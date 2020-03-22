@@ -1,0 +1,207 @@
+<div class="addCandidatesBlock">
+   <div class="addCandidatesFormBlock">
+      <form
+        [formGroup]="myForm"
+        appHighlightRequiredFields
+        appFocusInvalidInput
+        appFocusFirstEmptyInput
+      >
+        <h2>Add Candidates</h2>
+        <div class="addCandidatesForm">
+        <div class="form-group formGroupAddCandidate">
+          <div class="input-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              placeholder="Name"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'name')
+              }"
+              formControlName="name"
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'name')"
+            [formObject]="myForm"
+            [controlName]="'name'"
+            [fieldName]="'Name'"
+          ></app-error-message>
+        </div>
+        <div class="form-group formGroupAddCandidate">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              name="email"
+              id="email"
+              placeholder="Email"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'email')
+              }"
+              formControlName="email"
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'email')"
+            [formObject]="myForm"
+            [controlName]="'email'"
+            [fieldName]="'Email'"
+          ></app-error-message>
+        </div>
+        <div class="form-group formGroupAddCandidate">
+          <div class="input-group">
+            <label for="mobile">Mobile</label>
+            <input
+              type="text"
+              class="form-control"
+              name="mobile"
+              id="mobile"
+              placeholder="Mobile"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'mobile')
+              }"
+              formControlName="mobile"
+              appNumbersOnly
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'mobile')"
+            [formObject]="myForm"
+            [controlName]="'mobile'"
+            [fieldName]="'Mobile'"
+          ></app-error-message>
+        </div>
+        <div class="form-group formGroupAddCandidate">
+          <div class="input-group">
+            <label for="skill">Skill</label>
+            <input
+              type="text"
+              class="form-control"
+              name="skill"
+              id="skill"
+              placeholder="Skill"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'skill')
+              }"
+              formControlName="skill"
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'skill')"
+            [formObject]="myForm"
+            [controlName]="'skill'"
+            [fieldName]="'Skill'"
+          ></app-error-message>
+        </div>
+        <div class="form-group formGroupBtn">
+          <div class="input-group">
+            <app-save-cancel-buttons
+              [saveButtonName]="
+                myForm.controls.id.value !== null &&
+                myForm.controls.id.value !== undefined
+                  ? 'Update'
+                  : 'Add'
+              "
+              cancelButtonName="Reset"
+              (onSave)="myForm.valid && onSave()"
+              (onCancel)="onCancel()"
+            ></app-save-cancel-buttons>
+          </div>
+        </div>
+      </div>
+      </form>
+   </div>
+
+   
+  <div class="candidatesListBlock">
+    <h3>Candidates list</h3>
+    <!-- <ul class="nav nav-tabs">
+      <li class="nav-item" *ngFor="let skill of skillTabsList">
+        <a
+          class="nav-link"
+          [ngClass]="{ active: skill.active }"
+          href="javscript:void(0)"
+          (click)="onTabClick(skill)"
+          >{{ skill.description }}</a
+        >
+        content1
+      </li>
+    </ul> -->
+    <div class="manageCandidatesList">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tech 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Tech 2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-selected="false">Manager</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile" aria-selected="false">HR</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="table-responsive manageCandidatesListTabel tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <table class="table table-bordered table-md">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Skill</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let candidate of candidatesList; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ candidate.name }}</td>
+                <td>{{ candidate.email }}</td>
+                <td>{{ candidate.mobile }}</td>
+                <td>{{ candidate.skill }}</td>
+                <td>
+                  <a href="javascript:void(0)" (click)="onEdit(candidate)">
+                    Edit
+                  </a>
+                  |
+                  <a href="javascript:void(0)" (click)="onDelete(i)">
+                    Delete
+                  </a>
+                </td>
+              </tr>
+              <tr
+                *ngIf="
+                  (candidatesList && candidatesList.length === 0) || !candidatesList
+                "
+              >
+                <app-no-records-found></app-no-records-found>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+           <p>tab1</p>
+        </div>
+        <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="profile-tab">
+          <p>tab2</p>
+        </div>
+        <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab">
+          <p>tab3</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+

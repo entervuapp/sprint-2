@@ -1,0 +1,38 @@
+<div class="loginCard_right" id="slideOne">
+  <div class="ev_logo_block">
+    <div class="ev_logo">
+      <img src="../../../../assets/images/logo1.png" alt="EnterVu" />
+    </div>
+  </div>
+  <div class="loginFormNavigation">
+    <div class="btnGroup">
+      <span
+        id="organizationButton"
+        class="loginFormNavigationBtn organizationText"
+        (click)="addSlideOneClass($event)"
+        >Organization</span
+      >
+    </div>
+    <div class="btnGroup">
+      <span
+        id="individualButton"
+        class="loginFormNavigationBtn individualText"
+        (click)="addSlideOneClass($event)"
+        >Individual</span
+      >
+    </div>
+    <div class="btnGroup">
+      <span
+        id="aboutButton"
+        class="loginFormNavigationBtn aboutUsText"
+        (click)="removeSlideOneClass($event)"
+        >About Us</span
+      >
+    </div>
+  </div>
+  <div class="ev_copyRight">
+    <p class="ev_copyRightText">
+      Copyright &copy; 2019 EnterVu, All rights reserved.
+    </p>
+  </div>
+</div>

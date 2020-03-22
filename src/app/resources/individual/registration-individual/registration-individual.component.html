@@ -1,0 +1,182 @@
+<div class="ev_loginForm">
+  <div class="login-form">
+    <form
+      [formGroup]="myForm"
+      appHighlightRequiredFields
+      appFocusInvalidInput
+      appFocusFirstEmptyInput
+    >
+      <h2 class="text-center">Sign up</h2>
+      <div class="form-group">
+        <div class="input-group">
+          <span
+            class="input-group-addon"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'firstName')
+            }"
+            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faUser"></fa-icon
+          ></span>
+          <input
+            type="text"
+            class="form-control"
+            name="firstName"
+            id="firstName"
+            placeholder="First Name"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'firstName')
+            }"
+            formControlName="firstName"
+          />
+        </div>
+        <app-error-message
+          *ngIf="checkForError(myForm, 'firstName')"
+          [formObject]="myForm"
+          [controlName]="'firstName'"
+          [fieldName]="'First name'"
+        ></app-error-message>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span
+            class="input-group-addon"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'lastName')
+            }"
+            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faUser"></fa-icon
+          ></span>
+          <input
+            type="text"
+            class="form-control"
+            name="lastName"
+            id="lastName"
+            placeholder="Last Name"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'lastName')
+            }"
+            formControlName="lastName"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span
+            class="input-group-addon"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'email')
+            }"
+            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faEnvelope"></fa-icon
+          ></span>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            placeholder="Email id"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'email')
+            }"
+            formControlName="email"
+          />
+        </div>
+        <app-error-message
+          *ngIf="checkForError(myForm, 'email')"
+          [formObject]="myForm"
+          [controlName]="'email'"
+          [fieldName]="'Email'"
+        ></app-error-message>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span
+            class="input-group-addon"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'mobile')
+            }"
+            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faMobile"></fa-icon
+          ></span>
+          <input
+            type="text"
+            class="form-control"
+            name="mobile"
+            id="mobile"
+            placeholder="Mobile Number"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'mobile')
+            }"
+            appNumbersOnly
+            formControlName="mobile"
+          />
+        </div>
+        <app-error-message
+          *ngIf="checkForError(myForm, 'mobile')"
+          [formObject]="myForm"
+          [controlName]="'mobile'"
+          [fieldName]="'Mobile'"
+        ></app-error-message>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span
+            class="input-group-addon"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'password')
+            }"
+            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faLock"></fa-icon
+          ></span>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="Password"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'password')
+            }"
+            formControlName="password"
+          />
+        </div>
+        <app-error-message
+          *ngIf="checkForError(myForm, 'password')"
+          [formObject]="myForm"
+          [controlName]="'password'"
+          [fieldName]="'Password'"
+        ></app-error-message>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span
+            class="input-group-addon"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'confirmPassword')
+            }"
+            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faLock"></fa-icon
+          ></span>
+          <input
+            type="password"
+            class="form-control"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            [ngClass]="{
+              'input-field-error': checkForError(myForm, 'confirmPassword')
+            }"
+            formControlName="confirmPassword"
+          />
+        </div>
+        <app-error-message
+          *ngIf="checkForError(myForm, 'confirmPassword')"
+          [formObject]="myForm"
+          [controlName]="'confirmPassword'"
+          [fieldName]="'Confirm Password'"
+        ></app-error-message>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary login-btn btn-block">
+          Register
+        </button>
+      </div>
+    </form>
+    <p class="text-center text-muted small">
+      Don't have an account? <a href="#" (click)="showLogin()">Login here!</a>
+    </p>
+  </div>
+</div>

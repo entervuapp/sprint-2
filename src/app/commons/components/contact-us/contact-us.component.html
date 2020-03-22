@@ -1,0 +1,102 @@
+<div class="aboutUsContent">
+  <div class="contactUsForm">
+    <form
+      class="contactUsForm"
+      [formGroup]="formGroupObject"
+      appHighlightRequiredFields
+      appFocusInvalidInput
+      appFocusFirstEmptyInput
+      (submit)="formGroupObject.valid && onSubmit()"
+    >
+      <div class="form-group">
+        <label for="text"
+          >{{ displayTextObj.name
+          }}<span
+            [ngClass]="{
+              error: checkForError(formGroupObject, 'name')
+            }"
+            >*</span
+          >:</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          [ngClass]="{
+            'input-field-error': checkForError(formGroupObject, 'name')
+          }"
+          id="name"
+          placeholder="Enter Name"
+          name="name"
+          formControlName="name"
+        />
+        <app-error-message
+          *ngIf="checkForError(formGroupObject, 'name')"
+          [formObject]="formGroupObject"
+          [controlName]="'name'"
+          [fieldName]="'Name'"
+        ></app-error-message>
+      </div>
+      <div class="form-group">
+        <label for="email"
+          >{{ displayTextObj.email
+          }}<span
+            [ngClass]="{
+              error: checkForError(formGroupObject, 'email')
+            }"
+            >*</span
+          >:</label
+        >
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+          name="email"
+          formControlName="email"
+          [ngClass]="{
+            'input-field-error': checkForError(formGroupObject, 'email')
+          }"
+        />
+        <app-error-message
+          *ngIf="checkForError(formGroupObject, 'email')"
+          [formObject]="formGroupObject"
+          [controlName]="'email'"
+          [fieldName]="'Email'"
+        ></app-error-message>
+      </div>
+      <div class="form-group">
+        <label for="comment"
+          >{{ displayTextObj.comments
+          }}<span
+            [ngClass]="{
+              error: checkForError(formGroupObject, 'comments')
+            }"
+            >*</span
+          >:</label
+        >
+        <textarea
+          class="form-control"
+          rows="3"
+          id="comments"
+          name="comments"
+          formControlName="comments"
+          [ngClass]="{
+            'input-field-error': checkForError(formGroupObject, 'comments')
+          }"
+        ></textarea>
+        <app-error-message
+          *ngIf="checkForError(formGroupObject, 'comments')"
+          [formObject]="formGroupObject"
+          [controlName]="'comments'"
+          [fieldName]="'Comments'"
+        ></app-error-message>
+      </div>
+      <app-save-cancel-buttons
+        (onSave)="onSubmit()"
+        (onCancel)="onReset()"
+        saveButtonName="Submit"
+        cancelButtonName="Reset"
+      ></app-save-cancel-buttons>
+    </form>
+  </div>
+</div>

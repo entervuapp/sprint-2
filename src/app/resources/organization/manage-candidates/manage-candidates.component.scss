@@ -1,0 +1,44 @@
+.addCandidatesFormBlock{
+    padding: 25px 15px 15px 15px;
+}
+.addCandidatesFormBlock h2{
+    font-size: 20px;
+    color: #333;
+    margin: 0px 0px 10px 0px;
+}
+.addCandidatesForm{
+    border: 1px solid #ccc;
+    padding: 5px 10px 15px 10px;
+    display: inline-block;
+    width: 100%;
+}
+.formGroupAddCandidate{
+    width: 22%;
+    float: left;
+    padding: 10px 10px;
+    margin: 0px;
+}
+.formGroupAddCandidate .error{
+    font-size: 12px;
+    margin: 2px 0px;
+    color: #df4930;
+}
+.formGroupBtn{
+    width: 12%;
+    float: left;
+}
+.candidatesListBlock{
+    clear: both;
+    padding: 15px 15px;
+}
+.candidatesListBlock h3{
+    font-size: 20px;
+    color: #333;
+    margin: 0px 0px 10px 0px;
+}
+.manageCandidatesList {
+    padding: 0px 0px;
+}
+.manageCandidatesListTabel {
+    border: 0px solid #ccc;
+}

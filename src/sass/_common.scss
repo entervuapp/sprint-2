@@ -1,0 +1,579 @@
+@import "../sass/master";
+
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+button {
+  text-transform: capitalize;
+}
+
+.ev_mainContainer {
+  background-image: url(./assets/images/bg1.jpg);
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: inherit;
+  width: 100%;
+  height: 100vh;
+}
+
+.bgShadow {
+  background: $evu-black-color;
+  width: 100%;
+  height: 100vh;
+  opacity: 0.9;
+}
+
+.ev_loginCard {
+  background-image: url(./assets/images/loginBg.png);
+  background-size: cover;
+  background-repeat: repeat;
+  position: fixed;
+  width: 80%;
+  top: 10%;
+  height: 80vh;
+  left: 10%;
+  box-shadow: 0px 0px 15px $evu-light-black-color;
+  border-radius: 20px;
+}
+
+.loginCard_left {
+  background-image: url("./assets/images/loginBg.png");
+  background-size: cover;
+  background-repeat: repeat;
+  width: 50%;
+  float: left;
+  position: relative;
+  border-right: 1px solid var(--grayShade);
+  height: 100%;
+  border-radius: 20px 0px 0px 20px;
+  padding: 20px 25px;
+  overflow: auto;
+  z-index: 99;
+}
+.loginCard_right {
+  background-image: url("./assets/images/loginBg.png");
+  background-size: cover;
+  background-repeat: repeat;
+  width: 50%;
+  float: left;
+  position: relative;
+  height: 100%;
+  border-radius: 0px 20px 20px 0px;
+  padding: 20px 25px;
+  z-index: 99;
+  top: 0px;
+  left: 0px;
+  -webkit-transition: left 2s;
+  transition: left 2s;
+}
+
+.loginCard_right.loginCard_rightSlideEffect {
+  left: -50%;
+  border-radius: 20px 0px 0px 20px;
+  border-right: 1px solid $evu-grey-color;
+  z-index: 100;
+  -webkit-transition: left 2s;
+  transition: left 2s;
+}
+
+.aboutHeader {
+  border-bottom: 1px solid $evu-grey-color;
+  margin-top: 5px;
+}
+.aboutHeaderTitle {
+  font-size: 16px;
+  color: $evu-light-aqua-color;
+  padding: 8px 15px 8px 15px;
+  display: inline-block;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin: 0px 15px 0px 0px;
+  cursor: pointer;
+}
+/*.aboutHeaderTitle.active{
+	border-top: 2px solid $evu-light-aqua-color;
+	color: $evu-light-aqua-color;
+}*/
+.aboutHeaderTitle.active {
+  color: $evu-white-color;
+}
+.aboutUsContent {
+  padding: 15px 0px;
+}
+.whatWeAreCnt p {
+  font-size: 14px;
+  color: $evu-white-color;
+  margin: 0px 0px 10px 0px;
+}
+.ev_logo_block {
+  padding: 20px 12%;
+}
+.ev_logo img {
+  width: 100%;
+  height: auto;
+}
+.loginFormNavigation {
+  margin: 6% 0px 0px 0px;
+  text-align: center;
+}
+.loginFormNavigationBtn {
+  border: 2px solid $evu-white-color;
+  font-size: 18px;
+  color: $evu-white-color;
+  width: 200px;
+  display: inline-block;
+  padding: 8px 0px;
+  border-radius: 8px;
+  margin: 12px 0px;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0px 0px 2px $evu-light-black-color;
+}
+.loginFormNavigationBtn:hover,
+.loginFormNavigationBtn:focus {
+  border: 2px solid $evu-white-color;
+  color: $evu-light-black-color;
+  background: $evu-white-color;
+  box-shadow: 0px 0px 5px $evu-light-black-color;
+}
+.organizationText {
+}
+.individualText {
+}
+.aboutUsText {
+}
+.ev_copyRight {
+  position: absolute;
+  bottom: 0px;
+  width: 90%;
+  text-align: center;
+  border-top: 1px solid $evu-grey-color;
+}
+.ev_copyRightText {
+  color: $evu-white-color;
+  font-size: 12px;
+  margin: 8px 0px 10px 0px;
+}
+
+.contactUsForm .btnSubmit {
+  color: $evu-white-color;
+  background-color: $evu-parrot-green-color;
+  border-color: $evu-parrot-green-color;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.contactUsForm .btnSubmit:hover,
+.contactUsForm .btnSubmit:focus {
+  background-color: $evu-green-color;
+  border-color: $evu-green-color;
+  color: $evu-white-color;
+}
+
+/*=========== login form start here ===================*/
+.login-form {
+  padding: 0px 30px;
+}
+.login-form form {
+  margin-bottom: 15px;
+}
+.login-form h2 {
+  margin: 0 0 15px;
+}
+.form-control,
+.login-btn {
+  min-height: 38px;
+  border-radius: 2px;
+}
+.input-group-addon {
+  padding: 9px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  color: $evu-grey-color;
+  text-align: center;
+  background-color: $evu-shade-white-color;
+  border: 1px solid $evu-grey-color;
+  border-radius: 4px;
+  white-space: nowrap;
+  vertical-align: middle;
+  display: table-cell;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+.input-group-addon .fa {
+  font-size: 18px;
+}
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+.login-btn {
+  font-size: 15px;
+  font-weight: bold;
+}
+.social-btn .btn {
+  border: none;
+  margin: 10px 3px 0;
+  opacity: 1;
+}
+.social-btn .btn:hover {
+  opacity: 0.9;
+}
+.social-btn .btn-primary {
+  background: $evu-blue-color;
+}
+.social-btn .btn-info {
+  background: $evu-light-sky-blue-color;
+}
+.social-btn .btn-danger {
+  background: $evu-blood-red-color;
+}
+.or-seperator {
+  margin-top: 20px;
+  text-align: center;
+  border-top: 1px solid $evu-grey-color;
+}
+.or-seperator i {
+  padding: 0 10px;
+  background: $evu-pale-white-color;
+  position: relative;
+  top: -11px;
+  z-index: 1;
+}
+/*=========== login form end here ===================*/
+
+.loginCard_right_signIn {
+  background-image: url(/static/media/loginBg.aef0f1a1.png);
+  background-size: cover;
+  background-repeat: repeat;
+  width: 50%;
+  /* float: right; */
+  position: absolute;
+  height: 100%;
+  border-radius: 0px 20px 20px 0px;
+  padding: 20px 25px;
+  z-index: 50;
+  top: 0px;
+  /* left: 0px; */
+  right: 0;
+  transition: left 2s;
+  overflow: auto;
+}
+
+.loginCard_left_organization_register {
+  background-image: url(/static/media/loginBg.aef0f1a1.png);
+  background-size: cover;
+  background-repeat: repeat;
+  width: 50%;
+  /* float: right; */
+  position: absolute;
+  height: 100%;
+  border-radius: 0px 20px 20px 0px;
+  padding: 20px 25px;
+  z-index: 49;
+  top: 0px;
+  /* left: 0px; */
+  right: 0;
+  transition: left 2s;
+  overflow: auto;
+}
+
+/* carousel class starts here */
+.CarouselItemClass {
+  text-align: center;
+  height: 150px;
+  width: 150px;
+  border: 1px solid $evu-blood-red-color;
+  margin-right: 15px;
+  margin-left: 15px;
+  background: blueviolet;
+}
+/* carousel class ends here */
+
+.error {
+  color: $evu-blood-red-color;
+}
+
+.input-field-error {
+  border-color: $evu-blood-red-color !important;
+}
+
+.margin-right-10 {
+  margin-right: 10px;
+}
+
+/*edit profile starts here*/
+.height-width-100 {
+  height: 100px;
+  width: 100px;
+}
+/*edit profile ends here*/
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+/*=======================Header css start==========================*/
+.mainHeader {
+  padding: 12px 12px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #00aff5;
+}
+.headerLogo {
+  display: inline-block;
+}
+.headerLogo a {
+  display: inline-block;
+  width: 250px;
+}
+.headerLogo a img {
+  width: 100%;
+  height: auto;
+}
+.headerNavbar {
+  display: inline-block;
+}
+.headerNavbar .navbarUl {
+  padding: 0px 0px;
+  margin: 12px 0px 12px 0px;
+}
+.headerNavbar .navbarUl li {
+  list-style-type: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0 16px;
+  border: 0px solid #ccc;
+}
+
+.headerNavbar .navbarUl li a {
+  color: #5b6770;
+  font-weight: 500 !important;
+  padding: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+.headerNavbar .navbarUl li.active {
+  color: #ffb200 !important;
+  border-bottom: 2px solid #ffb200;
+  text-decoration: none;
+}
+.headerNavbar .navbarUl li.active a {
+  color: #ffb200;
+}
+.headerNavbar .navbarUl li:hover {
+  border-bottom: 2px solid #ffb200;
+  color: #ffb200;
+}
+.headerNavbar .navbarUl li:hover a {
+  color: #ffb200;
+}
+.headerRightSide {
+  display: inline-block;
+}
+.headerRightSide .navbarRightUl {
+  padding: 0px 0px;
+  margin: 12px 0px 12px 0px;
+}
+.headerRightSide .navbarRightUl li {
+  list-style-type: none;
+  display: inline;
+  padding: 0;
+  margin: 0 12px;
+}
+.headerRightSide .navbarRightUl li .fa {
+  font-size: 22px;
+}
+.individualProfileBlock {
+  position: relative;
+  cursor: pointer;
+}
+.individualProfileContent {
+  position: absolute;
+  top: 57px;
+  right: 0px;
+  background: #00aff5;
+  min-width: 200px;
+  z-index: 1000;
+}
+.individualProfileContent .individualProfileUl {
+  padding: 0px;
+  margin: 0px;
+}
+.individualProfileContent .individualProfileUl li {
+  display: block;
+  margin: 0px;
+  border-bottom: 1px solid #fff;
+  padding: 0px;
+}
+.individualProfileContent .individualProfileUl li a {
+  color: #fff;
+  font-size: 16px;
+  display: block;
+  padding: 8px 12px;
+  margin: 0px;
+}
+.individualProfileContent .individualProfileUl li a:hover {
+  background: #ffb200;
+  text-decoration: none;
+}
+.individualNotificationBlock {
+  position: relative;
+  cursor: pointer;
+}
+.individualNotificationContent {
+  position: absolute;
+  right: 0px;
+  top: 57px;
+  background: #00aff5;
+  min-width: 400px;
+  padding: 12px 15px;
+  z-index: 1000;
+}
+.individualNotificationContent h3 {
+  font-size: 24px;
+  color: #fff;
+  margin: 0px 0px 6px 0px;
+}
+.notificationList {
+  border: 1px solid #fff;
+  padding: 10px 10px;
+  margin: 6px 0px;
+  display: inline-block;
+  width: 100%;
+}
+.notificationList h4 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0px 0px 8px 0px;
+}
+.notificationListLeft {
+  width: 60%;
+  float: left;
+  color: #fff;
+  font-size: 14px;
+  margin: 0px 0px 0px 0px;
+}
+.notificationListRight {
+  width: 40%;
+  float: left;
+  font-size: 14px;
+  color: #fff;
+  text-align: right;
+  text-decoration: underline;
+}
+.notificationList .collapse.show {
+  display: inline-block;
+  width: 100%;
+  border-top: 1px solid #fff;
+  margin: 10px 0px 0px 0px;
+  padding: 10px 0px 0px 0px;
+}
+.notificationList .collapse.show .form-group {
+  margin-bottom: 10px;
+}
+.notificationList .collapse.show {
+  border-top: 1px solid #fff;
+  display: inline-block;
+  width: 100%;
+  margin: 10px 0px 0px 0px;
+  padding: 12px 0px 0px 0px;
+}
+.notificationBtnGrp {
+  text-align: right;
+}
+.notificationBtnGrp .btnCancel {
+  background: #6c757d;
+  color: #fff;
+  font-size: 14px;
+  padding: 2px 15px;
+  font-weight: 500;
+  border-radius: 0px;
+  border: 1px solid #6c757d;
+  margin: 0px 8px 0px 0px;
+}
+.notificationBtnGrp .btnCancel:hover {
+  background: transparent;
+  color: #6c757d;
+  border: 1px solid #6c757d;
+}
+.notificationBtnGrp .btnSubmit {
+  background: #ffb200;
+  color: #fff;
+  font-size: 14px;
+  padding: 2px 15px;
+  font-weight: 500;
+  border: 1px solid #ffb200;
+  border-radius: 0px;
+}
+.notificationBtnGrp .btnSubmit:hover {
+  background: transparent;
+  color: #ffb200;
+  border: 1px solid #ffb200;
+}
+/*=======================Header css end==========================*/
+
+/*=======================Dashboard css start==========================*/
+.companyList {
+  margin: 15px 0px;
+  padding: 15px 15px;
+}
+.companySingleBtn {
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid #ffb200;
+  border-radius: 0px;
+  margin: 0px 15px 0px 0px;
+  min-width: 150px;
+  color: #ffb200;
+  background: #fff;
+}
+.companySingleBtn.active,
+.companySingleBtn:hover {
+  border: 1px solid #ffb200;
+  color: #fff;
+  background: #ffb200;
+}
+/*=======================Dashboard css end==========================*/
+
+/*=======================interview queue css start==========================*/
+.interviewQueue {
+  padding: 0px 15px;
+}
+.interviewQueueTabel {
+  border: 0px solid #ccc;
+}
+.actionIcon{
+  margin: 0px 8px;
+  cursor: pointer;
+}
+.actionIcon .dropdown-menu{
+  padding: 0px;
+    margin: 0px;
+}
+.actionIcon .dropdown-menu li a{
+  display: block;
+    padding: 8px 8px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #000;
+    border-bottom: 1px solid #ababab;
+}
+.actionIcon .dropdown-menu li a:hover{
+  background: #ffb200;
+  color: #fff;
+  text-decoration: none;
+}
+/*=======================interview queue css end==========================*/

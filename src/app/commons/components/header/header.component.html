@@ -1,0 +1,26 @@
+<div class="overlayBlock" *ngIf="showNotification || showSettings" (click)="noDisplayOverlay()"></div>
+<div class="mainHeader">
+  <div class="headerLogo">
+    <a href="#"
+      ><img src="../../../../assets/images/logo2.png" alt="EnterVu"
+    /></a>
+  </div>
+  <div class="headerNavbar">
+    <ul class="navbarUl">
+      <li class="active"><a href="#">Dashboard</a></li>
+      <li><a href="#">Q&A</a></li>
+    </ul>
+  </div>
+  <div class="headerRightSide">
+    <ul class="navbarRightUl">
+      <li class="individualNotificationBlock">
+        <span (click)="showNotification = !showNotification"><fa-icon [icon]="fontIcon.faBell"></fa-icon></span>
+        <app-individual-notifications id="showNotificationId" *ngIf="showNotification"></app-individual-notifications>
+      </li>
+      <li class="individualProfileBlock">
+        <span (click)="showSettings = !showSettings"><fa-icon [icon]="fontIcon.faUser"></fa-icon></span>
+        <app-profile *ngIf="showSettings"></app-profile>
+      </li>
+    </ul>
+  </div>
+</div>

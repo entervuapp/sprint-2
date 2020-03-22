@@ -1,0 +1,15 @@
+<span style="color:red;" *ngIf="message">{{ message }}</span>
+<input
+  #file
+  type="file"
+  accept="application/msword, text/plain, application/pdf, .doc, .docx"
+  (change)="preview(file.files)"
+  class="d-none"
+/>
+<input
+  type="button"
+  class="btn btn-primary"
+  (click)="file.click()"
+  value="Resume"
+/>
+<span *ngIf="resumePath && resumePath.length">{{ resumePath[0].name }}</span>

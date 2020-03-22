@@ -1,0 +1,27 @@
+<span style="color:red;" *ngIf="message">{{ message }}</span>
+<input
+  #file
+  type="file"
+  accept="image/*"
+  (change)="preview(file.files)"
+  class="d-none"
+/>
+<img
+  [src]="imgURL"
+  class="height-width-100 rounded-circle"
+  *ngIf="imgURL"
+  (click)="file.click()"
+/>
+<img
+  src="../../../../assets/images/default_profile.png"
+  class="height-width-100 rounded-circle"
+  *ngIf="!imgURL"
+  (click)="file.click()"
+/>
+<br>
+<input
+  type="button"
+  class="removeProfileBtn"
+  (click)="onRemove()"
+  value="Remove Photo"
+/>
