@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export default class ObjectUtil {
   checkPasswordStrength = enteredPassword => {
     let array = [];
@@ -37,6 +39,10 @@ export default class ObjectUtil {
           isError = true;
         }
         break;
+      case "eventDate":
+      case "eventTime":
+      case "skillName":
+      case "numberOfRounds":
       case "address":
       case "skill":
       case "experience":

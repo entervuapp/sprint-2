@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ManageHeaderService } from "../../commons/services/manage-header/manage-header.service";
 
 @Component({
   selector: "app-main-screen",
@@ -8,7 +9,7 @@ import { Component, OnInit } from "@angular/core";
 export class MainScreenComponent implements OnInit {
   activated: string;
   handleFormsDisplay: {};
-  constructor() {}
+  constructor(private manageHeaderService: ManageHeaderService) {}
 
   ngOnInit() {
     this.activated = "whatWeAre";
@@ -19,6 +20,7 @@ export class MainScreenComponent implements OnInit {
       organization: false,
       individual: false
     };
+    this.manageHeaderService.updateHeaderVisibility(false);
   }
 
   handleAboutUsAndContactUs = event => {

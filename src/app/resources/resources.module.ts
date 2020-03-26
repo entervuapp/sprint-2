@@ -8,8 +8,9 @@ import { IndividualModule } from "./individual/individual.module";
 import { OrganizationModule } from "./organization/organization.module";
 import { MainScreenComponent } from "./main-screen/main-screen.component";
 import { CommonsModule } from "../commons/commons.module";
+import { QaModule } from "./qa/qa.module";
 
-const RESOURCE_MODULE_LIST = [IndividualModule, OrganizationModule];
+const RESOURCE_MODULE_LIST = [IndividualModule, OrganizationModule, QaModule];
 const COMPONENTS_LIST = [MainScreenComponent];
 
 @NgModule({
