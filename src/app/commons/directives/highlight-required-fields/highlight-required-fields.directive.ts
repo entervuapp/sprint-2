@@ -1,5 +1,5 @@
 import { Directive, HostListener, Input } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, FormArray } from "@angular/forms";
 @Directive({
   selector: "[appHighlightRequiredFields]"
 })
@@ -10,18 +10,26 @@ export class HighlightRequiredFieldsDirective {
 
   @HostListener("submit")
   onFormSubmit() {
-    this.markAllRequiredFieldsAsTouched();
+    this.markAllRequiredFieldsAsTouched(this.formObj);
   }
 
-  markAllRequiredFieldsAsTouched = () => {
-    if (this.formObj && this.formObj.controls) {
-      Object.keys(this.formObj.controls).forEach(eachControlName => {
-        if (this.formObj.controls[eachControlName] instanceof FormControl) {
-          this.formObj.controls[eachControlName].markAsTouched();
+  markAllRequiredFieldsAsTouched = (formGroup: FormGroup) => {
+    if (formGroup && formGroup.controls) {
+      Object.keys(formGroup.controls).forEach(eachControlName => {
+        if (formGroup.controls[eachControlName] instanceof FormControl) {
+          formGroup.controls[eachControlName].markAsTouched();
         } else if (
-          this.formObj.controls[eachControlName] instanceof FormGroup
+          formGroup.controls[eachControlName] instanceof FormGroup
         ) {
-          this.markAllRequiredFieldsAsTouched();
+          this.markAllRequiredFieldsAsTouched(
+            formGroup.controls[eachControlName]['controls']
+          );
+        } else if (
+          formGroup.controls[eachControlName] instanceof FormArray
+        ) {
+          formGroup.controls[eachControlName]['controls'].forEach(eachFormGroup => {
+            this.markAllRequiredFieldsAsTouched(eachFormGroup);
+          });
         }
       });
     }
