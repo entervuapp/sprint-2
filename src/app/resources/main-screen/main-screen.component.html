@@ -37,15 +37,15 @@
     ></app-login-logo-slider>
     <div class="loginCard_right_signIn">
       <app-login-form
-        *ngIf="handleFormsDisplay.login"
+        *ngIf="handleFormsDisplay['login']"
         (handleSignUpDisplay)="handleSignUpDisplay()"
       ></app-login-form>
       <app-registration-individual
-        *ngIf="handleFormsDisplay.individualRegistration"
+        *ngIf="handleFormsDisplay['individualRegistration']"
         (onLoginClick)="showLoginScreen()"
       ></app-registration-individual>
       <app-registration-organization
-        *ngIf="handleFormsDisplay.organizationRegistration"
+        *ngIf="handleFormsDisplay['organizationRegistration']"
         (onLoginClick)="showLoginScreen()"
       ></app-registration-organization>
     </div>
