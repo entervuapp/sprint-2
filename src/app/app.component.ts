@@ -2,32 +2,40 @@ import { Component, Input, ChangeDetectorRef } from "@angular/core";
 import { ManageHeaderService } from "./commons/services/manage-header/manage-header.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
+import { ROUTE_URL_PATH_CONSTANTS } from "./commons/constants/route-url-path.constants";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  styleUrls: ["./app.component.scss"],
 })
 export class AppComponent {
   title = "EnterVu";
   public isHeaderVisible: boolean;
-
   constructor(
-    private manageHeaderService: ManageHeaderService,
-    private cdr: ChangeDetectorRef,
+    private manageHeaderService?: ManageHeaderService,
+    private cdr?: ChangeDetectorRef,
     public router?: Router
   ) {
     this.isHeaderVisible = false;
-    this.manageHeaderService.getHeaderVisibility().subscribe(flag => {
-      this.isHeaderVisible = flag;
-      this.cdr.detectChanges();
-    });
+    if (
+      this.manageHeaderService &&
+      this.manageHeaderService.getHeaderVisibility
+    ) {
+      this.manageHeaderService.getHeaderVisibility().subscribe((flag) => {
+        this.isHeaderVisible = flag;
+        this.cdr.detectChanges();
+      });
+    }
   }
 
   public navigateTo(screen: string, queryParams?): void {
     switch (screen) {
-      case "path":
-        // this.router.navigate([`/${RouteUrlPathConstants.ROUTE_URL_PATH.home}`], { queryParams: { page: queryParams } });
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard:
+        // this.router.navigate([`/${RouteUrlPathConstants.ROUTE_URL_PATH.home}`], { queryParams: { page: queryParams } });
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard}`,
+        ]);
         break;
       default:
         break;
