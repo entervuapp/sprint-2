@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { RouterModule, Routes } from "@angular/router";
-
+import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
@@ -19,19 +19,20 @@ import { LoadingInterceptorService } from "./commons/services/loading-intercepto
     BrowserModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     AppRoutingModule,
     ResourcesModule,
-    CommonsModule
+    CommonsModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptorService,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

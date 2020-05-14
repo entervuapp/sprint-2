@@ -1,17 +1,10 @@
-const API_URLS_CONSTANT = {
-  LOGIN_SCREEN: {
-    LOGIN: ""
-  },
-  ORGANIZATION: {
-    DASHBOARD: {
-      URL: "/organization-dashboard"
-    }
-  },
-  INDIVIDUAL: {
-    DASHBOARD: {
-      URL: "/individual-dashboard"
-    }
-  }
-};
-
-export default API_URLS_CONSTANT;
+export class API_URLS_CONSTANTS {
+  static API_URLS = {
+    LOGIN_SCREEN: {
+      SIGN_UP: "https://visakharoyalinteriors.herokuapp.com/auth/signup",
+      SIGN_IN: "https://visakharoyalinteriors.herokuapp.com/auth/login",
+    },
+    ORGANIZATION: { DASHBOARD: { URL: "/organization-dashboard" } },
+    INDIVIDUAL: { DASHBOARD: { URL: "/individual-dashboard" } },
+  };
+}
