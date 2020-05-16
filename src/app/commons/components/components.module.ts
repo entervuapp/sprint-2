@@ -21,7 +21,10 @@ import { HeaderComponent } from "./header/header.component";
 import { OrganizationNotificationsComponent } from "./organization-notifications/organization-notifications.component";
 import { IndividualNotificationsComponent } from "./individual-notifications/individual-notifications.component";
 import { CandidateQueueComponent } from "./candidate-queue/candidate-queue.component";
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from "./profile/profile.component";
+import { TimeInputFieldComponent } from "./time-input-field/time-input-field.component";
+import { DateInputFieldComponent } from "./date-input-field/date-input-field.component";
+import { DisplayDateComponent } from "./display-date/display-date.component";
 
 const COMPONENTS_LIST = [
   SaveCancelButtonsComponent,
@@ -40,17 +43,21 @@ const COMPONENTS_LIST = [
   HeaderComponent,
   OrganizationNotificationsComponent,
   IndividualNotificationsComponent,
-  CandidateQueueComponent
+  CandidateQueueComponent,
+  ProfileComponent,
+  TimeInputFieldComponent,
+  DateInputFieldComponent,
+  DisplayDateComponent,
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS_LIST, ProfileComponent],
+  declarations: [...COMPONENTS_LIST],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     DirectivesModule,
-    FontAwesomeModule
-    ],
-  exports: [...COMPONENTS_LIST]
+    FontAwesomeModule,
+  ],
+  exports: [...COMPONENTS_LIST],
 })
 export class ComponentsModule {}

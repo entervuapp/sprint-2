@@ -13,6 +13,8 @@ import { CommonsModule } from "./commons/commons.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoadingInterceptorService } from "./commons/services/loading-interceptor/loading-interceptor.service";
 
+//modals
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -26,6 +28,7 @@ import { LoadingInterceptorService } from "./commons/services/loading-intercepto
     ResourcesModule,
     CommonsModule,
   ],
+  entryComponents: [],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

@@ -1,0 +1,17 @@
+<input
+  type="text"
+  [ngClass]="{
+    'input-field-error': checkForError(timeInputControl, 'time')
+  }"
+  [placeholder]="placeholderText"
+  [formControl]="timeInputControl"
+  [size]="fieldSize"
+  [maxLength]="maxlength"
+  (blur)="onBlur()"
+/>
+<app-error-message
+  *ngIf="checkForError(timeInputControl, 'time')"
+  [formObject]="timeInputControl"
+  [controlName]="'time'"
+  [fieldName]="'Time'"
+></app-error-message>
