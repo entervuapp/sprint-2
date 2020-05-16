@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
+import { FormGroup, FormControl } from "@angular/forms";
 @Injectable()
 export default class ObjectUtil {
-  checkPasswordStrength = enteredPassword => {
+  checkPasswordStrength = (enteredPassword) => {
     let array = [];
     if (enteredPassword && enteredPassword.length > 7) {
       array[0] = enteredPassword.match(/[A-Z]/);
@@ -21,87 +22,122 @@ export default class ObjectUtil {
     return password === confirmPassword ? true : false;
   };
 
-  checkEmailValidity = enteredEmail => {
+  checkEmailValidity = (enteredEmail) => {
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     return reg.test(enteredEmail);
   };
 
   checkForFormErrors = (formObj, property): boolean => {
     let isError = false;
-    switch (property) {
-      case "email":
-      case "officeEmail":
-        if (
-          (formObj.controls[property].hasError("required") &&
-            formObj.controls[property].touched) ||
-          formObj.controls[property].hasError("email")
-        ) {
-          isError = true;
-        }
-        break;
-      case "eventDate":
-      case "eventTime":
-      case "skillName":
-      case "numberOfRounds":
-      case "address":
-      case "skill":
-      case "experience":
-      case "mobile":
-      case "comments":
-      case "companyCode":
-      case "companyName":
-      case "name":
-      case "firstName":
-        if (
-          (formObj.controls[property].hasError("required") &&
-            formObj.controls[property].touched) ||
-          formObj.controls[property].hasError("minlength") ||
-          formObj.controls[property].hasError("maxlength")
-        ) {
-          isError = true;
-        }
-        break;
-      case "password":
-        let passwordStrength = this.checkPasswordStrength(
-          formObj.controls[property].value
-        );
-        if (
-          (formObj.controls[property].hasError("required") ||
+    if (formObj && formObj instanceof FormGroup) {
+      switch (property) {
+        case "email":
+        case "officeEmail":
+          if (
+            (formObj.controls[property].hasError("required") &&
+              formObj.controls[property].touched) ||
+            formObj.controls[property].hasError("email")
+          ) {
+            isError = true;
+          }
+          break;
+        case "eventDate":
+        case "eventTime":
+        case "skillName":
+        case "numberOfRounds":
+        case "address":
+        case "skill":
+        case "experience":
+        case "mobile":
+        case "comments":
+        case "companyCode":
+        case "companyName":
+        case "name":
+        case "firstName":
+          if (
+            (formObj.controls[property].hasError("required") &&
+              formObj.controls[property].touched) ||
             formObj.controls[property].hasError("minlength") ||
-            formObj.controls[property].value.length === 0) &&
-          formObj.controls[property].touched
-        ) {
-          isError = true;
-        } else if (formObj.controls[property].dirty && passwordStrength < 4) {
-          isError = true;
-          formObj.controls[property].setErrors({ weakPassword: true });
-        }
+            formObj.controls[property].hasError("maxlength")
+          ) {
+            isError = true;
+          }
+          break;
+        case "password":
+          let passwordStrength = this.checkPasswordStrength(
+            formObj.controls[property].value
+          );
+          if (
+            (formObj.controls[property].hasError("required") ||
+              formObj.controls[property].hasError("minlength") ||
+              formObj.controls[property].value.length === 0) &&
+            formObj.controls[property].touched
+          ) {
+            isError = true;
+          } else if (formObj.controls[property].dirty && passwordStrength < 4) {
+            isError = true;
+            formObj.controls[property].setErrors({ weakPassword: true });
+          }
 
-        break;
-      case "confirmPassword":
-        let isPasswordMatching = this.isPasswordAndConfirmPasswordMatching(
-          formObj.controls["password"].value,
-          formObj.controls[property].value
-        );
+          break;
+        case "confirmPassword":
+          let isPasswordMatching = this.isPasswordAndConfirmPasswordMatching(
+            formObj.controls["password"].value,
+            formObj.controls[property].value
+          );
 
-        if (
-          formObj.controls[property].hasError("required") &&
-          formObj.controls[property].touched
-        ) {
-          isError = true;
-        }
+          if (
+            formObj.controls[property].hasError("required") &&
+            formObj.controls[property].touched
+          ) {
+            isError = true;
+          }
 
-        if (
-          isPasswordMatching === false &&
-          (formObj.controls[property].touched ||
-            formObj.controls[property].dirty)
-        ) {
-          isError = true;
-          formObj.controls[property].setErrors({ mustMatch: true });
-        }
-        break;
-      default:
-        break;
+          if (
+            isPasswordMatching === false &&
+            (formObj.controls[property].touched ||
+              formObj.controls[property].dirty)
+          ) {
+            isError = true;
+            formObj.controls[property].setErrors({ mustMatch: true });
+          }
+          break;
+        default:
+          break;
+      }
+    } else if (formObj && formObj instanceof FormControl) {
+      switch (property) {
+        case "time":
+          var timeRegex = /^(([0-1][0-9])|(2[0-3])):[0-5][0-9]$/;
+          //valid format HH:MM
+          if (
+            formObj.hasError("required") &&
+            formObj.touched &&
+            (formObj.value === "" ||
+              formObj.value === null ||
+              formObj.value === undefined)
+          ) {
+            isError = true;
+          } else if (
+            formObj &&
+            formObj.value &&
+            timeRegex.exec(formObj.value) === null
+          ) {
+            isError = true;
+          }
+          break;
+        default:
+          if (
+            formObj.hasError("required") &&
+            formObj.touched &&
+            (formObj.value === "" ||
+              formObj.value === null ||
+              formObj.value === undefined)
+          ) {
+            isError = true;
+          }
+          break;
+      }
     }
     return isError;
   };

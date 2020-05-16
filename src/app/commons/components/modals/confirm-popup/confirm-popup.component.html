@@ -4,7 +4,7 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">{{ displayTextObj.heading }}</h4>
+        <h4 class="modal-title">{{ displayTextObj["heading"] }}</h4>
         <button type="button" class="close" (click)="hideModal()">
           &times;
         </button>
@@ -12,7 +12,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        {{ displayTextObj.message }}
+        {{ displayTextObj["message"] }}
       </div>
 
       <!-- Modal footer -->
@@ -23,7 +23,7 @@
           type="button"
           id="close-modal"
           data-dismiss="modal"
-          style="display: none"
+          style="display: none;"
         >
           Close
         </button>

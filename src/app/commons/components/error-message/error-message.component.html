@@ -1,29 +1,92 @@
 <div class="error">
-  <p *ngIf="formObject.controls[controlName].hasError('required')">
-    {{ fieldName }} is required.
-  </p>
-  <p *ngIf="formObject.controls[controlName].hasError('minlength')">
-    Minimum
-    {{ formObject.controls[controlName].errors.minlength.requiredLength }}
-    characters is required.
-  </p>
-  <p *ngIf="formObject.controls[controlName].hasError('maxlength')">
-    Max
-    {{ formObject.controls[controlName].errors.maxlength.requiredLength }}
-    characters is required.
-  </p>
-  <p *ngIf="formObject.controls[controlName].hasError('email')">
-    {{ fieldName }} is Invalid.
-  </p>
-  <p *ngIf="formObject.controls[controlName].hasError('weakPassword')">
-    {{ fieldName }} is weak. Use [A-Z], [a-z], [0-9] and [!_.-@#$%^&*].
-  </p>
-  <p
-    *ngIf="
-      controlName === 'confirmPassword' &&
-      formObject.controls['confirmPassword'].hasError('mustMatch')
-    "
-  >
-    Password and confirm password not matching.
-  </p>
+  <div *ngIf="checkInstance(formObject, 'formGroup')">
+    <p
+      *ngIf="
+        formObject &&
+        formObject['controls'] &&
+        formObject['controls'][controlName] &&
+        formObject['controls'][controlName].hasError('required')
+      "
+    >
+      {{ fieldName }} is required.
+    </p>
+    <p
+      *ngIf="
+        formObject &&
+        formObject['controls'] &&
+        formObject['controls'][controlName] &&
+        formObject['controls'][controlName].hasError('minlength')
+      "
+    >
+      Minimum
+      {{ formObject["controls"][controlName].errors.minlength.requiredLength }}
+      characters is required.
+    </p>
+    <p
+      *ngIf="
+        formObject &&
+        formObject['controls'] &&
+        formObject['controls'][controlName] &&
+        formObject['controls'][controlName].hasError('maxlength')
+      "
+    >
+      Max
+      {{ formObject["controls"][controlName].errors.maxlength.requiredLength }}
+      characters is required.
+    </p>
+    <p
+      *ngIf="
+        formObject &&
+        formObject['controls'] &&
+        formObject['controls'][controlName] &&
+        formObject['controls'][controlName].hasError('email')
+      "
+    >
+      {{ fieldName }} is Invalid.
+    </p>
+    <p
+      *ngIf="
+        formObject &&
+        formObject['controls'] &&
+        formObject['controls'][controlName] &&
+        formObject['controls'][controlName].hasError('weakPassword')
+      "
+    >
+      {{ fieldName }} is weak. Use [A-Z], [a-z], [0-9] and [!_.-@#$%^&*].
+    </p>
+    <p
+      *ngIf="
+        controlName === 'confirmPassword' &&
+        formObject['controls']['confirmPassword'].hasError('mustMatch')
+      "
+    >
+      Password and confirm password not matching.
+    </p>
+  </div>
+  <div *ngIf="checkInstance(formObject, 'formControl')">
+    <p
+      *ngIf="
+        formObject && formObject.hasError('required') && fieldName === 'Time'
+      "
+    >
+      {{ fieldName }} is required.
+    </p>
+    <p
+      *ngIf="
+        formObject &&
+        formObject.value &&
+        timeRegex.exec(formObject.value) === null &&
+        fieldName === 'Time'
+      "
+    >
+      {{ fieldName }} is Invalid.
+    </p>
+    <p
+      *ngIf="
+        formObject && formObject.hasError('required') && fieldName !== 'Time'
+      "
+    >
+      {{ fieldName }} is required.
+    </p>
+  </div>
 </div>

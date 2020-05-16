@@ -1,7 +1,7 @@
 import { Directive, HostListener, Input } from "@angular/core";
 import { FormControl, FormGroup, FormArray } from "@angular/forms";
 @Directive({
-  selector: "[appHighlightRequiredFields]"
+  selector: "[appHighlightRequiredFields]",
 })
 export class HighlightRequiredFieldsDirective {
   constructor() {}
@@ -15,21 +15,19 @@ export class HighlightRequiredFieldsDirective {
 
   markAllRequiredFieldsAsTouched = (formGroup: FormGroup) => {
     if (formGroup && formGroup.controls) {
-      Object.keys(formGroup.controls).forEach(eachControlName => {
+      Object.keys(formGroup.controls).forEach((eachControlName) => {
         if (formGroup.controls[eachControlName] instanceof FormControl) {
-          formGroup.controls[eachControlName].markAsTouched();
-        } else if (
-          formGroup.controls[eachControlName] instanceof FormGroup
-        ) {
+          formGroup.controls[eachControlName].markAsTouched({ onlySelf: true });
+        } else if (formGroup.controls[eachControlName] instanceof FormGroup) {
           this.markAllRequiredFieldsAsTouched(
-            formGroup.controls[eachControlName]['controls']
+            formGroup.controls[eachControlName]["controls"]
           );
-        } else if (
-          formGroup.controls[eachControlName] instanceof FormArray
-        ) {
-          formGroup.controls[eachControlName]['controls'].forEach(eachFormGroup => {
-            this.markAllRequiredFieldsAsTouched(eachFormGroup);
-          });
+        } else if (formGroup.controls[eachControlName] instanceof FormArray) {
+          formGroup.controls[eachControlName]["controls"].forEach(
+            (eachFormGroup) => {
+              this.markAllRequiredFieldsAsTouched(eachFormGroup);
+            }
+          );
         }
       });
     }
