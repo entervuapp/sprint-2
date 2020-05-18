@@ -95,6 +95,7 @@
           <app-time-input-field
             [isTouched]="formGroupObject.controls.eventTime.touched"
             [resetField]="resetField"
+            (onChange)="onTimeChange($event)"
           ></app-time-input-field>
         </div>
         <div
@@ -113,7 +114,7 @@
                 class="form-control"
                 [ngClass]="{
                   'input-field-error': checkForError(
-                    formGroupObject.controls.skillsList.controls[i],
+                    formGroupObject.controls.skillsList['controls'][i],
                     'skillName'
                   )
                 }"
@@ -125,11 +126,13 @@
               <app-error-message
                 *ngIf="
                   checkForError(
-                    formGroupObject.controls.skillsList.controls[i],
+                    formGroupObject.controls.skillsList['controls'][i],
                     'skillName'
                   )
                 "
-                [formObject]="formGroupObject.controls.skillsList.controls[i]"
+                [formObject]="
+                  formGroupObject.controls.skillsList['controls'][i]
+                "
                 [controlName]="'skillName'"
                 [fieldName]="'Skill name'"
               ></app-error-message>
@@ -141,7 +144,7 @@
                 class="form-control"
                 [ngClass]="{
                   'input-field-error': checkForError(
-                    formGroupObject.controls.skillsList.controls[i],
+                    formGroupObject.controls.skillsList['controls'][i],
                     'numberOfRounds'
                   )
                 }"
@@ -153,11 +156,13 @@
               <app-error-message
                 *ngIf="
                   checkForError(
-                    formGroupObject.controls.skillsList.controls[i],
+                    formGroupObject.controls.skillsList['controls'][i],
                     'numberOfRounds'
                   )
                 "
-                [formObject]="formGroupObject.controls.skillsList.controls[i]"
+                [formObject]="
+                  formGroupObject.controls.skillsList['controls'][i]
+                "
                 [controlName]="'numberOfRounds'"
                 [fieldName]="'Number of rounds'"
               ></app-error-message>
@@ -212,8 +217,14 @@
             <tr *ngFor="let event of eventsList; let i = index">
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ event.name }}</td>
-              <td>{{ event.eventDate }}</td>
-              <td>{{ event.eventTime }}</td>
+              <td>
+                <app-display-date
+                  [dateInput]="event && event.eventDate"
+                ></app-display-date>
+              </td>
+              <td>
+                {{ event.eventTime }}
+              </td>
               <td>
                 <ul>
                   <li *ngFor="let skill of event.skillsList">

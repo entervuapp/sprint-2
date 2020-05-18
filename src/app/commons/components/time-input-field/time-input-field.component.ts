@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, OnChanges } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  OnChanges,
+  EventEmitter,
+} from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
 import ObjectUtil from "../../utils/object-utils";
 
@@ -17,6 +24,7 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
   @Input() isTouched: boolean;
   @Input() resetField: boolean;
   @Input() renderValue: string;
+  @Output() onChange = new EventEmitter();
   constructor(private objectUtil: ObjectUtil) {}
 
   ngOnInit() {
@@ -31,7 +39,7 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
     if (
       changes &&
       changes.hasOwnProperty("isTouched") &&
-      changes.isTouched.currentValue !== changes.isTouched.previousValue
+      changes.isTouched.currentValue
     ) {
       this.isTouched = changes.isTouched.currentValue;
       if (!this.timeInputControl) {
@@ -43,7 +51,6 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
     if (
       changes &&
       changes.hasOwnProperty("resetField") &&
-      changes.resetField.currentValue !== changes.resetField.previousValue &&
       changes.resetField.currentValue
     ) {
       this.resetField = changes.resetField.currentValue;
@@ -100,6 +107,9 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
       console.log("invalid time");
     } else {
       this.timeInputControl.setValue(enteredTime);
+      if (this.onChange) {
+        this.onChange.emit(this.timeInputControl.value);
+      }
     }
   };
 }
