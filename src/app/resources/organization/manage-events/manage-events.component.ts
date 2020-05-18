@@ -28,6 +28,12 @@ export class ManageEventsComponent implements OnInit {
   ngOnInit() {
     this.resetField = false;
     this.eventsList = [];
+    this.eventsList.push({
+      name: "mega",
+      eventDate: "2020-05-19",
+      eventTime: "12:12",
+      skillsList: [{ skillName: "ue", numberOfRounds: "3" }],
+    });
     this.displayTextObj = {
       name: "Name",
       eventDate: "Date",
@@ -65,6 +71,9 @@ export class ManageEventsComponent implements OnInit {
   onReset = () => {
     console.log("onReset of contacts ", this.formGroupObject.value);
     this.resetField = true;
+    setTimeout(() => {
+      this.resetField = false;
+    }, 500);
   };
 
   checkForError(formObj, property) {
@@ -90,5 +99,17 @@ export class ManageEventsComponent implements OnInit {
     skills.controls["splice"](idx, 1);
     console.log("skills 2", skills);
     this.cdr.detectChanges();
+  };
+
+  public onEdit = (): void => {};
+
+  public onDelete = (): void => {};
+
+  public onTimeChange = (event): void => {
+    if (event) {
+      this.formGroupObject["controls"]["eventTime"].setValue(event);
+    } else {
+      this.formGroupObject["controls"]["eventTime"].setValue("");
+    }
   };
 }

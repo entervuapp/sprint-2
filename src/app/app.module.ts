@@ -6,14 +6,14 @@ import { RouterModule, Routes } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { PipesModule } from "./commons/pipes/pipes.module";
 
 //Modules
 import { ResourcesModule } from "./resources/resources.module";
 import { CommonsModule } from "./commons/commons.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoadingInterceptorService } from "./commons/services/loading-interceptor/loading-interceptor.service";
-
-//modals
+import { DatePipe } from "@angular/common"; //modals
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +27,7 @@ import { LoadingInterceptorService } from "./commons/services/loading-intercepto
     AppRoutingModule,
     ResourcesModule,
     CommonsModule,
+    PipesModule,
   ],
   entryComponents: [],
   providers: [
@@ -35,6 +36,7 @@ import { LoadingInterceptorService } from "./commons/services/loading-intercepto
       useClass: LoadingInterceptorService,
       multi: true,
     },
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })
