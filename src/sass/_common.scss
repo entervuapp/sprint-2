@@ -555,25 +555,35 @@ body {
 .interviewQueueTabel {
   border: 0px solid #ccc;
 }
-.actionIcon{
+.actionIcon {
   margin: 0px 8px;
   cursor: pointer;
 }
-.actionIcon .dropdown-menu{
+.actionIcon .dropdown-menu {
   padding: 0px;
-    margin: 0px;
+  margin: 0px;
 }
-.actionIcon .dropdown-menu li a{
+.actionIcon .dropdown-menu li a {
   display: block;
-    padding: 8px 8px;
-    font-size: 14px;
-    text-transform: uppercase;
-    color: #000;
-    border-bottom: 1px solid #ababab;
+  padding: 8px 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #000;
+  border-bottom: 1px solid #ababab;
 }
-.actionIcon .dropdown-menu li a:hover{
+.actionIcon .dropdown-menu li a:hover {
   background: #ffb200;
   color: #fff;
   text-decoration: none;
 }
 /*=======================interview queue css end==========================*/
+
+.loading-spinner {
+  position: fixed;
+  top: 50%;
+  right: 50%;
+  background-position: center;
+  z-index: 1000;
+  opacity: 0.4;
+  filter: alpha(opacity=40); /* For IE8 and earlier */
+}
