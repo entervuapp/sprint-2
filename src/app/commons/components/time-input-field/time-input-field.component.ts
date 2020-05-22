@@ -54,9 +54,12 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
       changes.resetField.currentValue
     ) {
       this.resetField = changes.resetField.currentValue;
+      this.isTouched = false;
       this.timeInputControl.setValue("");
       this.timeInputControl.markAsPristine({ onlySelf: true });
-      this.timeInputControl.markAsUntouched({ onlySelf: true });
+      setTimeout(() => {
+        this.timeInputControl.markAsUntouched({ onlySelf: true });
+      }, 500);
     }
 
     if (
