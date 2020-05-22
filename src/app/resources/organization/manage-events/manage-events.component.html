@@ -6,6 +6,7 @@
       appFocusInvalidInput
       appFocusFirstEmptyInput
     >
+      form {{ formGroupObject.valid }}
       <h2>Add Events</h2>
       <div class="addEventsForm">
         <div class="form-group formGroupAddEvents">
@@ -74,114 +75,111 @@
               >*</span
             ></label
           >
-          <br />
-          <!-- <input
-            type="time"
-            class="form-control"
-            [ngClass]="{
-              'input-field-error': checkForError(formGroupObject, 'eventTime')
-            }"
-            id="eventTime"
-            placeholder="Enter time"
-            name="eventTime"
-            formControlName="eventTime"
-          />
-          <app-error-message
-            *ngIf="checkForError(formGroupObject, 'eventTime')"
-            [formObject]="formGroupObject"
-            [controlName]="'eventTime'"
-            [fieldName]="'Time'"
-          ></app-error-message> -->
           <app-time-input-field
             [isTouched]="formGroupObject.controls.eventTime.touched"
             [resetField]="resetField"
             (onChange)="onTimeChange($event)"
           ></app-time-input-field>
         </div>
-        <div
-          formArrayName="skillsList"
-          *ngFor="
-            let creds of formGroupObject.controls.skillsList?.value;
-            let i = index;
-            let last = last
-          "
-        >
-          <ng-container [formGroupName]="i">
-            <div class="form-group formGroupAddEvents">
-              <label>Skills</label>
-              <input
-                type="text"
-                class="form-control"
-                [ngClass]="{
-                  'input-field-error': checkForError(
-                    formGroupObject.controls.skillsList['controls'][i],
-                    'skillName'
-                  )
-                }"
-                id="skillName-{{ i }}"
-                placeholder="Skill Name"
-                name="skillName-{{ i }}"
-                formControlName="skillName"
-              />
-              <app-error-message
+      </div>
+      <div class="addEventsForm">
+        <div>
+          <div class="form-group formGroupAddEvents">
+            <label for="text"
+              >{{ displayTextObj["skill"]
+              }}<span
                 *ngIf="
-                  checkForError(
-                    formGroupObject.controls.skillsList['controls'][i],
-                    'skillName'
-                  )
+                  formGroupObject.controls.skill.value ||
+                  formGroupObject.controls.numberOfRounds.value ||
+                  skillsList.length === 0
                 "
-                [formObject]="
-                  formGroupObject.controls.skillsList['controls'][i]
-                "
-                [controlName]="'skillName'"
-                [fieldName]="'Skill name'"
-              ></app-error-message>
-            </div>
-            <div class="form-group formGroupAddEvents">
-              <label>Rounds</label>
-              <input
-                type="text"
-                class="form-control"
                 [ngClass]="{
-                  'input-field-error': checkForError(
-                    formGroupObject.controls.skillsList['controls'][i],
-                    'numberOfRounds'
-                  )
+                  error: checkForError(formGroupObject, 'skill')
                 }"
-                id="numberOfRounds-{{ i }}"
-                placeholder="Number of rounds"
-                name="numberOfRounds-{{ i }}"
-                formControlName="numberOfRounds"
-              />
-              <app-error-message
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'input-field-error': checkForError(formGroupObject, 'skill')
+              }"
+              id="skill"
+              placeholder="Skill"
+              name="skill"
+              formControlName="skill"
+            />
+            <app-error-message
+              *ngIf="checkForError(formGroupObject, 'skill')"
+              [formObject]="formGroupObject"
+              [controlName]="'skill'"
+              [fieldName]="'Skill'"
+            ></app-error-message>
+          </div>
+          <div class="form-group formGroupAddEvents">
+            <label for="text"
+              >{{ displayTextObj["numberOfRounds"]
+              }}<span
                 *ngIf="
-                  checkForError(
-                    formGroupObject.controls.skillsList['controls'][i],
-                    'numberOfRounds'
-                  )
+                  formGroupObject.controls.numberOfRounds.value ||
+                  formGroupObject.controls.skill.value ||
+                  skillsList.length === 0
                 "
-                [formObject]="
-                  formGroupObject.controls.skillsList['controls'][i]
-                "
-                [controlName]="'numberOfRounds'"
-                [fieldName]="'Number of rounds'"
-              ></app-error-message>
-            </div>
+                [ngClass]="{
+                  error: checkForError(formGroupObject, 'numberOfRounds')
+                }"
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{
+                'input-field-error': checkForError(
+                  formGroupObject,
+                  'numberOfRounds'
+                )
+              }"
+              id="numberOfRounds"
+              placeholder="Number of Rounds"
+              name="numberOfRounds"
+              formControlName="numberOfRounds"
+              appNumbersOnly
+              (onNgModelChange)="onChangeOfRounds($event)"
+            />
+            <app-error-message
+              *ngIf="checkForError(formGroupObject, 'numberOfRounds')"
+              [formObject]="formGroupObject"
+              [controlName]="'numberOfRounds'"
+              [fieldName]="'Number of rounds'"
+            ></app-error-message>
+          </div>
+          <div>
             <input
               type="button"
-              *ngIf="last"
               value="Add"
               class="btn btn-primary"
-              (click)="addNewSkill()"
+              (click)="validateSkillSubmit() && addNewSkill()"
             />
+          </div>
+        </div>
+        <div>
+          <div *ngFor="let skillObj of skillsList; let i = index">
+            <span> {{ skillObj.skill }}</span>
+            <span>{{ skillObj.numberOfRounds }}</span>
             <input
               type="button"
-              *ngIf="!last"
-              class="btn btn-secondary"
+              value="Delete"
+              class="btn btn-primary"
               (click)="removeSkill(i)"
-              value="remove"
+            /><input
+              type="button"
+              value="Edit"
+              class="btn btn-primary"
+              (click)="onSkillEdit(skillObj, i)"
             />
-          </ng-container>
+          </div>
         </div>
       </div>
       <app-save-cancel-buttons
@@ -227,17 +225,17 @@
               </td>
               <td>
                 <ul>
-                  <li *ngFor="let skill of event.skillsList">
-                    {{ skill.skillName }}
+                  <li *ngFor="let skillObj of event.skillsList">
+                    {{ skillObj.skill }}
                   </li>
                 </ul>
               </td>
               <td>
-                <a href="javascript:void(0)" (click)="onEdit(event)">
+                <a href="javascript:void(0)" (click)="onEditOfEvent(event)">
                   Edit
                 </a>
                 |
-                <a href="javascript:void(0)" (click)="onDelete(i)">
+                <a href="javascript:void(0)" (click)="onDeleteOfEvent(i)">
                   Delete
                 </a>
               </td>
