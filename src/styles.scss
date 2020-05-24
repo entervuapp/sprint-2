@@ -1,1 +1,76 @@
 @import "./sass/common";
+.btn.btn-primary {
+    color: #fff;
+    background-color: #02434e;
+    border-color: #02434e;
+    padding: 4px 18px 5px 18px;
+    font-size: 14px;
+    min-width: 85px;
+}
+.btn.btn-secondary {
+    color: #fff;
+    background-color: #5b6770;
+    border-color: #5b6770;
+    padding: 4px 18px 5px 18px;
+    font-size: 14px;
+    min-width: 85px;
+}
+.btn.btn-danger {
+    background-color: #dd2f62;
+    border: 1px solid #dd2f62;
+    color: #fff;
+    padding: 4px 18px 5px 18px;
+    font-size: 14px;
+    min-width: 85px;
+}
+.btn.btn-info {
+    background-color: #005eb8;
+    border: 1px solid #005eb8;
+    color: #fff;
+    padding: 4px 18px 5px 18px;
+    font-size: 14px;
+    min-width: 85px;
+}
+.btn.btn-primary:hover {
+    color: #fff;
+    background-color: #265b65;
+    border-color: #265b65;
+}
+.btn.btn-secondary:hover {
+    color: #fff;
+    background-color: #494e52;
+    border-color: #494e52;
+}
+.btn.btn-danger:hover{
+    color: #fff;
+    background-color: #af4061;
+    border-color: #af4061;
+}
+.btn.btn-info:hover{
+    color: #fff;
+    background-color: #345c82;
+    border-color: #345c82;
+}
+
+
+  .btn-success {
+    background-color: #7abc2e;
+    border: 1px solid #7abc2e;
+    color: #fff;
+  }
+//   .btn-primary {
+//     background-color: #f69716;
+//     border: 1px solid #f69716;
+//     color: #fff;
+//   }
+//   .btn-secondary {
+//     background-color: #5b6770;
+//     border: 1px solid #5b6770;
+//     color: #fff;
+//   }
+  .btn-warning {
+    background-color: #772981;
+    border: 1px solid #772981;
+    color: #fff;
+  }
+  
