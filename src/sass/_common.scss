@@ -9,7 +9,6 @@ body {
 button {
   text-transform: capitalize;
 }
-
 .ev_mainContainer {
   background-image: url(./assets/images/bg1.jpg);
   background-size: cover;
@@ -46,7 +45,7 @@ button {
   width: 50%;
   float: left;
   position: relative;
-  border-right: 1px solid var(--grayShade);
+  border-right: 1px solid #ccc;
   height: 100%;
   border-radius: 20px 0px 0px 20px;
   padding: 20px 25px;
@@ -178,7 +177,7 @@ button {
   padding: 0px 30px;
 }
 .login-form form {
-  margin-bottom: 15px;
+  margin-bottom: 18px;
 }
 .login-form h2 {
   margin: 0 0 15px;
@@ -187,6 +186,19 @@ button {
 .login-btn {
   min-height: 38px;
   border-radius: 2px;
+}
+.contactUsForm .form-control{
+  border-radius: 0px;
+  border: 0px solid #ced4da;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    color: #f9fdfe;
+}
+.contactUsForm label{
+  color: #f9fdfe;
+}
+.contactUsForm .form-control:focus{
+  box-shadow: none;
 }
 .input-group-addon {
   padding: 9px 12px;
@@ -241,10 +253,45 @@ button {
 }
 .or-seperator i {
   padding: 0 10px;
-  background: $evu-pale-white-color;
-  position: relative;
-  top: -11px;
-  z-index: 1;
+    background: #f7f7f7;
+    position: relative;
+    top: -12px;
+    z-index: 1;
+    border-radius: 2px;
+    color: #333;
+}
+.custom-checkbox.clearfix label{
+  font-size: 14px;
+  color: #000;
+}
+.custom-checkbox.clearfix a{
+  font-size: 14px;
+    color: #fff;
+    text-decoration: underline;
+    margin: 0px 0px;
+    float: right;
+}
+.custom-checkbox.clearfix a:hover{
+  color: #02434e;
+}
+.login-form .ng-fa-icon{
+  color: #333;
+}
+.mediaTextClass{
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.loginAndRegisterTxt{
+  font-size: 16px;
+    color: #000;
+}
+.loginAndRegisterTxt a{
+  color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+.loginAndRegisterTxt a:hover{
+ text-decoration: underline;
 }
 /*=========== login form end here ===================*/
 
