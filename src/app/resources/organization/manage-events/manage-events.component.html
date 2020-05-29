@@ -1,4 +1,5 @@
 <div class="addEventBlock">
+  <app-alerts [alertsList]="alerts"></app-alerts>
   <div class="addEventFormBlock">
     <form
       [formGroup]="formGroupObject"
@@ -6,7 +7,6 @@
       appFocusInvalidInput
       appFocusFirstEmptyInput
     >
-      form {{ formGroupObject.valid }}
       <h2>Add Events</h2>
       <div class="addEventsForm">
         <div class="form-group formGroupAddEvents">
@@ -78,6 +78,7 @@
           <app-time-input-field
             [isTouched]="formGroupObject.controls.eventTime.touched"
             [resetField]="resetField"
+            [renderValue]="formGroupObject.controls.eventTime.value"
             (onChange)="onTimeChange($event)"
           ></app-time-input-field>
         </div>
@@ -166,7 +167,7 @@
         </div>
         <div>
           <div *ngFor="let skillObj of skillsList; let i = index">
-            <span> {{ skillObj.skill }}</span>
+            <span> {{ skillObj.skillName }}</span>
             <span>{{ skillObj.numberOfRounds }}</span>
             <input
               type="button"
@@ -183,7 +184,7 @@
         </div>
       </div>
       <app-save-cancel-buttons
-        (onSave)="formGroupObject.valid && onSubmit()"
+        (onSave)="formGroupObject.valid && onSave()"
         (onCancel)="onReset()"
         saveButtonName="Submit"
         cancelButtonName="Reset"
@@ -226,7 +227,7 @@
               <td>
                 <ul>
                   <li *ngFor="let skillObj of event.skillsList">
-                    {{ skillObj.skill }}
+                    {{ skillObj.skillName }}
                   </li>
                 </ul>
               </td>
@@ -235,7 +236,7 @@
                   Edit
                 </a>
                 |
-                <a href="javascript:void(0)" (click)="onDeleteOfEvent(i)">
+                <a href="javascript:void(0)" (click)="onDeleteOfEvent(event)">
                   Delete
                 </a>
               </td>
