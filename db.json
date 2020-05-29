@@ -1,0 +1,26 @@
+{
+  "events": [
+    {
+      "id": 3,
+      "name": "mega drive",
+      "eventDate": "2020-05-01",
+      "creationDate": "2020-05-01",
+      "eventTime": "10:00",
+      "createdBy": "",
+      "skillsList": [
+        {
+          "skillName": "Angular",
+          "numberOfRounds": "3"
+        },
+        {
+          "skillName": "Java",
+          "numberOfRounds": "3"
+        },
+        {
+          "skillName": "dot net",
+          "numberOfRounds": "2"
+        }
+      ]
+    }
+  ]
+}

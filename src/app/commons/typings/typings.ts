@@ -3,3 +3,8 @@ export interface Some {
   name: string;
   description?: string;
 }
+
+export interface Alerts {
+  code: string;
+  systemMessage: string;
+}

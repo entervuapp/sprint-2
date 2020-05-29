@@ -68,6 +68,9 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
       changes.renderValue.currentValue !== changes.renderValue.previousValue
     ) {
       this.renderValue = changes.renderValue.currentValue;
+      if (!this.timeInputControl) {
+        this.initializeControl();
+      }
       this.timeInputControl.setValue(changes.renderValue.currentValue);
     }
   }

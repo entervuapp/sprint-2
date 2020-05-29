@@ -8,6 +8,8 @@ import {
   FormGroupDirective,
 } from "@angular/forms";
 import ObjectUtil from "../../../commons/utils/object-utils";
+import { ManageEventsService } from "./manage-events/manage-events.service";
+import { Alerts } from "../../../commons/typings/typings";
 
 @Component({
   selector: "app-manage-events",
@@ -16,6 +18,7 @@ import ObjectUtil from "../../../commons/utils/object-utils";
 })
 export class ManageEventsComponent implements OnInit {
   resetField: boolean;
+  alerts: Alerts[];
   eventsList: any[];
   formGroupObject: FormGroup;
   public displayTextObj: {};
@@ -25,7 +28,8 @@ export class ManageEventsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private manageEventsService: ManageEventsService
   ) {}
 
   ngOnInit() {
@@ -67,37 +71,93 @@ export class ManageEventsComponent implements OnInit {
         this.formGroupObject.controls.numberOfRounds.setValidators([]);
       }
     });
+    this.getEventsList();
   }
 
-  private initializeForm = () => {
+  private initializeForm = (formData?) => {
     this.skillsList = [];
-    this.formGroupObject = this.fb.group({
-      name: new FormControl("", [Validators.required, Validators.minLength(3)]),
-      eventDate: new FormControl("", [Validators.required]),
-      eventTime: new FormControl("", [Validators.required]),
-      skill: new FormControl("", [
-        Validators.required,
-        Validators.minLength(2),
-      ]),
-      numberOfRounds: new FormControl("", [Validators.required]),
-    });
+    if (formData) {
+      this.formGroupObject = this.fb.group({
+        id: new FormControl(formData && formData.id ? formData.id : null),
+        createdBy: new FormControl(
+          formData && formData.createdBy ? formData.createdBy : ""
+        ),
+        creationDate: new FormControl(
+          formData && formData.creationDate ? formData.creationDate : ""
+        ),
+        name: new FormControl(formData && formData.name ? formData.name : "", [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        eventDate: new FormControl(
+          formData && formData.eventDate ? formData.eventDate : "",
+          [Validators.required]
+        ),
+        eventTime: new FormControl(
+          formData && formData.eventTime ? formData.eventTime : "",
+          [Validators.required]
+        ),
+        skill: new FormControl("", []),
+        numberOfRounds: new FormControl("", []),
+      });
+      this.skillsList =
+        formData && formData.skillsList && formData.skillsList.length > 0
+          ? formData.skillsList
+          : [];
+    } else {
+      this.formGroupObject = this.fb.group({
+        id: new FormControl(null),
+        createdBy: new FormControl(""),
+        creationDate: new FormControl(""),
+        name: new FormControl("", [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        eventDate: new FormControl("", [Validators.required]),
+        eventTime: new FormControl("", [Validators.required]),
+        skill: new FormControl("", [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
+        numberOfRounds: new FormControl("", [Validators.required]),
+      });
+    }
   };
 
-  onSubmit = () => {
+  onSave = () => {
+    this.alerts = [];
     if (
       this.formGroupObject.controls.skill.value &&
       this.formGroupObject.controls.numberOfRounds.value
     ) {
       this.addNewSkill();
     }
+
     let requestBody = {
+      id:
+        this.formGroupObject &&
+        this.formGroupObject.value &&
+        this.formGroupObject.value.id
+          ? this.formGroupObject.value.id
+          : null,
       name: this.formGroupObject.value.name,
       eventDate: this.formGroupObject.value.eventDate,
+      creationDate: this.formGroupObject.value.eventDate,
       eventTime: this.formGroupObject.value.eventTime,
+      createdBy: "",
       skillsList: [...this.skillsList],
     };
-    this.eventsList["push"](requestBody);
+    // this.eventsList["push"](requestBody);
     console.log("onSubmit of eventsList ", this.eventsList);
+    if (
+      requestBody &&
+      requestBody.id !== null &&
+      requestBody.id !== undefined
+    ) {
+      this.updateEvent(requestBody);
+    } else {
+      this.createEvent(requestBody);
+    }
     this.onReset();
   };
 
@@ -109,6 +169,38 @@ export class ManageEventsComponent implements OnInit {
     setTimeout(() => {
       this.resetField = false;
     }, 500);
+  };
+
+  private updateEvent = (requestBody) => {
+    this.manageEventsService.updateEvent(requestBody).subscribe(
+      (response) => {
+        console.log("update successfull");
+        this.getEventsList();
+        this.alerts = [
+          { code: "SUCCESS", systemMessage: "Updated sucessfully" },
+        ];
+      },
+      (errors) => {
+        console.log(errors);
+      }
+    );
+  };
+
+  private createEvent = (requestBody) => {
+    this.manageEventsService.createEvent(requestBody).subscribe(
+      (response) => {
+        console.log(response);
+        this.getEventsList();
+        this.alerts = [
+          { code: "SUCCESS", systemMessage: "Event created successfully" },
+        ];
+      },
+      (errors) => {
+        console.log(errors);
+        if (errors && errors.error && errors.error.messages) {
+        }
+      }
+    );
   };
 
   checkForError(formObj, property) {
@@ -133,24 +225,12 @@ export class ManageEventsComponent implements OnInit {
 
   addNewSkill = () => {
     let eachSkill = {
-      skill: this.formGroupObject.controls.skill.value,
+      skillName: this.formGroupObject.controls.skill.value,
       numberOfRounds: this.formGroupObject.controls.numberOfRounds.value,
     };
     this.skillsList.push(eachSkill);
     // this.handleMandatorySkill();
     this.clearSkillFields();
-  };
-
-  private handleMandatorySkill = () => {
-    if (this.skillsList && this.skillsList.length > 0) {
-      this.formGroupObject.controls.skill.setValidators([]);
-      this.formGroupObject.controls.numberOfRounds.setValidators([]);
-    } else {
-      this.formGroupObject.controls.skill.setValidators([Validators.required]);
-      this.formGroupObject.controls.numberOfRounds.setValidators([
-        Validators.required,
-      ]);
-    }
   };
 
   private clearSkillFields = () => {
@@ -175,8 +255,22 @@ export class ManageEventsComponent implements OnInit {
     );
   };
 
-  public onEditOfEvent = (event) => {};
-  public onDeleteOfEvent = (idx) => {};
+  public onEditOfEvent = (element) => {
+    this.initializeForm(element);
+  };
+
+  public onDeleteOfEvent = (element) => {
+    if (element && element.id !== null && element.id !== undefined) {
+      this.manageEventsService.deleteEvent(element.id).subscribe(
+        (response) => {
+          this.getEventsList();
+        },
+        (errors) => {
+          console.log(errors);
+        }
+      );
+    }
+  };
 
   public validateSkillSubmit = () => {
     if (
@@ -190,5 +284,17 @@ export class ManageEventsComponent implements OnInit {
     ) {
       return false;
     }
+  };
+
+  private getEventsList = () => {
+    this.manageEventsService.getEvents().subscribe(
+      (response) => {
+        this.eventsList = response;
+        console.log("events", this.eventsList);
+      },
+      (errors) => {
+        console.log("errors", errors);
+      }
+    );
   };
 }
