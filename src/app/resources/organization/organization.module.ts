@@ -11,6 +11,7 @@ import { EditProfileOrganizationComponent } from "./edit-profile-organization/ed
 import { ManageCandidatesComponent } from "./manage-candidates/manage-candidates.component";
 import { ManageHrTeamComponent } from "./manage-hr-team/manage-hr-team.component";
 import { ManageEventsComponent } from "./manage-events/manage-events.component";
+import { AddCandidateComponent } from "./add-candidate/add-candidate.component";
 
 const COMPONENTS_LIST = [
   RegistrationOrganizationComponent,
@@ -18,7 +19,8 @@ const COMPONENTS_LIST = [
   EditProfileOrganizationComponent,
   ManageCandidatesComponent,
   ManageHrTeamComponent,
-  ManageEventsComponent
+  ManageEventsComponent,
+  AddCandidateComponent,
 ];
 
 @NgModule({
@@ -30,8 +32,8 @@ const COMPONENTS_LIST = [
     ReactiveFormsModule,
     CommonsModule,
     DirectivesModule,
-    FontAwesomeModule
+    FontAwesomeModule,
   ],
-  exports: [...COMPONENTS_LIST]
+  exports: [...COMPONENTS_LIST],
 })
 export class OrganizationModule {}
