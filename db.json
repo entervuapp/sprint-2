@@ -1,4 +1,14 @@
 {
+  "addCandidates": [
+    {
+      "id": null,
+      "name": "Awadhesh",
+      "email": "awa@gmail.com",
+      "mobile": 9700447173,
+      "skill": "Angular",
+      "invitedBy": "TA Name"
+    }
+  ],
   "events": [
     {
       "id": 3,
