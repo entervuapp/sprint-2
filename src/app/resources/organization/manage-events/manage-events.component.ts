@@ -44,7 +44,11 @@ export class ManageEventsComponent implements OnInit {
     this.resetField = false;
     this.initializeForm();
     this.formGroupObject.get("skill").valueChanges.subscribe((val) => {
-      if (val || this.skillsList.length === 0) {
+      if (
+        val ||
+        this.formGroupObject.controls.numberOfRounds.value ||
+        this.skillsList.length === 0
+      ) {
         this.formGroupObject.controls.skill.setValidators([
           Validators.required,
           Validators.minLength(2),
@@ -54,11 +58,17 @@ export class ManageEventsComponent implements OnInit {
         ]);
       } else {
         this.formGroupObject.controls.skill.setValidators([]);
+        this.formGroupObject.controls.skill.setErrors(null);
         this.formGroupObject.controls.numberOfRounds.setValidators([]);
+        this.formGroupObject.controls.numberOfRounds.setErrors(null);
       }
     });
     this.formGroupObject.get("numberOfRounds").valueChanges.subscribe((val) => {
-      if (val || this.skillsList.length === 0) {
+      if (
+        val ||
+        this.formGroupObject.controls.skill.value ||
+        this.skillsList.length === 0
+      ) {
         this.formGroupObject.controls.skill.setValidators([
           Validators.required,
           Validators.minLength(2),
@@ -68,7 +78,9 @@ export class ManageEventsComponent implements OnInit {
         ]);
       } else {
         this.formGroupObject.controls.skill.setValidators([]);
+        this.formGroupObject.controls.skill.setErrors(null);
         this.formGroupObject.controls.numberOfRounds.setValidators([]);
+        this.formGroupObject.controls.numberOfRounds.setErrors(null);
       }
     });
     this.getEventsList();
