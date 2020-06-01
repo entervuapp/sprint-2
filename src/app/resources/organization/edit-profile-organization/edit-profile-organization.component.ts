@@ -3,40 +3,48 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from "@angular/forms";
 import ObjectUtil from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
+import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 
 @Component({
   selector: "app-edit-profile-organization",
   templateUrl: "./edit-profile-organization.component.html",
-  styleUrls: ["./edit-profile-organization.component.scss"]
+  styleUrls: ["./edit-profile-organization.component.scss"],
 })
 export class EditProfileOrganizationComponent implements OnInit {
   myForm: FormGroup;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
 
-  constructor(private fb: FormBuilder, private objectUtil: ObjectUtil) {}
+  constructor(
+    private fb: FormBuilder,
+    private objectUtil: ObjectUtil,
+    public manageHeaderService: ManageHeaderService
+  ) {}
 
   ngOnInit() {
+    if (this.manageHeaderService) {
+      this.manageHeaderService.updateHeaderVisibility(true);
+    }
     this.myForm = this.fb.group({
       avatar: new FormControl(""),
       firstName: new FormControl("", [
         Validators.required,
-        Validators.minLength(3)
+        Validators.minLength(3),
       ]),
       lastName: new FormControl(""),
       officeEmail: new FormControl("", [Validators.required, Validators.email]),
       companyName: new FormControl("", [
         Validators.required,
-        Validators.min(3)
+        Validators.min(3),
       ]),
       companyCode: new FormControl({ value: "", disabled: true }, [
         Validators.required,
-        Validators.min(3)
+        Validators.min(3),
       ]),
-      address: new FormControl("", [Validators.required, Validators.min(10)])
+      address: new FormControl("", [Validators.required, Validators.min(10)]),
     });
   }
 
@@ -46,7 +54,7 @@ export class EditProfileOrganizationComponent implements OnInit {
     return this.objectUtil.checkForFormErrors(formObj, property);
   }
 
-  onAvatarChange = event => {
+  onAvatarChange = (event) => {
     if (event && event.image) {
       this.myForm.controls["avatar"].setValue(event.image);
     } else {
@@ -54,7 +62,7 @@ export class EditProfileOrganizationComponent implements OnInit {
     }
   };
 
-  onResumeChange = event => {
+  onResumeChange = (event) => {
     if (event && event.file) {
       this.myForm.controls["resume"].setValue(event.file);
     } else {

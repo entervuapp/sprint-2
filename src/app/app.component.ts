@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectorRef } from "@angular/core";
 import { ManageHeaderService } from "./commons/services/manage-header/manage-header.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ROUTE_URL_PATH_CONSTANTS } from "./commons/constants/route-url-path.constants";
 
@@ -35,6 +35,26 @@ export class AppComponent {
         // this.router.navigate([`/${RouteUrlPathConstants.ROUTE_URL_PATH.home}`], { queryParams: { page: queryParams } });
         this.router.navigate([
           `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard}`,
+        ]);
+        break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.editOrganizationProfile:
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.editOrganizationProfile}`,
+        ]);
+        break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.changePassword:
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.changePassword}`,
+        ]);
+        break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.logout:
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.logout}`,
+        ]);
+        break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard:
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard}`,
         ]);
         break;
       default:

@@ -13,7 +13,7 @@ import { ResourcesModule } from "./resources/resources.module";
 import { CommonsModule } from "./commons/commons.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoadingInterceptorService } from "./commons/services/loading-interceptor/loading-interceptor.service";
-import { DatePipe } from "@angular/common"; //modals
+import { DatePipe } from "@angular/common";
 
 @NgModule({
   declarations: [AppComponent],
