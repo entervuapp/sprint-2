@@ -6,6 +6,9 @@ import { DashboardIndividualComponent } from "./resources/individual/dashboard-i
 import { MainScreenComponent } from "./resources/main-screen/main-screen.component";
 import { PageNotFoundComponent } from "./commons/components/page-not-found/page-not-found.component";
 import { DashboardOrganizationComponent } from "./resources/organization/dashboard-organization/dashboard-organization.component";
+import { EditProfileOrganizationComponent } from "./resources/organization/edit-profile-organization/edit-profile-organization.component";
+import { ChangePasswordComponent } from "./commons/components/change-password/change-password.component";
+import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.component";
 
 const routes: Routes = [
   {
@@ -20,6 +23,22 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard,
     component: DashboardOrganizationComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.editOrganizationProfile,
+    component: EditProfileOrganizationComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.changePassword,
+    component: ChangePasswordComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.logout,
+    component: MainScreenComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard,
+    component: QaDashboardComponent,
   },
   {
     path: "**",

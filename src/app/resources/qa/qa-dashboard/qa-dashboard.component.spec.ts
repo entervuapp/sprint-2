@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QaSampleComponent } from './qa-sample.component';
+import { QaDashboardComponent } from './qa-dashboard.component';
 
-describe('QaSampleComponent', () => {
-  let component: QaSampleComponent;
-  let fixture: ComponentFixture<QaSampleComponent>;
+describe('QaDashboardComponent', () => {
+  let component: QaDashboardComponent;
+  let fixture: ComponentFixture<QaDashboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QaSampleComponent ]
+      declarations: [ QaDashboardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QaSampleComponent);
+    fixture = TestBed.createComponent(QaDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

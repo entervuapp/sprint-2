@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { QaSampleComponent } from "./qa-sample/qa-sample.component";
+import { QaDashboardComponent } from "./qa-dashboard/qa-dashboard.component";
 
-const COMPONENTS_LIST = [QaSampleComponent];
+const COMPONENTS_LIST = [QaDashboardComponent];
 
 @NgModule({
   declarations: [COMPONENTS_LIST],
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class QaModule {}
