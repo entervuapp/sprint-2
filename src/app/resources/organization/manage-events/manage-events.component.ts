@@ -10,6 +10,7 @@ import {
 import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageEventsService } from "./manage-events/manage-events.service";
 import { Alerts } from "../../../commons/typings/typings";
+import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 
 @Component({
   selector: "app-manage-events",
@@ -23,6 +24,7 @@ export class ManageEventsComponent implements OnInit {
   formGroupObject: FormGroup;
   public displayTextObj: {};
   skillsList: any[];
+  fontIcon= FONT_AWESOME_ICONS_CONSTANTS;
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   constructor(
