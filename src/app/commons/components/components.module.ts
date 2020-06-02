@@ -25,6 +25,7 @@ import { ProfileComponent } from "./profile/profile.component";
 import { TimeInputFieldComponent } from "./time-input-field/time-input-field.component";
 import { DateInputFieldComponent } from "./date-input-field/date-input-field.component";
 import { DisplayDateComponent } from "./display-date/display-date.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 const COMPONENTS_LIST = [
   SaveCancelButtonsComponent,
@@ -48,6 +49,7 @@ const COMPONENTS_LIST = [
   TimeInputFieldComponent,
   DateInputFieldComponent,
   DisplayDateComponent,
+  ChangePasswordComponent,
 ];
 
 @NgModule({
