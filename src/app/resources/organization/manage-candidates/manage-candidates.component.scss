@@ -13,7 +13,7 @@
     width: 100%;
 }
 .formGroupAddCandidate{
-    width: 22%;
+    width: 20%;
     float: left;
     padding: 10px 10px;
     margin: 0px;
@@ -23,9 +23,14 @@
     margin: 2px 0px;
     color: #df4930;
 }
-.formGroupBtn{
-    width: 12%;
+.addCandidatesForm .formGroupBtn{
+    width: 20%;
     float: left;
+    margin-top: 42px;
+}
+.addCandidatesForm .formGroupBtn .btn.btn-secondary, .addCandidatesForm .formGroupBtn .btn.btn-primary{
+    padding: 4px 10px 5px 10px;
+    min-width: 55px;
 }
 .candidatesListBlock{
     clear: both;

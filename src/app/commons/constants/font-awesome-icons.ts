@@ -6,7 +6,8 @@ import {
   faKey,
   faMobile,
   faBell,
-  faEllipsisV
+  faEllipsisV,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 const FONT_AWESOME_ICONS_CONSTANTS = {
@@ -17,7 +18,8 @@ const FONT_AWESOME_ICONS_CONSTANTS = {
   faKey: faKey,
   faMobile: faMobile,
   faBell: faBell,
-  faEllipsisV: faEllipsisV
+  faEllipsisV: faEllipsisV,
+  faTrash: faTrash,
 };
 
 export default FONT_AWESOME_ICONS_CONSTANTS;

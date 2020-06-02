@@ -8,6 +8,7 @@
   [size]="fieldSize"
   [maxLength]="maxlength"
   (blur)="onBlur()"
+  class="form-control"
 />
 <app-error-message
   *ngIf="checkForError(timeInputControl, 'time')"

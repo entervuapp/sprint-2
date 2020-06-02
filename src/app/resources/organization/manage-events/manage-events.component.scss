@@ -1,34 +1,138 @@
-.addEventFormBlock {
+.addEventFormBlock{
   padding: 25px 15px 15px 15px;
 }
-.addEventFormBlock h2 {
-  font-size: 20px;
-  color: #333;
-  margin: 0px 0px 10px 0px;
+.addEventFormBlock h2{
+  font-size: 24px;
+    color: #333;
+    margin: 0px 0px 15px 0px;
 }
-.addEventsForm {
+.addEventsFormCard{
   border: 1px solid #ccc;
   padding: 5px 10px 15px 10px;
   display: inline-block;
   width: 100%;
 }
-.formGroupAddEvents {
-  width: 18%;
+.addEventsForm{
+  display: inline-block;
+  width: 100%;
+}
+.formGroupAddEvents{
+  width: 25%;
   float: left;
   padding: 10px 10px;
   margin: 0px;
 }
-.formGroupAddEvents .error {
+.addEventsFormHr{
+  margin: 0px 0px 0px 5px;
+  border-top: 1px solid #cccccc;
+  width: 50%;
+}
+.addEventSkillBtn{
+  margin-top: 45px;
+}
+.formGroupAddEvents .error{
   font-size: 12px;
   margin: 2px 0px;
   color: #df4930;
 }
-.EventListBlock {
+.eventsSubmitCancelBtns{
+  margin-top: 10px;
+}
+.EventListBlock{
   clear: both;
   padding: 15px 15px;
 }
-.EventListBlock h3 {
-  font-size: 20px;
+.EventListBlock h2{
+  font-size: 24px;
   color: #333;
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 15px 0px;
+}
+.skillRoundsDetailBlock{
+  display: table;
+  width: 60%;
+  background-color: transparent;
+  border-spacing: 5px;
+  padding: 0px 5px;
+}
+.skillRoundsDetailBlock > div {
+  display: table-row;
+    width: auto;
+    margin: 0px 0px;
+}
+.skillRoundsDetailBlock > div > span{
+  float: left;
+    display: table-column;
+    width: 35%;
+    border-bottom: 1px solid #ccc;
+    margin: 0px 5px;
+    padding: 0px 8px;
+}
+.skillRoundsDetailBlock .editRemoveBtns{
+  display: inline-block;
+  float: left;
+  padding: 0px 0px 0px 10px;
+}
+.skillRoundsDetailBlock .removeBtn, .skillRoundsDetailBlock .EditBtn{
+  display: inline-block;
+    padding: 0px 10px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    text-decoration: underline;
+}
+.skillRoundsDetailBlock .removeBtn{
+  color: #dc3545;
+}
+.skillRoundsDetailBlock .EditBtn{
+  color: #02434e;
+}
+.eventListCard{
+  border: 2px solid #a1a5a9;
+    width: 98%;
+    margin: 15px auto;
+    padding: 12px 12px;
+}
+.eventListCardHead{
+  margin: 0px 0px 12px 0px;
+}
+.eventListCardHead h3{
+  margin: 0px;
+    font-size: 22px;
+    color: #02434e;
+}
+.eventListCardEditDelete{
+  float: right;
+}
+.eventListCardEditDelete .deleteIcon{
+  padding: 0px 10px;
+}
+.eventListCardEditDelete .editIcon{
+  padding: 0px 10px;
+}
+.eventListCardContent{
+  margin: 0px 0px 12px 0px;
+}
+.eventListCardContent p{
+  font-size: 18px;
+  color: #333;
+  margin: 0px;
+}
+.eventListCardAddBtn{
+  margin: 0px 0px 8px 0px;
+}
+.eventListCardAddBtn .eventAddMembers{
+  font-size: 18px;
+    font-weight: 600;
+    color: #00aff5;
+    margin: 0px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.eventListCardAddBtn .eventOfferedMem{
+  font-size: 18px;
+    font-weight: 600;
+    color: #02434e;
+    margin: 0px;
+    text-decoration: underline;
+    cursor: pointer;
 }
