@@ -31,31 +31,37 @@ export class AppComponent {
 
   public navigateTo(screen: string, queryParams?): void {
     switch (screen) {
-      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard:
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD:
         // this.router.navigate([`/${RouteUrlPathConstants.ROUTE_URL_PATH.home}`], { queryParams: { page: queryParams } });
         this.router.navigate([
-          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard}`,
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD}`,
         ]);
         break;
-      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.editOrganizationProfile:
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE:
         this.router.navigate([
-          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.editOrganizationProfile}`,
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE}`,
         ]);
         break;
-      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.changePassword:
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD:
         this.router.navigate([
-          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.changePassword}`,
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD}`,
         ]);
         break;
-      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.logout:
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT:
         this.router.navigate([
-          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.logout}`,
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT}`,
         ]);
         break;
-      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard:
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD:
         this.router.navigate([
-          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard}`,
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD}`,
         ]);
+        break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE:
+        this.router.navigate(
+          [`/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE}`],
+          { queryParams: { id: queryParams.id } }
+        );
         break;
       default:
         break;

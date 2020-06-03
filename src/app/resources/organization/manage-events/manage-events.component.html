@@ -84,7 +84,7 @@
             ></app-time-input-field>
           </div>
         </div>
-        <hr class="addEventsFormHr"/>
+        <hr class="addEventsFormHr" />
         <div class="addEventsForm">
           <div>
             <div class="form-group formGroupAddEvents">
@@ -177,7 +177,9 @@
                   value="Delete"
                   class="removeBtn"
                   (click)="removeSkill(i)"
-                /> | <input
+                />
+                |
+                <input
                   type="button"
                   value="Edit"
                   class="EditBtn"
@@ -192,8 +194,8 @@
         <app-save-cancel-buttons
           (onSave)="formGroupObject.valid && onSave()"
           (onCancel)="onReset()"
-          saveButtonName="Submit"
-          cancelButtonName="Reset"
+          [saveButtonName]="formGroupObject.value.id ? 'Update' : 'Save'"
+          cancelButtonName="Cancel"
         ></app-save-cancel-buttons>
       </div>
     </form>
@@ -202,197 +204,78 @@
   <div class="EventListBlock">
     <h2>Events list</h2>
     <div class="addEventsTable">
-      <div class="eventListCard">
-         <div class="eventListCardHead">
-             <div class="row">
-               <div class="col-sm-8">
-                  <h3>Mega Event</h3>
-               </div>
-               <div class="col-sm-4">
-                  <div class="eventListCardEditDelete">
-                    <span class="deleteIcon"><fa-icon [icon]="fontIcon.faTrash"></fa-icon></span>
-                    <span class="editIcon"><fa-icon [icon]="fontIcon.faTrash"></fa-icon></span>
-                 </div>
-               </div>
-             </div> 
-         </div>
-         <div class="eventListCardContent">
-            <div class="row">
-               <div class="col-sm-4">
-                  <p class="eventDate">10-02-2019</p>
-               </div>
-               <div class="col-sm-4">
-                <p class="eventTime">Time</p>
-              </div>
-              <div class="col-sm-4">
-                <p class="eventSkills">Java, Dot Net, UI ...</p>
-              </div>
-            </div>
-         </div>
-         <div class="eventListCardAddBtn">
-            <div class="row">
-               <div class="col-sm-4">
-                  <p class="eventAddMembers">Add Members +</p>
-               </div>
-               <div class="col-sm-4"></div>
-              <div class="col-sm-4">
-                <p class="eventOfferedMem">Offered Membered List</p>
-              </div>
-            </div>
-         </div>
-      </div>
-
-      <div class="eventListCard">
-        <div class="eventListCardHead">
-            <div class="row">
-              <div class="col-sm-8">
-                 <h3>Mega Event</h3>
-              </div>
-              <div class="col-sm-4">
-                 <div class="eventListCardEditDelete">
-                   <span class="deleteIcon"><fa-icon [icon]="fontIcon.faTrash"></fa-icon></span>
-                   <span class="editIcon"><fa-icon [icon]="fontIcon.faTrash"></fa-icon></span>
-                </div>
-              </div>
-            </div> 
-        </div>
-        <div class="eventListCardContent">
-           <div class="row">
-              <div class="col-sm-4">
-                 <p class="eventDate">10-02-2019</p>
-              </div>
-              <div class="col-sm-4">
-               <p class="eventTime">Time</p>
-             </div>
-             <div class="col-sm-4">
-               <p class="eventSkills">Java, Dot Net, UI ...</p>
-             </div>
-           </div>
-        </div>
-        <div class="eventListCardAddBtn">
-           <div class="row">
-              <div class="col-sm-4">
-                 <p class="eventAddMembers">Add Members +</p>
-              </div>
-              <div class="col-sm-4"></div>
-             <div class="col-sm-4">
-               <p class="eventOfferedMem">Offered Membered List</p>
-             </div>
-           </div>
-        </div>
-     </div>
-
-      <!-- <div class="eventListCard" *ngFor="let event of eventsList; let i = index">
-        <div class="eventListCardHead">
-            <div class="row">
-              <div class="col-sm-8">
-                 <h3>{{ event.name }}</h3>
-              </div>
-              <div class="col-sm-4">
-                 <div class="eventListCardEditDelete">
-                   <span class="deleteIcon"><fa-icon [icon]="fontIcon.faTrash"></fa-icon></span>
-                   <span class="editIcon"><fa-icon [icon]="fontIcon.faTrash"></fa-icon></span>
-                </div>
-              </div>
-            </div> 
-        </div>
-        <div class="eventListCardContent">
-           <div class="row">
-              <div class="col-sm-4">
-                 <p class="eventDate">
-                   <app-display-date
-                     [dateInput]="event && event.eventDate"
-                   ></app-display-date>
-                 </p>
-              </div>
-              <div class="col-sm-4">
-               <p class="eventTime">{{ event.eventTime }}</p>
-             </div>
-             <div class="col-sm-4">
-               <p class="eventSkills" *ngFor="let skillObj of event.skillsList">
-                 {{ skillObj.skillName }}
-               </p>
-             </div>
-           </div>
-        </div>
-        <div class="eventListCardAddBtn">
-           <div class="row">
-              <div class="col-sm-4">
-                 <p class="eventAddMembers">Add Members +</p>
-              </div>
-              <div class="col-sm-4"></div>
-             <div class="col-sm-4">
-               <p class="eventOfferedMem">Offered Membered List</p>
-             </div>
-           </div>
-        </div>
-     </div>
-     <div *ngIf="(eventsList && eventsList.length === 0) ||
-         eventsList === undefined ||
-         eventsList === null
-       ">
-       <app-no-records-found></app-no-records-found>
-     </div> -->
-     
-     
-     <!-- <div
-        class="table-responsive manageEventsListTable tab-pane fade show active"
-        id="home"
-        role="tabpanel"
-        aria-labelledby="home-tab"
+      <div
+        class="eventListCard"
+        *ngFor="let event of eventsList; let i = index"
       >
-        <table class="table table-bordered table-md">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Event Name</th>
-              <th scope="col">Date</th>
-              <th scope="col">Time</th>
-              <th scope="col">Skills</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let event of eventsList; let i = index">
-              <th scope="row">{{ i + 1 }}</th>
-              <td>{{ event.name }}</td>
-              <td>
-                <app-display-date
-                  [dateInput]="event && event.eventDate"
-                ></app-display-date>
-              </td>
-              <td>
-                {{ event.eventTime }}
-              </td>
-              <td>
-                <ul>
-                  <li *ngFor="let skillObj of event.skillsList">
-                    {{ skillObj.skillName }}
-                  </li>
-                </ul>
-              </td>
-              <td>
-                <a href="javascript:void(0)" (click)="onEditOfEvent(event)">
-                  Edit
-                </a>
-                |
-                <a href="javascript:void(0)" (click)="onDeleteOfEvent(event)">
-                  Delete
-                </a>
-              </td>
-            </tr>
-            <tr
-              *ngIf="
-                (eventsList && eventsList.length === 0) ||
-                eventsList === undefined ||
-                eventsList === null
-              "
-            >
-              <app-no-records-found></app-no-records-found>
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
+        <div class="eventListCardHead">
+          <div class="row">
+            <div class="col-sm-8">
+              <h3>{{ event.name }}</h3>
+            </div>
+            <div class="col-sm-4">
+              <div class="eventListCardEditDelete">
+                <span class="deleteIcon"
+                  ><fa-icon
+                    class="cursor-pointer"
+                    [icon]="fontIcon.faEdit"
+                    (click)="onEditOfEvent(event)"
+                  ></fa-icon
+                ></span>
+                <span class="editIcon"
+                  ><fa-icon
+                    class="cursor-pointer"
+                    [icon]="fontIcon.faTrash"
+                    (click)="onDeleteOfEvent(event)"
+                  ></fa-icon
+                ></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="eventListCardContent">
+          <div class="row">
+            <div class="col-sm-4">
+              <app-display-date
+                [dateInput]="event && event.eventDate"
+              ></app-display-date>
+            </div>
+            <div class="col-sm-4">
+              <p class="eventTime">{{ event.eventTime }}</p>
+            </div>
+            <div class="col-sm-4">
+              <p
+                class="eventSkills"
+                data-toggle="tooltip"
+                [title]="prepareSkillsFordisplay(event, true)"
+              >
+                {{ prepareSkillsFordisplay(event) }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="eventListCardAddBtn">
+          <div class="row">
+            <div class="col-sm-4">
+              <p
+                class="eventAddMembers"
+                (click)="
+                  navigateToScreen(
+                    ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE,
+                    event
+                  )
+                "
+              >
+                Add Members +
+              </p>
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+              <p class="eventOfferedMem">Offered Membered List</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

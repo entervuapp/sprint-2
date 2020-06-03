@@ -9,6 +9,7 @@ import { DashboardOrganizationComponent } from "./resources/organization/dashboa
 import { EditProfileOrganizationComponent } from "./resources/organization/edit-profile-organization/edit-profile-organization.component";
 import { ChangePasswordComponent } from "./commons/components/change-password/change-password.component";
 import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.component";
+import { ManageCandidatesComponent } from "./resources/organization/manage-candidates/manage-candidates.component";
 
 const routes: Routes = [
   {
@@ -17,28 +18,32 @@ const routes: Routes = [
     pathMatch: "full",
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.individualDashboard,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD,
     component: DashboardIndividualComponent,
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD,
     component: DashboardOrganizationComponent,
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.editOrganizationProfile,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE,
     component: EditProfileOrganizationComponent,
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.changePassword,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
     component: ChangePasswordComponent,
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.logout,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
     component: MainScreenComponent,
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD,
     component: QaDashboardComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE,
+    component: ManageCandidatesComponent,
   },
   {
     path: "**",

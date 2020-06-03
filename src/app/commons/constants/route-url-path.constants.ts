@@ -1,11 +1,23 @@
 export class ROUTE_URL_PATH_CONSTANTS {
   static ROUTE_URL_PATH = {
-    home: "home",
-    individualDashboard: "individual-dashboard",
-    organizationDashboard: "organization-dashboard",
-    editOrganizationProfile: "edit-organization-profile",
-    changePassword: "change-password",
-    logout: "logout",
-    qaDashboard: "qa-dashboard",
+    HOME: "home",
+    INDIVIDUAL_DASHBOARD: "individual-dashboard",
+    ORGANIZATION_DASHBOARD: "organization-dashboard",
+    EDIT_ORGANIZATION_PROFILE: "edit-organization-profile",
+    CHANGE_PASSWORD: "change-password",
+    MANAGE_CANDIDATE: "manage-candidate",
+    LOGOUT: "logout",
+    QA_DASHBOARD: "qa-dashboard",
+  };
+  static MODULE_WISE_URL = {
+    DASHBOARD: [
+      ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD,
+      ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD,
+      ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE,
+      ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
+      ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE,
+      ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
+    ],
+    QA: [ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD],
   };
 }

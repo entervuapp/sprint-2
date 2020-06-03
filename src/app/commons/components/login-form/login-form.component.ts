@@ -53,7 +53,7 @@ export class LoginFormComponent extends AppComponent implements OnInit {
       (response) => {
         console.log("login success", response);
         this.navigateTo(
-          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard
+          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
         );
       },
       (errors) => {
