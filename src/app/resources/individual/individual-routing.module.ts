@@ -4,7 +4,7 @@ import { DashboardIndividualComponent } from "./dashboard-individual/dashboard-i
 import { ROUTE_URL_PATH_CONSTANTS } from "../../commons/constants/route-url-path.constants";
 const routes: Routes = [
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.individualDashboard,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD,
     component: DashboardIndividualComponent,
   },
 ];

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -11,30 +11,37 @@ import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageEventsService } from "./manage-events/manage-events.service";
 import { Alerts } from "../../../commons/typings/typings";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
+import { AppComponent } from "src/app/app.component";
+import { Router } from "@angular/router";
+import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 
 @Component({
   selector: "app-manage-events",
   templateUrl: "./manage-events.component.html",
   styleUrls: ["./manage-events.component.scss"],
 })
-export class ManageEventsComponent implements OnInit {
+export class ManageEventsComponent extends AppComponent implements OnInit {
   resetField: boolean;
   alerts: Alerts[];
+  ROUTE_URL_PATH_CONSTANTS;
   eventsList: any[];
   formGroupObject: FormGroup;
   public displayTextObj: {};
   skillsList: any[];
-  fontIcon= FONT_AWESOME_ICONS_CONSTANTS;
+  fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   constructor(
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
-    private cdr: ChangeDetectorRef,
-    private manageEventsService: ManageEventsService
-  ) {}
+    public objectUtil: ObjectUtil,
+    public manageEventsService: ManageEventsService,
+    public router: Router
+  ) {
+    super();
+  }
 
   ngOnInit() {
+    this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.eventsList = [];
     this.displayTextObj = {
       name: "Name",
@@ -263,19 +270,21 @@ export class ManageEventsComponent implements OnInit {
   };
 
   public onSkillEdit = (skillObj): void => {
-    this.formGroupObject.controls.skill.setValue(skillObj.skill);
+    this.formGroupObject.controls.skill.setValue(skillObj.skillName);
     this.formGroupObject.controls.numberOfRounds.setValue(
       skillObj.numberOfRounds
     );
   };
 
-  public onEditOfEvent = (element) => {
-    this.initializeForm(element);
+  public onEditOfEvent = (event) => {
+    this.manageEventsService.findEvent(event.id).subscribe((response) => {
+      this.initializeForm({ ...response });
+    });
   };
 
-  public onDeleteOfEvent = (element) => {
-    if (element && element.id !== null && element.id !== undefined) {
-      this.manageEventsService.deleteEvent(element.id).subscribe(
+  public onDeleteOfEvent = (event) => {
+    if (event && event.id !== null && event.id !== undefined) {
+      this.manageEventsService.deleteEvent(event.id).subscribe(
         (response) => {
           this.getEventsList();
         },
@@ -310,5 +319,27 @@ export class ManageEventsComponent implements OnInit {
         console.log("errors", errors);
       }
     );
+  };
+
+  public prepareSkillsFordisplay = (event, isTooltip = false) => {
+    let skillList = [];
+    event.skillsList.map((item) => skillList.push(item.skillName));
+    let displayText = skillList.join(", ");
+    if (displayText && displayText.length > 20) {
+      return isTooltip
+        ? displayText
+        : (displayText = `${displayText.substr(0, 20)} ...`);
+    } else {
+      return displayText;
+    }
+  };
+
+  public navigateToScreen = (screen, event?) => {
+    if (screen && event) {
+      let queryParam = { id: event.id };
+      this.navigateTo(screen, queryParam);
+    } else if (screen) {
+      this.navigateTo(screen);
+    }
   };
 }

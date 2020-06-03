@@ -14,6 +14,14 @@ export class ManageEventsService {
     return this.http.get(url);
   };
 
+  findEvent = (idx): Observable<any> => {
+    let url =
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_EVENTS +
+      "/" +
+      idx;
+    return this.http.get(url);
+  };
+
   createEvent = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");

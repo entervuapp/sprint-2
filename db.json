@@ -15,20 +15,20 @@
       "name": "mega drive",
       "eventDate": "2020-05-01",
       "creationDate": "2020-05-01",
-      "eventTime": "10:00",
+      "eventTime": "10:01",
       "createdBy": "",
       "skillsList": [
+        {
+          "skillName": "dot net",
+          "numberOfRounds": "2"
+        },
         {
           "skillName": "Angular",
           "numberOfRounds": "3"
         },
         {
-          "skillName": "Java",
+          "skillName": "Angular",
           "numberOfRounds": "3"
-        },
-        {
-          "skillName": "dot net",
-          "numberOfRounds": "2"
         }
       ]
     },
@@ -43,24 +43,6 @@
         {
           "skillName": "ui",
           "numberOfRounds": "3"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "name": "mega",
-      "eventDate": "2020-05-02",
-      "creationDate": "2020-05-02",
-      "eventTime": "11:11",
-      "createdBy": "",
-      "skillsList": [
-        {
-          "skillName": "ui",
-          "numberOfRounds": "2"
-        },
-        {
-          "skillName": "q2",
-          "numberOfRounds": "1"
         }
       ]
     }

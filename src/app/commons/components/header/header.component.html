@@ -5,42 +5,19 @@
 ></div>
 <div class="mainHeader">
   <div class="headerLogo">
-    <a href="#"
-      ><img src="../../../../assets/images/logo2.png" alt="EnterVu"
-    /></a>
+    <a (click)="navigateToScreen('DASHBOARD')">
+      <img src="../../../../assets/images/logo2.png" alt="EnterVu" />
+    </a>
   </div>
   <div class="headerNavbar">
     <ul class="navbarUl">
       <li
+        *ngFor="let menu of SHARED_CONSTANTS.MAIN_MENU_LIST"
         [ngClass]="{
-          active:
-            activeModule ===
-            ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard
+          active: activeModule === menu
         }"
       >
-        <a
-          (click)="
-            navigateToScreen(
-              ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.organizationDashboard
-            )
-          "
-          >Dashboard</a
-        >
-      </li>
-      <li
-        [ngClass]="{
-          active:
-            activeModule === ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard
-        }"
-      >
-        <a
-          (click)="
-            navigateToScreen(
-              ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.qaDashboard
-            )
-          "
-          >Q&A</a
-        >
+        <a (click)="navigateToScreen(menu)">{{ menu }}</a>
       </li>
     </ul>
   </div>
