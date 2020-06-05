@@ -15,6 +15,7 @@ const routes: Routes = [
   {
     path: "",
     component: MainScreenComponent,
+    // component: DashboardOrganizationComponent,
     pathMatch: "full",
   },
   {

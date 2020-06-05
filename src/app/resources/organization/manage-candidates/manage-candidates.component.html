@@ -89,6 +89,11 @@
               }"
               formControlName="skill"
             />
+            <select class="custom-select" id="inputGroupSelect01">
+              <option [value]="skill" *ngFor="let skill of skillDropDownList"
+                >{{ skill.skillName }}
+              </option>
+            </select>
           </div>
           <app-error-message
             *ngIf="checkForError(myForm, 'skill')"
@@ -118,87 +123,32 @@
 
   <div class="candidatesListBlock">
     <h3>Candidates list</h3>
-    <!-- <ul class="nav nav-tabs">
-      <li class="nav-item" *ngFor="let skill of skillTabsList">
-        <a
-          class="nav-link"
-          [ngClass]="{ active: skill.active }"
-          href="javscript:void(0)"
-          (click)="onTabClick(skill)"
-          >{{ skill.description }}</a
-        >
-        content1
-      </li>
-    </ul> -->
     <div class="manageCandidatesList">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <!-- <li class="nav-item" *ngFor="let skill of eventDetails.skillsList">
+        <li
+          class="nav-item"
+          *ngFor="let skill of skillDropDownList; let i = index"
+          [ngClass]="{ active: true }"
+          (click)="onSkillTabClick(skill)"
+        >
           <a
-            class="nav-link active"
+            class="nav-link"
             id="{{ skill.skillName }}-tab"
             data-toggle="tab"
-            href="#{{ skill.skillName }}"
+            href="#{{ skill.skillName }}{{ i }}"
             role="tab"
-            aria-controls="home"
+            attr.aria-controls="{{ skill.skillName }}"
             aria-selected="true"
             >{{ skill.skillName }}</a
-          >
-        </li> -->
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            id="home-tab"
-            data-toggle="tab"
-            href="#home"
-            role="tab"
-            aria-controls="home"
-            aria-selected="true"
-            >Angular</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            id="profile-tab"
-            data-toggle="tab"
-            href="#profile"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="false"
-            >Java</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            id="profile-tab"
-            data-toggle="tab"
-            href="#profile1"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="false"
-            >Dot net</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            id="profile-tab"
-            data-toggle="tab"
-            href="#profile2"
-            role="tab"
-            aria-controls="profile"
-            aria-selected="false"
-            >React</a
           >
         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
         <div
           class="table-responsive manageCandidatesListTabel tab-pane fade show active"
-          id="home"
+          id="content"
           role="tabpanel"
-          aria-labelledby="home-tab"
+          attr.aria-labelledby="tab-tab"
         >
           <table class="table table-bordered table-md">
             <thead>
@@ -223,7 +173,7 @@
                     Edit
                   </a>
                   |
-                  <a href="javascript:void(0)" (click)="onDelete(i)">
+                  <a href="javascript:void(0)" (click)="onDelete(candidate)">
                     Delete
                   </a>
                 </td>
@@ -238,30 +188,6 @@
               </tr>
             </tbody>
           </table>
-        </div>
-        <div
-          class="tab-pane fade"
-          id="profile"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-          <p>tab1</p>
-        </div>
-        <div
-          class="tab-pane fade"
-          id="profile1"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-          <p>tab2</p>
-        </div>
-        <div
-          class="tab-pane fade"
-          id="profile2"
-          role="tabpanel"
-          aria-labelledby="profile-tab"
-        >
-          <p>tab3</p>
         </div>
       </div>
     </div>

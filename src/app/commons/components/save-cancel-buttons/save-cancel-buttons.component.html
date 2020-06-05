@@ -8,7 +8,7 @@
   <button
     type="submit"
     class="btn btn-primary margin-right-10"
-    [ngClass]="{ myClassCss: className === 'myClassCss' }"
+    [ngClass]="{ 'login-btn btn-block': className === 'login-btn btn-block' }"
     (click)="saveHandler()"
   >
     {{ saveButtonName }}

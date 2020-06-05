@@ -24,6 +24,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.1",
     "@fortawesome/free-regular-svg-icons": "^5.12.1",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@ng-bootstrap/ng-bootstrap": "^4.2.2",
     "angular2-useful-swiper": "^8.0.1-beta.1",
     "bootstrap": "^4.4.1",
     "core-js": "^2.5.4",
