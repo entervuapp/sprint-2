@@ -14,6 +14,7 @@ import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesom
 import { AppComponent } from "src/app/app.component";
 import { Router } from "@angular/router";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-manage-events",
@@ -25,6 +26,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   alerts: Alerts[];
   ROUTE_URL_PATH_CONSTANTS;
   eventsList: any[];
+  private _subscriptions = new Subscription();
   formGroupObject: FormGroup;
   public displayTextObj: {};
   skillsList: any[];
@@ -52,47 +54,57 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     };
     this.resetField = false;
     this.initializeForm();
-    this.formGroupObject.get("skill").valueChanges.subscribe((val) => {
-      if (
-        val ||
-        this.formGroupObject.controls.numberOfRounds.value ||
-        this.skillsList.length === 0
-      ) {
-        this.formGroupObject.controls.skill.setValidators([
-          Validators.required,
-          Validators.minLength(2),
-        ]);
-        this.formGroupObject.controls.numberOfRounds.setValidators([
-          Validators.required,
-        ]);
-      } else {
-        this.formGroupObject.controls.skill.setValidators([]);
-        this.formGroupObject.controls.skill.setErrors(null);
-        this.formGroupObject.controls.numberOfRounds.setValidators([]);
-        this.formGroupObject.controls.numberOfRounds.setErrors(null);
-      }
-    });
-    this.formGroupObject.get("numberOfRounds").valueChanges.subscribe((val) => {
-      if (
-        val ||
-        this.formGroupObject.controls.skill.value ||
-        this.skillsList.length === 0
-      ) {
-        this.formGroupObject.controls.skill.setValidators([
-          Validators.required,
-          Validators.minLength(2),
-        ]);
-        this.formGroupObject.controls.numberOfRounds.setValidators([
-          Validators.required,
-        ]);
-      } else {
-        this.formGroupObject.controls.skill.setValidators([]);
-        this.formGroupObject.controls.skill.setErrors(null);
-        this.formGroupObject.controls.numberOfRounds.setValidators([]);
-        this.formGroupObject.controls.numberOfRounds.setErrors(null);
-      }
-    });
+    this._subscriptions.add(
+      this.formGroupObject.get("skill").valueChanges.subscribe((val) => {
+        if (
+          val ||
+          this.formGroupObject.controls.numberOfRounds.value ||
+          this.skillsList.length === 0
+        ) {
+          this.formGroupObject.controls.skill.setValidators([
+            Validators.required,
+            Validators.minLength(2),
+          ]);
+          this.formGroupObject.controls.numberOfRounds.setValidators([
+            Validators.required,
+          ]);
+        } else {
+          this.formGroupObject.controls.skill.setValidators([]);
+          this.formGroupObject.controls.skill.setErrors(null);
+          this.formGroupObject.controls.numberOfRounds.setValidators([]);
+          this.formGroupObject.controls.numberOfRounds.setErrors(null);
+        }
+      })
+    );
+    this._subscriptions.add(
+      this.formGroupObject
+        .get("numberOfRounds")
+        .valueChanges.subscribe((val) => {
+          if (
+            val ||
+            this.formGroupObject.controls.skill.value ||
+            this.skillsList.length === 0
+          ) {
+            this.formGroupObject.controls.skill.setValidators([
+              Validators.required,
+              Validators.minLength(2),
+            ]);
+            this.formGroupObject.controls.numberOfRounds.setValidators([
+              Validators.required,
+            ]);
+          } else {
+            this.formGroupObject.controls.skill.setValidators([]);
+            this.formGroupObject.controls.skill.setErrors(null);
+            this.formGroupObject.controls.numberOfRounds.setValidators([]);
+            this.formGroupObject.controls.numberOfRounds.setErrors(null);
+          }
+        })
+    );
     this.getEventsList();
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
   }
 
   private initializeForm = (formData?) => {
@@ -193,34 +205,38 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   private updateEvent = (requestBody) => {
-    this.manageEventsService.updateEvent(requestBody).subscribe(
-      (response) => {
-        console.log("update successfull");
-        this.getEventsList();
-        this.alerts = [
-          { code: "SUCCESS", systemMessage: "Updated sucessfully" },
-        ];
-      },
-      (errors) => {
-        console.log(errors);
-      }
+    this._subscriptions.add(
+      this.manageEventsService.updateEvent(requestBody).subscribe(
+        (response) => {
+          console.log("update successfull");
+          this.getEventsList();
+          this.alerts = [
+            { code: "SUCCESS", systemMessage: "Updated sucessfully" },
+          ];
+        },
+        (errors) => {
+          console.log(errors);
+        }
+      )
     );
   };
 
   private createEvent = (requestBody) => {
-    this.manageEventsService.createEvent(requestBody).subscribe(
-      (response) => {
-        console.log(response);
-        this.getEventsList();
-        this.alerts = [
-          { code: "SUCCESS", systemMessage: "Event created successfully" },
-        ];
-      },
-      (errors) => {
-        console.log(errors);
-        if (errors && errors.error && errors.error.messages) {
+    this._subscriptions.add(
+      this.manageEventsService.createEvent(requestBody).subscribe(
+        (response) => {
+          console.log(response);
+          this.getEventsList();
+          this.alerts = [
+            { code: "SUCCESS", systemMessage: "Event created successfully" },
+          ];
+        },
+        (errors) => {
+          console.log(errors);
+          if (errors && errors.error && errors.error.messages) {
+          }
         }
-      }
+      )
     );
   };
 
@@ -277,20 +293,24 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onEditOfEvent = (event) => {
-    this.manageEventsService.findEvent(event.id).subscribe((response) => {
-      this.initializeForm({ ...response });
-    });
+    this._subscriptions.add(
+      this.manageEventsService.findEvent(event.id).subscribe((response) => {
+        this.initializeForm({ ...response });
+      })
+    );
   };
 
   public onDeleteOfEvent = (event) => {
     if (event && event.id !== null && event.id !== undefined) {
-      this.manageEventsService.deleteEvent(event.id).subscribe(
-        (response) => {
-          this.getEventsList();
-        },
-        (errors) => {
-          console.log(errors);
-        }
+      this._subscriptions.add(
+        this.manageEventsService.deleteEvent(event.id).subscribe(
+          (response) => {
+            this.getEventsList();
+          },
+          (errors) => {
+            console.log(errors);
+          }
+        )
       );
     }
   };
@@ -310,20 +330,24 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   private getEventsList = () => {
-    this.manageEventsService.getEvents().subscribe(
-      (response) => {
-        this.eventsList = response;
-        console.log("events", this.eventsList);
-      },
-      (errors) => {
-        console.log("errors", errors);
-      }
+    this._subscriptions.add(
+      this.manageEventsService.getEvents().subscribe(
+        (response) => {
+          this.eventsList = response;
+          console.log("events", this.eventsList);
+        },
+        (errors) => {
+          console.log("errors", errors);
+        }
+      )
     );
   };
 
-  public prepareSkillsFordisplay = (event, isTooltip = false) => {
+  public prepareSkillsForDisplay = (event, isTooltip = false) => {
     let skillList = [];
-    event.skillsList.map((item) => skillList.push(item.skillName));
+    if (event && event.skillsList && event.skillsList.length) {
+      event.skillsList.map((item) => skillList.push(item.skillName));
+    }
     let displayText = skillList.join(", ");
     if (displayText && displayText.length > 20) {
       return isTooltip

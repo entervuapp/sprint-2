@@ -65,6 +65,7 @@
         <app-save-cancel-buttons
           saveButtonName="Submit"
           hideCancelButton="true"
+          className="login-btn btn-block"
           (onSave)="myForm.valid && onSignIn()"
         ></app-save-cancel-buttons>
       </div>
@@ -75,12 +76,21 @@
         <a href="#" class="pull-right">Forgot Password?</a>
       </div> -->
       <div class="custom-control custom-checkbox mb-3 clearfix">
-        <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
-        <label class="custom-control-label" for="customCheck">Remember me</label>
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="customCheck"
+          name="example1"
+        />
+        <label class="custom-control-label" for="customCheck"
+          >Remember me</label
+        >
         <a href="#" class="pull-right">Forgot Password?</a>
       </div>
       <div class="or-seperator"><i>or</i></div>
-      <p class="text-center mediaTextClass">Login with your social media account</p>
+      <p class="text-center mediaTextClass">
+        Login with your social media account
+      </p>
       <div class="text-center social-btn">
         <a href="#" class="btn btn-primary"
           ><i class="fa fa-facebook"></i>&nbsp; Facebook</a

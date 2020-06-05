@@ -48,16 +48,16 @@ export class LoginFormComponent extends AppComponent implements OnInit {
       email: this.myForm.value.username,
       password: this.myForm.value.password,
     };
-    console.log("onSignIn", requestBody);
     this.loginFormService.signIn(requestBody).subscribe(
       (response) => {
-        console.log("login success", response);
         this.navigateTo(
           this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
         );
       },
       (errors) => {
-        console.log("login error", errors);
+        if (errors) {
+          console.log("login error", errors);
+        }
       }
     );
   }

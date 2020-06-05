@@ -6,35 +6,29 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 @Injectable({
   providedIn: "root",
 })
-export class ManageEventsService {
+export class ManageCandidateService {
   constructor(private http: HttpClient) {}
 
-  getEvents = (): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_EVENTS;
-    return this.http.get(url);
-  };
-
-  findEvent = (idx): Observable<any> => {
+  getCandidates = (): Observable<any> => {
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_EVENTS +
-      "/" +
-      idx;
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES.GET_CANDIDATES;
     return this.http.get(url);
   };
 
-  createEvent = (requestBody): Observable<any> => {
+  addCandidate = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.CREATE_EVENTS;
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES.ADD_CANDIDATE;
     return this.http.post(url, requestBody, { headers: headersData });
   };
 
-  updateEvent = (requestBody): Observable<any> => {
+  updateCandidate = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.UPDATE_EVENTS +
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES
+        .UPDATE_CANDIDATE +
       "/" +
       requestBody.id;
     return this.http.put(url, requestBody, { headers: headersData });
@@ -42,7 +36,8 @@ export class ManageEventsService {
 
   deleteEvent = (idx): Observable<any> => {
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.CREATE_EVENTS +
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES
+        .DELETE_CANDIDATE +
       "/" +
       idx;
     return this.http.delete(url);
