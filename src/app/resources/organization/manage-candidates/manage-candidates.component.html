@@ -128,11 +128,11 @@
         <li
           class="nav-item"
           *ngFor="let skill of skillDropDownList; let i = index"
-          [ngClass]="{ active: true }"
           (click)="onSkillTabClick(skill)"
         >
           <a
             class="nav-link"
+            [ngClass]="{ active: skill.active }"
             id="{{ skill.skillName }}-tab"
             data-toggle="tab"
             href="#{{ skill.skillName }}{{ i }}"

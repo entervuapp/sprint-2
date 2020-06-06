@@ -66,7 +66,7 @@ export class RegistrationOrganizationComponent extends AppComponent
   };
 
   onRegister = () => {
-    console.log("onRegister", this.myForm.value);
+    console.log("onRegister", JSON.stringify(this.myForm.value));
     let requestBody = {
       name: this.myForm.value.firstName,
       email: this.myForm.value.officeEmail,

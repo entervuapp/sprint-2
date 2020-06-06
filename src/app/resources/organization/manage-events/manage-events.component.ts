@@ -31,6 +31,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   public displayTextObj: {};
   skillsList: any[];
   fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
+  mininumEventDate: string;
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   constructor(
@@ -43,6 +44,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mininumEventDate = this.stringDateFormat();
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.eventsList = [];
     this.displayTextObj = {
@@ -365,5 +367,24 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     } else if (screen) {
       this.navigateTo(screen);
     }
+  };
+
+  private stringDateFormat = (givenDate = null) => {
+    let newDate;
+    if (givenDate) {
+      newDate = new Date(givenDate);
+    } else {
+      newDate = new Date();
+    }
+
+    let year = newDate.getFullYear();
+    let month =
+      parseInt(newDate.getMonth()) + 1 < 10
+        ? "0" + (parseInt(newDate.getMonth()) + 1)
+        : parseInt(newDate.getMonth()) + 1;
+    let date =
+      newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
+
+    return year + "-" + month + "-" + date;
   };
 }
