@@ -54,7 +54,6 @@ export class ManageCandidatesComponent implements OnInit {
         this.eventId = parseInt(params["id"]);
         if (this.eventId) {
           this.getEventDetails(this.eventId);
-          this.getCandidatesList(this.eventId);
         }
       })
     );
@@ -91,6 +90,7 @@ export class ManageCandidatesComponent implements OnInit {
           (response) => {
             this.eventDetails = { ...response };
             this.prepareSkillDropDwon();
+            this.getCandidatesList(this.eventId);
           },
           (errors) => {
             console.log("error", errors);
@@ -210,20 +210,28 @@ export class ManageCandidatesComponent implements OnInit {
       this.eventDetails.skillsList.forEach((skill, key) => {
         let skillObj = {
           skillName: skill.skillName,
-          active: false,
+          active: key === 0 ? true : false,
         };
         this.skillDropDownList.push(skillObj);
       });
     }
-    setTimeout(() => {
-      if (this.skillDropDownList && this.skillDropDownList.length) {
-        this.skillDropDownList[0].active = true;
-      }
-    }, 500);
   };
 
   public onSkillTabClick = (skill): void => {
-    this.filterCandidatesForSkill(skill.skillName);
+    this.markSkillAsActive(skill);
+    this.filterCandidatesForSkill(skill);
+  };
+
+  private markSkillAsActive = (skill): void => {
+    if (this.skillDropDownList && this.skillDropDownList.length) {
+      this.skillDropDownList.forEach((item) => {
+        if (skill && item.skillName === skill.skillName) {
+          item.active = true;
+        } else {
+          item.active = false;
+        }
+      });
+    }
   };
 
   private getCandidatesList = (eventId): void => {
@@ -234,7 +242,7 @@ export class ManageCandidatesComponent implements OnInit {
           this.originalCandidatesList = allCandidatesList.filter(
             (item) => item.eventId === eventId
           );
-          this.filterCandidatesForSkill(this.skillDropDownList[0]);
+          this.filterCandidatesForSkill();
         },
         (errors) => {
           console.log("error", errors);
@@ -246,9 +254,14 @@ export class ManageCandidatesComponent implements OnInit {
     );
   };
 
-  private filterCandidatesForSkill = (skill) => {
-    this.candidatesList = this.originalCandidatesList.filter(
-      (candidate) => candidate.skill === skill
-    );
+  private filterCandidatesForSkill = (skill?) => {
+    if (!skill) {
+      skill = this.skillDropDownList.find((item) => item.active);
+    }
+    if (skill && skill.skillName) {
+      this.candidatesList = this.originalCandidatesList.filter(
+        (candidate) => candidate.skill === skill.skillName
+      );
+    }
   };
 }

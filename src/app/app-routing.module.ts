@@ -10,12 +10,13 @@ import { EditProfileOrganizationComponent } from "./resources/organization/edit-
 import { ChangePasswordComponent } from "./commons/components/change-password/change-password.component";
 import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.component";
 import { ManageCandidatesComponent } from "./resources/organization/manage-candidates/manage-candidates.component";
+import { AdminDashboardComponent } from "./resources/admin/admin-dashboard/admin-dashboard.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: MainScreenComponent,
-    // component: DashboardOrganizationComponent,
+    // component: MainScreenComponent,
+    component: DashboardOrganizationComponent,
     pathMatch: "full",
   },
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE,
     component: ManageCandidatesComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN,
+    component: AdminDashboardComponent,
   },
   {
     path: "**",

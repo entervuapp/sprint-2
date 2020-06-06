@@ -8,6 +8,7 @@ export class ROUTE_URL_PATH_CONSTANTS {
     MANAGE_CANDIDATE: "manage-candidate",
     LOGOUT: "logout",
     QA_DASHBOARD: "qa-dashboard",
+    ADMIN: "admin",
   };
   static MODULE_WISE_URL = {
     DASHBOARD: [
@@ -19,5 +20,6 @@ export class ROUTE_URL_PATH_CONSTANTS {
       ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
     ],
     QA: [ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD],
+    ADMIN: [ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN],
   };
 }

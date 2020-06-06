@@ -63,6 +63,10 @@ export class HeaderComponent extends AppComponent implements OnInit {
           this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD
         );
         break;
+      case "ADMIN":
+        this.activeModule = menu;
+        this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+        break;
     }
   };
 }

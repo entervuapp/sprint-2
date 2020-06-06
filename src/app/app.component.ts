@@ -63,6 +63,11 @@ export class AppComponent {
           { queryParams: { id: queryParams.id } }
         );
         break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN:
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN}`,
+        ]);
+        break;
       default:
         break;
     }

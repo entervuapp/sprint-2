@@ -58,6 +58,7 @@
               placeholder="Enter date"
               name="eventDate"
               formControlName="eventDate"
+              [min]="mininumEventDate"
             />
             <app-error-message
               *ngIf="checkForError(formGroupObject, 'eventDate')"

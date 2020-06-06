@@ -26,6 +26,24 @@
       "eventId": 3,
       "skill": "dot net",
       "invitedBy": ""
+    },
+    {
+      "id": 4,
+      "name": "pranay",
+      "email": "pr@gmail.com",
+      "mobile": "4555555555",
+      "eventId": 3,
+      "skill": "java",
+      "invitedBy": ""
+    },
+    {
+      "id": 5,
+      "name": "rasool",
+      "email": "r@gamil.com",
+      "mobile": "4545454545",
+      "eventId": 3,
+      "skill": "java",
+      "invitedBy": ""
     }
   ],
   "events": [
