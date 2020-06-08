@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
 import { ResourcesRoutingModule } from "./resources-routing.module";
 
 //Modules
@@ -10,6 +9,7 @@ import { MainScreenComponent } from "./main-screen/main-screen.component";
 import { CommonsModule } from "../commons/commons.module";
 import { QaModule } from "./qa/qa.module";
 import { AdminModule } from "./admin/admin.module";
+import { MaterialComponentsModule } from "../commons/material-components/material-components.module";
 
 const RESOURCE_MODULE_LIST = [
   IndividualModule,
@@ -26,6 +26,7 @@ const COMPONENTS_LIST = [MainScreenComponent];
     ResourcesRoutingModule,
     ...RESOURCE_MODULE_LIST,
     CommonsModule,
+    MaterialComponentsModule,
   ],
   exports: [...RESOURCE_MODULE_LIST, COMPONENTS_LIST],
 })

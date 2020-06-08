@@ -17,6 +17,7 @@ import { CommonsModule } from "./commons/commons.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoadingInterceptorService } from "./commons/services/loading-interceptor/loading-interceptor.service";
 import { DatePipe } from "@angular/common";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { DatePipe } from "@angular/common";
     SlickCarouselModule,
     CommonsModule,
     PipesModule,
+    BrowserAnimationsModule,
   ],
   entryComponents: [],
   providers: [
