@@ -8,6 +8,9 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { PipesModule } from "./commons/pipes/pipes.module";
 
+// Import your library
+import { SlickCarouselModule } from "ngx-slick-carousel";
+
 //Modules
 import { ResourcesModule } from "./resources/resources.module";
 import { CommonsModule } from "./commons/commons.module";
@@ -26,6 +29,7 @@ import { DatePipe } from "@angular/common";
     ReactiveFormsModule,
     AppRoutingModule,
     ResourcesModule,
+    SlickCarouselModule,
     CommonsModule,
     PipesModule,
   ],
