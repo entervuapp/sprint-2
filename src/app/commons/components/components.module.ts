@@ -2,6 +2,9 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 
+// Import your library
+import { SlickCarouselModule } from "ngx-slick-carousel";
+
 import { SaveCancelButtonsComponent } from "./save-cancel-buttons/save-cancel-buttons.component";
 import { AboutUsComponent } from "./about-us/about-us.component";
 import { ContactUsComponent } from "./contact-us/contact-us.component";
@@ -26,6 +29,7 @@ import { TimeInputFieldComponent } from "./time-input-field/time-input-field.com
 import { DateInputFieldComponent } from "./date-input-field/date-input-field.component";
 import { DisplayDateComponent } from "./display-date/display-date.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { CarouselComponent } from "./carousel/carousel.component";
 
 const COMPONENTS_LIST = [
   SaveCancelButtonsComponent,
@@ -50,6 +54,7 @@ const COMPONENTS_LIST = [
   DateInputFieldComponent,
   DisplayDateComponent,
   ChangePasswordComponent,
+  CarouselComponent,
 ];
 
 @NgModule({
@@ -59,6 +64,7 @@ const COMPONENTS_LIST = [
     ReactiveFormsModule,
     DirectivesModule,
     FontAwesomeModule,
+    SlickCarouselModule,
   ],
   exports: [...COMPONENTS_LIST],
 })

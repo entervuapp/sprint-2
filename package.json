@@ -28,7 +28,11 @@
     "angular2-useful-swiper": "^8.0.1-beta.1",
     "bootstrap": "^4.4.1",
     "core-js": "^2.5.4",
+    "jquery": "^3.5.1",
+    "ngx-slick-carousel": "^0.5.0",
     "rxjs": "~6.3.3",
+    "script-loader": "^0.7.2",
+    "slick-carousel": "^1.8.1",
     "swiper": "^5.3.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
