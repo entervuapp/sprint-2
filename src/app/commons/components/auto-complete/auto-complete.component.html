@@ -1,13 +1,26 @@
 <div class="autoCompleteCard">
-   <div class="row">
-      <div class="col-sm-6">
-        <div class="form-group autoFormGroup">
-          <label for="usr">Name:</label>
-          <input type="text" class="form-control autoFormControl" id="usr">
-        </div>
-        <div class="listArrayCard">
-           <p *ngFor="let skill of skillsList">{{skill}}</p>
-        </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group autoFormGroup">
+        <label for="usr">Name:</label>
+        <input
+          type="text"
+          class="form-control autoFormControl"
+          id="usr"
+          [formControl]="formControl"
+        />
       </div>
-   </div>
+      <div
+        class="listArrayCard"
+        *ngIf="filteredSkillList && filteredSkillList.length"
+      >
+        <p
+          *ngFor="let skill of filteredSkillList"
+          (click)="onOptionSelect(skill)"
+        >
+          {{ skill }}
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
