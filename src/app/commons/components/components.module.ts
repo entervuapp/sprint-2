@@ -30,6 +30,7 @@ import { DateInputFieldComponent } from "./date-input-field/date-input-field.com
 import { DisplayDateComponent } from "./display-date/display-date.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { CarouselComponent } from "./carousel/carousel.component";
+import { AutoCompleteComponent } from './auto-complete/auto-complete.component';
 
 const COMPONENTS_LIST = [
   SaveCancelButtonsComponent,
@@ -55,6 +56,7 @@ const COMPONENTS_LIST = [
   DisplayDateComponent,
   ChangePasswordComponent,
   CarouselComponent,
+  AutoCompleteComponent,
 ];
 
 @NgModule({
