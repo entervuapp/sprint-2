@@ -15,9 +15,9 @@ import { AdminDashboardComponent } from "./resources/admin/admin-dashboard/admin
 const routes: Routes = [
   {
     path: "",
-    component: MainScreenComponent,
+    // component: MainScreenComponent,
     // component: DashboardIndividualComponent,
-    // component: DashboardOrganizationComponent,
+    component: DashboardOrganizationComponent,
     pathMatch: "full",
   },
   {

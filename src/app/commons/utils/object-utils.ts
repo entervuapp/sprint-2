@@ -46,7 +46,6 @@ export default class ObjectUtil {
         case "skillName":
         case "numberOfRounds":
         case "address":
-        case "skill":
         case "experience":
         case "mobile":
         case "comments":
@@ -54,11 +53,28 @@ export default class ObjectUtil {
         case "companyName":
         case "name":
         case "firstName":
+        case "description":
           if (
             (formObj.controls[property].hasError("required") &&
               formObj.controls[property].touched) ||
             formObj.controls[property].hasError("minlength") ||
             formObj.controls[property].hasError("maxlength")
+          ) {
+            isError = true;
+          }
+          break;
+        case "skill":
+          if (
+            (formObj.controls[property]["controls"].description.hasError(
+              "required"
+            ) &&
+              formObj.controls[property]["controls"].description.touched) ||
+            formObj.controls[property]["controls"].description.hasError(
+              "minlength"
+            ) ||
+            formObj.controls[property]["controls"].description.hasError(
+              "maxlength"
+            )
           ) {
             isError = true;
           }

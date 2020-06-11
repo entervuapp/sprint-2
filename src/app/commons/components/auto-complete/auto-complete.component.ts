@@ -17,9 +17,13 @@ export class AutoCompleteComponent implements OnInit {
     this.filteredSkillList = [];
     this.formControl = new FormControl("", []);
     this.formControl.valueChanges.subscribe((response) => {
-      this.filteredSkillList = this.skillsList.filter(
-        (skill) => skill.toLowerCase().indexOf(response.toLowerCase()) !== -1
-      );
+      if (response && response.length) {
+        this.filteredSkillList = this.skillsList.filter(
+          (skill) => skill.toLowerCase().indexOf(response.toLowerCase()) !== -1
+        );
+      } else {
+        this.filteredSkillList = [];
+      }
     });
   }
 

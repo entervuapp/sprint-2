@@ -16,12 +16,12 @@ const COMMONS_MODULES_LIST = [
   UtilsModule,
   ConstantsModule,
   ServicesModule,
-  FontAwesomeModule
+  FontAwesomeModule,
 ];
 
 @NgModule({
   declarations: [],
   imports: [...COMMONS_MODULES_LIST],
-  exports: [...COMMONS_MODULES_LIST]
+  exports: [...COMMONS_MODULES_LIST],
 })
 export class CommonsModule {}

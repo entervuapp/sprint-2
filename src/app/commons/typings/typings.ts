@@ -8,3 +8,8 @@ export interface Alerts {
   code: string;
   systemMessage: string;
 }
+
+export interface ValueDescription {
+  value: string;
+  description: string;
+}

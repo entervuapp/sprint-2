@@ -15,6 +15,20 @@
         formObject &&
         formObject['controls'] &&
         formObject['controls'][controlName] &&
+        formObject['controls'][controlName].controls &&
+        formObject['controls'][controlName].controls.description &&
+        formObject['controls'][controlName].controls.description.hasError(
+          'required'
+        )
+      "
+    >
+      {{ fieldName }} is required.
+    </p>
+    <p
+      *ngIf="
+        formObject &&
+        formObject['controls'] &&
+        formObject['controls'][controlName] &&
         formObject['controls'][controlName].hasError('minlength')
       "
     >
