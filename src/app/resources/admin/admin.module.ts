@@ -6,11 +6,15 @@ import { AdminRoutingModule } from "./admin-routing.module";
 import { AdminDashboardComponent } from "./admin-dashboard/admin-dashboard.component";
 import { ManageSkillsComponent } from "./manage-skills/manage-skills.component";
 
+//services
+import { ManageSkillsService } from "./manage-skills/manage-skills/manage-skills.service";
+
+const SERVICES_LIST = [ManageSkillsService];
 const COMPONENTS_LIST = [AdminDashboardComponent, ManageSkillsComponent];
 
 @NgModule({
   declarations: [COMPONENTS_LIST],
   imports: [CommonModule, AdminRoutingModule, MaterialComponentsModule],
-  providers: [],
+  providers: [SERVICES_LIST],
 })
 export class AdminModule {}

@@ -28,5 +28,13 @@ export class API_URLS_CONSTANTS {
       },
     },
     INDIVIDUAL: { DASHBOARD: { URL: "/individual-dashboard" } },
+    ADMIN: {
+      SKILLS: {
+        GET_SKILLS: `${BASE_URL}/skills`,
+        CREATE_SKILLS: `${BASE_URL}/skills`,
+        UPDATE_SKILLS: `${BASE_URL}/skills`,
+        DELETE_SKILLS: `${BASE_URL}/skills`,
+      },
+    },
   };
 }

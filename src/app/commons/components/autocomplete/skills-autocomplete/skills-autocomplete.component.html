@@ -1,0 +1,39 @@
+<div class="autoCompleteCard">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group autoFormGroup">
+        <label for="skill">{{ labelName }}</label>
+        <input
+          type="text"
+          class="form-control autoFormControl"
+          id="skill"
+          [formControl]="formControl.controls.description"
+          [ngClass]="{
+            'input-field-error': isSkillHasError
+          }"
+        />
+        <app-error-message
+          *ngIf="checkForError(formControl, 'description')"
+          [formObject]="formControl"
+          [controlName]="'description'"
+          [fieldName]="'Skill'"
+        ></app-error-message>
+        status {{ formControl.controls.description.status }} <br />
+        touched
+        {{ formControl.controls.description.touched }}<br />
+        error {{ formControl.controls.description.hasError("required") }}
+      </div>
+      <div
+        class="listArrayCard"
+        *ngIf="filteredSkillList && filteredSkillList.length"
+      >
+        <p
+          *ngFor="let skill of filteredSkillList"
+          (click)="onOptionSelect(skill)"
+        >
+          {{ skill.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

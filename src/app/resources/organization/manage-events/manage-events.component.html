@@ -1,7 +1,7 @@
 <div class="addEventBlock container">
   <app-alerts [alertsList]="alerts"></app-alerts>
   <div class="addEventFormBlock">
-    ff{{ formGroupObject.valid }}
+    ff{{ formGroupObject.value | json }}
     <form
       [formGroup]="formGroupObject"
       appHighlightRequiredFields
@@ -89,12 +89,13 @@
         <hr class="addEventsFormHr" />
         <div class="addEventsForm">
           <div>
-            <div class="form-group formGroupAddEvents">
+            <div class="form-group formGroupAddEvents autoFormGroup">
               <label for="text"
                 >{{ displayTextObj["skill"]
                 }}<span
                   *ngIf="
-                    formGroupObject.controls.skill.value ||
+                    formGroupObject.controls.skill['controls'].description
+                      .value ||
                     formGroupObject.controls.numberOfRounds.value ||
                     skillsList.length === 0
                   "
@@ -106,15 +107,28 @@
               >
               <input
                 type="text"
-                class="form-control"
+                class="form-control autoFormControl"
                 [ngClass]="{
                   'input-field-error': checkForError(formGroupObject, 'skill')
                 }"
                 id="skill"
                 placeholder="Skill"
                 name="skill"
-                formControlName="skill"
+                [formControl]="
+                  formGroupObject.controls.skill['controls'].description
+                "
+                (keyup)="onSkillChange()"
               />
+              <!-- <app-skills-autocomplete
+                [isRequired]="isSkillRequired()"
+                (onSelect)="onSkillSelect($event)"
+                [resetField]="resetField"
+                [renderSkill]="renderSkill"
+                [isTouched]="
+                  formGroupObject.controls.skill['controls'].description.touched
+                "
+                (onChange)="onSkillChange($event)"
+              ></app-skills-autocomplete> -->
               <app-error-message
                 *ngIf="checkForError(formGroupObject, 'skill')"
                 [formObject]="formGroupObject"
@@ -122,13 +136,27 @@
                 [fieldName]="'Skill'"
               ></app-error-message>
             </div>
+            <div
+              class="listArrayCard"
+              *ngIf="
+                filteredSkillOptionsList && filteredSkillOptionsList.length
+              "
+            >
+              <p
+                *ngFor="let skill of filteredSkillOptionsList"
+                (click)="onSkillOptionSelect(skill)"
+              >
+                {{ skill.description }}
+              </p>
+            </div>
             <div class="form-group formGroupAddEvents">
               <label for="text"
                 >{{ displayTextObj["numberOfRounds"]
                 }}<span
                   *ngIf="
                     formGroupObject.controls.numberOfRounds.value ||
-                    formGroupObject.controls.skill.value ||
+                    formGroupObject.controls.skill['controls'].description
+                      .value ||
                     skillsList.length === 0
                   "
                   [ngClass]="{
@@ -171,7 +199,7 @@
           </div>
           <div class="skillRoundsDetailBlock">
             <div *ngFor="let skillObj of skillsList; let i = index">
-              <span> {{ skillObj.skillName }}</span>
+              <span> {{ skillObj.skill.description }}</span>
               <span>{{ skillObj.numberOfRounds }}</span>
               <diV class="editRemoveBtns">
                 <input
@@ -197,7 +225,7 @@
           (onSave)="formGroupObject.valid && onSave()"
           (onCancel)="onReset()"
           [saveButtonName]="formGroupObject.value.id ? 'Update' : 'Save'"
-          cancelButtonName="Cancel"
+          cancelButtonName="Reset"
         ></app-save-cancel-buttons>
       </div>
     </form>
