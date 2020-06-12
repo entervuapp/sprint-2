@@ -13,3 +13,13 @@ export interface ValueDescription {
   value: string;
   description: string;
 }
+
+export interface SkillAndRound {
+  skill: ValueDescription;
+  numberOfRounds: number;
+}
+
+export interface SkillAndActive {
+  skill: ValueDescription;
+  active: boolean;
+}

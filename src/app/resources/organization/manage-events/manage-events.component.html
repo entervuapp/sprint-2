@@ -118,16 +118,6 @@
                 "
                 (keyup)="onSkillChange()"
               />
-              <!-- <app-skills-autocomplete
-                [isRequired]="isSkillRequired()"
-                (onSelect)="onSkillSelect($event)"
-                [resetField]="resetField"
-                [renderSkill]="renderSkill"
-                [isTouched]="
-                  formGroupObject.controls.skill['controls'].description.touched
-                "
-                (onChange)="onSkillChange($event)"
-              ></app-skills-autocomplete> -->
               <app-error-message
                 *ngIf="checkForError(formGroupObject, 'skill')"
                 [formObject]="formGroupObject"

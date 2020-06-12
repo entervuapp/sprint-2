@@ -9,18 +9,13 @@ import {
 } from "@angular/forms";
 import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageEventsService } from "./manage-events/manage-events.service";
-import { Alerts, ValueDescription } from "../../../commons/typings/typings";
+import { Alerts, ValueDescription, SkillAndRound } from "../../../commons/typings/typings";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { AppComponent } from "src/app/app.component";
 import { Router } from "@angular/router";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Subscription } from "rxjs";
 import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/manage-skills.service";
-
-interface SkillRound {
-  skill: ValueDescription;
-  numberOfRounds: number;
-}
 
 @Component({
   selector: "app-manage-events",
@@ -35,7 +30,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   private _subscriptions = new Subscription();
   formGroupObject: FormGroup;
   public displayTextObj: object;
-  skillsList: SkillRound[];
+  skillsList: SkillAndRound[];
   skillOptionsList: ValueDescription[];
   filteredSkillOptionsList: ValueDescription[];
   fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
