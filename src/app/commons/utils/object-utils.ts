@@ -78,6 +78,19 @@ export default class ObjectUtil {
           ) {
             isError = true;
           }
+
+          if ((formObj.controls[property]["controls"].description.hasError("duplicate") &&
+              formObj.controls[property]["controls"].description.touched) ||
+            formObj.controls[property]["controls"].description.hasError(
+              "minlength"
+            ) ||
+            formObj.controls[property]["controls"].description.hasError(
+              "maxlength"
+            )
+          ) {
+            isError = true;
+          }
+
           break;
         case "password":
           let passwordStrength = this.checkPasswordStrength(

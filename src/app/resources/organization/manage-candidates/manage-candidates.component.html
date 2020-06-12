@@ -87,7 +87,7 @@
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'skill')
               }"
-              formControlName="skill"
+              [formControl]="myForm.controls.skill.controls.description"
             />
             <select class="custom-select" id="inputGroupSelect01">
               <option [value]="skill" *ngFor="let skill of skillDropDownList"

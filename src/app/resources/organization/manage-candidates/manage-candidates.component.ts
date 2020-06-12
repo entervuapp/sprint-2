@@ -78,7 +78,10 @@ export class ManageCandidatesComponent implements OnInit {
         Validators.maxLength(10),
       ]),
       eventId: new FormControl(this.eventId, []),
-      skill: new FormControl("", [Validators.required]),
+      skill: new FormGroup({
+        value: new FormControl("", [Validators.required]),
+        description: new FormControl("", [Validators.required, Validators.minLength(2)])
+      }),
       invitedBy: new FormControl("", []),
     });
   };
@@ -158,7 +161,6 @@ export class ManageCandidatesComponent implements OnInit {
 
   public onCancel = () => {
     this.myForm.reset();
-    console.log(this.myForm);
   };
 
   onEdit = (candidate) => {
@@ -207,9 +209,9 @@ export class ManageCandidatesComponent implements OnInit {
       this.eventDetails.skillsList &&
       this.eventDetails.skillsList.length
     ) {
-      this.eventDetails.skillsList.forEach((skill, key) => {
+      this.eventDetails.skillsList.forEach((eachSkill, key) => {
         let skillObj = {
-          skillName: skill.skillName,
+          skillName: eachSkill.skill.description,
           active: key === 0 ? true : false,
         };
         this.skillDropDownList.push(skillObj);
