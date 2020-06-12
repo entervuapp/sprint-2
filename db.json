@@ -50,6 +50,30 @@
     }
   ],
   "candidates": [
+    {
+      "id": 1,
+      "name": "awadhesh",
+      "email": "awa@gmail.com",
+      "mobile": "1212121212",
+      "eventId": 1,
+      "skill": {
+        "value": "ANGULAR_7",
+        "description": "Angular 7"
+      },
+      "invitedBy": ""
+    },
+    {
+      "id": 2,
+      "name": "rasool",
+      "email": "r@gmail.com",
+      "mobile": "1313131313",
+      "eventId": 1,
+      "skill": {
+        "value": "DOT_NET",
+        "description": "Dot net"
+      },
+      "invitedBy": null
+    }
   ],
   "events": [
     {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -11,7 +11,7 @@ import { ManageHeaderService } from "../../../commons/services/manage-header/man
 import { ActivatedRoute } from "@angular/router";
 import { ManageEventsService } from "../../organization/manage-events/manage-events/manage-events.service";
 import { Subscription } from "rxjs";
-import { Alerts } from "../../../commons/typings/typings";
+import { Alerts, ValueDescription, SkillAndActive } from "../../../commons/typings/typings";
 import { ManageCandidateService } from "./manage-candidates/manage-candidate.service";
 
 @Component({
@@ -19,18 +19,23 @@ import { ManageCandidateService } from "./manage-candidates/manage-candidate.ser
   templateUrl: "./manage-candidates.component.html",
   styleUrls: ["./manage-candidates.component.scss"],
 })
+
 export class ManageCandidatesComponent implements OnInit {
   eventDetails;
   alerts: Alerts[];
   private _subscriptions = new Subscription();
-  skillDropDownList: any[];
+  skillDropDownList: ValueDescription[];
   myForm: FormGroup;
   eventId: number;
   candidatesList: any[];
   originalCandidatesList: any[];
-  skillTabsList: any[];
+  public skillTabsList: SkillAndActive[];
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
+  public displayTextObject: object;
+
+  @ViewChild('skillSelect') skillSelect: ElementRef;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
@@ -41,13 +46,16 @@ export class ManageCandidatesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.displayTextObject = {
+      name: "Name",
+      mobile: "Mobile",
+      email:"Email",
+      skill: "Skill",
+      addCandidate: "Add candidate"
+    }
     this.originalCandidatesList = [];
     this.eventDetails = {};
-    this.skillTabsList = [
-      { code: "UI", description: "UI", active: false },
-      { code: "JAVA", description: "Java", active: true },
-      { code: "DOT_NET", description: "Dot Net", active: false },
-    ];
+    this.skillTabsList = [];
     this.candidatesList = [];
     this._subscriptions.add(
       this.activatedRoute.queryParams.subscribe((params) => {
@@ -66,6 +74,10 @@ export class ManageCandidatesComponent implements OnInit {
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
   }
+
+  ngAfterViewInit() {
+    console.log('view init',this.skillSelect.nativeElement.value);
+}
 
   private initializeForm = () => {
     this.myForm = this.fb.group({
@@ -93,6 +105,7 @@ export class ManageCandidatesComponent implements OnInit {
           (response) => {
             this.eventDetails = { ...response };
             this.prepareSkillDropDwon();
+            this.onSkillSelect(this.skillDropDownList[0]);
             this.getCandidatesList(this.eventId);
           },
           (errors) => {
@@ -161,6 +174,11 @@ export class ManageCandidatesComponent implements OnInit {
 
   public onCancel = () => {
     this.myForm.reset();
+    setTimeout(() => {
+
+      this.myForm.controls.eventId.setValue(this.eventId);
+      this.onSkillSelect();
+    }, 500);
   };
 
   onEdit = (candidate) => {
@@ -174,6 +192,7 @@ export class ManageCandidatesComponent implements OnInit {
       eventId,
       invitedBy,
     });
+    this.skillSelect.nativeElement.value = this.myForm.value.skill.value;
   };
 
   onDelete = (candidate) => {
@@ -192,16 +211,6 @@ export class ManageCandidatesComponent implements OnInit {
     );
   };
 
-  onTabClick = (skill) => {
-    this.skillTabsList.forEach((item) => {
-      if (skill.code === item.code) {
-        item.active = true;
-      } else {
-        item.active = false;
-      }
-    });
-  };
-
   private prepareSkillDropDwon = () => {
     this.skillDropDownList = [];
     if (
@@ -211,10 +220,14 @@ export class ManageCandidatesComponent implements OnInit {
     ) {
       this.eventDetails.skillsList.forEach((eachSkill, key) => {
         let skillObj = {
-          skillName: eachSkill.skill.description,
+          skill:{
+            description: eachSkill.skill.description,
+            value : eachSkill.skill.value
+          },
           active: key === 0 ? true : false,
         };
-        this.skillDropDownList.push(skillObj);
+        this.skillDropDownList.push(skillObj.skill);
+        this.skillTabsList.push(skillObj);
       });
     }
   };
@@ -224,10 +237,10 @@ export class ManageCandidatesComponent implements OnInit {
     this.filterCandidatesForSkill(skill);
   };
 
-  private markSkillAsActive = (skill): void => {
-    if (this.skillDropDownList && this.skillDropDownList.length) {
-      this.skillDropDownList.forEach((item) => {
-        if (skill && item.skillName === skill.skillName) {
+  private markSkillAsActive = (activeSkill): void => {
+    if (this.skillTabsList && this.skillTabsList.length) {
+      this.skillTabsList.forEach((item) => {
+        if (activeSkill && item.skill && item.skill.value === activeSkill.skill.value) {
           item.active = true;
         } else {
           item.active = false;
@@ -256,14 +269,21 @@ export class ManageCandidatesComponent implements OnInit {
     );
   };
 
-  private filterCandidatesForSkill = (skill?) => {
-    if (!skill) {
-      skill = this.skillDropDownList.find((item) => item.active);
+  private filterCandidatesForSkill = (activeSkill?) => {
+    if (!activeSkill) {
+      activeSkill = this.skillTabsList.find((item) => item.active);
     }
-    if (skill && skill.skillName) {
+    if (activeSkill && activeSkill.skill && activeSkill.skill.description) {
       this.candidatesList = this.originalCandidatesList.filter(
-        (candidate) => candidate.skill === skill.skillName
+        (candidate) => candidate.skill.description === activeSkill.skill.description
       );
     }
   };
+
+  public onSkillSelect =(selectedSkill = null) => {
+    if(!selectedSkill){
+      selectedSkill = this.skillDropDownList.find(skill => skill.value === this.skillSelect.nativeElement.value);
+    }
+    this.myForm.controls.skill.setValue({value: selectedSkill['value'], description: selectedSkill['description']});
+  }
 }
