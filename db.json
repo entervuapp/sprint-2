@@ -50,90 +50,39 @@
     }
   ],
   "candidates": [
-    {
-      "id": 1,
-      "eventId": 3,
-      "name": "Awadhesh",
-      "email": "awa@gmail.com",
-      "mobile": 9700447173,
-      "skill": "Angular",
-      "invitedBy": "TA Name"
-    },
-    {
-      "id": 2,
-      "eventId": 4,
-      "name": "kiran",
-      "email": "awa@gmail.com",
-      "mobile": 9700447173,
-      "skill": "Angular",
-      "invitedBy": "TA Name"
-    },
-    {
-      "id": 3,
-      "name": "akhil",
-      "email": "AKH@GMA.COM",
-      "mobile": "4444444444",
-      "eventId": 3,
-      "skill": "dot net",
-      "invitedBy": ""
-    },
-    {
-      "id": 4,
-      "name": "pranay",
-      "email": "pr@gmail.com",
-      "mobile": "4555555555",
-      "eventId": 3,
-      "skill": "java",
-      "invitedBy": ""
-    },
-    {
-      "id": 5,
-      "name": "rasool",
-      "email": "r@gamil.com",
-      "mobile": "4545454545",
-      "eventId": 3,
-      "skill": "java",
-      "invitedBy": ""
-    }
   ],
   "events": [
     {
-      "id": 3,
-      "name": "mega drive",
-      "eventDate": "2020-05-01",
-      "creationDate": "2020-05-01",
-      "eventTime": "10:01",
+      "id": 1,
+      "name": "Walkin",
+      "eventDate": "2020-06-13",
+      "creationDate": "2020-06-13",
+      "eventTime": "11:22",
       "createdBy": "",
       "skillsList": [
         {
-          "skillName": "dot net",
+          "id": 1,
+          "skill": {
+            "value": "ANGULAR_7",
+            "description": "Angular 7"
+          },
+          "numberOfRounds": "3"
+        },
+        {
+          "id": 2,
+          "skill": {
+            "value": "DOT_NET",
+            "description": "Dot net"
+          },
           "numberOfRounds": "2"
         },
         {
-          "skillName": "Angular",
+          "id": 3,
+          "skill": {
+            "value": "JAVA",
+            "description": "Java"
+          },
           "numberOfRounds": "3"
-        },
-        {
-          "skillName": "java",
-          "numberOfRounds": "3"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "mega",
-      "eventDate": "2020-04-30",
-      "creationDate": "2020-04-30",
-      "eventTime": "11:11",
-      "createdBy": "",
-      "skillsList": [
-        {
-          "skillName": "ui",
-          "numberOfRounds": "3"
-        },
-        {
-          "skillName": "Angular",
-          "numberOfRounds": "2"
         }
       ]
     }

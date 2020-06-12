@@ -25,6 +25,20 @@
       {{ fieldName }} is required.
     </p>
     <p
+    *ngIf="
+      formObject &&
+      formObject['controls'] &&
+      formObject['controls'][controlName] &&
+      formObject['controls'][controlName].controls &&
+      formObject['controls'][controlName].controls.description &&
+      formObject['controls'][controlName].controls.description.hasError(
+        'duplicate'
+      )
+    "
+  >
+    Duplicate not allowed.
+  </p>
+    <p
       *ngIf="
         formObject &&
         formObject['controls'] &&

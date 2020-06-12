@@ -164,8 +164,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     } else {
       this.createEvent(requestBody);
     }
-    this.onReset();
-  };
+    };
 
   onReset = () => {
     this.resetField = true;
@@ -181,11 +180,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     this._subscriptions.add(
       this.manageEventsService.updateEvent(requestBody).subscribe(
         (response) => {
-          console.log("update successfull");
           this.getEventsList();
           this.alerts = [
             { code: "SUCCESS", systemMessage: "Updated sucessfully" },
           ];
+          this.clearSkillFields();
+    this.onReset();
         },
         (errors) => {
           console.log(errors);
@@ -198,11 +198,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     this._subscriptions.add(
       this.manageEventsService.createEvent(requestBody).subscribe(
         (response) => {
-          console.log(response);
           this.getEventsList();
           this.alerts = [
             { code: "SUCCESS", systemMessage: "Event created successfully" },
           ];
+          this.clearSkillFields();
+    this.onReset();
         },
         (errors) => {
           console.log(errors);
@@ -226,17 +227,29 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   addNewSkill = () => {
-    let eachSkill = {
-      skill: {
-        value: this.formGroupObject.controls.skill["controls"].value.value,
-        description: this.formGroupObject.controls.skill["controls"].description
+    if (
+      this.formGroupObject.controls.skill["controls"].value.value &&
+      this.formGroupObject.controls.numberOfRounds.value
+    ) {
+      
+      let eachSkill = {
+        id: this.skillsList.length+1,
+        skill: {
+          value: this.formGroupObject.controls.skill["controls"].value.value,
+          description: this.formGroupObject.controls.skill["controls"].description
           .value,
-      },
-      numberOfRounds: this.formGroupObject.controls.numberOfRounds.value,
-    };
-    this.skillsList.push(eachSkill);
-    // this.handleMandatorySkill();
-    this.clearSkillFields();
+        },
+        numberOfRounds: this.formGroupObject.controls.numberOfRounds.value,
+      };
+      this.skillsList.push(eachSkill);
+      this.clearSkillFields();
+      this.onChangeOfRounds(null);
+      this.onSkillChange();
+    }else{
+      this.formGroupObject.controls.skill['controls'].description.markAsTouched({ onlySelf: true });
+      this.formGroupObject.controls.numberOfRounds.markAsTouched({ onlySelf: true });
+    }
+
   };
 
   private clearSkillFields = () => {
@@ -257,8 +270,6 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
 
   public removeSkill = (idx) => {
     this.skillsList.splice(idx, 1);
-    console.log("skills 2", this.skillsList);
-    // this.cdr.detectChanges();
   };
 
   public onSkillEdit = (skillObj): void => {
@@ -314,7 +325,6 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       this.manageEventsService.getEvents().subscribe(
         (response) => {
           this.eventsList = response;
-          console.log("events", this.eventsList);
         },
         (errors) => {
           console.log("errors", errors);
@@ -326,7 +336,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   public prepareSkillsForDisplay = (event, isTooltip = false) => {
     let skillList = [];
     if (event && event.skillsList && event.skillsList.length) {
-      event.skillsList.map((item) => skillList.push(item.skillName));
+      event.skillsList.map((item) => skillList.push(item.skill.description));
     }
     let displayText = skillList.join(", ");
     if (displayText && displayText.length > 20) {
@@ -400,12 +410,23 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onSkillOptionSelect = (skill: ValueDescription): void => {
-    this.formGroupObject.controls.skill.setValue({
-      value: skill.value,
-      description: skill.description,
-    });
-    this.filteredSkillOptionsList = [];
-  };
+    if(skill){
+        let isSkillAdded = this.skillsList && this.skillsList.length && this.skillsList.filter((eachSkill) => eachSkill.skill['value'] === skill.value);
+        if(isSkillAdded && isSkillAdded.length){
+          this.formGroupObject.controls.skill['controls'].description.setErrors({
+           duplicate: true
+          });
+          this.filteredSkillOptionsList = [];
+          this.checkForError(this.formGroupObject, 'skill');
+        }else{
+          this.formGroupObject.controls.skill.setValue({
+            value: skill.value,
+            description: skill.description,
+          });
+          this.filteredSkillOptionsList = [];
+        }
+      }
+    }
 
   public onSkillChange = (): void => {
     if (
@@ -427,6 +448,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         []
       );
       this.formGroupObject.controls.skill["controls"].description.setErrors(
+        null
+      );
+      this.formGroupObject.controls.skill["controls"].value.setValidators(
+        []
+      );
+      this.formGroupObject.controls.skill["controls"].value.setErrors(
         null
       );
       this.formGroupObject.controls.numberOfRounds.setValidators([]);
@@ -480,6 +507,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         []
       );
       this.formGroupObject.controls.skill["controls"].description.setErrors(
+        null
+      );
+      this.formGroupObject.controls.skill["controls"].value.setValidators(
+        []
+      );
+      this.formGroupObject.controls.skill["controls"].value.setErrors(
         null
       );
       this.formGroupObject.controls.numberOfRounds.setValidators([]);
