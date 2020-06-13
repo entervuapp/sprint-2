@@ -1,1 +1,79 @@
-<app-manage-skills></app-manage-skills>
+<div class="adminDashboardWrapper">
+
+    <div class="adminSearchAddSkillBlock">
+       <div class="container">
+          <div class="adminSearchAddSkillCard"> 
+            <div class="adminSearchCard" *ngIf="adminSearchCardEnable">
+                <div class="adminSearchCardForm">
+                        <form>
+                            <div class="form-group">
+                                <label for="skillSearch">Search Skill:</label>
+                                <div class="adminSearchInputGrp">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Skill Search"
+                                        id="skillSearch"
+                                    />
+                                    <span
+                                        class="adminSearchIcon"
+                                        ><fa-icon [icon]="fontAwesome.faSearch"></fa-icon
+                                    ></span>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+                <div class="adminSearchAddBtn">
+                    <span
+                        class="adminSearchPlusIcon"
+                        (click)="adminAddSkillEnable()"
+                        ><fa-icon [icon]="fontAwesome.faPlus"></fa-icon
+                    ></span>
+                </div>
+            </div>
+        
+            <div class="adminAddSkillCard" *ngIf="adminAddSkillCardEnable">
+                <div class="adminAddSkillCardForm">
+                        <form>
+                            <div class="adminAddSkillForm">
+                                <p class="adminAddSkillFormHead">Add Skills:</p>
+                                <div class="form-group skillIdFormGrp">
+                                    <input type="text" class="form-control" id="skillId" placeholder="Skill Id">
+                                </div>
+                                <div class="form-group skillNameFormGrp">
+                                    <input type="text" class="form-control" id="skillName" placeholder="Skill Name">
+                                </div>
+                                <button type="submit" class="btn btn-default skillSubmitBtn">Submit</button>
+                            </div>
+                        </form>
+                </div>
+                <div class="adminAddSearchBtn">
+                    <span
+                        class="adminAddSearchIcon"
+                        (click)="adminSearchEnable()"
+                        ><fa-icon [icon]="fontAwesome.faSearch"></fa-icon
+                    ></span>
+                </div>
+            </div>
+           </div>
+        </div>
+     </div>
+
+     <div class="skillListBlock">
+        <div class="container">
+           <div class="skillListCard">
+              <div class="row">
+                 <div class="col-sm-6 skillListCol" *ngFor="let skillList of adminSkillList">
+                    <div class="skillListTable">
+                        <label class="skillListId">{{ skillList.id }}</label>
+                        <p class="skillListName">{{ skillList.skillName }}</p>
+                    </div>
+                </div>
+              </div>
+           </div>
+        </div>
+     </div>
+
+ </div>
+
+<!-- <app-manage-skills></app-manage-skills> -->
