@@ -1,52 +1,69 @@
 {
   "skills": [
     {
+      "id": 1,
       "description": "Angular Js",
       "value": "ANGULAR_JS"
     },
     {
+      "id": 2,
       "description": "Angular 2",
       "value": "ANGULAR_2"
     },
     {
+      "id": 3,
       "description": "Angular 4",
       "value": "ANGULAR_4"
     },
     {
+      "id": 4,
       "description": "Angular 5",
       "value": "ANGULAR_5"
     },
     {
+      "id": 5,
       "description": "Angular 6",
       "value": "ANGULAR_6"
     },
     {
+      "id": 6,
       "description": "Angular 7",
       "value": "ANGULAR_7"
     },
     {
+      "id": 7,
       "description": "Angular 8",
       "value": "ANGULAR_8"
     },
     {
+      "id": 8,
       "description": "Angular 9",
       "value": "ANGULAR_9"
     },
     {
+      "id": 9,
       "description": "Dot net",
       "value": "DOT_NET"
     },
     {
+      "id": 10,
       "description": "Java",
       "value": "JAVA"
     },
     {
+      "id": 11,
       "description": "React Js",
       "value": "REACT_JS"
     },
     {
+      "id": 12,
       "description": "Vue Js",
       "value": "VUE_JS"
+    },
+    {
+      "id": 13,
+      "value": "JAVASCRIPT",
+      "description": "Javascript"
     }
   ],
   "candidates": [

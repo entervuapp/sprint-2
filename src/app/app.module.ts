@@ -23,17 +23,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
     FontAwesomeModule,
-    ReactiveFormsModule,
     AppRoutingModule,
     ResourcesModule,
     SlickCarouselModule,
     CommonsModule,
     PipesModule,
-    BrowserAnimationsModule,
   ],
   entryComponents: [],
   providers: [
@@ -45,5 +45,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DatePipe,
   ],
   bootstrap: [AppComponent],
+  
 })
 export class AppModule {}
