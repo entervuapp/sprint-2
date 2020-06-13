@@ -63,6 +63,16 @@ export default class ObjectUtil {
             isError = true;
           }
           break;
+        case "value":
+          if (
+            (formObj.controls[property].hasError("required") &&
+              formObj.controls[property].touched) ||
+            formObj.controls[property].hasError("minlength") ||
+            formObj.controls[property].hasError("maxlength")
+          ) {
+            isError = true;
+          }
+          break;
         case "skill":
           if (
             (formObj.controls[property]["controls"].description.hasError(

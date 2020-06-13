@@ -1,0 +1,199 @@
+.adminDashboardWrapper{
+    padding: 30px 0px;
+}
+.adminSearchAddSkillBlock{
+    display: inline-block;
+    width: 100%;
+}
+.adminSearchAddSkillCard{
+    border-bottom: 1px solid #ffb200;
+    padding: 20px 15px 15px 15px;
+    width: 100%;
+    display: inline-block;
+    position: relative;
+    margin: 0px 0px 20px 0px;
+    box-shadow: 0px 0px 5px #ccc;
+    border-bottom: 1px solid #ccc;
+}
+/* Admin search form css start */
+.adminSearchCard{
+    display: flex;
+    justify-content: center;
+}
+.adminSearchCardForm{
+    width: 80%;
+    float: left;
+}
+.adminAddSkillFormHead{
+    margin-bottom: .5rem;
+    font-size: 16px;
+    color: #333;
+}
+.adminSearchInputGrp{
+    position: relative;
+}
+.adminSearchInputGrp .form-control{
+    border-radius: 6px;
+    padding: 6px 65px 6px 12px; 
+}
+.adminSearchIcon{
+    background: #00aff5;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    min-height: 38px;
+    padding: 6px 20px 6px 20px;
+    border-radius: 0px 6px 6px 0px;
+    color: #fff;
+    cursor: pointer;
+}
+.adminSearchIcon:hover{
+    background: #075f82;
+    color: #fff;
+}
+.adminSearchAddBtn{
+    width: auto;
+    float: left;
+    text-align: center;
+    margin: 28px 20px 0px 20px;
+}
+.adminSearchPlusIcon{
+    background: #ffb200;
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    border-radius: 50%;
+    padding: 6px 0px 0px 0px;
+    text-align: center;
+    border: 2px solid #ffb200;
+    cursor: pointer;
+}
+.adminSearchPlusIcon:hover {
+    border: 2px solid #ffb200;
+    background: #fff;
+    color: #ffb200;
+}
+.adminSearchPlusIcon .ng-fa-icon{
+    font-size: 20px;
+}
+/* Admin search form css end */
+
+/* Admin Add Skill form css start */
+.adminAddSkillCard{
+    display: flex;
+    justify-content: center;
+}
+.adminAddSkillCardForm{
+    width: 80%;
+    float: left;
+}
+.adminAddSkillForm{
+    width: 100%;
+    position: relative;
+    display: inline-block;
+}
+.skillIdFormGrp{
+    width: 25%;
+    float: left;
+}
+.skillIdFormGrp .form-control{
+    padding: 5px 10px 5px 10px;
+    border-radius: 6px 0px 0px 6px;
+}
+.skillNameFormGrp{
+    width: 75%;
+    float: left;
+}
+.skillNameFormGrp .form-control{
+    border-radius: 0px 6px 6px 0px;
+    padding: 5px 90px 5px 10px;
+}
+.skillSubmitBtn{
+    position: absolute;
+    right: 0px;
+    bottom: 16px;
+    background: #00aff5;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 6px 12px 6px 12px;
+    border-radius: 0px 6px 6px 0px;
+}
+.skillSubmitBtn:hover{
+    background: #075f82;
+    color: #fff;
+}
+.adminAddSearchBtn{
+    width: auto;
+    float: left;
+    text-align: center;
+    margin: 28px 20px 0px 20px;
+}
+.adminAddSearchIcon{
+    background: #ffb200;
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    display: inline-block;
+    border-radius: 50%;
+    padding: 6px 0px 0px 0px;
+    text-align: center;
+    border: 2px solid #ffb200;
+    cursor: pointer;
+}
+.adminAddSearchIcon:hover {
+    border: 2px solid #ffb200;
+    background: #fff;
+    color: #ffb200;
+}
+.adminAddSearchIcon .ng-fa-icon{
+    font-size: 20px;
+}
+/* Admin Add Skill form css end */
+
+/* Skill list table css start */
+.skillListBlock{
+ margin: 15px 0px;
+}
+.skillListCol:nth-child(odd) {
+    border-right: 1px solid #ccc;
+}
+.skillListTable:nth-child(odd){
+  padding: 12px 0px 12px 0px;
+    border-bottom: 1px solid #ccc;
+}
+.skillListId{
+    float: left;
+    width: auto;
+    padding: 0px;
+    margin: 0px 12px 0px 0px;
+    font-size: 16px;
+    color: #00aff5;
+    font-weight: 600;
+    min-width: 40px;
+}
+.skillListName{
+    font-size: 16px;
+    color: #333;
+    margin: 0px;
+    position: relative;
+    width: 100%;
+    padding: 0px 60px 0px 0px;
+}
+.skillEditDeleteCard{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.skillEditIcon{
+    margin: 0px 10px;
+    cursor: pointer;
+    color: #345c82;
+}
+.skillDeleteIcon{
+    margin: 0px 0px 0px 5px;
+    cursor: pointer;
+    color: #dd2f62;
+}
+/* Skill list table css end */

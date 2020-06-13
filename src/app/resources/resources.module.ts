@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ResourcesRoutingModule } from "./resources-routing.module";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 //Modules
 import { IndividualModule } from "./individual/individual.module";
@@ -27,7 +28,9 @@ const COMPONENTS_LIST = [MainScreenComponent];
     ...RESOURCE_MODULE_LIST,
     CommonsModule,
     MaterialComponentsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  exports: [...RESOURCE_MODULE_LIST, COMPONENTS_LIST],
+  exports: [...RESOURCE_MODULE_LIST, COMPONENTS_LIST, ReactiveFormsModule, FormsModule],
 })
 export class ResourcesModule {}
