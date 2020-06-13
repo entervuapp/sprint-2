@@ -66,7 +66,14 @@
                  <div class="col-sm-6 skillListCol" *ngFor="let skillList of adminSkillList">
                     <div class="skillListTable">
                         <label class="skillListId">{{ skillList.id }}</label>
-                        <p class="skillListName">{{ skillList.skillName }}</p>
+                        <p class="skillListName">{{ skillList.skillName }}
+                            <span class="skillEditDeleteCard">
+                                <span class="skillEditIcon"><fa-icon [icon]="fontAwesome.faEdit"></fa-icon
+                                    ></span>
+                                <span class="skillDeleteIcon"><fa-icon [icon]="fontAwesome.faTrash"></fa-icon
+                                    ></span>
+                            </span>
+                        </p>
                     </div>
                 </div>
               </div>

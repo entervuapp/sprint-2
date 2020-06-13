@@ -177,5 +177,23 @@
     font-size: 16px;
     color: #333;
     margin: 0px;
+    position: relative;
+    width: 100%;
+    padding: 0px 60px 0px 0px;
+}
+.skillEditDeleteCard{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.skillEditIcon{
+    margin: 0px 10px;
+    cursor: pointer;
+    color: #345c82;
+}
+.skillDeleteIcon{
+    margin: 0px 0px 0px 5px;
+    cursor: pointer;
+    color: #dd2f62;
 }
 /* Skill list table css end */
