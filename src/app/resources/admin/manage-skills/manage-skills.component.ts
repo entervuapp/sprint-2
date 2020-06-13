@@ -34,7 +34,7 @@ export class ManageSkillsComponent implements OnInit {
     private manageSkillsService: ManageSkillsService
   ) {}
 
-  ngOnInit = (): void => {
+  ngOnInit() {
     this.initializeForm();
     this.searchSkillCardEnable = true;
     this.addSkillCardEnable = false;
@@ -44,11 +44,11 @@ export class ManageSkillsComponent implements OnInit {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
     this.getSkills();
-  };
+  }
 
-  ngOnDestroy = (): void => {
+  ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
-  };
+  }
 
   private initializeForm = (): void => {
     this.skillSearchControl = new FormControl("");
