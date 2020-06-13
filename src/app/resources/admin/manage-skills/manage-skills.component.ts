@@ -35,6 +35,7 @@ export class ManageSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log("awa");
     this.initializeForm();
     this.searchSkillCardEnable = true;
     this.addSkillCardEnable = false;
