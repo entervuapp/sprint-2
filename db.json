@@ -2,8 +2,8 @@
   "skills": [
     {
       "id": 1,
-      "description": "Angular Js",
-      "value": "ANGULAR_JS"
+      "value": "ANGULAR_JS",
+      "description": "Angular Js"
     },
     {
       "id": 2,
@@ -104,8 +104,8 @@
         {
           "id": 1,
           "skill": {
-            "value": "ANGULAR_7",
-            "description": "Angular 7"
+            "value": "ANGULAR_2",
+            "description": "Angular 2"
           },
           "numberOfRounds": "3"
         },

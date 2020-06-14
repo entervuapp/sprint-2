@@ -1,0 +1,1 @@
+1. on update of skill in an event, and that skill has candidates, will be lost ?
