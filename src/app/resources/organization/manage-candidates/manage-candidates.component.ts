@@ -11,15 +11,19 @@ import { ManageHeaderService } from "../../../commons/services/manage-header/man
 import { ActivatedRoute } from "@angular/router";
 import { ManageEventsService } from "../../organization/manage-events/manage-events/manage-events.service";
 import { Subscription } from "rxjs";
-import { Alerts, ValueDescription, SkillAndActive } from "../../../commons/typings/typings";
+import {
+  Alerts,
+  ValueDescription,
+  SkillAndActive,
+} from "../../../commons/typings/typings";
 import { ManageCandidateService } from "./manage-candidates/manage-candidate.service";
+import { template } from "@angular/core/src/render3";
 
 @Component({
   selector: "app-manage-candidates",
   templateUrl: "./manage-candidates.component.html",
   styleUrls: ["./manage-candidates.component.scss"],
 })
-
 export class ManageCandidatesComponent implements OnInit {
   eventDetails;
   alerts: Alerts[];
@@ -29,12 +33,13 @@ export class ManageCandidatesComponent implements OnInit {
   eventId: number;
   candidatesList: any[];
   originalCandidatesList: any[];
+  public candidateSearchControl: FormControl;
   public skillTabsList: SkillAndActive[];
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
   public displayTextObject: object;
 
-  @ViewChild('skillSelect') skillSelect: ElementRef;
+  @ViewChild("skillSelect") skillSelect: ElementRef;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -46,13 +51,14 @@ export class ManageCandidatesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.candidateSearchControl = new FormControl("");
     this.displayTextObject = {
       name: "Name",
       mobile: "Mobile",
-      email:"Email",
+      email: "Email",
       skill: "Skill",
-      addCandidate: "Add candidate"
-    }
+      addCandidate: "Add candidate",
+    };
     this.originalCandidatesList = [];
     this.eventDetails = {};
     this.skillTabsList = [];
@@ -76,8 +82,8 @@ export class ManageCandidatesComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    console.log('view init',this.skillSelect.nativeElement.value);
-}
+    console.log("view init", this.skillSelect.nativeElement.value);
+  }
 
   private initializeForm = () => {
     this.myForm = this.fb.group({
@@ -92,7 +98,10 @@ export class ManageCandidatesComponent implements OnInit {
       eventId: new FormControl(this.eventId, []),
       skill: new FormGroup({
         value: new FormControl("", [Validators.required]),
-        description: new FormControl("", [Validators.required, Validators.minLength(2)])
+        description: new FormControl("", [
+          Validators.required,
+          Validators.minLength(2),
+        ]),
       }),
       invitedBy: new FormControl("", []),
     });
@@ -175,7 +184,6 @@ export class ManageCandidatesComponent implements OnInit {
   public onCancel = () => {
     this.myForm.reset();
     setTimeout(() => {
-
       this.myForm.controls.eventId.setValue(this.eventId);
       this.onSkillSelect();
     }, 500);
@@ -220,9 +228,9 @@ export class ManageCandidatesComponent implements OnInit {
     ) {
       this.eventDetails.skillsList.forEach((eachSkill, key) => {
         let skillObj = {
-          skill:{
+          skill: {
             description: eachSkill.skill.description,
-            value : eachSkill.skill.value
+            value: eachSkill.skill.value,
           },
           active: key === 0 ? true : false,
         };
@@ -233,6 +241,7 @@ export class ManageCandidatesComponent implements OnInit {
   };
 
   public onSkillTabClick = (skill): void => {
+    this.candidateSearchControl.setValue("");
     this.markSkillAsActive(skill);
     this.filterCandidatesForSkill(skill);
   };
@@ -240,7 +249,11 @@ export class ManageCandidatesComponent implements OnInit {
   private markSkillAsActive = (activeSkill): void => {
     if (this.skillTabsList && this.skillTabsList.length) {
       this.skillTabsList.forEach((item) => {
-        if (activeSkill && item.skill && item.skill.value === activeSkill.skill.value) {
+        if (
+          activeSkill &&
+          item.skill &&
+          item.skill.value === activeSkill.skill.value
+        ) {
           item.active = true;
         } else {
           item.active = false;
@@ -275,15 +288,46 @@ export class ManageCandidatesComponent implements OnInit {
     }
     if (activeSkill && activeSkill.skill && activeSkill.skill.description) {
       this.candidatesList = this.originalCandidatesList.filter(
-        (candidate) => candidate.skill.description === activeSkill.skill.description
+        (candidate) =>
+          candidate.skill.description === activeSkill.skill.description
       );
     }
   };
 
-  public onSkillSelect =(selectedSkill = null) => {
-    if(!selectedSkill){
-      selectedSkill = this.skillDropDownList.find(skill => skill.value === this.skillSelect.nativeElement.value);
+  public onSkillSelect = (selectedSkill = null) => {
+    if (!selectedSkill) {
+      selectedSkill = this.skillDropDownList.find(
+        (skill) => skill.value === this.skillSelect.nativeElement.value
+      );
     }
-    this.myForm.controls.skill.setValue({value: selectedSkill['value'], description: selectedSkill['description']});
-  }
+    this.myForm.controls.skill.setValue({
+      value: selectedSkill["value"],
+      description: selectedSkill["description"],
+    });
+  };
+
+  public onCandidateSearch = () => {
+    let activeSkill = this.skillTabsList.find((item) => item.active);
+    if (activeSkill && activeSkill.skill && activeSkill.skill.description) {
+      this.candidatesList = this.originalCandidatesList
+        .filter(
+          (candidate) =>
+            candidate.skill.description === activeSkill.skill.description
+        )
+        .filter(
+          (candidate) =>
+            candidate.name
+              .toLowerCase()
+              .indexOf(this.candidateSearchControl.value.toLowerCase()) !==
+              -1 ||
+            candidate.email
+              .toLowerCase()
+              .indexOf(this.candidateSearchControl.value.toLowerCase()) !==
+              -1 ||
+            candidate.mobile
+              .toLowerCase()
+              .indexOf(this.candidateSearchControl.value.toLowerCase()) !== -1
+        );
+    }
+  };
 }
