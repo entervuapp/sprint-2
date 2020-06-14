@@ -156,13 +156,10 @@ export class ManageSkillsComponent implements OnInit {
     }
   };
 
-  private resetAddForm = (): void => {
-    this.initializeForm();
-    this.addSkillForm.controls.value.markAsUntouched();
-    this.addSkillForm.controls.value.markAsPristine();
-    this.addSkillForm.controls.description.markAsUntouched();
-    this.addSkillForm.controls.description.markAsPristine();
-    this.addSkillForm.reset();
+  private resetAddForm = () => {
+    setTimeout(() => {
+      this.addSkillForm.reset();
+    }, 100);
   };
 
   public onSearch = (): void => {
@@ -182,11 +179,19 @@ export class ManageSkillsComponent implements OnInit {
   };
 
   public onBlurOfSkillId = (): void => {
-    let filteredList = this.filterSkillsList.filter(
-      (skill) =>
-        skill.value.toLowerCase() ===
-        this.addSkillForm.controls.value.value.toLowerCase()
-    );
+    let filteredList = [];
+    if (
+      this.addSkillForm &&
+      this.addSkillForm.controls &&
+      this.addSkillForm.controls.value &&
+      this.addSkillForm.controls.value.value
+    ) {
+      filteredList = this.filterSkillsList.filter(
+        (skill) =>
+          skill.value.toLowerCase() ===
+          this.addSkillForm.controls.value.value.toLowerCase()
+      );
+    }
     if (filteredList && filteredList.length) {
       this.addSkillForm.controls.value.setErrors({ duplicate: true });
     } else {
@@ -196,12 +201,20 @@ export class ManageSkillsComponent implements OnInit {
     }
   };
 
-  public onBlurOfSkillName = () => {
-    let filteredList = this.filterSkillsList.filter(
-      (skill) =>
-        skill.description.toLowerCase() ===
-        this.addSkillForm.controls.description.value.toLowerCase()
-    );
+  public onBlurOfSkillName = (): void => {
+    let filteredList = [];
+    if (
+      this.addSkillForm &&
+      this.addSkillForm.controls &&
+      this.addSkillForm.controls.description &&
+      this.addSkillForm.controls.description.value
+    ) {
+      filteredList = this.filterSkillsList.filter(
+        (skill) =>
+          skill.description.toLowerCase() ===
+          this.addSkillForm.controls.description.value.toLowerCase()
+      );
+    }
     if (filteredList && filteredList.length) {
       this.addSkillForm.controls.description.setErrors({ duplicate: true });
     } else {
