@@ -2,6 +2,7 @@
   <div class="adminSearchAddSkillBlock">
     <div class="container">
       <div class="adminSearchAddSkillCard">
+        add{{ addSkillForm.valid }}
         <div class="adminSearchCard" *ngIf="searchSkillCardEnable">
           <div class="adminSearchCardForm">
             <form>
@@ -13,7 +14,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="Skill Search"
+                    [placeholder]="displayTextObject['skillSearch']"
                     id="skillSearch"
                     [formControl]="skillSearchControl"
                     (input)="onSearch()"
@@ -40,7 +41,9 @@
               appFocusInvalidInput
             >
               <div class="adminAddSkillForm">
-                <p class="adminAddSkillFormHead">Add Skills:</p>
+                <p class="adminAddSkillFormHead">
+                  {{ displayTextObject["addSkills"] }}
+                </p>
                 <div class="form-group skillIdFormGrp">
                   <input
                     type="text"
@@ -49,8 +52,9 @@
                       'input-field-error': checkForError(addSkillForm, 'value')
                     }"
                     id="skillId"
-                    placeholder="Skill Id"
+                    [placeholder]="displayTextObject['skillId']"
                     [formControl]="addSkillForm.controls.value"
+                    (blur)="onBlurOfSkillId()"
                   />
                   <app-error-message
                     *ngIf="checkForError(addSkillForm, 'value')"
@@ -70,8 +74,9 @@
                       )
                     }"
                     id="skillName"
-                    placeholder="Skill Name"
+                    [placeholder]="displayTextObject['skillName']"
                     [formControl]="addSkillForm.controls.description"
+                    (blur)="onBlurOfSkillName()"
                   />
                   <app-error-message
                     *ngIf="checkForError(addSkillForm, 'description')"

@@ -38,6 +38,10 @@ export class ManageSkillsComponent implements OnInit {
   ngOnInit() {
     this.displayTextObject = {
       searchSkill: "Search Skill",
+      addSkills: "Add skills",
+      skillSearch: "Skill search",
+      skillId: "Skill ID",
+      skillName: "Skill name",
     };
     this.initializeForm();
     this.searchSkillCardEnable = true;
@@ -174,6 +178,36 @@ export class ManageSkillsComponent implements OnInit {
       );
     } else {
       this.filterSkillsList = [...this.originalSkillsList];
+    }
+  };
+
+  public onBlurOfSkillId = (): void => {
+    let filteredList = this.filterSkillsList.filter(
+      (skill) =>
+        skill.value.toLowerCase() ===
+        this.addSkillForm.controls.value.value.toLowerCase()
+    );
+    if (filteredList && filteredList.length) {
+      this.addSkillForm.controls.value.setErrors({ duplicate: true });
+    } else {
+      this.addSkillForm.controls.value.hasError("duplicate")
+        ? this.addSkillForm.controls.value.setErrors(null)
+        : "";
+    }
+  };
+
+  public onBlurOfSkillName = () => {
+    let filteredList = this.filterSkillsList.filter(
+      (skill) =>
+        skill.description.toLowerCase() ===
+        this.addSkillForm.controls.description.value.toLowerCase()
+    );
+    if (filteredList && filteredList.length) {
+      this.addSkillForm.controls.description.setErrors({ duplicate: true });
+    } else {
+      this.addSkillForm.controls.description.hasError("duplicate")
+        ? this.addSkillForm.controls.description.setErrors(null)
+        : "";
     }
   };
 }
