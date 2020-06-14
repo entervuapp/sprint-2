@@ -24,6 +24,7 @@ export class ManageSkillsComponent implements OnInit {
   originalSkillsList: ValueDescription[];
   searchSkillCardEnable: boolean;
   addSkillCardEnable: boolean;
+  public displayTextObject: object;
   public addSkillForm: FormGroup;
   public skillSearchControl: FormControl;
 
@@ -35,6 +36,9 @@ export class ManageSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.displayTextObject = {
+      searchSkill: "Search Skill",
+    };
     this.initializeForm();
     this.searchSkillCardEnable = true;
     this.addSkillCardEnable = false;
@@ -162,6 +166,9 @@ export class ManageSkillsComponent implements OnInit {
       this.filterSkillsList = this.originalSkillsList.filter(
         (skill) =>
           skill["description"]
+            .toLowerCase()
+            .indexOf(this.skillSearchControl.value.toLowerCase()) !== -1 ||
+          skill["value"]
             .toLowerCase()
             .indexOf(this.skillSearchControl.value.toLowerCase()) !== -1
       );

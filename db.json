@@ -83,13 +83,37 @@
       "id": 2,
       "name": "rasool",
       "email": "r@gmail.com",
-      "mobile": "1313131313",
+      "mobile": "2313131313",
       "eventId": 1,
       "skill": {
         "value": "DOT_NET",
         "description": "Dot net"
       },
       "invitedBy": null
+    },
+    {
+      "id": 3,
+      "name": "awa",
+      "email": "awa@gmail.com",
+      "mobile": "1313131313",
+      "eventId": 1,
+      "skill": {
+        "value": "DOT_NET",
+        "description": "Dot net"
+      },
+      "invitedBy": ""
+    },
+    {
+      "id": 4,
+      "name": "kiran",
+      "email": "k@gmail.com",
+      "mobile": "8887878788",
+      "eventId": 1,
+      "skill": {
+        "value": "ANGULAR_2",
+        "description": "Angular 2"
+      },
+      "invitedBy": ""
     }
   ],
   "events": [

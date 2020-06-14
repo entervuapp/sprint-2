@@ -140,6 +140,16 @@
           role="tabpanel"
           attr.aria-labelledby="tab-tab"
         >
+          <div>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search"
+              id="skillSearch"
+              [formControl]="candidateSearchControl"
+              (input)="onCandidateSearch()"
+            />
+          </div>
           <table class="table table-bordered table-md">
             <thead>
               <tr>
