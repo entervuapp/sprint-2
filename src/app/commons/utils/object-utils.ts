@@ -55,7 +55,8 @@ export default class ObjectUtil {
         case "firstName":
         case "description":
           if (
-            (formObj.controls[property].hasError("required") &&
+            ((formObj.controls[property].hasError("required") ||
+              formObj.controls[property].hasError("duplicate")) &&
               formObj.controls[property].touched) ||
             formObj.controls[property].hasError("minlength") ||
             formObj.controls[property].hasError("maxlength")
@@ -65,7 +66,8 @@ export default class ObjectUtil {
           break;
         case "value":
           if (
-            (formObj.controls[property].hasError("required") &&
+            ((formObj.controls[property].hasError("required") ||
+              formObj.controls[property].hasError("duplicate")) &&
               formObj.controls[property].touched) ||
             formObj.controls[property].hasError("minlength") ||
             formObj.controls[property].hasError("maxlength")
@@ -89,7 +91,10 @@ export default class ObjectUtil {
             isError = true;
           }
 
-          if ((formObj.controls[property]["controls"].description.hasError("duplicate") &&
+          if (
+            (formObj.controls[property]["controls"].description.hasError(
+              "duplicate"
+            ) &&
               formObj.controls[property]["controls"].description.touched) ||
             formObj.controls[property]["controls"].description.hasError(
               "minlength"
