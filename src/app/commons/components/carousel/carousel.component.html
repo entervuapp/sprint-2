@@ -1,17 +1,23 @@
 <!-- You can now use your library component in app.component.html -->
-<ngx-slick-carousel
-  class="carousel"
-  #slickModal="slick-carousel"
-  [config]="slideConfig"
-  (init)="slickInit($event)"
-  (breakpoint)="breakpoint($event)"
-  (afterChange)="afterChange($event)"
-  (beforeChange)="beforeChange($event)"
->
-  <div ngxSlickItem *ngFor="let slide of slides" class="slide each-slide">
-    {{ slide }}
-  </div>
-</ngx-slick-carousel>
+<div class="InterviewSlideCount">
+  <h3 class="InterviewSlideCountHead">Today Interviews List</h3>
+  <ngx-slick-carousel
+    class="carousel"
+    #slickModal="slick-carousel"
+    [config]="slideConfig"
+    (init)="slickInit($event)"
+    (breakpoint)="breakpoint($event)"
+    (afterChange)="afterChange($event)"
+    (beforeChange)="beforeChange($event)"
+  >
+    <div ngxSlickItem *ngFor="let slide of slides" class="slide each-slide">
+      <div class="interviewSlideCard">
+        <p class="interviewSlideCardHead">{{ slide.InterviewName }}</p>
+        <p class="interviewSlideCardMembers">{{ slide.members }} Members</p>
+      </div>
+    </div>
+  </ngx-slick-carousel>
+</div>
 
 <!--
 <button (click)="addSlide()">Add</button>

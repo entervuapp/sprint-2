@@ -77,3 +77,22 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.nav-btn.slick-arrow {
+  position: absolute;
+  top: 24px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+.nav-btn.slick-arrow > img {
+  width: 100%;
+  height: auto;
+}
+.prev-slide.slick-arrow {
+  left: -50px;
+}
+
+.next-slide.slick-arrow {
+  right: -50px;
+}
