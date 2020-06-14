@@ -1,16 +1,11 @@
 <div class="addCandidatesBlock container">
   <div class="addCandidatesFormBlock">
-    <form
-      [formGroup]="myForm"
-      appHighlightRequiredFields
-      appFocusInvalidInput
-      appFocusFirstEmptyInput
-    >
-      <h2>{{displayTextObject['addCandidate']}}</h2>
+    <form [formGroup]="myForm" appHighlightRequiredFields appFocusInvalidInput>
+      <h2>{{ displayTextObject["addCandidate"] }}</h2>
       <div class="addCandidatesForm">
         <div class="form-group formGroupAddCandidate">
           <div class="input-group">
-            <label for="name">{{displayTextObject['name']}}</label>
+            <label for="name">{{ displayTextObject["name"] }}</label>
             <input
               type="text"
               class="form-control"
@@ -32,7 +27,7 @@
         </div>
         <div class="form-group formGroupAddCandidate">
           <div class="input-group">
-            <label for="email">{{displayTextObject['email']}}</label>
+            <label for="email">{{ displayTextObject["email"] }}</label>
             <input
               type="text"
               class="form-control"
@@ -54,7 +49,7 @@
         </div>
         <div class="form-group formGroupAddCandidate">
           <div class="input-group">
-            <label for="mobile">{{displayTextObject['mobile']}}</label>
+            <label for="mobile">{{ displayTextObject["mobile"] }}</label>
             <input
               type="text"
               class="form-control"
@@ -77,9 +72,15 @@
         </div>
         <div class="form-group formGroupAddCandidate">
           <div class="input-group">
-            <label for="skill">{{displayTextObject['skill']}}</label>
-            <select class="custom-select" #skillSelect (change)="onSkillSelect()">
-              <option [value]="skill.value" *ngFor="let skill of skillDropDownList"
+            <label for="skill">{{ displayTextObject["skill"] }}</label>
+            <select
+              class="custom-select"
+              #skillSelect
+              (change)="onSkillSelect()"
+            >
+              <option
+                [value]="skill.value"
+                *ngFor="let skill of skillDropDownList"
                 >{{ skill.description }}
               </option>
             </select>

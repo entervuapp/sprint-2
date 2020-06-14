@@ -5,7 +5,6 @@
       [formGroup]="formGroupObject"
       appHighlightRequiredFields
       appFocusInvalidInput
-      appFocusFirstEmptyInput
     >
       <h2>Add Events</h2>
       <div class="addEventsFormCard">
@@ -124,20 +123,20 @@
                 [controlName]="'skill'"
                 [fieldName]="'Skill'"
               ></app-error-message>
-            <div
-              class="listArrayCard"
-              *ngIf="
-                filteredSkillOptionsList && filteredSkillOptionsList.length
-              "
-            >
-              <p
-                *ngFor="let skill of filteredSkillOptionsList"
-                (click)="onSkillOptionSelect(skill)"
+              <div
+                class="listArrayCard"
+                *ngIf="
+                  filteredSkillOptionsList && filteredSkillOptionsList.length
+                "
               >
-                {{ skill.description }}
-              </p>
+                <p
+                  *ngFor="let skill of filteredSkillOptionsList"
+                  (click)="onSkillOptionSelect(skill)"
+                >
+                  {{ skill.description }}
+                </p>
+              </div>
             </div>
-          </div>
             <div class="form-group formGroupAddEvents">
               <label for="text"
                 >{{ displayTextObj["numberOfRounds"]
@@ -180,7 +179,7 @@
             <div>
               <input
                 type="button"
-                value="Add"
+                [value]="renderSkillId ? 'Update' : 'Add'"
                 class="btn btn-primary addEventSkillBtn"
                 (click)="validateSkillSubmit() && addNewSkill()"
               />
@@ -211,7 +210,9 @@
       </div>
       <div class="eventsSubmitCancelBtns">
         <app-save-cancel-buttons
-          (onSave)="formGroupObject.valid && onSave()"
+          (onSave)="
+            formGroupObject.valid && validateSkillSubmit('save') && onSave()
+          "
           (onCancel)="onReset()"
           [saveButtonName]="formGroupObject.value.id ? 'Update' : 'Save'"
           cancelButtonName="Reset"
