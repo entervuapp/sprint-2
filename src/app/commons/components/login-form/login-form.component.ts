@@ -10,6 +10,7 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../../constants/route-url-path.constan
 import { LoginFormService } from "../../components/login-form/login-form/login-form.service";
 import { AppComponent } from "src/app/app.component";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-login-form",
@@ -20,6 +21,7 @@ export class LoginFormComponent extends AppComponent implements OnInit {
   myForm: FormGroup;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   ROUTE_URL_PATH_CONSTANTS;
+  private _subscriptions = new Subscription();
   @Output() handleSignUpDisplay = new EventEmitter();
   constructor(
     private fb: FormBuilder,
@@ -37,6 +39,10 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
+
   handleSignUp = () => {
     if (this.handleSignUpDisplay) {
       this.handleSignUpDisplay.emit();
@@ -48,17 +54,19 @@ export class LoginFormComponent extends AppComponent implements OnInit {
       email: this.myForm.value.username,
       password: this.myForm.value.password,
     };
-    this.loginFormService.signIn(requestBody).subscribe(
-      (response) => {
-        this.navigateTo(
-          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-        );
-      },
-      (errors) => {
-        if (errors) {
-          console.log("login error", errors);
+    this._subscriptions.add(
+      this.loginFormService.signIn(requestBody).subscribe(
+        (response) => {
+          this.navigateTo(
+            this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+          );
+        },
+        (errors) => {
+          if (errors) {
+            console.log("login error", errors);
+          }
         }
-      }
+      )
     );
   }
 

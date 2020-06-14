@@ -146,13 +146,15 @@ export class SkillsAutocompleteComponent implements OnInit, OnChanges {
   };
 
   private getSkills = (): void => {
-    this.skillsAutocompleteService.getSkills().subscribe(
-      (response) => {
-        this.skillsList = [...response];
-      },
-      (errors) => {
-        console.log(errors);
-      }
+    this._subscriptions.add(
+      this.skillsAutocompleteService.getSkills().subscribe(
+        (response) => {
+          this.skillsList = [...response];
+        },
+        (errors) => {
+          console.log(errors);
+        }
+      )
     );
   };
 
