@@ -3,42 +3,40 @@
   margin: auto;
   background: #fff;
 }
-
-.nav-btn {
-  height: 47px;
-  position: absolute;
-  width: 26px;
-  cursor: pointer;
-  top: 100px !important;
+.InterviewSlideCount{
+  padding: 0px 15px;
+    display: inline-block;
+    width: 100%;
+    margin: 15px 0px 25px 0px;
 }
-
-.prev-slide.slick-disabled,
-.next-slide.slick-disabled {
-  pointer-events: none;
-  opacity: 0.2;
+.InterviewSlideCountHead{
+  font-size: 22px;
+    color: #00aff5;
+    margin: 0px 0px 15px 0px;
 }
-
-.prev-slide {
-  background: url("../../../../assets/images/right-arrow.png") no-repeat scroll
-    0 0;
-  left: -33px;
+.slide.each-slide.slick-slide{
+  padding: 6px 8px;
 }
-
-.next-slide {
-  background: url("../../../../assets/images/right-arrow.png") no-repeat scroll -24px
-    0px;
-  right: -33px;
+.slide.each-slide.slick-slide.slick-active:focus,
+.slide.each-slide.slick-slide.slick-active:active,
+.slide.each-slide.slick-slide:focus,
+.slide.each-slide.slick-slide:active{
+  border: none;
+    outline: none;
 }
-
-.prev-slide:hover {
-  background-position: 0px -53px;
+.interviewSlideCard{
+  border: 1px solid #ffb200;
+    padding: 8px 10px;
 }
-
-.next-slide:hover {
-  background-position: -24px -53px;
+.interviewSlideCardHead{
+  color: #ffb200;
+    font-weight: 500;
+    margin: 0px 0px 5px 0px;
+    font-size: 16px;
 }
-
-.each-slide {
-  height: 100px;
-  width: 100px;
+.interviewSlideCardMembers{
+  color: #333;
+  font-weight: 500;
+  margin: 0px 0px 5px 0px;
+  font-size: 14px;
 }
