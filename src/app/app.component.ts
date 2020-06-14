@@ -29,10 +29,11 @@ export class AppComponent {
     }
   }
 
+  ngOnDestroy(): void {}
+
   public navigateTo(screen: string, queryParams?): void {
     switch (screen) {
       case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD:
-        // this.router.navigate([`/${RouteUrlPathConstants.ROUTE_URL_PATH.home}`], { queryParams: { page: queryParams } });
         this.router.navigate([
           `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD}`,
         ]);

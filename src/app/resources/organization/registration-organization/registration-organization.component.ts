@@ -11,6 +11,7 @@ import { AppComponent } from "src/app/app.component";
 import { LoginFormService } from "../../../commons/components/login-form/login-form/login-form.service";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-registration-organization",
@@ -22,6 +23,7 @@ export class RegistrationOrganizationComponent extends AppComponent
   myForm: FormGroup;
   ROUTE_URL_PATH_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
+  private _subscriptions = new Subscription();
 
   @Output() onLoginClick = new EventEmitter();
 
@@ -59,6 +61,10 @@ export class RegistrationOrganizationComponent extends AppComponent
     });
   }
 
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
+
   showLogin = () => {
     if (this.onLoginClick) {
       this.onLoginClick.emit();
@@ -72,17 +78,18 @@ export class RegistrationOrganizationComponent extends AppComponent
       email: this.myForm.value.officeEmail,
       password: this.myForm.value.password,
     };
-
-    this.loginFormService.singUp(requestBody).subscribe(
-      (response) => {
-        console.log("signup success", response);
-        this.navigateTo(
-          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-        );
-      },
-      (errors) => {
-        console.log("singup error", errors);
-      }
+    this._subscriptions.add(
+      this.loginFormService.singUp(requestBody).subscribe(
+        (response) => {
+          console.log("signup success", response);
+          this.navigateTo(
+            this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+          );
+        },
+        (errors) => {
+          console.log("singup error", errors);
+        }
+      )
     );
   };
 
