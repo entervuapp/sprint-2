@@ -26,6 +26,12 @@ export class API_URLS_CONSTANTS {
         UPDATE_CANDIDATE: `${BASE_URL}/candidates`,
         DELETE_CANDIDATE: `${BASE_URL}/candidates`,
       },
+      MANAGE_HR_TEAM: {
+        GET_TEAM_MEMBERS: `${BASE_URL}/teams`,
+        ADD_TEAM_MEMBERS: `${BASE_URL}/teams`,
+        UPDATE_TEAM_MEMBERS: `${BASE_URL}/teams`,
+        DELETE_TEAM_MEMBERS: `${BASE_URL}/teams`,
+      },
     },
     INDIVIDUAL: { DASHBOARD: { URL: "/individual-dashboard" } },
     ADMIN: {

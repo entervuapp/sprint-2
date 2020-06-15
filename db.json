@@ -1,4 +1,27 @@
 {
+  "teams": [
+    {
+      "name": "Awadhesh",
+      "officeEmail": "awa@gmail.com",
+      "mobile": "1212121212",
+      "organization": "PK Global",
+      "id": 1
+    },
+    {
+      "name": "Kran",
+      "officeEmail": "k@gmail.com",
+      "mobile": "1212121212",
+      "organization": "Cybage",
+      "id": 1
+    },
+    {
+      "name": "Manoj",
+      "officeEmail": "m@gmail.com",
+      "mobile": "1212121214",
+      "organization": "PK Global",
+      "id": 2
+    }
+  ],
   "skills": [
     {
       "id": 1,
@@ -59,11 +82,6 @@
       "id": 12,
       "description": "Vue Js",
       "value": "VUE_JS"
-    },
-    {
-      "id": 13,
-      "value": "1",
-      "description": "1"
     }
   ],
   "candidates": [
