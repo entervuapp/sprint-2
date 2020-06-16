@@ -1,3 +1,5 @@
-<p>
-  on-going-event-organization works!
-</p>
+<app-carousel
+  [eventId]="eventId"
+  (onSelect)="onSelectOfCarousel($event)"
+></app-carousel>
+<app-candidate-queue [selectedSlide]="selectedSlide"></app-candidate-queue>

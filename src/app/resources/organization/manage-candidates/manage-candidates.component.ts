@@ -17,7 +17,6 @@ import {
   SkillAndActive,
 } from "../../../commons/typings/typings";
 import { ManageCandidateService } from "./manage-candidates/manage-candidate.service";
-import { template } from "@angular/core/src/render3";
 
 @Component({
   selector: "app-manage-candidates",

@@ -64,6 +64,14 @@ export class AppComponent {
           { queryParams: { id: queryParams.id } }
         );
         break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ON_GOING_EVENT_ORGANIZATION:
+        this.router.navigate(
+          [
+            `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ON_GOING_EVENT_ORGANIZATION}`,
+          ],
+          { queryParams: { id: queryParams.id } }
+        );
+        break;
       case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN:
         this.router.navigate([
           `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN}`,
