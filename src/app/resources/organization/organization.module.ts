@@ -11,6 +11,7 @@ import { EditProfileOrganizationComponent } from "./edit-profile-organization/ed
 import { ManageCandidatesComponent } from "./manage-candidates/manage-candidates.component";
 import { ManageHrTeamComponent } from "./manage-hr-team/manage-hr-team.component";
 import { ManageEventsComponent } from "./manage-events/manage-events.component";
+import { OnGoingEventOrganizationComponent } from "./on-going-event-organization/on-going-event-organization.component";
 
 const COMPONENTS_LIST = [
   RegistrationOrganizationComponent,
@@ -19,6 +20,7 @@ const COMPONENTS_LIST = [
   ManageCandidatesComponent,
   ManageHrTeamComponent,
   ManageEventsComponent,
+  OnGoingEventOrganizationComponent,
 ];
 
 @NgModule({
