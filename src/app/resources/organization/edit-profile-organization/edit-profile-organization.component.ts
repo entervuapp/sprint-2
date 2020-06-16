@@ -10,6 +10,7 @@ import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesom
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { EditProfileOrganizationService } from "./edit-profile-organization/edit-profile-organization.service";
 import { Subscription } from "rxjs";
+import { Alerts } from "../../../commons/typings/typings";
 
 @Component({
   selector: "app-edit-profile-organization",
@@ -17,9 +18,10 @@ import { Subscription } from "rxjs";
   styleUrls: ["./edit-profile-organization.component.scss"],
 })
 export class EditProfileOrganizationComponent implements OnInit {
-  myForm: FormGroup;
-  FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
+  public myForm: FormGroup;
+  public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
+  public alerts: Alerts[];
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +31,7 @@ export class EditProfileOrganizationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.alerts = [];
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
@@ -40,7 +43,7 @@ export class EditProfileOrganizationComponent implements OnInit {
     this._subscriptions.unsubscribe();
   }
 
-  private initializeForm = (data) => {
+  private initializeForm = (data): void => {
     this.myForm = this.fb.group({
       avatar: new FormControl(data && data.avatar ? data.avatar : ""),
       firstName: new FormControl(data && data.firstName ? data.firstName : "", [
@@ -71,11 +74,11 @@ export class EditProfileOrganizationComponent implements OnInit {
     });
   };
 
-  checkForError(formObj, property) {
+  public checkForError = (formObj: FormGroup, property: string): boolean => {
     return this.objectUtil.checkForFormErrors(formObj, property);
-  }
+  };
 
-  onAvatarChange = (event) => {
+  public onAvatarChange = (event): void => {
     if (event && event.image) {
       this.myForm.controls["avatar"].setValue(event.image);
     } else {
@@ -83,35 +86,30 @@ export class EditProfileOrganizationComponent implements OnInit {
     }
   };
 
-  onResumeChange = (event) => {
-    if (event && event.file) {
-      this.myForm.controls["resume"].setValue(event.file);
-    } else {
-      this.myForm.controls.resume.setValue(null);
-    }
-  };
-
-  onUpdate = () => {
-    console.log("on update", this.myForm.getRawValue());
+  public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
-    this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
-      (response) => {
-        console.log(response);
-        this.getUserProfile();
-      },
-      (errors) => {
-        if (errors) {
-          console.log(errors);
+    this._subscriptions.add(
+      this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
+        (response) => {
+          this.alerts = [
+            { code: "SUCCESS", systemMessage: "Updated sucessfully" },
+          ];
+          this.getUserProfile();
+        },
+        (errors) => {
+          if (errors) {
+            console.log(errors);
+          }
         }
-      }
+      )
     );
   };
 
-  onReset = () => {
-    console.log("on reset", this.myForm.value);
+  public onReset = (): void => {
+    this.myForm.reset();
   };
 
-  private getUserProfile = () => {
+  private getUserProfile = (): void => {
     this._subscriptions.add(
       this.editProfileOrganizationService.getProfile(1).subscribe(
         (response) => {
