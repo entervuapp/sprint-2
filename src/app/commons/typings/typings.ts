@@ -23,3 +23,8 @@ export interface SkillAndActive {
   skill: ValueDescription;
   active: boolean;
 }
+
+export interface SkillWithCount {
+  skill: ValueDescription;
+  candidatesCount: boolean;
+}

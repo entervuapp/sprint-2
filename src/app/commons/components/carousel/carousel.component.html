@@ -10,10 +10,17 @@
     (afterChange)="afterChange($event)"
     (beforeChange)="beforeChange($event)"
   >
-    <div ngxSlickItem *ngFor="let slide of slides" class="slide each-slide">
+    <div
+      ngxSlickItem
+      *ngFor="let slide of slides"
+      class="slide each-slide"
+      (click)="onClickOfCarousel(slide)"
+    >
       <div class="interviewSlideCard">
-        <p class="interviewSlideCardHead">{{ slide.InterviewName }}</p>
-        <p class="interviewSlideCardMembers">{{ slide.members }} Members</p>
+        <p class="interviewSlideCardHead">{{ slide.skill.description }}</p>
+        <p class="interviewSlideCardMembers">
+          {{ slide.candidatesCount }} Members
+        </p>
       </div>
     </div>
   </ngx-slick-carousel>
