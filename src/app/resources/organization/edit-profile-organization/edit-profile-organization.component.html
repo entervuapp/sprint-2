@@ -1,6 +1,7 @@
 <div class="editProfileOrg">
   <div class="editProfileOrgForm">
     <form
+      *ngIf="myForm"
       [formGroup]="myForm"
       appHighlightRequiredFields
       appFocusInvalidInput
@@ -15,129 +16,129 @@
         </div>
       </div>
       <div class="orgProfileForm">
-      <div class="form-group formGroupOrgProfile">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            name="firstName"
-            id="firstName"
-            placeholder="First Name"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'firstName')
-            }"
-            formControlName="firstName"
-          />
+        <div class="form-group formGroupOrgProfile">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="firstName"
+              id="firstName"
+              placeholder="First Name"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'firstName')
+              }"
+              formControlName="firstName"
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'firstName')"
+            [formObject]="myForm"
+            [controlName]="'firstName'"
+            [fieldName]="'First name'"
+          ></app-error-message>
         </div>
-        <app-error-message
-          *ngIf="checkForError(myForm, 'firstName')"
-          [formObject]="myForm"
-          [controlName]="'firstName'"
-          [fieldName]="'First name'"
-        ></app-error-message>
-      </div>
-      <div class="form-group formGroupOrgProfile">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            name="lastName"
-            id="lastName"
-            placeholder="Last Name"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'lastName')
-            }"
-            formControlName="lastName"
-          />
+        <div class="form-group formGroupOrgProfile">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="lastName"
+              id="lastName"
+              placeholder="Last Name"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'lastName')
+              }"
+              formControlName="lastName"
+            />
+          </div>
         </div>
-      </div>
-      <div class="form-group formGroupOrgProfile">
-        <div class="input-group">
-          <input
-            type="email"
-            class="form-control"
-            name="officeEmail"
-            id="officeEmail"
-            placeholder="Office email"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'officeEmail')
-            }"
-            formControlName="officeEmail"
-          />
+        <div class="form-group formGroupOrgProfile">
+          <div class="input-group">
+            <input
+              type="email"
+              class="form-control"
+              name="officeEmail"
+              id="officeEmail"
+              placeholder="Office email"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'officeEmail')
+              }"
+              formControlName="officeEmail"
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'officeEmail')"
+            [formObject]="myForm"
+            [controlName]="'officeEmail'"
+            [fieldName]="'Office Email'"
+          ></app-error-message>
         </div>
-        <app-error-message
-          *ngIf="checkForError(myForm, 'officeEmail')"
-          [formObject]="myForm"
-          [controlName]="'officeEmail'"
-          [fieldName]="'Office Email'"
-        ></app-error-message>
-      </div>
-      <div class="form-group formGroupOrgProfile">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            name="companyName"
-            id="companyName"
-            placeholder="Company name"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'companyName')
-            }"
-            formControlName="companyName"
-          />
-        </div>
-        <app-error-message
-          *ngIf="checkForError(myForm, 'companyName')"
-          [formObject]="myForm"
-          [controlName]="'companyName'"
-          [fieldName]="'Company name'"
-          appNumbersOnly
-        ></app-error-message>
-      </div>
-      <div class="form-group formGroupOrgProfile">
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            name="companyCode"
-            id="companyCode"
-            placeholder="Company code"
+        <div class="form-group formGroupOrgProfile">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="companyName"
+              id="companyName"
+              placeholder="Company name"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'companyName')
+              }"
+              formControlName="companyName"
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'companyName')"
+            [formObject]="myForm"
+            [controlName]="'companyName'"
+            [fieldName]="'Company name'"
             appNumbersOnly
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'companyCode')
-            }"
-            formControlName="companyCode"
-          />
+          ></app-error-message>
         </div>
-        <app-error-message
-          *ngIf="checkForError(myForm, 'companyCode')"
-          [formObject]="myForm"
-          [controlName]="'companyCode'"
-          [fieldName]="'Company code'"
-        ></app-error-message>
-      </div>
-      <div class="form-group formGroupOrgProfile">
-        <div class="input-group">
-          <textarea
-            type="text"
-            class="form-control"
-            name="address"
-            id="address"
-            placeholder="Address"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'address')
-            }"
-            formControlName="address"
-          ></textarea>
+        <div class="form-group formGroupOrgProfile">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="companyCode"
+              id="companyCode"
+              placeholder="Company code"
+              appNumbersOnly
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'companyCode')
+              }"
+              formControlName="companyCode"
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'companyCode')"
+            [formObject]="myForm"
+            [controlName]="'companyCode'"
+            [fieldName]="'Company code'"
+          ></app-error-message>
         </div>
-        <app-error-message
-          *ngIf="checkForError(myForm, 'address')"
-          [formObject]="myForm"
-          [controlName]="'address'"
-          [fieldName]="'Address'"
-        ></app-error-message>
+        <div class="form-group formGroupOrgProfile">
+          <div class="input-group">
+            <textarea
+              type="text"
+              class="form-control"
+              name="address"
+              id="address"
+              placeholder="Address"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'address')
+              }"
+              formControlName="address"
+            ></textarea>
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'address')"
+            [formObject]="myForm"
+            [controlName]="'address'"
+            [fieldName]="'Address'"
+          ></app-error-message>
+        </div>
       </div>
-    </div>
       <div class="form-group formGroupOrgProfile">
         <app-save-cancel-buttons
           saveButtonName="Update"

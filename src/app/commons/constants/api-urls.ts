@@ -32,6 +32,11 @@ export class API_URLS_CONSTANTS {
         UPDATE_TEAM_MEMBERS: `${BASE_URL}/teams`,
         DELETE_TEAM_MEMBERS: `${BASE_URL}/teams`,
       },
+      PROFILE: {
+        GET_PROFILE: `${BASE_URL}/profiles`,
+        UPDATE_PROFILE: `${BASE_URL}/profiles`,
+        DELETE_PROFILE: `${BASE_URL}/profiles`,
+      },
     },
     INDIVIDUAL: { DASHBOARD: { URL: "/individual-dashboard" } },
     ADMIN: {
