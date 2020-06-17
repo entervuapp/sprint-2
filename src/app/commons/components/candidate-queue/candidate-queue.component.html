@@ -1,17 +1,14 @@
+<app-alerts [alertsList]="alerts"></app-alerts>
 <div class="interviewQueue">
   <h3 class="interviewQueueHead">Java Interview Candidents list</h3>
   <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="#">Tech 1</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Tech 2</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">Manager</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#">HR</a>
+    <li class="nav-item" *ngFor="let round of roundsList; let i = index">
+      <a
+        class="nav-link"
+        [ngClass]="{ active: round.active }"
+        (click)="onRoundsTabClick(round)"
+        >{{ round.displayText }}</a
+      >
     </li>
   </ul>
   <div class="table-responsive interviewQueueTabel">
@@ -29,111 +26,6 @@
           <td>1</td>
           <td>Kiran</td>
           <td>In Interview</td>
-          <td>
-            <div class="dropdown actionIcon">
-              <span data-toggle="dropdown">
-                <fa-icon [icon]="fontIcon.faEllipsisV"></fa-icon>
-              </span>
-              <ul class="dropdown-menu">
-                <li>
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#breakStatusPopup"
-                    >Break Status</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#leaveForDayPopup"
-                    >Leaving for the day</a
-                  >
-                </li>
-                <li>
-                  <a href="#" data-toggle="modal" data-target="#feedbackPopup"
-                    >Feedback</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Awadesh</td>
-          <td>In Break</td>
-          <td>
-            <div class="dropdown actionIcon">
-              <span data-toggle="dropdown">
-                <fa-icon [icon]="fontIcon.faEllipsisV"></fa-icon>
-              </span>
-              <ul class="dropdown-menu">
-                <li>
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#breakStatusPopup"
-                    >Break Status</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#leaveForDayPopup"
-                    >Leaving for the day</a
-                  >
-                </li>
-                <li>
-                  <a href="#" data-toggle="modal" data-target="#feedbackPopup"
-                    >Feedback</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Pranay</td>
-          <td>In Interview</td>
-          <td>
-            <div class="dropdown actionIcon">
-              <span data-toggle="dropdown">
-                <fa-icon [icon]="fontIcon.faEllipsisV"></fa-icon>
-              </span>
-              <ul class="dropdown-menu">
-                <li>
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#breakStatusPopup"
-                    >Break Status</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#leaveForDayPopup"
-                    >Leaving for the day</a
-                  >
-                </li>
-                <li>
-                  <a href="#" data-toggle="modal" data-target="#feedbackPopup"
-                    >Feedback</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Anna</td>
-          <td>Not Responding</td>
           <td>
             <div class="dropdown actionIcon">
               <span data-toggle="dropdown">

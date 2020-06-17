@@ -104,8 +104,8 @@
       "mobile": "1212121212",
       "eventId": 1,
       "skill": {
-        "value": "ANGULAR_7",
-        "description": "Angular 7"
+        "value": "ANGULAR_2",
+        "description": "Angular 2"
       },
       "invitedBy": ""
     },
@@ -140,8 +140,8 @@
       "mobile": "8887878788",
       "eventId": 1,
       "skill": {
-        "value": "ANGULAR_2",
-        "description": "Angular 2"
+        "value": "JAVA",
+        "description": "Java"
       },
       "invitedBy": ""
     }
@@ -161,7 +161,7 @@
             "value": "ANGULAR_2",
             "description": "Angular 2"
           },
-          "numberOfRounds": "3"
+          "numberOfRounds": 3
         },
         {
           "id": 2,
@@ -169,7 +169,7 @@
             "value": "DOT_NET",
             "description": "Dot net"
           },
-          "numberOfRounds": "2"
+          "numberOfRounds": 2
         },
         {
           "id": 3,
@@ -177,7 +177,7 @@
             "value": "JAVA",
             "description": "Java"
           },
-          "numberOfRounds": "3"
+          "numberOfRounds": 4
         }
       ]
     }
