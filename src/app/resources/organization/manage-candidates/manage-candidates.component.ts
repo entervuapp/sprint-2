@@ -80,10 +80,6 @@ export class ManageCandidatesComponent implements OnInit {
     this._subscriptions.unsubscribe();
   }
 
-  ngAfterViewInit() {
-    console.log("view init", this.skillSelect.nativeElement.value);
-  }
-
   private initializeForm = () => {
     this.myForm = this.fb.group({
       id: new FormControl(null),
@@ -95,6 +91,7 @@ export class ManageCandidatesComponent implements OnInit {
         Validators.maxLength(10),
       ]),
       eventId: new FormControl(this.eventId, []),
+      inRound: new FormControl("", []),
       skill: new FormGroup({
         value: new FormControl("", [Validators.required]),
         description: new FormControl("", [
@@ -136,6 +133,7 @@ export class ManageCandidatesComponent implements OnInit {
     if (requestBody && requestBody.id) {
       this.updateCandidate(requestBody);
     } else {
+      requestBody.inRound = 1;
       this.addCandidate(requestBody);
     }
   };
@@ -189,7 +187,16 @@ export class ManageCandidatesComponent implements OnInit {
   };
 
   onEdit = (candidate) => {
-    const { name, email, mobile, skill, id, eventId, invitedBy } = candidate;
+    const {
+      name,
+      email,
+      mobile,
+      skill,
+      id,
+      eventId,
+      inRound,
+      invitedBy,
+    } = candidate;
     this.myForm.patchValue({
       name,
       email,
@@ -197,6 +204,7 @@ export class ManageCandidatesComponent implements OnInit {
       skill,
       id,
       eventId,
+      inRound,
       invitedBy,
     });
     this.skillSelect.nativeElement.value = this.myForm.value.skill.value;

@@ -22,10 +22,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Kiran</td>
-          <td>In Interview</td>
+        <tr *ngFor="let candidate of filteredCandidateList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ candidate.name }}</td>
+          <td>{{ candidate.interviewStatus }}</td>
           <td>
             <div class="dropdown actionIcon">
               <span data-toggle="dropdown">
