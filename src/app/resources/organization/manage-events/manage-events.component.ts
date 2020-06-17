@@ -526,7 +526,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
 
   public onChangeOfRounds = (event) => {
     if (event) {
-      this.formGroupObject["controls"]["numberOfRounds"].setValue(event);
+      this.formGroupObject["controls"]["numberOfRounds"].setValue(
+        parseInt(event)
+      );
     } else {
       this.formGroupObject["controls"]["numberOfRounds"].setValue("");
     }
