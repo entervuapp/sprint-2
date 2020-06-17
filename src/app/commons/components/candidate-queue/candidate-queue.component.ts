@@ -13,6 +13,7 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
   public currentSlideWithSkill: SkillAndRound;
   public alerts: Alerts[];
   public roundsList: any;
+  public filteredCandidateList: any[];
   @Input() selectedSlide: SkillWithCount;
   @Input() eventDetails: object;
   @Input() candidatesList: any[];
@@ -72,6 +73,7 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
         };
         this.roundsList.push(temp);
       }
+      this.filterCandidateAsPerRound({ id: 1 });
     }
   };
 
@@ -84,5 +86,14 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
         round.active = false;
       }
     });
+    this.filterCandidateAsPerRound(roundObj);
+  };
+
+  private filterCandidateAsPerRound = (roundObj): void => {
+    this.filteredCandidateList = this.candidatesList
+      .filter(
+        (candidate) => candidate.skill.value === this.selectedSlide.skill.value
+      )
+      .filter((candidate) => candidate.inRound === roundObj.id);
   };
 }
