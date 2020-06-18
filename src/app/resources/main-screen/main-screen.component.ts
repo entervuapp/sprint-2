@@ -1,41 +1,44 @@
 import { Component, OnInit } from "@angular/core";
 import { ManageHeaderService } from "../../commons/services/manage-header/manage-header.service";
+import { Alerts } from "../../commons/typings/typings";
 
 @Component({
   selector: "app-main-screen",
   templateUrl: "./main-screen.component.html",
-  styleUrls: ["./main-screen.component.scss"]
+  styleUrls: ["./main-screen.component.scss"],
 })
 export class MainScreenComponent implements OnInit {
   activated: string;
   handleFormsDisplay: {};
+  public alerts: Alerts[];
   constructor(private manageHeaderService: ManageHeaderService) {}
 
   ngOnInit() {
+    this.alerts = [];
     this.activated = "whatWeAre";
     this.handleFormsDisplay = {
       organizationRegistration: false,
       individualRegistration: false,
       login: false,
       organization: false,
-      individual: false
+      individual: false,
     };
     this.manageHeaderService.updateHeaderVisibility(false);
   }
 
-  handleAboutUsAndContactUs = event => {
+  handleAboutUsAndContactUs = (event) => {
     console.log("handle about contact", event.target.id);
     this.activated = event.target.id;
   };
 
-  handleViewOnSlide = event => {
+  handleViewOnSlide = (event) => {
     if (event && event.buttonName === "organizationButton") {
       this.handleFormsDisplay = {
         organizationRegistration: false,
         individualRegistration: false,
         login: true,
         organization: true,
-        individual: false
+        individual: false,
       };
     } else {
       this.handleFormsDisplay = {
@@ -43,7 +46,7 @@ export class MainScreenComponent implements OnInit {
         individualRegistration: false,
         login: true,
         organization: false,
-        individual: true
+        individual: true,
       };
     }
   };
@@ -55,7 +58,7 @@ export class MainScreenComponent implements OnInit {
         individualRegistration: false,
         login: false,
         organization: true,
-        individual: false
+        individual: false,
       };
     } else {
       this.handleFormsDisplay = {
@@ -63,12 +66,18 @@ export class MainScreenComponent implements OnInit {
         individualRegistration: true,
         login: false,
         organization: false,
-        individual: true
+        individual: true,
       };
     }
   };
 
   showLoginScreen = () => {
     this.handleFormsDisplay["login"] = true;
+  };
+
+  public onError = (errors): void => {
+    if (errors) {
+      this.alerts = [{ code: "ERROR", systemMessage: errors }];
+    }
   };
 }

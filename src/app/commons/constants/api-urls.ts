@@ -3,8 +3,8 @@ const BASE_URL = "http://localhost:3000";
 export class API_URLS_CONSTANTS {
   static API_URLS = {
     LOGIN_SCREEN: {
-      SIGN_UP: "https://visakharoyalinteriors.herokuapp.com/auth/signup",
-      SIGN_IN: "https://visakharoyalinteriors.herokuapp.com/auth/login",
+      SIGN_UP: "https://visakharoyalinteriors.herokuapp.com/entervu/register",
+      SIGN_IN: "https://visakharoyalinteriors.herokuapp.com/entervu/login",
     },
     ORGANIZATION: {
       DASHBOARD: {

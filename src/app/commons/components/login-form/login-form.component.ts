@@ -11,6 +11,9 @@ import { LoginFormService } from "../../components/login-form/login-form/login-f
 import { AppComponent } from "src/app/app.component";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { Alerts } from "../../typings/typings";
+import { LocalStorageService } from "../../services/local-storage/local-storage.service";
+import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 
 @Component({
   selector: "app-login-form",
@@ -18,20 +21,27 @@ import { Subscription } from "rxjs";
   styleUrls: ["./login-form.component.scss"],
 })
 export class LoginFormComponent extends AppComponent implements OnInit {
-  myForm: FormGroup;
-  FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
-  ROUTE_URL_PATH_CONSTANTS;
+  public myForm: FormGroup;
+  public SHARED_CONSTANTS: SHARED_CONSTANTS;
+  public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
+  public ROUTE_URL_PATH_CONSTANTS;
+  public alerts: Alerts[];
   private _subscriptions = new Subscription();
   @Output() handleSignUpDisplay = new EventEmitter();
+  @Output() onError = new EventEmitter();
+
   constructor(
     private fb: FormBuilder,
     private loginFormService: LoginFormService,
-    public router: Router
+    public router: Router,
+    public localStorageService: LocalStorageService
   ) {
     super();
   }
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
+    this.alerts = [];
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.myForm = this.fb.group({
       username: new FormControl("", [Validators.required]),
@@ -57,13 +67,45 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     this._subscriptions.add(
       this.loginFormService.signIn(requestBody).subscribe(
         (response) => {
-          this.navigateTo(
-            this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+          this.localStorageService.set(
+            this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
+            response.roles[0]
           );
+          this.localStorageService.set(
+            this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
+            response.accessToken
+          );
+          this.localStorageService.set(
+            this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
+            JSON.stringify({
+              firstName: response.companyCode,
+              lastName: response.companyCode,
+              email: response.email,
+              companyName: response.firstName,
+              companyCode: response.lastName,
+            })
+          );
+          if (
+            this.localStorageService.get(
+              this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
+            ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN
+          ) {
+            this.navigateTo(
+              this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+                .ORGANIZATION_DASHBOARD
+            );
+          } else {
+            this.navigateTo(
+              this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
+            );
+          }
         },
         (errors) => {
           if (errors) {
             console.log("login error", errors);
+            if (this.onError) {
+              this.onError.emit(errors);
+            }
           }
         }
       )
