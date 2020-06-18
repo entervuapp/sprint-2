@@ -11,14 +11,20 @@ import { finalize } from "rxjs/operators";
 import { LoaderService } from "../loader/loader.service";
 import { retry, catchError } from "rxjs/operators";
 import { AppComponent } from "src/app/app.component";
+import { SHARED_CONSTANTS } from "../../constants/shared.constants";
+import { LocalStorageService } from "../local-storage/local-storage.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class LoadingInterceptorService extends AppComponent
   implements HttpInterceptor {
+  SHARED_CONSTANTS = SHARED_CONSTANTS;
   counter: number = 0;
-  constructor(private loaderService: LoaderService) {
+  constructor(
+    private loaderService: LoaderService,
+    private localStorageService: LocalStorageService
+  ) {
     super();
   }
   intercept(
@@ -27,7 +33,25 @@ export class LoadingInterceptorService extends AppComponent
   ): Observable<HttpEvent<any>> {
     this.counter++;
     this.loaderService.show();
-    return next.handle(request).pipe(
+    let authReq = null;
+    if (
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
+      )
+    ) {
+      authReq = request.clone({
+        headers: request.headers
+          .set(
+            "Authorization",
+            this.localStorageService.get(
+              this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
+            )
+          )
+          .append("Access-Control-Allow-Origin", "*"),
+      });
+    }
+
+    return next.handle(authReq ? authReq : request).pipe(
       // retry(1),
       catchError((errors: HttpErrorResponse) => {
         let errorMessage = "";

@@ -12,6 +12,7 @@ import { LoginFormService } from "../../../commons/components/login-form/login-f
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { Alerts } from "../../../commons/typings/typings";
 
 @Component({
   selector: "app-registration-organization",
@@ -24,8 +25,9 @@ export class RegistrationOrganizationComponent extends AppComponent
   ROUTE_URL_PATH_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
-
+  public alerts: Alerts[];
   @Output() onLoginClick = new EventEmitter();
+  @Output() onError = new EventEmitter();
 
   constructor(
     public router: Router,
@@ -37,6 +39,7 @@ export class RegistrationOrganizationComponent extends AppComponent
   }
 
   ngOnInit() {
+    this.alerts = [];
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.myForm = this.fb.group({
       firstName: new FormControl("", [
@@ -72,12 +75,17 @@ export class RegistrationOrganizationComponent extends AppComponent
   };
 
   onRegister = () => {
-    console.log("onRegister", JSON.stringify(this.myForm.value));
     let requestBody = {
-      name: this.myForm.value.firstName,
-      email: this.myForm.value.officeEmail,
-      password: this.myForm.value.password,
+      ...this.myForm.value,
+      clientName: "entervu",
+      role:
+        this.myForm.value &&
+        this.myForm.value.companyCode &&
+        this.myForm.value.companyName
+          ? "ENTERVU_ROLE_HR_ADMIN"
+          : "ENTERVU_ROLE_CANDIDATE",
     };
+    delete requestBody.confirmPassword;
     this._subscriptions.add(
       this.loginFormService.singUp(requestBody).subscribe(
         (response) => {
@@ -87,7 +95,12 @@ export class RegistrationOrganizationComponent extends AppComponent
           );
         },
         (errors) => {
-          console.log("singup error", errors);
+          if (errors) {
+            console.log("singup error", errors);
+            if (this.onError) {
+              this.onError.emit(errors);
+            }
+          }
         }
       )
     );

@@ -1,4 +1,5 @@
 <div class="ev_mainContainer">
+  <app-alerts [alertsList]="alerts"></app-alerts>
   <div class="bgShadow"></div>
   <div class="ev_loginCard">
     <div class="loginCard_left">
@@ -33,14 +34,17 @@
       <app-login-form
         *ngIf="handleFormsDisplay['login']"
         (handleSignUpDisplay)="handleSignUpDisplay()"
+        (onError)="onError($event)"
       ></app-login-form>
       <app-registration-individual
         *ngIf="handleFormsDisplay['individualRegistration']"
         (onLoginClick)="showLoginScreen()"
+        (onError)="onError($event)"
       ></app-registration-individual>
       <app-registration-organization
         *ngIf="handleFormsDisplay['organizationRegistration']"
         (onLoginClick)="showLoginScreen()"
+        (onError)="onError($event)"
       ></app-registration-organization>
     </div>
   </div>
