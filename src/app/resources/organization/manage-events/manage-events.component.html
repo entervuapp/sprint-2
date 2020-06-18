@@ -222,7 +222,7 @@
   </div>
 
   <div class="EventListBlock">
-    <h2>Events list</h2>
+    <h2>Events List</h2>
     <div class="addEventsTable">
       <div
         class="eventListCard"
@@ -231,7 +231,13 @@
         <div class="eventListCardHead">
           <div class="row">
             <div class="col-sm-8">
-              <h3>{{ event.name }}</h3>
+              <h3 
+              (click)="
+              navigateToScreen(
+                ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+                  .ON_GOING_EVENT_ORGANIZATION,
+                event
+              )">{{ event.name }}</h3>
             </div>
             <div class="col-sm-4">
               <div class="eventListCardEditDelete">
@@ -288,7 +294,7 @@
               >
                 Add Members +
               </p>
-              <p
+              <!-- <p
                 class="eventAddMembers"
                 (click)="
                   navigateToScreen(
@@ -299,7 +305,7 @@
                 "
               >
                 View event
-              </p>
+              </p> -->
             </div>
             <div class="col-sm-4"></div>
             <div class="col-sm-4">

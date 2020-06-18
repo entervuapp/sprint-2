@@ -98,8 +98,11 @@
 }
 .eventListCardHead h3 {
   margin: 0px;
-  font-size: 22px;
-  color: #02434e;
+    font-size: 22px;
+    color: #02434e;
+    cursor: pointer;
+    width: auto;
+    text-decoration: underline;
 }
 .eventListCardEditDelete {
   float: right;
