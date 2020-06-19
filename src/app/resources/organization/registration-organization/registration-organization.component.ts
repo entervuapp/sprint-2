@@ -13,6 +13,8 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-p
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Alerts } from "../../../commons/typings/typings";
+import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
+import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 
 @Component({
   selector: "app-registration-organization",
@@ -22,6 +24,7 @@ import { Alerts } from "../../../commons/typings/typings";
 export class RegistrationOrganizationComponent extends AppComponent
   implements OnInit {
   myForm: FormGroup;
+  SHARED_CONSTANTS;
   ROUTE_URL_PATH_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
@@ -33,12 +36,14 @@ export class RegistrationOrganizationComponent extends AppComponent
     public router: Router,
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
-    private loginFormService: LoginFormService
+    private loginFormService: LoginFormService,
+    private localStorageService: LocalStorageService
   ) {
     super();
   }
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.alerts = [];
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.myForm = this.fb.group({
@@ -89,6 +94,8 @@ export class RegistrationOrganizationComponent extends AppComponent
     this._subscriptions.add(
       this.loginFormService.singUp(requestBody).subscribe(
         (response) => {
+          this.sendEmailForVerification();
+          this.doLogin(requestBody);
           console.log("signup success", response);
           this.navigateTo(
             this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
@@ -106,7 +113,77 @@ export class RegistrationOrganizationComponent extends AppComponent
     );
   };
 
-  checkForError(formObj, property) {
+  public checkForError = (formObj, property): boolean => {
     return this.objectUtil.checkForFormErrors(formObj, property);
-  }
+  };
+
+  private doLogin = (requestBody) => {
+    let requestBodyfroLogin = {
+      email: requestBody.username,
+      password: requestBody.password,
+    };
+    this._subscriptions.add(
+      this.loginFormService.signIn(requestBodyfroLogin).subscribe(
+        (response) => {
+          this.prepareLocalStorages(response);
+          this.handleNavigation();
+        },
+        (errors) => {
+          if (errors) {
+            console.log("login error", errors);
+            if (this.onError) {
+              this.onError.emit(errors);
+            }
+          }
+        }
+      )
+    );
+  };
+  private prepareLocalStorages = (response): void => {
+    this.localStorageService.set(
+      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
+      response.roles[0]
+    );
+    this.localStorageService.set(
+      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
+      response.accessToken
+    );
+    this.localStorageService.set(
+      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
+      JSON.stringify({
+        firstName: response && response.companyCode ? response.companyCode : "",
+        lastName: response && response.companyCode ? response.companyCode : "",
+        email: response && response.email ? response.email : "",
+        companyName: response && response.firstName ? response.firstName : "",
+        companyCode: response && response.lastName ? response.lastName : "",
+      })
+    );
+  };
+
+  private sendEmailForVerification = () => {};
+
+  private handleNavigation = () => {
+    if (
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
+      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
+      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+    ) {
+      this.navigateTo(
+        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+      );
+    } else if (
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
+      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
+    ) {
+      this.navigateTo(
+        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
+      );
+    } else {
+      this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+    }
+  };
 }
