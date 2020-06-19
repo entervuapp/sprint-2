@@ -1,4 +1,5 @@
 <div class="adminDashboardWrapper">
+  <app-alerts [alertsList]="alerts"></app-alerts>
   <div class="adminSearchAddSkillBlock">
     <div class="container">
       <div class="adminSearchAddSkillCard">
@@ -16,7 +17,6 @@
                     [placeholder]="displayTextObject['skillSearch']"
                     id="skillSearch"
                     [formControl]="skillSearchControl"
-                    (input)="onSearch()"
                   />
                   <span class="adminSearchIcon"
                     ><fa-icon [icon]="fontAwesome.faSearch"></fa-icon

@@ -17,4 +17,8 @@ export class LocalStorageService {
   public delete = (key): void => {
     localStorage.removeItem(key);
   };
+
+  public clearAll = (): void => {
+    localStorage.clear();
+  };
 }
