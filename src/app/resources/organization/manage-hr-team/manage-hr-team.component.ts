@@ -9,6 +9,7 @@ import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesom
 import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageHrTeamService } from "./manage-hr-team/manage-hr-team.service";
 import { Subscription } from "rxjs";
+import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 
 @Component({
   selector: "app-manage-hr-team",
@@ -25,7 +26,8 @@ export class ManageHrTeamComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
-    private manageHrTeamService: ManageHrTeamService
+    private manageHrTeamService: ManageHrTeamService,
+    public manageHeaderService: ManageHeaderService
   ) {}
 
   ngOnInit() {
@@ -35,6 +37,9 @@ export class ManageHrTeamComponent implements OnInit {
       id: new FormControl(null),
       officeEmail: new FormControl("", [Validators.required, Validators.email]),
     });
+    if (this.manageHeaderService) {
+      this.manageHeaderService.updateHeaderVisibility(true);
+    }
     this.getTeamMembers();
   }
 

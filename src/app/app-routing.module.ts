@@ -12,6 +12,7 @@ import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.c
 import { ManageCandidatesComponent } from "./resources/organization/manage-candidates/manage-candidates.component";
 import { OnGoingEventOrganizationComponent } from "./resources/organization/on-going-event-organization/on-going-event-organization.component";
 import { AdminDashboardComponent } from "./resources/admin/admin-dashboard/admin-dashboard.component";
+import { ManageHrTeamComponent } from "./resources/organization/manage-hr-team/manage-hr-team.component";
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE,
     component: ManageCandidatesComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_TEAM,
+    component: ManageHrTeamComponent,
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ON_GOING_EVENT_ORGANIZATION,
