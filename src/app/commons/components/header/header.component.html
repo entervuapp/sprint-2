@@ -12,12 +12,12 @@
   <div class="headerNavbar">
     <ul class="navbarUl">
       <li
-        *ngFor="let menu of SHARED_CONSTANTS.MAIN_MENU_LIST"
+        *ngFor="let menu of menuList"
         [ngClass]="{
-          active: activeModule === menu
+          active: activeModule === menu.DISPLAY_TEXT
         }"
       >
-        <a (click)="navigateToScreen(menu)">{{ menu }}</a>
+        <a (click)="navigateToScreen(menu)">{{ menu.DISPLAY_TEXT }}</a>
       </li>
     </ul>
   </div>
