@@ -438,8 +438,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   private getSkillOptions = () => {
     this._subscriptions.add(
       this.manageSkillsService.getSkills().subscribe(
-        (response) => {
-          this.skillOptionsList = [...response];
+        (data) => {
+          this.skillOptionsList = [...data.response];
           this.filteredSkillOptionsList = [];
         },
         (errors) => {
