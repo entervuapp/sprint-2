@@ -1,10 +1,11 @@
 const BASE_URL = "http://localhost:3000";
+const BASE_URL_2 = "https://visakharoyalinteriors.herokuapp.com/";
 
 export class API_URLS_CONSTANTS {
   static API_URLS = {
     LOGIN_SCREEN: {
-      SIGN_UP: "https://visakharoyalinteriors.herokuapp.com/entervu/register",
-      SIGN_IN: "https://visakharoyalinteriors.herokuapp.com/entervu/login",
+      SIGN_UP: `${BASE_URL_2}entervu/register`,
+      SIGN_IN: `${BASE_URL_2}entervu/login`,
     },
     ORGANIZATION: {
       DASHBOARD: {
@@ -41,10 +42,11 @@ export class API_URLS_CONSTANTS {
     INDIVIDUAL: { DASHBOARD: { URL: "/individual-dashboard" } },
     ADMIN: {
       SKILLS: {
-        GET_SKILLS: `${BASE_URL}/skills`,
-        CREATE_SKILLS: `${BASE_URL}/skills`,
-        UPDATE_SKILLS: `${BASE_URL}/skills`,
-        DELETE_SKILLS: `${BASE_URL}/skills`,
+        GET_SKILLS: `${BASE_URL_2}entervu/skill`,
+        FIND_SKILLS: `${BASE_URL_2}entervu/skill/value`,
+        CREATE_SKILLS: `${BASE_URL_2}entervu/skill`,
+        UPDATE_SKILLS: `${BASE_URL_2}entervu/skill`,
+        DELETE_SKILLS: `${BASE_URL_2}entervu/skill`,
       },
     },
   };

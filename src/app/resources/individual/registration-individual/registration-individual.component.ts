@@ -68,7 +68,7 @@ export class RegistrationIndividualComponent implements OnInit {
           : "ENTERVU_ROLE_CANDIDATE",
     };
     delete requestBody.confirmPassword;
-    console.log("onRegister", JSON.stringify(requestBody));
+    console.log("onRegister can", JSON.stringify(requestBody));
     this._subscriptions.add(
       this.loginFormService.singUp(requestBody).subscribe(
         (response) => {

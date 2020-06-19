@@ -7,10 +7,11 @@ import {
   Validators,
   FormBuilder,
 } from "@angular/forms";
-import { ValueDescription } from "../../../commons/typings/typings";
+import { ValueDescription, Alerts } from "../../../commons/typings/typings";
 import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageSkillsService } from "./manage-skills/manage-skills.service";
 import { Subscription } from "rxjs";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
   selector: "app-manage-skills",
@@ -21,12 +22,12 @@ export class ManageSkillsComponent implements OnInit {
   fontAwesome = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   filterSkillsList: ValueDescription[];
-  originalSkillsList: ValueDescription[];
   searchSkillCardEnable: boolean;
   addSkillCardEnable: boolean;
   public displayTextObject: object;
   public addSkillForm: FormGroup;
   public skillSearchControl: FormControl;
+  public alerts: Alerts[];
 
   constructor(
     public manageHeaderService: ManageHeaderService,
@@ -36,6 +37,7 @@ export class ManageSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.alerts = [];
     this.displayTextObject = {
       searchSkill: "Search Skill",
       addSkills: "Add skills",
@@ -46,12 +48,20 @@ export class ManageSkillsComponent implements OnInit {
     this.initializeForm();
     this.searchSkillCardEnable = true;
     this.addSkillCardEnable = false;
-    this.originalSkillsList = [];
     this.filterSkillsList = [];
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
     this.getSkills();
+    this.skillSearchControl.valueChanges
+      .pipe(debounceTime(400), distinctUntilChanged())
+      .subscribe((value) => {
+        if (value) {
+          this.onSearch(value);
+        } else {
+          this.getSkills();
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -116,9 +126,8 @@ export class ManageSkillsComponent implements OnInit {
   private getSkills = (): void => {
     this._subscriptions.add(
       this.manageSkillsService.getSkills().subscribe(
-        (response) => {
-          this.originalSkillsList = [...response];
-          this.filterSkillsList = [...response];
+        (data) => {
+          this.filterSkillsList = [...data.response];
         },
         (errors) => {
           if (errors) {
@@ -141,14 +150,18 @@ export class ManageSkillsComponent implements OnInit {
 
   public onDeleteOfSkill = (skill): void => {
     if (skill && skill.id) {
+      let requestBody = {
+        skillId: skill.id,
+      };
       this._subscriptions.add(
-        this.manageSkillsService.deleteEvent(skill.id).subscribe(
+        this.manageSkillsService.deleteSkill(requestBody).subscribe(
           (response) => {
             this.getSkills();
           },
           (errors) => {
             if (errors) {
               console.log(errors);
+              this.alerts = [{ code: "ERROR", systemMessage: errors }];
             }
           }
         )
@@ -162,19 +175,28 @@ export class ManageSkillsComponent implements OnInit {
     }, 100);
   };
 
-  public onSearch = (): void => {
-    if (this.skillSearchControl.value) {
-      this.filterSkillsList = this.originalSkillsList.filter(
-        (skill) =>
-          skill["description"]
-            .toLowerCase()
-            .indexOf(this.skillSearchControl.value.toLowerCase()) !== -1 ||
-          skill["value"]
-            .toLowerCase()
-            .indexOf(this.skillSearchControl.value.toLowerCase()) !== -1
+  public onSearch = (value): void => {
+    if (value) {
+      let requestBody = {
+        value: value,
+      };
+      this._subscriptions.add(
+        this.manageSkillsService.findSkills(requestBody).subscribe(
+          (data) => {
+            if (data && data.response && data.response.length) {
+              this.filterSkillsList = data["response"];
+            } else {
+              this.filterSkillsList = [];
+            }
+          },
+          (errors) => {
+            if (errors) {
+              console.log(errors);
+              this.alerts = [{ code: "ERROR", systemMessage: errors }];
+            }
+          }
+        )
       );
-    } else {
-      this.filterSkillsList = [...this.originalSkillsList];
     }
   };
 
