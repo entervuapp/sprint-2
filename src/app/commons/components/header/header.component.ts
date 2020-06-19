@@ -98,20 +98,16 @@ export class HeaderComponent extends AppComponent implements OnInit {
         this.navigateTo(menu.NAVIGATE_TO);
         break;
       case "DASHBOARD":
-        this.activeModule = menu;
-        this.navigateTo(
-          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-        );
+        this.activeModule = menu.DISPLAY_TEXT;
+        this.navigateTo(menu.NAVIGATE_TO);
         break;
       case "QA":
-        this.activeModule = menu;
-        this.navigateTo(
-          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD
-        );
+        this.activeModule = menu.DISPLAY_TEXT;
+        this.navigateTo(menu.NAVIGATE_TO);
         break;
       case "ADMIN":
-        this.activeModule = menu;
-        this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+        this.activeModule = menu.DISPLAY_TEXT;
+        this.navigateTo(menu.NAVIGATE_TO);
         break;
     }
   };

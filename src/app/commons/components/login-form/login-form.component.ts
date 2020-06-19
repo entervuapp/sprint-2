@@ -67,38 +67,8 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     this._subscriptions.add(
       this.loginFormService.signIn(requestBody).subscribe(
         (response) => {
-          this.localStorageService.set(
-            this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
-            response.roles[0]
-          );
-          this.localStorageService.set(
-            this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
-            response.accessToken
-          );
-          this.localStorageService.set(
-            this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
-            JSON.stringify({
-              firstName: response.companyCode,
-              lastName: response.companyCode,
-              email: response.email,
-              companyName: response.firstName,
-              companyCode: response.lastName,
-            })
-          );
-          if (
-            this.localStorageService.get(
-              this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-            ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN
-          ) {
-            this.navigateTo(
-              this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-                .ORGANIZATION_DASHBOARD
-            );
-          } else {
-            this.navigateTo(
-              this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
-            );
-          }
+          this.prepareLocalStorages(response);
+          this.handleNavigation();
         },
         (errors) => {
           if (errors) {
@@ -122,4 +92,52 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     }
     return false;
   }
+
+  private prepareLocalStorages = (response): void => {
+    this.localStorageService.set(
+      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
+      response.roles[0]
+    );
+    this.localStorageService.set(
+      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
+      response.accessToken
+    );
+    this.localStorageService.set(
+      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
+      JSON.stringify({
+        firstName: response && response.companyCode ? response.companyCode : "",
+        lastName: response && response.companyCode ? response.companyCode : "",
+        email: response && response.email ? response.email : "",
+        companyName: response && response.firstName ? response.firstName : "",
+        companyCode: response && response.lastName ? response.lastName : "",
+      })
+    );
+  };
+
+  private sendEmailForVerification = () => {};
+
+  private handleNavigation = () => {
+    if (
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
+      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
+      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+    ) {
+      this.navigateTo(
+        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+      );
+    } else if (
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
+      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
+    ) {
+      this.navigateTo(
+        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
+      );
+    } else {
+      this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+    }
+  };
 }
