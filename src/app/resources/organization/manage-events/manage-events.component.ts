@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -21,6 +21,7 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-p
 import { Subscription } from "rxjs";
 import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/manage-skills.service";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
+import { DirectiveRegistryValuesIndex } from "@angular/core/src/render3/interfaces/styling";
 
 @Component({
   selector: "app-manage-events",
@@ -46,6 +47,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   public newRoundNames: string[];
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
+
   constructor(
     private fb: FormBuilder,
     public objectUtil: ObjectUtil,
@@ -571,13 +573,20 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onClickOfNumberOfRounds = (skillObj): void => {
-    this.skillObjForPopup = { ...skillObj };
-    for (let i = 0; i < this.skillObjForPopup["numberOfRounds"]; i++) {
-      let temp = {
-        roundName: "",
-        roundId: i,
-      };
-      this.skillObjForPopup["roundDetailsList"].push(temp);
+    this.skillObjForPopup = {};
+    this.skillObjForPopup = JSON.parse(JSON.stringify(skillObj));
+    if (
+      this.skillObjForPopup &&
+      this.skillObjForPopup["roundDetailsList"] &&
+      this.skillObjForPopup["roundDetailsList"].length === 0
+    ) {
+      for (let i = 0; i < this.skillObjForPopup["numberOfRounds"]; i++) {
+        let temp = {
+          roundName: "",
+          roundId: i,
+        };
+        this.skillObjForPopup["roundDetailsList"].push(temp);
+      }
     }
   };
 
@@ -611,8 +620,36 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onRoundNamesSubmit = () => {
-    //close popup
-
+    if (this.skillsList && this.skillsList.length) {
+      for (let i = 0; i < this.skillsList.length; i++) {
+        if (
+          this.skillsList[i].skill.value ===
+          this.skillObjForPopup["skill"].value
+        ) {
+          this.skillsList[i]["roundDetailsList"] = this.skillObjForPopup[
+            "roundDetailsList"
+          ];
+        }
+      }
+    }
     this.skillObjForPopup = {};
+    let elem2: HTMLElement = document.querySelector(
+      "#addRoundsPopup .close"
+    ) as HTMLElement;
+    elem2.click();
+  };
+
+  public displaySkills = (idx, tooltip = false): string => {
+    let displayText = "";
+    this.skillsList[idx]["roundDetailsList"].forEach((item) => {
+      displayText =
+        displayText && displayText.length > 0
+          ? `${displayText}, ${item.roundName}`
+          : `${item.roundName}`;
+    });
+    if (displayText && displayText.length > 10 && tooltip === false) {
+      displayText = `${displayText.substr(0, 10)} ...`;
+    }
+    return displayText;
   };
 }

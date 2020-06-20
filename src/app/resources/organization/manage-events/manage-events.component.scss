@@ -68,13 +68,17 @@
   padding: 0px 8px;
 }
 .skillRoundsDetailBlock span.eventRoundsBtn.roundsNotAdded {
-    color: #fff;
-    font-size: 16px;
-    padding: 3px 5px 3px 5px;
-    border-radius: 2px;
-    box-shadow: 0px 0px 2px #333;
-    background: #dd2f62;
-    cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  padding: 3px 5px 3px 5px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px #333;
+  background: #dd2f62;
+  cursor: pointer;
+}
+
+.green {
+  background-color: green !important;
 }
 // .skillRoundsDetailBlock span.eventRoundsBtn.roundsNotAdded.roundsAdded {
 //   background: #7abc2e;
@@ -110,11 +114,11 @@
 }
 .eventListCardHead h3 {
   margin: 0px;
-    font-size: 22px;
-    color: #02434e;
-    cursor: pointer;
-    width: auto;
-    text-decoration: underline;
+  font-size: 22px;
+  color: #02434e;
+  cursor: pointer;
+  width: auto;
+  text-decoration: underline;
 }
 .eventListCardEditDelete {
   float: right;
@@ -153,7 +157,6 @@
   cursor: pointer;
 }
 
-
 // .autoCompleteCard {
 //   display: inline-block;
 //   width: 100%;
@@ -163,12 +166,12 @@
 // }
 .listArrayCard {
   position: absolute;
-    width: calc(100% - 20px);
-    left: 10px;
-    background: #fff;
-    z-index: 100;
-    height: 245px;
-    overflow: auto;
+  width: calc(100% - 20px);
+  left: 10px;
+  background: #fff;
+  z-index: 100;
+  height: 245px;
+  overflow: auto;
   border-top: 0px solid #6f6f6f;
   border-left: 1px solid #6f6f6f;
   border-right: 1px solid #6f6f6f;
@@ -210,39 +213,39 @@
   color: #333;
 }
 
-.addRoundsDetailsFormBtns{
+.addRoundsDetailsFormBtns {
   text-align: right;
 }
-.roundsModalTitle{
+.roundsModalTitle {
   font-size: 22px;
   margin: 0px;
   color: #333;
 }
-.addRoundsDetailsOptionsCard, 
-.addRoundsPrevOptionsCard{
+.addRoundsDetailsOptionsCard,
+.addRoundsPrevOptionsCard {
   border-top: 1px solid #ccc;
-    margin: 15px 0px 0px 0px;
-    padding: 12px 0px 12px 0px;
+  margin: 15px 0px 0px 0px;
+  padding: 12px 0px 12px 0px;
 }
-.addRoundsDetailsOptionsCard h3, 
+.addRoundsDetailsOptionsCard h3,
 .addRoundsPrevOptionsCard h3 {
   font-size: 20px;
-    color: #333;
-    margin: 0px 0px 10px 0px;
+  color: #333;
+  margin: 0px 0px 10px 0px;
 }
-.addRoundsDetailsOptionsCard .DetailsOptions, 
+.addRoundsDetailsOptionsCard .DetailsOptions,
 .addRoundsPrevOptionsCard .DetailsOptions {
   font-size: 14px;
-    color: #fff;
-    background: #196f7d;
-    border: 1px solid #196f7d;
-    border-radius: 3px;
-    padding: 4px 10px 4px 10px;
-    margin: 5px 5px;
-    display: inline-block;
-    cursor: pointer;
+  color: #fff;
+  background: #196f7d;
+  border: 1px solid #196f7d;
+  border-radius: 3px;
+  padding: 4px 10px 4px 10px;
+  margin: 5px 5px;
+  display: inline-block;
+  cursor: pointer;
 }
-.addRoundsDetailsOptionsCard .DetailsOptions:hover, 
+.addRoundsDetailsOptionsCard .DetailsOptions:hover,
 .addRoundsPrevOptionsCard .DetailsOptions:hover {
   color: #196f7d;
   background: #fff;
