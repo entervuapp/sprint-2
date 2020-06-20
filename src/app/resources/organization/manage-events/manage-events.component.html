@@ -189,14 +189,14 @@
             <div *ngFor="let skillObj of skillsList; let i = index">
               <span> {{ skillObj.skill.description }}</span>
               <!-- <span>{{ skillObj.numberOfRounds }}</span> -->
-              <span
-                class="eventRoundsBtn roundsNotAdded roundsAdded"
-                [ngClass]="{ green: displaySkills(i) }"
-                data-toggle="modal"
-                data-target="#addRoundsPopup"
-                (click)="onClickOfNumberOfRounds(skillObj)"
-                >{{ skillObj.numberOfRounds }}</span
-              >
+              <span>
+                 <p 
+                 class="eventRoundsBtn roundsNotAdded roundsAdded"
+                 [ngClass]="{ green: displaySkills(i) }"
+                 data-toggle="modal"
+                 data-target="#addRoundsPopup"
+                 (click)="onClickOfNumberOfRounds(skillObj)">{{ skillObj.numberOfRounds }}</p>
+                </span>
               <span
                 data-toggle="tooltip"
                 *ngIf="skillObj.roundDetailsList.length"

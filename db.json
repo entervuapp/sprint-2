@@ -236,6 +236,82 @@
           "numberOfRounds": 4
         }
       ]
+    },
+    {
+      "id": 2,
+      "name": "asasdsa",
+      "eventDate": "2020-06-26",
+      "creationDate": "2020-06-26",
+      "eventTime": "05:22",
+      "createdBy": "",
+      "skillsList": [
+        {
+          "id": 1,
+          "skill": {
+            "value": "ANGULAR_2",
+            "description": "Angular 2"
+          },
+          "numberOfRounds": 5,
+          "roundDetailsList": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "asasdsa",
+      "eventDate": "2020-06-26",
+      "creationDate": "2020-06-26",
+      "eventTime": "05:22",
+      "createdBy": "",
+      "skillsList": [
+        {
+          "id": 1,
+          "skill": {
+            "value": "ANGULAR_2",
+            "description": "Angular 2"
+          },
+          "numberOfRounds": 5,
+          "roundDetailsList": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "asasdsa",
+      "eventDate": "2020-06-26",
+      "creationDate": "2020-06-26",
+      "eventTime": "05:22",
+      "createdBy": "",
+      "skillsList": [
+        {
+          "id": 1,
+          "skill": {
+            "value": "ANGULAR_2",
+            "description": "Angular 2"
+          },
+          "numberOfRounds": 5,
+          "roundDetailsList": []
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "asasdsa",
+      "eventDate": "2020-06-26",
+      "creationDate": "2020-06-26",
+      "eventTime": "05:22",
+      "createdBy": "",
+      "skillsList": [
+        {
+          "id": 1,
+          "skill": {
+            "value": "ANGULAR_2",
+            "description": "Angular 2"
+          },
+          "numberOfRounds": 5,
+          "roundDetailsList": []
+        }
+      ]
     }
   ]
 }
