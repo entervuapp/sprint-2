@@ -14,8 +14,14 @@ export interface ValueDescription {
   description: string;
 }
 
+export interface ValueDescriptionId {
+  value: string;
+  description: string;
+  id: number;
+}
+
 export interface SkillAndRound {
-  skill: ValueDescription;
+  skill: ValueDescriptionId;
   numberOfRounds: number;
 }
 

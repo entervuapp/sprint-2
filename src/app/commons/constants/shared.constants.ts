@@ -3,9 +3,11 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../constants/route-url-path.constants"
 export class SHARED_CONSTANTS {
   public static EVU_ROUND_NAMES = [
     "Written",
+    "Telephonic",
     "Tech 1",
     "Tech 2",
     "Manager",
+    "Client",
     "HR",
   ];
 
