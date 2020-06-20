@@ -186,42 +186,46 @@
             </div>
           </div>
           <div class="skillRoundsDetailBlock">
-            <div *ngFor="let skillObj of skillsList; let i = index">
-              <span> {{ skillObj.skill.description }}</span>
-              <!-- <span>{{ skillObj.numberOfRounds }}</span> -->
-              <span>
-                 <p 
-                 class="eventRoundsBtn roundsNotAdded roundsAdded"
-                 [ngClass]="{ green: displaySkills(i) }"
-                 data-toggle="modal"
-                 data-target="#addRoundsPopup"
-                 (click)="onClickOfNumberOfRounds(skillObj)">{{ skillObj.numberOfRounds }}</p>
-                </span>
-              <span
-                data-toggle="tooltip"
-                *ngIf="skillObj.roundDetailsList.length"
-                [title]="displaySkills(i, true)"
-              >
-                {{ displaySkills(i) }}
-              </span>
-
-              <!-- {{ skillObjForPopup.roundDetailsList[0].roundName }} -->
-              <diV class="editRemoveBtns">
-                <input
-                  type="button"
-                  value="Delete"
-                  class="removeBtn"
-                  (click)="removeSkill(i)"
-                />
-                |
-                <input
-                  type="button"
-                  value="Edit"
-                  class="EditBtn"
-                  (click)="onSkillEdit(skillObj, i)"
-                />
-              </diV>
-            </div>
+            <table class="table table-bordered table-md">
+              <tr *ngFor="let skillObj of skillsList; let i = index">
+                <td class="skillRoundsDesc">
+                    {{ skillObj.skill.description }}
+                </td>
+                <td class="skillRoundsCount">
+                     <p 
+                     class="eventRoundsBtn roundsNotAdded roundsAdded"
+                     [ngClass]="{ green: displaySkills(i) }"
+                     data-toggle="modal"
+                     data-target="#addRoundsPopup"
+                     (click)="onClickOfNumberOfRounds(skillObj)">
+                     {{ skillObj.numberOfRounds }}
+                    </p>
+                    <span
+                    class="eventRoundsData"
+                    data-toggle="tooltip"
+                    *ngIf="skillObj.roundDetailsList.length"
+                    [title]="displaySkills(i, true)"
+                    >
+                    - {{ displaySkills(i) }}
+                    </span>
+                </td>
+                <td class="editRemoveBtns">
+                    <input
+                      type="button"
+                      value="Delete"
+                      class="removeBtn"
+                      (click)="removeSkill(i)"
+                    />
+                    |
+                    <input
+                      type="button"
+                      value="Edit"
+                      class="EditBtn"
+                      (click)="onSkillEdit(skillObj, i)"
+                    />
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

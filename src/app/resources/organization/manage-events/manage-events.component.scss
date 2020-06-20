@@ -54,39 +54,43 @@
   border-spacing: 5px;
   padding: 0px 5px;
 }
-.skillRoundsDetailBlock > div {
-  display: table-row;
-  width: auto;
-  margin: 0px 0px;
-}
-.skillRoundsDetailBlock > div > span {
-  float: left;
-  display: table-column;
+.skillRoundsDetailBlock .skillRoundsDesc {
   width: 35%;
-  border-bottom: 1px solid #ccc;
   margin: 0px 5px;
-  padding: 0px 8px;
-}
-.skillRoundsDetailBlock span.eventRoundsBtn.roundsNotAdded {
-  color: #fff;
+  padding: 5px 8px 5px 8px;
   font-size: 16px;
-  padding: 3px 5px 3px 5px;
-  border-radius: 2px;
-  box-shadow: 0px 0px 2px #333;
-  background: #dd2f62;
-  cursor: pointer;
+  color: #333;
+  margin: 0px;
 }
-
+.skillRoundsDetailBlock .skillRoundsCount {
+  width: 35%;
+  margin: 0px 5px;
+  padding: 5px 8px 5px 8px;
+}
+.skillRoundsDetailBlock .eventRoundsBtn.roundsNotAdded {
+  color: #fff;
+    font-size: 16px;
+    padding: 2px 8px 2px 8px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 2px #333;
+    background: #dd2f62;
+    cursor: pointer;
+    margin: 0px;
+    display: inline-block;
+}
 .green {
   background-color: green !important;
+}
+.skillRoundsDetailBlock .eventRoundsData{
+  font-size: 16px;
+  color: #333;
+  margin: 0px;
 }
 // .skillRoundsDetailBlock span.eventRoundsBtn.roundsNotAdded.roundsAdded {
 //   background: #7abc2e;
 // }
 .skillRoundsDetailBlock .editRemoveBtns {
-  display: inline-block;
-  float: left;
-  padding: 0px 0px 0px 10px;
+  padding: 5px 10px 5px 10px;
 }
 .skillRoundsDetailBlock .removeBtn,
 .skillRoundsDetailBlock .EditBtn {
