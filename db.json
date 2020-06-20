@@ -236,56 +236,6 @@
           "numberOfRounds": 4
         }
       ]
-    },
-    {
-      "id": 2,
-      "name": "Mega Drive",
-      "eventDate": "2020-06-21",
-      "creationDate": "2020-06-21",
-      "eventTime": "12:12",
-      "createdBy": "",
-      "skillsList": [
-        {
-          "id": 1,
-          "skill": {
-            "value": "REACT_JS",
-            "description": "React Js"
-          },
-          "numberOfRounds": 2,
-          "roundDetailsList": [
-            {
-              "roundName": "Tech 1",
-              "roundId": 0
-            },
-            {
-              "roundName": "HR",
-              "roundId": 1
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "skill": {
-            "value": "ANGULAR_9",
-            "description": "Angular 9"
-          },
-          "numberOfRounds": 3,
-          "roundDetailsList": [
-            {
-              "roundName": "Written",
-              "roundId": 0
-            },
-            {
-              "roundName": "Tech 1",
-              "roundId": 1
-            },
-            {
-              "roundName": "HR",
-              "roundId": 2
-            }
-          ]
-        }
-      ]
     }
   ]
 }
