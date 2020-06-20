@@ -1,6 +1,14 @@
 import { ROUTE_URL_PATH_CONSTANTS } from "../constants/route-url-path.constants";
 
 export class SHARED_CONSTANTS {
+  public static EVU_ROUND_NAMES = [
+    "Written",
+    "Tech 1",
+    "Tech 2",
+    "Manager",
+    "HR",
+  ];
+
   public static EVU_USER_ROLES = {
     SUPER_USER: "ENTERVU_ROLE_SUPER_USER",
     HR_ADMIN: "ENTERVU_ROLE_HR_ADMIN",

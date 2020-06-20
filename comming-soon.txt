@@ -16,4 +16,14 @@
 
 /// below items for pricing
 1. To transfer a completed event to the future date, with all the candidates as ease.
-2. 
+2. To view all past events
+3. email and mobile number ?
+
+
+
+//email services
+1. Forgot password
+2. admin hr email verification
+3. jr email verification and registration
+4. candidate email verification
+5. contact us

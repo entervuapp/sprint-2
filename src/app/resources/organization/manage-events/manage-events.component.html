@@ -188,7 +188,15 @@
           <div class="skillRoundsDetailBlock">
             <div *ngFor="let skillObj of skillsList; let i = index">
               <span> {{ skillObj.skill.description }}</span>
-              <span>{{ skillObj.numberOfRounds }}</span>
+              <!-- <span>{{ skillObj.numberOfRounds }}</span> -->
+              <span
+                class="eventRoundsBtn roundsNotAdded roundsAdded"
+                data-toggle="modal"
+                data-target="#addRoundsPopup"
+                (click)="onClickOfNumberOfRounds(skillObj)"
+                >{{ skillObj.numberOfRounds }}</span
+              >
+              {{ skillObjForPopup.roundDetailsList[0].roundName }}
               <diV class="editRemoveBtns">
                 <input
                   type="button"
@@ -231,13 +239,17 @@
         <div class="eventListCardHead">
           <div class="row">
             <div class="col-sm-8">
-              <h3 
-              (click)="
-              navigateToScreen(
-                ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-                  .ON_GOING_EVENT_ORGANIZATION,
-                event
-              )">{{ event.name }}</h3>
+              <h3
+                (click)="
+                  navigateToScreen(
+                    ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+                      .ON_GOING_EVENT_ORGANIZATION,
+                    event
+                  )
+                "
+              >
+                {{ event.name }}
+              </h3>
             </div>
             <div class="col-sm-4">
               <div class="eventListCardEditDelete">
@@ -317,3 +329,82 @@
     </div>
   </div>
 </div>
+
+<!-- The Modal popup for add rounds -->
+<div class="modal fade" id="addRoundsPopup">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title roundsModalTitle">Add Round Details</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="addRoundsDetailsForm">
+          <div class="addRoundsDetailsFormCard">
+            <div class="addRoundsDetailsFormFields">
+              <div
+                class="form-group"
+                *ngFor="
+                  let skill of skillObjForPopup.roundDetailsList;
+                  let i = index
+                "
+              >
+                <label for="time">Round {{ i + 1 }}:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="round{{ i + 1 }}"
+                  name="round{{ i + 1 }}"
+                  [ngModel]="skill.roundName"
+                  (blur)="onRoundNameBlur($event, skill)"
+                />
+              </div>
+            </div>
+            <div class="addRoundsDetailsFormBtns">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="onRoundNamesSubmit()"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+          <div class="addRoundsDetailsOptionsCard">
+            <h3>Options</h3>
+            <span
+              class="DetailsOptions"
+              *ngFor="let roundName of SHARED_CONSTANTS.EVU_ROUND_NAMES"
+              (click)="onRoundNameSuggestion(roundName)"
+              >{{ roundName }}</span
+            >
+          </div>
+          <div
+            class="addRoundsPrevOptionsCard"
+            *ngIf="newRoundNames && newRoundNames.length"
+          >
+            <h3>Previous Options</h3>
+            <span
+              class="DetailsOptions"
+              *ngFor="let newRound of newRoundNames"
+              (click)="onRoundNameSuggestion(newRound)"
+              >{{ newRound }}</span
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Modal footer -->
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<!-- The Modal popup for add rounds -->

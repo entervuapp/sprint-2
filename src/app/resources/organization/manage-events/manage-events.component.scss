@@ -67,6 +67,18 @@
   margin: 0px 5px;
   padding: 0px 8px;
 }
+.skillRoundsDetailBlock span.eventRoundsBtn.roundsNotAdded {
+    color: #fff;
+    font-size: 16px;
+    padding: 3px 5px 3px 5px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 2px #333;
+    background: #dd2f62;
+    cursor: pointer;
+}
+// .skillRoundsDetailBlock span.eventRoundsBtn.roundsNotAdded.roundsAdded {
+//   background: #7abc2e;
+// }
 .skillRoundsDetailBlock .editRemoveBtns {
   display: inline-block;
   float: left;
@@ -196,4 +208,43 @@
 .listArrayCard p:hover {
   background: #e2e2e2;
   color: #333;
+}
+
+.addRoundsDetailsFormBtns{
+  text-align: right;
+}
+.roundsModalTitle{
+  font-size: 22px;
+  margin: 0px;
+  color: #333;
+}
+.addRoundsDetailsOptionsCard, 
+.addRoundsPrevOptionsCard{
+  border-top: 1px solid #ccc;
+    margin: 15px 0px 0px 0px;
+    padding: 12px 0px 12px 0px;
+}
+.addRoundsDetailsOptionsCard h3, 
+.addRoundsPrevOptionsCard h3 {
+  font-size: 20px;
+    color: #333;
+    margin: 0px 0px 10px 0px;
+}
+.addRoundsDetailsOptionsCard .DetailsOptions, 
+.addRoundsPrevOptionsCard .DetailsOptions {
+  font-size: 14px;
+    color: #fff;
+    background: #196f7d;
+    border: 1px solid #196f7d;
+    border-radius: 3px;
+    padding: 4px 10px 4px 10px;
+    margin: 5px 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+.addRoundsDetailsOptionsCard .DetailsOptions:hover, 
+.addRoundsPrevOptionsCard .DetailsOptions:hover {
+  color: #196f7d;
+  background: #fff;
+  border: 1px solid #196f7d;
 }
