@@ -191,12 +191,21 @@
               <!-- <span>{{ skillObj.numberOfRounds }}</span> -->
               <span
                 class="eventRoundsBtn roundsNotAdded roundsAdded"
+                [ngClass]="{ green: displaySkills(i) }"
                 data-toggle="modal"
                 data-target="#addRoundsPopup"
                 (click)="onClickOfNumberOfRounds(skillObj)"
                 >{{ skillObj.numberOfRounds }}</span
               >
-              {{ skillObjForPopup.roundDetailsList[0].roundName }}
+              <span
+                data-toggle="tooltip"
+                *ngIf="skillObj.roundDetailsList.length"
+                [title]="displaySkills(i, true)"
+              >
+                {{ displaySkills(i) }}
+              </span>
+
+              <!-- {{ skillObjForPopup.roundDetailsList[0].roundName }} -->
               <diV class="editRemoveBtns">
                 <input
                   type="button"
@@ -366,6 +375,8 @@
             </div>
             <div class="addRoundsDetailsFormBtns">
               <button
+                id="submit1"
+                #roundNamesSubmit
                 type="submit"
                 class="btn btn-primary"
                 (click)="onRoundNamesSubmit()"
