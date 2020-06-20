@@ -1,14 +1,14 @@
 <div class="manageTeamBlock">
   <div class="container">
-  <div class="manageTeamhead1">
-    <h2>Add Team</h2>
-    <form
+    <div class="manageTeamhead1">
+      <h2>Add Team</h2>
+      <form
         [formGroup]="myForm"
         appHighlightRequiredFields
         appFocusInvalidInput
       >
-      <div class="addTeamMemberForm">
-        <div class="form-group addTeamFormGroup">
+        <div class="addTeamMemberForm">
+          <!-- <div class="form-group addTeamFormGroup">
           <div class="input-group formGroupAddTeamMember">
             <label for="FullName">Full Name</label>
             <input
@@ -29,131 +29,131 @@
             [controlName]="'officeEmail'"
             [fieldName]="'Office Email'"
           ></app-error-message>
-        </div>
-        <div class="form-group addTeamFormGroup">
-          <div class="input-group formGroupAddTeamMember">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              name="email"
-              id="email"
-              placeholder="email"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'officeEmail')
-              }"
-              formControlName="officeEmail"
-            />
+        </div> -->
+          <div class="form-group addTeamFormGroup">
+            <div class="input-group formGroupAddTeamMember">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="email"
+                placeholder="email"
+                [ngClass]="{
+                  'input-field-error': checkForError(myForm, 'officeEmail')
+                }"
+                formControlName="officeEmail"
+              />
+            </div>
+            <app-error-message
+              *ngIf="checkForError(myForm, 'officeEmail')"
+              [formObject]="myForm"
+              [controlName]="'officeEmail'"
+              [fieldName]="'Office Email'"
+            ></app-error-message>
           </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'officeEmail')"
-            [formObject]="myForm"
-            [controlName]="'officeEmail'"
-            [fieldName]="'Office Email'"
-          ></app-error-message>
-        </div>
-        <div class="form-group addTeamFormGroup">
-          <div class="input-group formGroupAddTeamMember">
-            <label for="Mnumber">Mobile Number</label>
-            <input
-              type="text"
-              class="form-control"
-              name="Mnumber"
-              id="Mnumber"
-              placeholder="Mobile Number"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'officeEmail')
-              }"
-              formControlName="officeEmail"
-            />
+          <!-- <div class="form-group addTeamFormGroup">
+            <div class="input-group formGroupAddTeamMember">
+              <label for="Mnumber">Mobile Number</label>
+              <input
+                type="text"
+                class="form-control"
+                name="Mnumber"
+                id="Mnumber"
+                placeholder="Mobile Number"
+                [ngClass]="{
+                  'input-field-error': checkForError(myForm, 'officeEmail')
+                }"
+                formControlName="officeEmail"
+              />
+            </div>
+            <app-error-message
+              *ngIf="checkForError(myForm, 'officeEmail')"
+              [formObject]="myForm"
+              [controlName]="'officeEmail'"
+              [fieldName]="'Office Email'"
+            ></app-error-message>
           </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'officeEmail')"
-            [formObject]="myForm"
-            [controlName]="'officeEmail'"
-            [fieldName]="'Office Email'"
-          ></app-error-message>
+          <div class="form-group addTeamFormGroup">
+            <div class="input-group formGroupAddTeamMember">
+              <label for="password">Password</label>
+              <input
+                type="text"
+                class="form-control"
+                name="password"
+                id="password"
+                placeholder="Password"
+                [ngClass]="{
+                  'input-field-error': checkForError(myForm, 'officeEmail')
+                }"
+                formControlName="officeEmail"
+              />
+            </div>
+            <app-error-message
+              *ngIf="checkForError(myForm, 'officeEmail')"
+              [formObject]="myForm"
+              [controlName]="'officeEmail'"
+              [fieldName]="'Office Email'"
+            ></app-error-message>
+          </div> -->
         </div>
-        <div class="form-group addTeamFormGroup">
-          <div class="input-group formGroupAddTeamMember">
-            <label for="password">Password</label>
-            <input
-              type="text"
-              class="form-control"
-              name="password"
-              id="password"
-              placeholder="Password"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'officeEmail')
-              }"
-              formControlName="officeEmail"
-            />
-          </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'officeEmail')"
-            [formObject]="myForm"
-            [controlName]="'officeEmail'"
-            [fieldName]="'Office Email'"
-          ></app-error-message>
+        <div class="addTeamAddBtn">
+          <app-save-cancel-buttons
+            [saveButtonName]="
+              myForm.value.id !== null && myForm.value.id !== undefined
+                ? 'Update'
+                : 'Add'
+            "
+            hideCancelButton="true"
+            (onSave)="myForm.valid && onAdd()"
+          ></app-save-cancel-buttons>
         </div>
-      </div>
-      <div class="addTeamAddBtn">
-        <app-save-cancel-buttons
-          [saveButtonName]="
-            myForm.value.id !== null && myForm.value.id !== undefined
-              ? 'Update'
-              : 'Add'
-          "
-          hideCancelButton="true"
-          (onSave)="myForm.valid && onAdd()"
-        ></app-save-cancel-buttons>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
 
-  <div class="manageTeamhead2">
-    <h3>Team List</h3>
-    <div class="addTeamMemberTable">
-      <div
-        class="table-responsive manageCandidatesListTabel tab-pane fade show active"
-        id="home"
-        role="tabpanel"
-        aria-labelledby="home-tab"
-      >
-        <table class="table table-bordered table-md">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Mobile</th>
-              <th scope="col">Email</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let member of teamMembersList; let i = index">
-              <td scope="row">{{ member.name }}</td>
-              <td scope="row">{{ member.mobile }}</td>
-              <td scope="row">{{ member.officeEmail }}</td>
-              <td>
-                <!-- <a href="javascript:void(0)" (click)="onEdit(member)">
+    <div class="manageTeamhead2">
+      <h3>Team List</h3>
+      <div class="addTeamMemberTable">
+        <div
+          class="table-responsive manageCandidatesListTabel tab-pane fade show active"
+          id="home"
+          role="tabpanel"
+          aria-labelledby="home-tab"
+        >
+          <table class="table table-bordered table-md">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let member of teamMembersList; let i = index">
+                <td scope="row">{{ member.name }}</td>
+                <td scope="row">{{ member.mobile }}</td>
+                <td scope="row">{{ member.officeEmail }}</td>
+                <td>
+                  <!-- <a href="javascript:void(0)" (click)="onEdit(member)">
                   Edit
                 </a>
                 | -->
-                <a
-                  href="javascript:void(0)"
-                  (click)="onDeleteOfTeamMember(member)"
-                >
-                  Delete
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                  <a
+                    href="javascript:void(0)"
+                    (click)="onDeleteOfTeamMember(member)"
+                  >
+                    Delete
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- <div class="form-group">
+    <!-- <div class="form-group">
     <app-save-cancel-buttons
       [saveButtonName]="Invite"
       (onSave)="invitationList && invitationList.length > 0 && sendInvite()"
