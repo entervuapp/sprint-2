@@ -21,7 +21,6 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-p
 import { Subscription } from "rxjs";
 import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/manage-skills.service";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
-import { DirectiveRegistryValuesIndex } from "@angular/core/src/render3/interfaces/styling";
 
 @Component({
   selector: "app-manage-events",
@@ -71,6 +70,11 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       eventTime: "Time",
       skill: "Skill",
       numberOfRounds: "Number of rounds",
+      addEvent: "Add event",
+      events: "Events",
+      addMembers: "Add members+",
+      viewEvent: "View event",
+      offeredMembers: "Offered members",
     };
     this.resetField = false;
     this.getSkillOptions();
