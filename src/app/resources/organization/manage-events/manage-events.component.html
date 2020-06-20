@@ -6,7 +6,7 @@
       appHighlightRequiredFields
       appFocusInvalidInput
     >
-      <h2>Add Events</h2>
+      <h2>{{ displayTextObj["addEvent"] }}</h2>
       <div class="addEventsFormCard">
         <div class="addEventsForm">
           <div class="form-group formGroupAddEvents">
@@ -239,7 +239,7 @@
   </div>
 
   <div class="EventListBlock">
-    <h2>Events List</h2>
+    <h2>{{ displayTextObj["events"] }}</h2>
     <div class="addEventsTable">
       <div
         class="eventListCard"
@@ -313,9 +313,9 @@
                   )
                 "
               >
-                Add Members +
+                {{ displayTextObj["addMembers"] }}
               </p>
-              <!-- <p
+              <p
                 class="eventAddMembers"
                 (click)="
                   navigateToScreen(
@@ -325,12 +325,14 @@
                   )
                 "
               >
-                View event
-              </p> -->
+                {{ displayTextObj["viewEvent"] }}
+              </p>
             </div>
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
-              <p class="eventOfferedMem">Offered Membered List</p>
+              <p class="eventOfferedMem">
+                {{ displayTextObj["offeredMembers"] }}
+              </p>
             </div>
           </div>
         </div>
