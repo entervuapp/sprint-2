@@ -20,6 +20,7 @@ import { Router } from "@angular/router";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Subscription } from "rxjs";
 import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/manage-skills.service";
+import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 
 @Component({
   selector: "app-manage-events",
@@ -40,6 +41,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
   mininumEventDate: string;
   renderSkillId: number;
+  skillObjForPopup: object;
+  public SHARED_CONSTANTS;
+  public newRoundNames: string[];
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
   constructor(
@@ -53,6 +57,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.newRoundNames = [];
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
+    this.skillObjForPopup = {};
     this.mininumEventDate = this.stringDateFormat();
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.eventsList = [];
@@ -240,6 +247,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
               .description.value,
           },
           numberOfRounds: this.formGroupObject.controls.numberOfRounds.value,
+          roundDetailsList: [],
         };
       } else {
         eachSkill = {
@@ -250,6 +258,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
               .description.value,
           },
           numberOfRounds: this.formGroupObject.controls.numberOfRounds.value,
+          roundDetailsList: [],
         };
       }
 
@@ -438,8 +447,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   private getSkillOptions = () => {
     this._subscriptions.add(
       this.manageSkillsService.getSkills().subscribe(
-        (response) => {
-          this.skillOptionsList = [...response];
+        (data) => {
+          this.skillOptionsList = [...data.response];
           this.filteredSkillOptionsList = [];
         },
         (errors) => {
@@ -559,5 +568,51 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       this.formGroupObject.controls.numberOfRounds.setValidators([]);
       this.formGroupObject.controls.numberOfRounds.setErrors(null);
     }
+  };
+
+  public onClickOfNumberOfRounds = (skillObj): void => {
+    this.skillObjForPopup = { ...skillObj };
+    for (let i = 0; i < this.skillObjForPopup["numberOfRounds"]; i++) {
+      let temp = {
+        roundName: "",
+        roundId: i,
+      };
+      this.skillObjForPopup["roundDetailsList"].push(temp);
+    }
+  };
+
+  public onRoundNameSuggestion = (roundName: string) => {
+    if (
+      this.skillObjForPopup &&
+      this.skillObjForPopup["roundDetailsList"] &&
+      this.skillObjForPopup["roundDetailsList"].length &&
+      roundName
+    ) {
+      for (
+        let i = 0;
+        i < this.skillObjForPopup["roundDetailsList"].length;
+        i++
+      ) {
+        if (this.skillObjForPopup["roundDetailsList"][i].roundName === "") {
+          this.skillObjForPopup["roundDetailsList"][i].roundName = roundName;
+          break;
+        }
+      }
+    }
+  };
+
+  public onRoundNameBlur = (event, skill): void => {
+    if (skill && event && event.target && event.target.value) {
+      skill.roundName = event.target.value;
+      if (this.newRoundNames.indexOf(event.target.value) === -1) {
+        this.newRoundNames.push(event.target.value);
+      }
+    }
+  };
+
+  public onRoundNamesSubmit = () => {
+    //close popup
+
+    this.skillObjForPopup = {};
   };
 }

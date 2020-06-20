@@ -188,7 +188,15 @@
           <div class="skillRoundsDetailBlock">
             <div *ngFor="let skillObj of skillsList; let i = index">
               <span> {{ skillObj.skill.description }}</span>
-              <span>{{ skillObj.numberOfRounds }}</span>
+              <!-- <span>{{ skillObj.numberOfRounds }}</span> -->
+              <span
+                class="eventRoundsBtn roundsNotAdded roundsAdded"
+                data-toggle="modal"
+                data-target="#addRoundsPopup"
+                (click)="onClickOfNumberOfRounds(skillObj)"
+                >{{ skillObj.numberOfRounds }}</span
+              >
+              {{ skillObjForPopup.roundDetailsList[0].roundName }}
               <diV class="editRemoveBtns">
                 <input
                   type="button"
@@ -205,11 +213,6 @@
                 />
               </diV>
             </div>
-            <span 
-            class="eventRoundsBtn roundsNotAdded roundsAdded"
-            data-toggle="modal"
-            data-target="#addRoundsPopup"
-            >2</span>
           </div>
         </div>
       </div>
@@ -236,13 +239,17 @@
         <div class="eventListCardHead">
           <div class="row">
             <div class="col-sm-8">
-              <h3 
-              (click)="
-              navigateToScreen(
-                ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-                  .ON_GOING_EVENT_ORGANIZATION,
-                event
-              )">{{ event.name }}</h3>
+              <h3
+                (click)="
+                  navigateToScreen(
+                    ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+                      .ON_GOING_EVENT_ORGANIZATION,
+                    event
+                  )
+                "
+              >
+                {{ event.name }}
+              </h3>
             </div>
             <div class="col-sm-4">
               <div class="eventListCardEditDelete">
@@ -336,58 +343,59 @@
       </div>
       <!-- Modal body -->
       <div class="modal-body">
-        
         <div class="addRoundsDetailsForm">
           <div class="addRoundsDetailsFormCard">
-              <div class="addRoundsDetailsFormFields">
-              <div class="form-group">
-              <label for="time">Round 1:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="round1"
-                name="round1"
-              />
-              </div>
-              <div class="form-group">
-              <label for="time">Round 2:</label>
-              <input
-                type="text"
-                class="form-control"
-                id="round2"
-                name="round2"
-              />
+            <div class="addRoundsDetailsFormFields">
+              <div
+                class="form-group"
+                *ngFor="
+                  let skill of skillObjForPopup.roundDetailsList;
+                  let i = index
+                "
+              >
+                <label for="time">Round {{ i + 1 }}:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="round{{ i + 1 }}"
+                  name="round{{ i + 1 }}"
+                  [ngModel]="skill.roundName"
+                  (blur)="onRoundNameBlur($event, skill)"
+                />
               </div>
             </div>
             <div class="addRoundsDetailsFormBtns">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="onRoundNamesSubmit()"
+              >
+                Submit
+              </button>
             </div>
           </div>
           <div class="addRoundsDetailsOptionsCard">
             <h3>Options</h3>
-             <span class="DetailsOptions">Tech 1</span>
-             <span class="DetailsOptions">Tech 2</span>
-             <span class="DetailsOptions">Manager</span>
-             <span class="DetailsOptions">HR</span>
-
-             <span class="DetailsOptions">Tech 1</span>
-             <span class="DetailsOptions">Tech 2</span>
-             <span class="DetailsOptions">Manager</span>
-             <span class="DetailsOptions">HR</span>
-             <span class="DetailsOptions">Tech 1</span>
-             <span class="DetailsOptions">Tech 2</span>
-             <span class="DetailsOptions">Manager</span>
-             <span class="DetailsOptions">HR</span>
+            <span
+              class="DetailsOptions"
+              *ngFor="let roundName of SHARED_CONSTANTS.EVU_ROUND_NAMES"
+              (click)="onRoundNameSuggestion(roundName)"
+              >{{ roundName }}</span
+            >
           </div>
-          <div class="addRoundsPrevOptionsCard">
+          <div
+            class="addRoundsPrevOptionsCard"
+            *ngIf="newRoundNames && newRoundNames.length"
+          >
             <h3>Previous Options</h3>
-            <span class="DetailsOptions">Tech 1</span>
-             <span class="DetailsOptions">Tech 2</span>
-             <span class="DetailsOptions">Manager</span>
-             <span class="DetailsOptions">HR</span>
+            <span
+              class="DetailsOptions"
+              *ngFor="let newRound of newRoundNames"
+              (click)="onRoundNameSuggestion(newRound)"
+              >{{ newRound }}</span
+            >
           </div>
         </div>
-
       </div>
       <!-- Modal footer -->
       <!-- <div class="modal-footer">
