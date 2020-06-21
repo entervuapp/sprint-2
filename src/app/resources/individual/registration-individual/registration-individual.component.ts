@@ -7,9 +7,9 @@ import {
 } from "@angular/forms";
 import ObjectUtil from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
-import { LoginFormService } from "../../../commons/components/login-form/login-form/login-form.service";
 import { Subscription } from "rxjs";
 import { Alerts } from "../../../commons/typings/typings";
+import { RegistrationIndividualService } from "./registration-individual/registration-individual.service";
 
 @Component({
   selector: "app-registration-individual",
@@ -28,7 +28,7 @@ export class RegistrationIndividualComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
-    private loginFormService: LoginFormService
+    private registrationIndividualService: RegistrationIndividualService
   ) {}
 
   ngOnInit() {
@@ -82,19 +82,21 @@ export class RegistrationIndividualComponent implements OnInit {
     delete requestBody.confirmPassword;
     console.log("onRegister can", JSON.stringify(requestBody));
     this._subscriptions.add(
-      this.loginFormService.inidivualRegistration(requestBody).subscribe(
-        (response) => {
-          console.log("success candidate registration");
-        },
-        (errors) => {
-          if (errors) {
-            console.log(errors);
-            if (this.onError) {
-              this.onError.emit(errors);
+      this.registrationIndividualService
+        .inidivualRegistration(requestBody)
+        .subscribe(
+          (response) => {
+            console.log("success candidate registration");
+          },
+          (errors) => {
+            if (errors) {
+              console.log(errors);
+              if (this.onError) {
+                this.onError.emit(errors);
+              }
             }
           }
-        }
-      )
+        )
     );
   };
 }
