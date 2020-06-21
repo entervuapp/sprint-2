@@ -1,6 +1,11 @@
 <div class="ev_loginForm">
   <div class="login-form">
-    <form [formGroup]="myForm" appHighlightRequiredFields appFocusInvalidInput>
+    <form
+      [formGroup]="myForm"
+      appHighlightRequiredFields
+      appFocusInvalidInput
+      appFocusFirstEmptyInput
+    >
       <h2 class="text-center">Sign up</h2>
       <div class="form-group">
         <div class="input-group">
@@ -57,7 +62,7 @@
           <span
             class="input-group-addon"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'email')
+              'input-field-error': checkForError(myForm, 'officeEmail')
             }"
             ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faEnvelope"></fa-icon
           ></span>
@@ -68,15 +73,15 @@
             id="email"
             placeholder="Email id"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'email')
+              'input-field-error': checkForError(myForm, 'officeEmail')
             }"
-            formControlName="email"
+            formControlName="officeEmail"
           />
         </div>
         <app-error-message
-          *ngIf="checkForError(myForm, 'email')"
+          *ngIf="checkForError(myForm, 'officeEmail')"
           [formObject]="myForm"
-          [controlName]="'email'"
+          [controlName]="'officeEmail'"
           [fieldName]="'Email'"
         ></app-error-message>
       </div>
@@ -168,7 +173,7 @@
         <button
           type="submit"
           class="btn btn-primary login-btn btn-block"
-          (click)="myForm.valid && onRegister()"
+          (click)="onRegister()"
         >
           Register
         </button>

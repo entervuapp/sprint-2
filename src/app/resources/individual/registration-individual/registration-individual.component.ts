@@ -9,6 +9,7 @@ import ObjectUtil from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { LoginFormService } from "../../../commons/components/login-form/login-form/login-form.service";
 import { Subscription } from "rxjs";
+import { Alerts } from "../../../commons/typings/typings";
 
 @Component({
   selector: "app-registration-individual",
@@ -17,10 +18,13 @@ import { Subscription } from "rxjs";
 })
 export class RegistrationIndividualComponent implements OnInit {
   myForm: FormGroup;
-  FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
+  public alerts: Alerts[];
+  public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
+
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
+
   constructor(
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
@@ -28,13 +32,18 @@ export class RegistrationIndividualComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.alerts = [];
+    this.initializeForm();
+  }
+
+  public initializeForm = (): void => {
     this.myForm = this.fb.group({
       firstName: new FormControl("", [
         Validators.required,
         Validators.minLength(3),
       ]),
       lastName: new FormControl(""),
-      email: new FormControl("", [Validators.required, Validators.email]),
+      officeEmail: new FormControl("", [Validators.required, Validators.email]),
       mobile: new FormControl("", [
         Validators.required,
         Validators.minLength(10),
@@ -42,23 +51,26 @@ export class RegistrationIndividualComponent implements OnInit {
       password: new FormControl("", [Validators.required]),
       confirmPassword: new FormControl("", [Validators.required]),
     });
-  }
+  };
 
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
   }
 
-  showLogin = () => {
+  public showLogin = (): void => {
     if (this.onLoginClick) {
       this.onLoginClick.emit();
     }
   };
 
-  checkForError(formObj, property) {
+  public checkForError = (formObj, property): boolean => {
     return this.objectUtil.checkForFormErrors(formObj, property);
-  }
+  };
 
   public onRegister = (): void => {
+    if (this.myForm.valid === false) {
+      return;
+    }
     let requestBody = {
       ...this.myForm.value,
       clientName: "entervu",
@@ -70,13 +82,16 @@ export class RegistrationIndividualComponent implements OnInit {
     delete requestBody.confirmPassword;
     console.log("onRegister can", JSON.stringify(requestBody));
     this._subscriptions.add(
-      this.loginFormService.singUp(requestBody).subscribe(
+      this.loginFormService.inidivualRegistration(requestBody).subscribe(
         (response) => {
           console.log("success candidate registration");
         },
         (errors) => {
           if (errors) {
             console.log(errors);
+            if (this.onError) {
+              this.onError.emit(errors);
+            }
           }
         }
       )
