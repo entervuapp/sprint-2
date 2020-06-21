@@ -15,6 +15,7 @@ import { Subscription } from "rxjs";
 import { Alerts } from "../../../commons/typings/typings";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
+import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
 
 @Component({
   selector: "app-registration-organization",
@@ -37,7 +38,8 @@ export class RegistrationOrganizationComponent extends AppComponent
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
     private loginFormService: LoginFormService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private registrationOrganizationService: RegistrationOrganizationService
   ) {
     super();
   }
@@ -92,24 +94,26 @@ export class RegistrationOrganizationComponent extends AppComponent
     };
     delete requestBody.confirmPassword;
     this._subscriptions.add(
-      this.loginFormService.organizationSignUp(requestBody).subscribe(
-        (response) => {
-          console.log("signup organization success", response);
-          this.sendEmailForVerification();
-          this.doLogin(requestBody);
-          // this.navigateTo(
-          //   this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-          // );
-        },
-        (errors) => {
-          if (errors) {
-            console.log("singup error", errors);
-            if (this.onError) {
-              this.onError.emit(errors);
+      this.registrationOrganizationService
+        .organizationSignUp(requestBody)
+        .subscribe(
+          (response) => {
+            console.log("signup organization success", response);
+            this.sendEmailForVerification();
+            this.doLogin(requestBody);
+            // this.navigateTo(
+            //   this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+            // );
+          },
+          (errors) => {
+            if (errors) {
+              console.log("singup error", errors);
+              if (this.onError) {
+                this.onError.emit(errors);
+              }
             }
           }
-        }
-      )
+        )
     );
   };
 

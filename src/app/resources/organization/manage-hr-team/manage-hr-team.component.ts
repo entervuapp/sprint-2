@@ -10,6 +10,10 @@ import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageHrTeamService } from "./manage-hr-team/manage-hr-team.service";
 import { Subscription } from "rxjs";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
+import { Alerts } from "../../../commons/typings/typings";
+import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
+import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
+import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
 
 @Component({
   selector: "app-manage-hr-team",
@@ -18,7 +22,8 @@ import { ManageHeaderService } from "../../../commons/services/manage-header/man
 })
 export class ManageHrTeamComponent implements OnInit {
   myForm: FormGroup;
-  invitationList: any[];
+  public alerts: Alerts[];
+  public SHARED_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   public teamMembersList: any[];
@@ -27,12 +32,15 @@ export class ManageHrTeamComponent implements OnInit {
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
     private manageHrTeamService: ManageHrTeamService,
-    public manageHeaderService: ManageHeaderService
+    public manageHeaderService: ManageHeaderService,
+    private localStorageService: LocalStorageService,
+    private registrationOrganizationService: RegistrationOrganizationService
   ) {}
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
+    this.alerts = [];
     this.teamMembersList = [];
-    this.invitationList = [];
     this.myForm = this.fb.group({
       id: new FormControl(null),
       officeEmail: new FormControl("", [Validators.required, Validators.email]),
@@ -52,9 +60,39 @@ export class ManageHrTeamComponent implements OnInit {
   };
 
   onAdd = () => {
-    this.myForm.controls.id.setValue(this.invitationList.length + 1);
-    this.invitationList.push({ ...this.myForm.value });
-    this.myForm.reset();
+    let requestBody = {
+      ...this.myForm.value,
+      role: this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER,
+      companyCode: JSON.parse(
+        this.localStorageService.get(
+          this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
+        )
+      ).companyCode,
+      companyName: JSON.parse(
+        this.localStorageService.get(
+          this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
+        )
+      ).companyName,
+      clientName: "entervu",
+    };
+
+    this._subscriptions.add(
+      this.registrationOrganizationService
+        .organizationSignUp(requestBody)
+        .subscribe(
+          (data) => {
+            this.alerts = [
+              { code: "SUCCESS", systemMessage: "Created successfully" },
+            ];
+            this.getTeamMembers();
+          },
+          (errors) => {
+            if (errors) {
+              this.alerts = [{ code: "ERROR", systemMessage: errors }];
+            }
+          }
+        )
+    );
   };
 
   onEdit = (invitation) => {
@@ -83,7 +121,6 @@ export class ManageHrTeamComponent implements OnInit {
   sendInvite = () => {};
 
   onInvitationCancel = () => {
-    this.invitationList.length = 0;
     this.myForm.reset();
   };
 
