@@ -14,8 +14,13 @@ export class LoginFormService {
     return this.http.post(url, requestBody);
   };
 
-  singUp = (requestBody): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.LOGIN_SCREEN.SIGN_UP;
+  organizationSignUp = (requestBody): Observable<any> => {
+    let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.REGISTRATION.HR;
+    return this.http.post(url, requestBody);
+  };
+
+  inidivualRegistration = (requestBody): Observable<any> => {
+    let url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.REGISTRATION.CANDIDATE;
     return this.http.post(url, requestBody);
   };
 }

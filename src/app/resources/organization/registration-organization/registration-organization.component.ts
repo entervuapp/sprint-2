@@ -92,14 +92,14 @@ export class RegistrationOrganizationComponent extends AppComponent
     };
     delete requestBody.confirmPassword;
     this._subscriptions.add(
-      this.loginFormService.singUp(requestBody).subscribe(
+      this.loginFormService.organizationSignUp(requestBody).subscribe(
         (response) => {
+          console.log("signup organization success", response);
           this.sendEmailForVerification();
           this.doLogin(requestBody);
-          console.log("signup success", response);
-          this.navigateTo(
-            this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-          );
+          // this.navigateTo(
+          //   this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+          // );
         },
         (errors) => {
           if (errors) {
@@ -119,12 +119,13 @@ export class RegistrationOrganizationComponent extends AppComponent
 
   private doLogin = (requestBody) => {
     let requestBodyfroLogin = {
-      email: requestBody.username,
+      email: requestBody.officeEmail,
       password: requestBody.password,
     };
     this._subscriptions.add(
       this.loginFormService.signIn(requestBodyfroLogin).subscribe(
         (response) => {
+          console.log("login success", response);
           this.prepareLocalStorages(response);
           this.handleNavigation();
         },

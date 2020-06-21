@@ -135,7 +135,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         eventTime: new FormControl("", [Validators.required]),
         skill: new FormGroup({
           value: new FormControl("", [Validators.required]),
-          id: new FormControl("", [Validators.required]),
+          id: new FormControl("", []),
           description: new FormControl("", [
             Validators.required,
             Validators.minLength(2),
@@ -168,7 +168,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       eventTime: this.formGroupObject.value.eventTime,
       createdBy: this.getUserDetails("email"),
       companyCode: this.getUserDetails("companyCode"),
-      skillList: this.prepareSkillList([...this.skillsList]),
+      eventSkills: this.prepareSkillList([...this.skillsList]),
     };
     // this.eventsList["push"](requestBody);
     console.log("onSubmit of eventsList ", this.eventsList);
@@ -597,8 +597,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     ) {
       for (let i = 0; i < this.skillObjForPopup["numberOfRounds"]; i++) {
         let temp = {
+          id: i,
           roundName: "",
-          roundId: i,
+          roundNumber: i,
         };
         this.skillObjForPopup["roundDetailsList"].push(temp);
       }
@@ -688,7 +689,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     if (list && list.length > 0) {
       list.map((skillObj) => {
         let temp = {
-          skill: skillObj.skill.id,
+          id: null,
+          skillId: skillObj.skill.id,
           rounds: skillObj.numberOfRounds,
           roundDetails: skillObj.roundDetailsList,
         };
