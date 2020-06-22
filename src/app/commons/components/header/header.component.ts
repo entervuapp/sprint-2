@@ -88,7 +88,7 @@ export class HeaderComponent extends AppComponent implements OnInit {
     this.showSettings = false;
   }
 
-  navigateToScreen = (menu) => {
+  public navigateToScreen = (menu): void => {
     switch (menu.DISPLAY_TEXT) {
       case "EVENTS":
         this.activeModule = menu.DISPLAY_TEXT;
@@ -109,6 +109,34 @@ export class HeaderComponent extends AppComponent implements OnInit {
       case "ADMIN":
         this.activeModule = menu.DISPLAY_TEXT;
         this.navigateTo(menu.NAVIGATE_TO);
+        break;
+      default:
+        break;
+    }
+  };
+
+  public onClickOfLogo = (): void => {
+    const userRole = this.localStorageService.get(
+      this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
+    );
+    switch (userRole) {
+      case this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER:
+        this.navigateToScreen(
+          this.SHARED_CONSTANTS.MAIN_MENU.SUPER_USER_MENU_LIST[0]
+        );
+        break;
+      case this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN:
+      case this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER:
+        this.navigateToScreen(
+          this.SHARED_CONSTANTS.MAIN_MENU.ORGANIZATION_MENU_LIST[0]
+        );
+        break;
+      case this.SHARED_CONSTANTS.EVU_USER_ROLES.CANDIDATE:
+        this.navigateToScreen(
+          this.SHARED_CONSTANTS.MAIN_MENU.INDIVIDUAL_MENU_LIST[0]
+        );
+        break;
+      default:
         break;
     }
   };
