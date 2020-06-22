@@ -23,11 +23,12 @@ import ObjectUtil from "../../../utils/object-utils";
   styleUrls: ["./skills-autocomplete.component.css"],
 })
 export class SkillsAutocompleteComponent implements OnInit, OnChanges {
-  formControl: FormGroup;
-  skillsList: ValueDescription[];
-  filteredSkillList: ValueDescription[];
-  isSkillHasError: boolean;
+  public formControl: FormGroup;
+  private skillsList: ValueDescription[];
+  public filteredSkillList: ValueDescription[];
+  public isSkillHasError: boolean;
   private _subscriptions = new Subscription();
+
   @Input() isRequired: boolean;
   @Input() placeholderText: string;
   @Input() labelName: string;
