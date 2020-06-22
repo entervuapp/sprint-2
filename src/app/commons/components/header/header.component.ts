@@ -79,7 +79,8 @@ export class HeaderComponent extends AppComponent implements OnInit {
       let activeMenu = this.menuList.find(
         (menu) => menu.NAVIGATE_TO === urlPart
       );
-      this.activeModule = activeMenu.DISPLAY_TEXT;
+      this.activeModule =
+        activeMenu && activeMenu.DISPLAY_TEXT ? activeMenu.DISPLAY_TEXT : "";
     }
   };
   noDisplayOverlay() {

@@ -5,6 +5,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 // Import your library
 import { SlickCarouselModule } from "ngx-slick-carousel";
 
+//services
+import { ChangePasswordService } from "./change-password/change-password/change-password.service";
+
+//components
 import { SaveCancelButtonsComponent } from "./save-cancel-buttons/save-cancel-buttons.component";
 import { AboutUsComponent } from "./about-us/about-us.component";
 import { ContactUsComponent } from "./contact-us/contact-us.component";
@@ -59,6 +63,8 @@ const COMPONENTS_LIST = [
   SkillsAutocompleteComponent,
 ];
 
+const SERVICES_LIST = [ChangePasswordService];
+
 @NgModule({
   declarations: [...COMPONENTS_LIST],
   imports: [
@@ -69,5 +75,6 @@ const COMPONENTS_LIST = [
     SlickCarouselModule,
   ],
   exports: [...COMPONENTS_LIST],
+  providers: [SERVICES_LIST],
 })
 export class ComponentsModule {}

@@ -34,3 +34,7 @@ export interface SkillWithCount {
   skill: ValueDescription;
   candidatesCount: boolean;
 }
+
+export interface NewAny {
+  [key: string]: string | boolean | number | object | NewAny[] | null;
+}
