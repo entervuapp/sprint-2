@@ -82,6 +82,7 @@ export class ChangePasswordComponent implements OnInit {
         )
       ).email,
     };
+    delete requestBody.confirmNewPassword;
     console.log("on password update", JSON.stringify(requestBody));
 
     this._subscriptions.add(
