@@ -9,8 +9,8 @@
 3. Manage events screen, enter skill as react. the height of the options panel issue.
 4. Add candidates screen, search inside the tab. need to work on the size of the search field.
 5. Manage events screen, Hightlight current event which is on going.
-6.
-
+6. Main menus center align
+7. look in to change password
 
 
 
