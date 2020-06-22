@@ -6,6 +6,9 @@ export class API_URLS_CONSTANTS {
     LOGIN_SCREEN: {
       SIGN_IN: `${BASE_URL}/entervu/login`,
     },
+    CHANGE_PASSWORD: {
+      URL: `${BASE_URL}/entervu/password`,
+    },
     ORGANIZATION: {
       REGISTRATION: {
         HR: `${BASE_URL}/entervu/company/register`,

@@ -10,7 +10,7 @@ export class ChangePasswordService {
   constructor(private http: HttpClient) {}
 
   updatePassword = (requestBody): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.LOGIN_SCREEN.SIGN_IN;
+    let url = API_URLS_CONSTANTS.API_URLS.CHANGE_PASSWORD.URL;
     return this.http.post(url, requestBody);
   };
 }

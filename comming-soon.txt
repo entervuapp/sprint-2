@@ -1,4 +1,5 @@
 1. on update of skill in an event, and that skill has candidates, will be lost ?
+2. change password has to be removed and place remember password. remove query for fetching passwords
 
 
 
@@ -11,6 +12,7 @@
 5. Manage events screen, Hightlight current event which is on going.
 6. Main menus center align
 7. look in to change password
+8. show cursor pointer on logo mouse hover and on menu items too
 
 
 
