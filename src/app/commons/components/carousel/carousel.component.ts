@@ -80,32 +80,32 @@ export class CarouselComponent implements OnInit, OnChanges {
     }
   }
 
-  addSlide() {
+  public addSlide(): void {
     this.slides.push();
   }
 
-  removeSlide() {
+  public removeSlide(): void {
     this.slides.length = this.slides.length - 1;
   }
 
-  slickInit(e) {
+  public slickInit(e): void {
     // console.log("slick initialized");
   }
 
-  breakpoint(e) {
+  public breakpoint(e): void {
     // console.log("breakpoint");
   }
 
-  afterChange(e) {
+  public afterChange(e): void {
     // console.log("afterChange");
   }
 
-  beforeChange(e) {
+  public beforeChange(e): void {
     // console.log("beforeChange");
   }
 
   private getCandidateCategoryCount = (list): void => {
-    let countOfCandidatesPerSkill = {};
+    const countOfCandidatesPerSkill = {};
     list.forEach((item) => {
       if (
         item &&
@@ -125,8 +125,11 @@ export class CarouselComponent implements OnInit, OnChanges {
         };
       }
     });
-    for (let key in countOfCandidatesPerSkill) {
-      this.slides.push(countOfCandidatesPerSkill[key]);
+
+    for (const key in countOfCandidatesPerSkill) {
+      if (countOfCandidatesPerSkill.hasOwnProperty(key)) {
+        this.slides.push(countOfCandidatesPerSkill[key]);
+      }
     }
     this.onSelect.emit({ ...this.slides[0] });
   };
