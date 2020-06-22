@@ -108,6 +108,9 @@ export default class ObjectUtil {
 
           break;
         case "password":
+        case "currentPassword":
+        case "newPassword":
+        case "confirmNewPassword":
           let passwordStrength = this.checkPasswordStrength(
             formObj.controls[property].value
           );
