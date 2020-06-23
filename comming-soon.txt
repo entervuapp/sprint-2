@@ -5,10 +5,10 @@
 
 
 //issues
-1. Manage events screen, Skill field border is different from others
-2. Manage events screen, View event label alignment
-3. Manage events screen, enter skill as react. the height of the options panel issue.
-4. Add candidates screen, search inside the tab. need to work on the size of the search field.
+1. Manage events screen, Skill field border is different from others - done
+2. Manage events screen, View event label alignment 
+3. Manage events screen, enter skill as react. the height of the options panel issue. - done
+4. Add candidates screen, search inside the tab. need to work on the size of the search field. 
 5. Manage events screen, Hightlight current event which is on going.
 6. Main menus center align
 7. look in to change password
