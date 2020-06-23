@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from "@angular/core";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../constants/font-awesome-icons";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
-import { Alerts, SkillAndRound, SkillWithCount } from "../../typings/typings";
+import { SkillAndRound, SkillWithCount } from "../../typings/typings";
 
 @Component({
   selector: "app-candidate-queue",
@@ -11,7 +11,6 @@ import { Alerts, SkillAndRound, SkillWithCount } from "../../typings/typings";
 export class CandidateQueueComponent implements OnInit, OnChanges {
   public fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
   public currentSlideWithSkill: SkillAndRound;
-  public alerts: Alerts[];
   public roundsList: any;
   public filteredCandidateList: any[];
   @Input() selectedSlide: SkillWithCount;

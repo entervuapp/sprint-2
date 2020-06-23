@@ -10,7 +10,6 @@ import {
 import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageEventsService } from "./manage-events/manage-events.service";
 import {
-  Alerts,
   ValueDescriptionId,
   SkillAndRound,
 } from "../../../commons/typings/typings";
@@ -30,7 +29,6 @@ import { LocalStorageService } from "../../../commons/services/local-storage/loc
 })
 export class ManageEventsComponent extends AppComponent implements OnInit {
   resetField: boolean;
-  alerts: Alerts[];
   ROUTE_URL_PATH_CONSTANTS;
   eventsList: any[];
   private _subscriptions = new Subscription();
@@ -148,7 +146,6 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   onSave = () => {
-    this.alerts = [];
     if (
       this.formGroupObject.controls.skill["controls"].value.value &&
       this.formGroupObject.controls.numberOfRounds.value
@@ -198,9 +195,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       this.manageEventsService.updateEvent(requestBody).subscribe(
         (response) => {
           this.getEventsList();
-          this.alerts = [
-            { code: "SUCCESS", systemMessage: "Updated sucessfully" },
-          ];
+          this.objectUtil.showAlert(response);
           this.clearSkillFields();
           this.onReset();
         },
@@ -216,15 +211,14 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       this.manageEventsService.createEvent(requestBody).subscribe(
         (response) => {
           this.getEventsList();
-          this.alerts = [
-            { code: "SUCCESS", systemMessage: "Event created successfully" },
-          ];
+          this.objectUtil.showAlert(response);
           this.clearSkillFields();
           this.onReset();
         },
         (errors) => {
           console.log(errors);
-          if (errors && errors.error && errors.error.messages) {
+          if (errors) {
+            this.objectUtil.showAlert(errors);
           }
         }
       )

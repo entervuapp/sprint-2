@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ManageHeaderService } from "../../commons/services/manage-header/manage-header.service";
-import { Alerts } from "../../commons/typings/typings";
 
 @Component({
   selector: "app-main-screen",
@@ -10,11 +9,9 @@ import { Alerts } from "../../commons/typings/typings";
 export class MainScreenComponent implements OnInit {
   activated: string;
   handleFormsDisplay: {};
-  public alerts: Alerts[];
   constructor(private manageHeaderService: ManageHeaderService) {}
 
   ngOnInit() {
-    this.alerts = [];
     this.activated = "whatWeAre";
     this.handleFormsDisplay = {
       organizationRegistration: false,
@@ -73,11 +70,5 @@ export class MainScreenComponent implements OnInit {
 
   showLoginScreen = () => {
     this.handleFormsDisplay["login"] = true;
-  };
-
-  public onError = (errors): void => {
-    if (errors) {
-      this.alerts = [{ code: "ERROR", systemMessage: errors }];
-    }
   };
 }

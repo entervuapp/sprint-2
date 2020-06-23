@@ -10,7 +10,6 @@ import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageHrTeamService } from "./manage-hr-team/manage-hr-team.service";
 import { Subscription } from "rxjs";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
-import { Alerts } from "../../../commons/typings/typings";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
@@ -22,7 +21,6 @@ import { RegistrationOrganizationService } from "../registration-organization/re
 })
 export class ManageHrTeamComponent implements OnInit {
   myForm: FormGroup;
-  public alerts: Alerts[];
   public SHARED_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
@@ -39,7 +37,6 @@ export class ManageHrTeamComponent implements OnInit {
 
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
-    this.alerts = [];
     this.teamMembersList = [];
     this.myForm = this.fb.group({
       id: new FormControl(null),
@@ -81,14 +78,12 @@ export class ManageHrTeamComponent implements OnInit {
         .organizationSignUp(requestBody)
         .subscribe(
           (data) => {
-            this.alerts = [
-              { code: "SUCCESS", systemMessage: "Created successfully" },
-            ];
+            this.objectUtil.showAlert(data);
             this.getTeamMembers();
           },
           (errors) => {
             if (errors) {
-              this.alerts = [{ code: "ERROR", systemMessage: errors }];
+              this.objectUtil.showAlert(errors);
             }
           }
         )

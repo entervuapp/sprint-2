@@ -1,12 +1,20 @@
-import { Component, OnInit, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+} from "@angular/core";
 
 @Component({
   selector: "app-alerts",
   templateUrl: "./alerts.component.html",
   styleUrls: ["./alerts.component.scss"],
 })
-export class AlertsComponent implements OnInit {
+export class AlertsComponent implements OnInit, OnChanges {
   @Input() alertsList: any[];
+  @Output() onClose = new EventEmitter();
 
   constructor() {}
 
@@ -14,7 +22,19 @@ export class AlertsComponent implements OnInit {
     this.alertsList = this.alertsList || [];
   }
 
-  public onClose = (idx): void => {
-    this.alertsList.splice(idx, 1);
+  ngOnChanges(changes) {
+    if (
+      changes &&
+      changes.hasOwnProperty("alertsList") &&
+      changes.alertsList.currentValue
+    ) {
+      this.alertsList = changes.alertsList.currentValue;
+    }
+  }
+
+  public close = (idx): void => {
+    if (this.onClose) {
+      this.onClose.emit(idx);
+    }
   };
 }

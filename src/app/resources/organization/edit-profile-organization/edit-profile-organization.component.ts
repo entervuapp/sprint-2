@@ -10,7 +10,6 @@ import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesom
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { EditProfileOrganizationService } from "./edit-profile-organization/edit-profile-organization.service";
 import { Subscription } from "rxjs";
-import { Alerts } from "../../../commons/typings/typings";
 
 @Component({
   selector: "app-edit-profile-organization",
@@ -21,7 +20,6 @@ export class EditProfileOrganizationComponent implements OnInit {
   public myForm: FormGroup;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
-  public alerts: Alerts[];
 
   constructor(
     private fb: FormBuilder,
@@ -31,7 +29,6 @@ export class EditProfileOrganizationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.alerts = [];
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
@@ -91,14 +88,12 @@ export class EditProfileOrganizationComponent implements OnInit {
     this._subscriptions.add(
       this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
         (response) => {
-          this.alerts = [
-            { code: "SUCCESS", systemMessage: "Updated sucessfully" },
-          ];
+          this.objectUtil.showAlert(response);
           this.getUserProfile();
         },
         (errors) => {
           if (errors) {
-            console.log(errors);
+            this.objectUtil.showAlert(errors);
           }
         }
       )

@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { Subscription } from "rxjs";
-import { Alerts, SkillWithCount } from "../../typings/typings";
+import { SkillWithCount } from "../../typings/typings";
 
 @Component({
   selector: "app-carousel",
@@ -19,7 +19,6 @@ export class CarouselComponent implements OnInit, OnChanges {
   fontAwesome = FONT_AWESOME_ICONS_CONSTANTS;
   slides: SkillWithCount[];
   private _subscriptions = new Subscription();
-  public alerts: Alerts[];
   public slideConfig: object;
 
   @Input() eventDetails: object;

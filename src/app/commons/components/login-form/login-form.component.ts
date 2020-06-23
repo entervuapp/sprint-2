@@ -11,9 +11,9 @@ import { LoginFormService } from "../../components/login-form/login-form/login-f
 import { AppComponent } from "src/app/app.component";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Alerts } from "../../typings/typings";
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
+import ObjectUtil from "../../utils/object-utils";
 
 @Component({
   selector: "app-login-form",
@@ -25,7 +25,6 @@ export class LoginFormComponent extends AppComponent implements OnInit {
   public SHARED_CONSTANTS: SHARED_CONSTANTS;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   public ROUTE_URL_PATH_CONSTANTS;
-  public alerts: Alerts[];
   private _subscriptions = new Subscription();
   @Output() handleSignUpDisplay = new EventEmitter();
   @Output() onError = new EventEmitter();
@@ -34,14 +33,14 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     private fb: FormBuilder,
     private loginFormService: LoginFormService,
     public router: Router,
-    public localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService,
+    private objectUtil: ObjectUtil
   ) {
     super();
   }
 
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
-    this.alerts = [];
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.myForm = this.fb.group({
       username: new FormControl("", [Validators.required]),
@@ -73,9 +72,7 @@ export class LoginFormComponent extends AppComponent implements OnInit {
         (errors) => {
           if (errors) {
             console.log("login error", errors);
-            if (this.onError) {
-              this.onError.emit(errors);
-            }
+            this.objectUtil.showAlert(errors);
           }
         }
       )

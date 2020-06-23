@@ -12,7 +12,6 @@ import { LoginFormService } from "../../../commons/components/login-form/login-f
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { Alerts } from "../../../commons/typings/typings";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
@@ -29,7 +28,6 @@ export class RegistrationOrganizationComponent extends AppComponent
   ROUTE_URL_PATH_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
-  public alerts: Alerts[];
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
 
@@ -46,7 +44,6 @@ export class RegistrationOrganizationComponent extends AppComponent
 
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
-    this.alerts = [];
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.myForm = this.fb.group({
       firstName: new FormControl("", [
