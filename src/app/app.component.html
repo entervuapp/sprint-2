@@ -1,3 +1,4 @@
 <app-header *ngIf="isHeaderVisible"></app-header>
+<app-alerts [alertsList]="alertsList" (onClose)="onClose($event)"></app-alerts>
 <router-outlet></router-outlet>
 <app-loading-spinner></app-loading-spinner>

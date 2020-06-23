@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
+import { AlertService } from "../services/alert/alert.service";
+
 @Injectable()
 export default class ObjectUtil {
+  constructor(private alertService: AlertService) {}
+
   checkPasswordStrength = (enteredPassword) => {
     let array = [];
     if (enteredPassword && enteredPassword.length > 7) {
@@ -110,7 +114,6 @@ export default class ObjectUtil {
         case "password":
         case "currentPassword":
         case "newPassword":
-        case "confirmNewPassword":
           let passwordStrength = this.checkPasswordStrength(
             formObj.controls[property].value
           );
@@ -126,6 +129,28 @@ export default class ObjectUtil {
             formObj.controls[property].setErrors({ weakPassword: true });
           }
 
+          break;
+        case "confirmNewPassword":
+          let isConfirmPasswordMatching = this.isPasswordAndConfirmPasswordMatching(
+            formObj.controls["newPassword"].value,
+            formObj.controls[property].value
+          );
+
+          if (
+            formObj.controls[property].hasError("required") &&
+            formObj.controls[property].touched
+          ) {
+            isError = true;
+          }
+
+          if (
+            isConfirmPasswordMatching === false &&
+            (formObj.controls[property].touched ||
+              formObj.controls[property].dirty)
+          ) {
+            isError = true;
+            formObj.controls[property].setErrors({ mustMatch: true });
+          }
           break;
         case "confirmPassword":
           let isPasswordMatching = this.isPasswordAndConfirmPasswordMatching(
@@ -187,5 +212,11 @@ export default class ObjectUtil {
       }
     }
     return isError;
+  };
+
+  public showAlert = (alertList): void => {
+    if (alertList) {
+      this.alertService.set(alertList);
+    }
   };
 }

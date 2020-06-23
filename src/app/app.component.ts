@@ -3,6 +3,8 @@ import { ManageHeaderService } from "./commons/services/manage-header/manage-hea
 import { Router } from "@angular/router";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ROUTE_URL_PATH_CONSTANTS } from "./commons/constants/route-url-path.constants";
+import { AlertService } from "./commons/services/alert/alert.service";
+import { Alerts } from "./commons/typings/typings";
 
 @Component({
   selector: "app-root",
@@ -12,10 +14,13 @@ import { ROUTE_URL_PATH_CONSTANTS } from "./commons/constants/route-url-path.con
 export class AppComponent {
   title = "EnterVu";
   public isHeaderVisible: boolean;
+  private alertsList: Alerts[];
+
   constructor(
     private manageHeaderService?: ManageHeaderService,
     private cdr?: ChangeDetectorRef,
-    public router?: Router
+    public router?: Router,
+    public alertService?: AlertService
   ) {
     this.isHeaderVisible = false;
     if (
@@ -25,6 +30,17 @@ export class AppComponent {
       this.manageHeaderService.getHeaderVisibility().subscribe((flag) => {
         this.isHeaderVisible = flag;
         this.cdr.detectChanges();
+      });
+    }
+
+    //subscribe alerts
+    if (this.alertService) {
+      this.alertService.get().subscribe((alerts) => {
+        if (alerts && alerts.length) {
+          this.alertsList = alerts;
+        } else {
+          this.alertsList = [];
+        }
       });
     }
   }
@@ -70,10 +86,9 @@ export class AppComponent {
         );
         break;
       case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_TEAM:
-        this.router.navigate(
-          [`/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_TEAM}`]
-          // { queryParams: { id: queryParams.id } }
-        );
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_TEAM}`,
+        ]);
         break;
       case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ON_GOING_EVENT_ORGANIZATION:
         this.router.navigate(
@@ -128,4 +143,10 @@ export class AppComponent {
       return isFormEmpty;
     }
   }
+
+  public onClose = (idx): void => {
+    if (idx) {
+      this.alertsList.splice(idx, 1);
+    }
+  };
 }

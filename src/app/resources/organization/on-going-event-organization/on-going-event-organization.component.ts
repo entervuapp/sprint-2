@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { Alerts, SkillWithCount } from "../../../commons/typings/typings";
+import { SkillWithCount } from "../../../commons/typings/typings";
 import { ManageEventsService } from "../../../resources/organization/manage-events/manage-events/manage-events.service";
 import { ManageCandidateService } from "../../../resources/organization/manage-candidates/manage-candidates/manage-candidate.service";
+import ObjectUtil from "../../../commons/utils/object-utils";
 
 @Component({
   selector: "app-on-going-event-organization",
@@ -13,7 +14,6 @@ import { ManageCandidateService } from "../../../resources/organization/manage-c
 export class OnGoingEventOrganizationComponent implements OnInit {
   private _subscriptions = new Subscription();
   public eventId: number;
-  public alerts: Alerts[];
   public selectedSlide: SkillWithCount;
   public eventDetails: object;
   public candidatesList: any[];
@@ -21,7 +21,8 @@ export class OnGoingEventOrganizationComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private manageEventsService: ManageEventsService,
-    private manageCandidateService: ManageCandidateService
+    private manageCandidateService: ManageCandidateService,
+    private objectUtil: ObjectUtil
   ) {}
 
   ngOnInit() {
@@ -54,7 +55,7 @@ export class OnGoingEventOrganizationComponent implements OnInit {
           (errors) => {
             console.log("error", errors);
             if (errors) {
-              this.alerts = [{ code: "ERROR", systemMessage: errors }];
+              this.objectUtil.showAlert(errors);
             }
           }
         )
@@ -74,7 +75,7 @@ export class OnGoingEventOrganizationComponent implements OnInit {
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.alerts = [{ code: "ERROR", systemMessage: errors }];
+            this.objectUtil.showAlert(errors);
           }
         }
       )

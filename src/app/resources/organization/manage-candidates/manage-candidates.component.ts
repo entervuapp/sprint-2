@@ -12,7 +12,6 @@ import { ActivatedRoute } from "@angular/router";
 import { ManageEventsService } from "../../organization/manage-events/manage-events/manage-events.service";
 import { Subscription } from "rxjs";
 import {
-  Alerts,
   ValueDescription,
   SkillAndActive,
 } from "../../../commons/typings/typings";
@@ -25,7 +24,6 @@ import { ManageCandidateService } from "./manage-candidates/manage-candidate.ser
 })
 export class ManageCandidatesComponent implements OnInit {
   eventDetails;
-  alerts: Alerts[];
   private _subscriptions = new Subscription();
   skillDropDownList: ValueDescription[];
   myForm: FormGroup;
@@ -116,7 +114,7 @@ export class ManageCandidatesComponent implements OnInit {
           (errors) => {
             console.log("error", errors);
             if (errors) {
-              this.alerts = [{ code: "ERROR", systemMessage: errors }];
+              this.objectUtil.showAlert(errors);
             }
           }
         )
@@ -142,16 +140,14 @@ export class ManageCandidatesComponent implements OnInit {
     this._subscriptions.add(
       this.manageCandidateService.addCandidate(requestBody).subscribe(
         (response) => {
-          this.alerts = [
-            { code: "SUCCESS", systemMessage: "Created successfully." },
-          ];
+          this.objectUtil.showAlert(response);
           this.getCandidatesList(this.eventId);
           this.onCancel();
         },
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.alerts = [{ code: "ERROR", systemMessage: errors }];
+            this.objectUtil.showAlert(errors);
           }
         }
       )
@@ -162,16 +158,14 @@ export class ManageCandidatesComponent implements OnInit {
     this._subscriptions.add(
       this.manageCandidateService.updateCandidate(requestBody).subscribe(
         (response) => {
-          this.alerts = [
-            { code: "SUCCESS", systemMessage: "Updated successfully." },
-          ];
+          this.objectUtil.showAlert(response);
           this.getCandidatesList(this.eventId);
           this.onCancel();
         },
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.alerts = [{ code: "ERROR", systemMessage: errors }];
+            this.objectUtil.showAlert(errors);
           }
         }
       )
@@ -219,7 +213,7 @@ export class ManageCandidatesComponent implements OnInit {
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.alerts = [{ code: "ERROR", systemMessage: errors }];
+            this.objectUtil.showAlert(errors);
           }
         }
       )
@@ -282,7 +276,7 @@ export class ManageCandidatesComponent implements OnInit {
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.alerts = [{ code: "ERROR", systemMessage: errors }];
+            this.objectUtil.showAlert(errors);
           }
         }
       )

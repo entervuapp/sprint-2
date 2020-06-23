@@ -9,7 +9,6 @@ import {
 import ObjectUtil from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { Subscription } from "rxjs";
-import { Alerts } from "../../../commons/typings/typings";
 import { RegistrationIndividualService } from "./registration-individual/registration-individual.service";
 import { LoginFormService } from "../../../commons/components/login-form/login-form/login-form.service";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
@@ -24,7 +23,6 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-p
 export class RegistrationIndividualComponent extends AppComponent
   implements OnInit {
   myForm: FormGroup;
-  public alerts: Alerts[];
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   private SHARED_CONSTANTS;
@@ -46,7 +44,6 @@ export class RegistrationIndividualComponent extends AppComponent
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
-    this.alerts = [];
     this.initializeForm();
   }
 
@@ -88,6 +85,7 @@ export class RegistrationIndividualComponent extends AppComponent
     let requestBody = {
       ...this.myForm.value,
       clientName: "entervu",
+      email: this.myForm.value.officeEmail,
       role:
         this.myForm.value.companyCode && this.myForm.value.companyName
           ? "ENTERVU_ROLE_HR_ADMIN"

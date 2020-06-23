@@ -100,6 +100,14 @@
     >
       Password and confirm password not matching.
     </p>
+    <p
+      *ngIf="
+        controlName === 'confirmNewPassword' &&
+        formObject['controls']['confirmNewPassword'].hasError('mustMatch')
+      "
+    >
+      New password and confirm new password not matching.
+    </p>
   </div>
   <div *ngIf="checkInstance(formObject, 'formControl')">
     <p

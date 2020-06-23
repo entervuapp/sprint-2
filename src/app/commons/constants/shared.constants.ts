@@ -1,6 +1,13 @@
 import { ROUTE_URL_PATH_CONSTANTS } from "../constants/route-url-path.constants";
 
 export class SHARED_CONSTANTS {
+  public static SERVICE_MESSAGES = {
+    SUCCESS: [{ code: "SUCCESS", systemMessage: "Success" }],
+    ERROR: [{ code: "ERROR", systemMessage: "Error" }],
+    WARNING: [{ code: "WARNING", systemMessage: "Warning" }],
+    INFO: [{ code: "INFO", systemMessage: "Info" }],
+  };
+
   public static EVU_ROUND_NAMES = [
     "Written",
     "Telephonic",

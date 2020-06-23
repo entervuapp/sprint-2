@@ -7,7 +7,7 @@ import {
   Validators,
   FormBuilder,
 } from "@angular/forms";
-import { ValueDescription, Alerts } from "../../../commons/typings/typings";
+import { ValueDescription } from "../../../commons/typings/typings";
 import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageSkillsService } from "./manage-skills/manage-skills.service";
 import { Subscription } from "rxjs";
@@ -27,7 +27,6 @@ export class ManageSkillsComponent implements OnInit {
   public displayTextObject: object;
   public addSkillForm: FormGroup;
   public skillSearchControl: FormControl;
-  public alerts: Alerts[];
 
   constructor(
     public manageHeaderService: ManageHeaderService,
@@ -37,7 +36,6 @@ export class ManageSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.alerts = [];
     this.displayTextObject = {
       searchSkill: "Search Skill",
       addSkills: "Add skills",
@@ -161,7 +159,7 @@ export class ManageSkillsComponent implements OnInit {
           (errors) => {
             if (errors) {
               console.log(errors);
-              this.alerts = [{ code: "ERROR", systemMessage: errors }];
+              this.objectUtil.showAlert(errors);
             }
           }
         )
@@ -192,7 +190,7 @@ export class ManageSkillsComponent implements OnInit {
           (errors) => {
             if (errors) {
               console.log(errors);
-              this.alerts = [{ code: "ERROR", systemMessage: errors }];
+              this.objectUtil.showAlert(errors);
             }
           }
         )
