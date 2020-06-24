@@ -176,7 +176,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     ) {
       this.updateEvent(requestBody);
     } else {
-      this.createEvent(requestBody);
+      // this.createEvent(requestBody);
     }
   };
 
