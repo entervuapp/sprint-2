@@ -229,6 +229,9 @@ export class ManageSkillsComponent implements OnInit {
       this.addSkillForm.controls.description &&
       this.addSkillForm.controls.description.value
     ) {
+      this.addSkillForm.controls.value.setValue(
+        this.addSkillForm.controls.value.value.toUpperCase()
+      );
       filteredList = this.filterSkillsList.filter(
         (skill) =>
           skill.description.toLowerCase() ===

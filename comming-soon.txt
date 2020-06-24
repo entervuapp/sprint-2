@@ -1,5 +1,5 @@
 1. on update of skill in an event, and that skill has candidates, will be lost ?
-2. change password has to be removed and place remember password. remove query for fetching passwords
+2. change password has to be removed and place it with remember password. remove query for fetching passwords
 
 
 
@@ -10,9 +10,11 @@
 3. Manage events screen, enter skill as react. the height of the options panel issue. - done
 4. Add candidates screen, search inside the tab. need to work on the size of the search field. 
 5. Manage events screen, Hightlight current event which is on going.
-6. Main menus center align
-7. look in to change password
-8. show cursor pointer on logo mouse hover and on menu items too
+6. Main menus center align.
+7. look in to change password.
+8. show cursor pointer on logo mouse hover and on menu items too.
+9. contact us form
+10. 
 
 
 
@@ -20,6 +22,8 @@
 1. To transfer a completed event to the future date, with all the candidates as ease.
 2. To view all past events
 3. email and mobile number ?
+4. You can add only 5 team members in a day
+5. 
 
 
 
