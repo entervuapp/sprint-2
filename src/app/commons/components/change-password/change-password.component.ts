@@ -21,7 +21,7 @@ import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 export class ChangePasswordComponent implements OnInit {
   public myForm: FormGroup;
   private _subscriptions = new Subscription();
-  public displayTextObject: object;
+  public displayTextObject: NewAny;
   public SHARED_CONSTANTS;
 
   constructor(

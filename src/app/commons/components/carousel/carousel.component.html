@@ -1,6 +1,8 @@
 <!-- You can now use your library component in app.component.html -->
 <div class="InterviewSlideCount">
-  <h3 class="InterviewSlideCountHead">Today Interviews List</h3>
+  <h3 class="InterviewSlideCountHead">
+    {{ displayTextObject["todayInterviewList"] }}
+  </h3>
   <ngx-slick-carousel
     class="carousel"
     #slickModal="slick-carousel"

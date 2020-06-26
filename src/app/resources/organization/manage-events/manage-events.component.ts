@@ -168,7 +168,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       eventSkills: this.prepareSkillList([...this.skillsList]),
     };
     // this.eventsList["push"](requestBody);
-    console.log("onSubmit of eventsList ", this.eventsList);
+    console.log("onSubmit ", requestBody);
     if (
       requestBody &&
       requestBody.id !== null &&
@@ -176,7 +176,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     ) {
       this.updateEvent(requestBody);
     } else {
-      // this.createEvent(requestBody);
+      this.createEvent(requestBody);
     }
   };
 
@@ -268,7 +268,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
           roundDetailsList: [],
         };
       }
-
+      // this.objectUtil.showAlert([
+      //   { code: "SUCCESS", systemMessage: "Success" },
+      // ]);
       this.renderSkillId
         ? this.skillsList.splice(this.renderSkillId - 1, 1, eachSkill)
         : this.skillsList.push(eachSkill);
@@ -591,9 +593,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     ) {
       for (let i = 0; i < this.skillObjForPopup["numberOfRounds"]; i++) {
         let temp = {
-          id: i,
+          id: i + 1,
           roundName: "",
-          roundNumber: i,
+          roundNumber: i + 1,
         };
         this.skillObjForPopup["roundDetailsList"].push(temp);
       }

@@ -6,7 +6,7 @@
       appFocusInvalidInput
       appFocusFirstEmptyInput
     >
-      <h2 class="text-center">Sign in</h2>
+      <h2 class="text-center">{{ displayTextObject["signIn"] }}</h2>
       <div class="form-group">
         <div class="input-group">
           <span
@@ -20,7 +20,7 @@
             type="text"
             class="form-control"
             name="username"
-            placeholder="Username"
+            placeholder="displayTextObject['username']"
             formControlName="username"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'username')
@@ -31,7 +31,7 @@
           *ngIf="checkForError(myForm, 'username')"
           [formObject]="myForm"
           [controlName]="'username'"
-          [fieldName]="'Username'"
+          [fieldName]="displayTextObject['username']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -58,7 +58,7 @@
           *ngIf="checkForError(myForm, 'password')"
           [formObject]="myForm"
           [controlName]="'password'"
-          [fieldName]="'Password'"
+          [fieldName]="displayTextObject['password']"
         ></app-error-message>
       </div>
       <div class="form-group">

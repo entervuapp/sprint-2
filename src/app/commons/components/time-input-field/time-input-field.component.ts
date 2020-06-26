@@ -15,7 +15,7 @@ import ObjectUtil from "../../utils/object-utils";
   styleUrls: ["./time-input-field.component.css"],
 })
 export class TimeInputFieldComponent implements OnInit, OnChanges {
-  timeInputControl: FormControl;
+  public timeInputControl: FormControl;
 
   @Input() placeholderText: string;
   @Input() fieldSize: string;
@@ -75,7 +75,7 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
     }
   }
 
-  private initializeControl = () => {
+  private initializeControl = (): void => {
     if (this.isRequired) {
       this.timeInputControl = new FormControl("", {
         validators: Validators.required,
@@ -89,11 +89,11 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
     }
   };
 
-  public checkForError = (formControl, property) => {
+  public checkForError = (formControl, property): boolean => {
     return this.objectUtil.checkForFormErrors(formControl, property);
   };
 
-  public onBlur = () => {
+  public onBlur = (): void => {
     let enteredTime = JSON.parse(JSON.stringify(this.timeInputControl.value));
     var timeRegex = /^(([0-1][0-9])|(2[0-3])):[0-5][0-9]$/;
     if (

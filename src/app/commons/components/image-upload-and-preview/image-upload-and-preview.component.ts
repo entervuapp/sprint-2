@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: "app-image-upload-and-preview",
   templateUrl: "./image-upload-and-preview.component.html",
-  styleUrls: ["./image-upload-and-preview.component.scss"]
+  styleUrls: ["./image-upload-and-preview.component.scss"],
 })
 export class ImageUploadAndPreviewComponent implements OnInit {
-  public imagePath;
-  imgURL: any;
+  private imagePath;
+  public imgURL: any;
   public message: string;
 
   @Output() onAvatarChange = new EventEmitter();
@@ -15,14 +15,14 @@ export class ImageUploadAndPreviewComponent implements OnInit {
 
   ngOnInit() {}
 
-  onRemove = () => {
+  public onRemove = (): void => {
     this.imgURL = null;
     if (this.onAvatarChange) {
       this.onAvatarChange.emit({ image: this.imgURL });
     }
   };
 
-  preview(files) {
+  public preview = (files): void => {
     if (files.length === 0) return;
 
     var mimeType = files[0].type;
@@ -34,11 +34,11 @@ export class ImageUploadAndPreviewComponent implements OnInit {
     var reader = new FileReader();
     this.imagePath = files;
     reader.readAsDataURL(files[0]);
-    reader.onload = _event => {
+    reader.onload = (_event) => {
       this.imgURL = reader.result;
       if (this.onAvatarChange) {
         this.onAvatarChange.emit({ image: this.imgURL });
       }
     };
-  }
+  };
 }

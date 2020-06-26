@@ -24,13 +24,13 @@ export class SaveCancelButtonsComponent implements OnInit {
     this.hideCancelButton = this.hideCancelButton || false;
   }
 
-  saveHandler = () => {
+  public saveHandler = (): void => {
     if (this.onSave) {
       this.onSave.emit();
     }
   };
 
-  cancelHandler = () => {
+  public cancelHandler = (): void => {
     if (this.onCancel) {
       this.onCancel.emit();
     }

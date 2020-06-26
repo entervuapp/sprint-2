@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Subject } from "rxjs";
 import { LoaderService } from "../../services/loader/loader.service";
+import { NewAny } from "../../typings/typings";
 
 @Component({
   selector: "app-loading-spinner",
@@ -8,10 +9,14 @@ import { LoaderService } from "../../services/loader/loader.service";
   styleUrls: ["./loading-spinner.component.scss"],
 })
 export class LoadingSpinnerComponent implements OnInit {
-  isLoading: Subject<boolean>;
+  public isLoading: Subject<boolean>;
+  public displayTextObject: NewAny;
   constructor(private loaderService: LoaderService) {}
 
   ngOnInit() {
+    this.displayTextObject = {
+      loading: "Loading...",
+    };
     this.isLoading = this.loaderService && this.loaderService.isLoading;
   }
 }

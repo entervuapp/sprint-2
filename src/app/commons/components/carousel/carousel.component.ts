@@ -6,9 +6,8 @@ import {
   Output,
   EventEmitter,
 } from "@angular/core";
-import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { Subscription } from "rxjs";
-import { SkillWithCount } from "../../typings/typings";
+import { SkillWithCount, NewAny } from "../../typings/typings";
 
 @Component({
   selector: "app-carousel",
@@ -16,8 +15,8 @@ import { SkillWithCount } from "../../typings/typings";
   styleUrls: ["./carousel.component.css"],
 })
 export class CarouselComponent implements OnInit, OnChanges {
-  fontAwesome = FONT_AWESOME_ICONS_CONSTANTS;
-  slides: SkillWithCount[];
+  public slides: SkillWithCount[];
+  public displayTextObject: NewAny;
   private _subscriptions = new Subscription();
   public slideConfig: object;
 
@@ -28,6 +27,9 @@ export class CarouselComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit() {
+    this.displayTextObject = {
+      todayInterviewList: "Today Interviews List",
+    };
     this.slides = [];
     this.slideConfig = {
       slidesToShow: 6,
@@ -130,7 +132,9 @@ export class CarouselComponent implements OnInit, OnChanges {
         this.slides.push(countOfCandidatesPerSkill[key]);
       }
     }
-    this.onSelect.emit({ ...this.slides[0] });
+    if (this.onSelect) {
+      this.onSelect.emit({ ...this.slides[0] });
+    }
   };
 
   public onClickOfCarousel = (slide): void => {

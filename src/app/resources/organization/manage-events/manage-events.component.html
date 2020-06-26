@@ -244,7 +244,7 @@
 
   <div class="EventListBlock">
     <h2>{{ displayTextObj["events"] }}</h2>
-    <div class="addEventsTable">
+    <div class="addEventsTable" *ngIf="eventsList && eventsList.length">
       <div
         class="eventListCard"
         *ngFor="let event of eventsList; let i = index"
@@ -341,6 +341,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="addEventsTable" *ngIf="eventsList && eventsList.length === 0">
+      <app-no-records-found
+        [message]="'No events found.'"
+      ></app-no-records-found>
     </div>
   </div>
 </div>

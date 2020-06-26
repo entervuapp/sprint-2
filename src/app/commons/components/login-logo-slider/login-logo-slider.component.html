@@ -10,7 +10,7 @@
         id="organizationButton"
         class="loginFormNavigationBtn organizationText"
         (click)="addSlideOneClass($event)"
-        >Organization</span
+        >{{ displayTextObject["organization"] }}</span
       >
     </div>
     <div class="btnGroup">
@@ -18,7 +18,7 @@
         id="individualButton"
         class="loginFormNavigationBtn individualText"
         (click)="addSlideOneClass($event)"
-        >Individual</span
+        >{{ displayTextObject["individual"] }}</span
       >
     </div>
     <div class="btnGroup">
@@ -26,7 +26,7 @@
         id="aboutButton"
         class="loginFormNavigationBtn aboutUsText"
         (click)="removeSlideOneClass($event)"
-        >About Us</span
+        >{{ displayTextObject["aboutUs"] }}</span
       >
     </div>
   </div>
