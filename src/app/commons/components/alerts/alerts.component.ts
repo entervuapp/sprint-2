@@ -22,7 +22,7 @@ export class AlertsComponent implements OnInit, OnChanges {
     this.alertsList = this.alertsList || [];
   }
 
-  ngOnChanges(changes) {
+  ngOnChanges(changes): void {
     if (
       changes &&
       changes.hasOwnProperty("alertsList") &&

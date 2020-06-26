@@ -15,7 +15,7 @@ export class AlertService {
 
   public set = (value): void => {
     if (this.alertObservable && value) {
-      this.alertObservable.next([value]);
+      this.alertObservable.next(value);
     }
   };
 }

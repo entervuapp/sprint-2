@@ -7,7 +7,8 @@
             ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE
           )
         "
-        >My Profile</a
+      >
+        {{ displayTextObject["myProfile"] }}</a
       >
     </li>
     <li>
@@ -17,16 +18,19 @@
             ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD
           )
         "
-        >Change Password</a
       >
+        {{ displayTextObject["changePassword"] }}
+      </a>
     </li>
-    <li><a>Settings</a></li>
+    <li>
+      <a>{{ displayTextObject["settings"] }}</a>
+    </li>
     <li>
       <a
         (click)="
           navigateToScreen(ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT)
         "
-        >Logout</a
+        >{{ displayTextObject["logout"] }}</a
       >
     </li>
   </ul>

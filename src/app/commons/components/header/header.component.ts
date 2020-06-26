@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../constants/font-awesome-icons";
 import { AppComponent } from "src/app/app.component";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ROUTE_URL_PATH_CONSTANTS } from "../../constants/route-url-path.constants";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
 
@@ -17,12 +16,11 @@ interface Menu {
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent extends AppComponent implements OnInit {
-  showNotification: boolean;
-  activeModule: string;
-  showSettings: boolean;
-  fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
-  ROUTE_URL_PATH_CONSTANTS;
-  SHARED_CONSTANTS;
+  public showNotification: boolean;
+  public activeModule: string;
+  public showSettings: boolean;
+  public fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
+  private SHARED_CONSTANTS;
   public menuList: Menu[];
   constructor(
     public router: Router,
@@ -34,7 +32,6 @@ export class HeaderComponent extends AppComponent implements OnInit {
 
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
-    this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     if (
       this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ===
       this.localStorageService.get(
@@ -71,7 +68,7 @@ export class HeaderComponent extends AppComponent implements OnInit {
     this.highlightModule();
   }
 
-  private highlightModule = () => {
+  private highlightModule = (): void => {
     if (this.activatedRoute) {
       let url = this.activatedRoute.snapshot["_routerState"].url;
       let urlFirstPart = url.split("/")[1];
@@ -83,10 +80,11 @@ export class HeaderComponent extends AppComponent implements OnInit {
         activeMenu && activeMenu.DISPLAY_TEXT ? activeMenu.DISPLAY_TEXT : "";
     }
   };
-  noDisplayOverlay() {
+
+  public noDisplayOverlay = (): void => {
     this.showNotification = false;
     this.showSettings = false;
-  }
+  };
 
   public navigateToScreen = (menu): void => {
     switch (menu.DISPLAY_TEXT) {

@@ -7,7 +7,7 @@ import { FormGroup, FormControl } from "@angular/forms";
   styleUrls: ["./error-message.component.scss"],
 })
 export class ErrorMessageComponent implements OnInit {
-  timeRegex;
+  public timeRegex;
   @Input() formObject: FormGroup | FormControl;
   @Input() controlName: string;
   @Input() fieldName: string;
@@ -21,7 +21,7 @@ export class ErrorMessageComponent implements OnInit {
     }
   }
 
-  public checkInstance = (formObject, formType) => {
+  public checkInstance = (formObject, formType): boolean => {
     if (formObject && formType === "formGroup") {
       return formObject instanceof FormGroup;
     } else if (formObject && formType === "formControl") {

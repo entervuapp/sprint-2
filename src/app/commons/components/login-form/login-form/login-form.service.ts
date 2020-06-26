@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { API_URLS_CONSTANTS } from "../../../constants/api-urls";
 
@@ -9,7 +9,7 @@ import { API_URLS_CONSTANTS } from "../../../constants/api-urls";
 export class LoginFormService {
   constructor(private http: HttpClient) {}
 
-  signIn = (requestBody): Observable<any> => {
+  public signIn = (requestBody): Observable<any> => {
     let url = API_URLS_CONSTANTS.API_URLS.LOGIN_SCREEN.SIGN_IN;
     return this.http.post(url, requestBody);
   };
