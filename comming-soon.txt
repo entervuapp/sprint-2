@@ -1,6 +1,7 @@
 1. on update of skill in an event, and that skill has candidates, will be lost ?
 2. change password has to be removed and place it with remember password. remove query for fetching passwords
-
+3. user should verify email to login
+4. candidate is able to change the url manually to admin and able to add skills
 
 
 
@@ -23,7 +24,8 @@
 2. To view all past events
 3. email and mobile number ?
 4. You can add only 5 team members in a day
-5. 
+5. For creating more than 1 event on a day 
+6. for organizing more than 1 event on a day
 
 
 
