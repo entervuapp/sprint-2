@@ -20,7 +20,9 @@ export class MainScreenComponent implements OnInit {
       organization: false,
       individual: false,
     };
-    this.manageHeaderService.updateHeaderVisibility(false);
+    if (this.manageHeaderService) {
+      this.manageHeaderService.updateHeaderVisibility(false);
+    }
   }
 
   handleAboutUsAndContactUs = (event) => {
@@ -47,6 +49,7 @@ export class MainScreenComponent implements OnInit {
       };
     }
   };
+  1;
 
   handleSignUpDisplay = () => {
     if (this.handleFormsDisplay && this.handleFormsDisplay["organization"]) {
@@ -69,6 +72,16 @@ export class MainScreenComponent implements OnInit {
   };
 
   showLoginScreen = () => {
-    this.handleFormsDisplay["login"] = true;
+    this.handleActiveAndInactive("login");
+  };
+
+  private handleActiveAndInactive = (section: string): void => {
+    for (let key in this.handleFormsDisplay) {
+      if (key === section) {
+        this.handleFormsDisplay[key] = true;
+      } else {
+        this.handleFormsDisplay[key] = false;
+      }
+    }
   };
 }

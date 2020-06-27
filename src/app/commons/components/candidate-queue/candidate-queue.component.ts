@@ -36,6 +36,7 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
       close: "Close",
       submit: "Submit",
       feedback: "Feedback",
+      enterTime: "Enter time",
     };
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);

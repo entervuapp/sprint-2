@@ -20,7 +20,7 @@
             type="text"
             class="form-control"
             name="username"
-            placeholder="displayTextObject['username']"
+            [placeholder]="displayTextObject['username']"
             formControlName="username"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'username')
@@ -47,7 +47,7 @@
             type="password"
             class="form-control"
             name="password"
-            placeholder="Password"
+            [placeholder]="displayTextObject['password']"
             formControlName="password"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'password')

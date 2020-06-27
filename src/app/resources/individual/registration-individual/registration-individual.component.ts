@@ -14,6 +14,7 @@ import { LoginFormService } from "../../../commons/components/login-form/login-f
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-registration-individual",
@@ -36,7 +37,8 @@ export class RegistrationIndividualComponent extends AppComponent
     private objectUtil: ObjectUtil,
     private registrationIndividualService: RegistrationIndividualService,
     private loginFormService: LoginFormService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public router: Router
   ) {
     super();
   }
@@ -149,11 +151,9 @@ export class RegistrationIndividualComponent extends AppComponent
     this.localStorageService.set(
       this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
       JSON.stringify({
-        firstName: response && response.companyCode ? response.companyCode : "",
-        lastName: response && response.companyCode ? response.companyCode : "",
         email: response && response.email ? response.email : "",
-        companyName: response && response.firstName ? response.firstName : "",
-        companyCode: response && response.lastName ? response.lastName : "",
+        firstName: response && response.firstName ? response.firstName : "",
+        lastName: response && response.lastName ? response.lastName : "",
       })
     );
   };

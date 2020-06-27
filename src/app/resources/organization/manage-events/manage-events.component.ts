@@ -167,7 +167,6 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       companyCode: this.getUserDetails("companyCode"),
       eventSkills: this.prepareSkillList([...this.skillsList]),
     };
-    // this.eventsList["push"](requestBody);
     console.log("onSubmit ", requestBody);
     if (
       requestBody &&
@@ -319,8 +318,17 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onEditOfEvent = (event) => {
+    let userDetails = JSON.parse(
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
+      )
+    );
+    let requestBody = {
+      companyCode: userDetails["companyCode"],
+      id: event.id,
+    };
     this._subscriptions.add(
-      this.manageEventsService.findEvent(event.id).subscribe((response) => {
+      this.manageEventsService.findEvent(requestBody).subscribe((response) => {
         this.initializeForm({ ...response });
       })
     );
@@ -384,13 +392,26 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   private getEventsList = () => {
+    let userDetails = JSON.parse(
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
+      )
+    );
+    let requestBody = { companyCode: userDetails["companyCode"] };
     this._subscriptions.add(
-      this.manageEventsService.getEvents().subscribe(
-        (response) => {
-          this.eventsList = response;
+      this.manageEventsService.getEvents(requestBody).subscribe(
+        (data) => {
+          if (data && data["response"] && data["response"].length) {
+            this.eventsList = data["response"];
+          } else {
+            this.eventsList = [];
+          }
         },
         (errors) => {
           console.log("errors", errors);
+          this.objectUtil.showAlert(
+            this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+          );
         }
       )
     );
@@ -398,8 +419,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
 
   public prepareSkillsForDisplay = (event, isTooltip = false) => {
     let skillList = [];
-    if (event && event.skillsList && event.skillsList.length) {
-      event.skillsList.map((item) => skillList.push(item.skill.description));
+    if (event && event.eventSkills && event.eventSkills.length) {
+      event.eventSkills.map((item) =>
+        skillList.push(this.fetchSkillName(item.skillId))
+      );
     }
     let displayText = skillList.join(", ");
     if (displayText && displayText.length > 20) {
@@ -690,6 +713,11 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
           rounds: skillObj.numberOfRounds,
           roundDetails: skillObj.roundDetailsList,
         };
+        if (temp && temp.roundDetails && temp.roundDetails.length) {
+          temp.roundDetails.forEach((element) => {
+            delete element.id;
+          });
+        }
         skillList.push(temp);
       });
     }
@@ -726,6 +754,13 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         this.editedSkillRoundDetails.push(temp);
       }
       return this.editedSkillRoundDetails;
+    }
+  };
+
+  private fetchSkillName = (id): string => {
+    if (id && this.skillOptionsList && this.skillOptionsList.length) {
+      let skillObj = this.skillOptionsList.find((skill) => skill.id === id);
+      return skillObj.description;
     }
   };
 }

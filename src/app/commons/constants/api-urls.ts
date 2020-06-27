@@ -14,10 +14,10 @@ export class API_URLS_CONSTANTS {
         HR: `${BASE_URL}/entervu/company/register`,
       },
       MANAGE_EVENTS: {
-        GET_EVENTS: `${BASE_URL}​/entervu​/event`,
-        CREATE_EVENTS: `${BASE_URL}/entervu​/event`,
-        UPDATE_EVENTS: `${BASE_URL}/entervu​/event`,
-        DELETE_EVENT: `${BASE_URL}/entervu​/event`,
+        GET_EVENTS: `${BASE_URL}/entervu/event`,
+        CREATE_EVENTS: `${BASE_URL}/entervu/event`,
+        UPDATE_EVENTS: `${BASE_URL}/entervu/event`,
+        DELETE_EVENT: `${BASE_URL}/entervu/event`,
       },
       MANAGE_CANDIDATES: {
         GET_CANDIDATES: `${LOCAL_URL}/candidates`,

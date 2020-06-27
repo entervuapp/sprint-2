@@ -90,6 +90,8 @@ export class RegistrationOrganizationComponent extends AppComponent
           : "ENTERVU_ROLE_CANDIDATE",
     };
     delete requestBody.confirmPassword;
+    console.log("on register", JSON.stringify(requestBody));
+
     this._subscriptions.add(
       this.registrationOrganizationService
         .organizationSignUp(requestBody)

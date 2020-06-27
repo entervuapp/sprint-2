@@ -78,12 +78,17 @@ export class ManageHrTeamComponent implements OnInit {
         .organizationSignUp(requestBody)
         .subscribe(
           (data) => {
-            this.objectUtil.showAlert(data);
+            this.objectUtil.showAlert(
+              this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS
+            );
+            this.onReset();
             this.getTeamMembers();
           },
           (errors) => {
             if (errors) {
-              this.objectUtil.showAlert(errors);
+              this.objectUtil.showAlert(
+                this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+              );
             }
           }
         )
@@ -115,7 +120,7 @@ export class ManageHrTeamComponent implements OnInit {
 
   sendInvite = () => {};
 
-  onInvitationCancel = () => {
+  onReset = () => {
     this.myForm.reset();
   };
 
@@ -135,5 +140,9 @@ export class ManageHrTeamComponent implements OnInit {
         }
       )
     );
+  };
+
+  public hasCapability = (): boolean => {
+    return this.objectUtil.isAuthorized("addTeam");
   };
 }

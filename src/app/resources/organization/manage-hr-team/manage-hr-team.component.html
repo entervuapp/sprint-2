@@ -1,6 +1,6 @@
 <div class="manageTeamBlock">
   <div class="container">
-    <div class="manageTeamhead1">
+    <div class="manageTeamhead1" *ngIf="hasCapability()">
       <h2>Add Team</h2>
       <form
         [formGroup]="myForm"
@@ -8,28 +8,6 @@
         appFocusInvalidInput
       >
         <div class="addTeamMemberForm">
-          <!-- <div class="form-group addTeamFormGroup">
-          <div class="input-group formGroupAddTeamMember">
-            <label for="FullName">Full Name</label>
-            <input
-              type="text"
-              class="form-control"
-              name="FullName"
-              id="FullName"
-              placeholder="Full Name"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'officeEmail')
-              }"
-              formControlName="officeEmail"
-            />
-          </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'officeEmail')"
-            [formObject]="myForm"
-            [controlName]="'officeEmail'"
-            [fieldName]="'Office Email'"
-          ></app-error-message>
-        </div> -->
           <div class="form-group addTeamFormGroup">
             <div class="input-group formGroupAddTeamMember">
               <label for="email">Email</label>
@@ -52,50 +30,6 @@
               [fieldName]="'Office Email'"
             ></app-error-message>
           </div>
-          <!-- <div class="form-group addTeamFormGroup">
-            <div class="input-group formGroupAddTeamMember">
-              <label for="Mnumber">Mobile Number</label>
-              <input
-                type="text"
-                class="form-control"
-                name="Mnumber"
-                id="Mnumber"
-                placeholder="Mobile Number"
-                [ngClass]="{
-                  'input-field-error': checkForError(myForm, 'officeEmail')
-                }"
-                formControlName="officeEmail"
-              />
-            </div>
-            <app-error-message
-              *ngIf="checkForError(myForm, 'officeEmail')"
-              [formObject]="myForm"
-              [controlName]="'officeEmail'"
-              [fieldName]="'Office Email'"
-            ></app-error-message>
-          </div>
-          <div class="form-group addTeamFormGroup">
-            <div class="input-group formGroupAddTeamMember">
-              <label for="password">Password</label>
-              <input
-                type="text"
-                class="form-control"
-                name="password"
-                id="password"
-                placeholder="Password"
-                [ngClass]="{
-                  'input-field-error': checkForError(myForm, 'officeEmail')
-                }"
-                formControlName="officeEmail"
-              />
-            </div>
-            <app-error-message
-              *ngIf="checkForError(myForm, 'officeEmail')"
-              [formObject]="myForm"
-              [controlName]="'officeEmail'"
-              [fieldName]="'Office Email'"
-            ></app-error-message>
-          </div> -->
         </div>
         <div class="addTeamAddBtn">
           <app-save-cancel-buttons

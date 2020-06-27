@@ -1,10 +1,16 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { AlertService } from "../services/alert/alert.service";
+import { LocalStorageService } from "../services/local-storage/local-storage.service";
+import { SHARED_CONSTANTS } from "../constants/shared.constants";
 
 @Injectable()
 export default class ObjectUtil {
-  constructor(private alertService: AlertService) {}
+  private SHARED_CONSTANTS = SHARED_CONSTANTS;
+  constructor(
+    private alertService: AlertService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   checkPasswordStrength = (enteredPassword) => {
     let array = [];
@@ -218,5 +224,18 @@ export default class ObjectUtil {
     if (alertList) {
       this.alertService.set(alertList);
     }
+  };
+
+  public isAuthorized = (task): boolean => {
+    let userRole = this.localStorageService.get(
+      this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
+    );
+    if (
+      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+      this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER
+    ) {
+      return true;
+    }
+    return false;
   };
 }
