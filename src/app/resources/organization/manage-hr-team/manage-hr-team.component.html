@@ -1,6 +1,6 @@
 <div class="manageTeamBlock">
   <div class="container">
-    <div class="manageTeamhead1" *ngIf="hasCapability()">
+    <div class="manageTeamhead1" *ngIf="hasCapability('addTeam')">
       <h2>Add Team</h2>
       <form
         [formGroup]="myForm"
@@ -74,6 +74,7 @@
                 </a>
                 | -->
                   <a
+                    *ngIf="hasCapability('deleteSkill')"
                     href="javascript:void(0)"
                     (click)="onDeleteOfTeamMember(member)"
                   >

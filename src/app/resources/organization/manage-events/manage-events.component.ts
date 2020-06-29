@@ -213,11 +213,16 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
           this.objectUtil.showAlert(response);
           this.clearSkillFields();
           this.onReset();
+          this.objectUtil.showAlert(
+            this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS
+          );
         },
         (errors) => {
           console.log(errors);
           if (errors) {
-            this.objectUtil.showAlert(errors);
+            this.objectUtil.showAlert(
+              this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+            );
           }
         }
       )

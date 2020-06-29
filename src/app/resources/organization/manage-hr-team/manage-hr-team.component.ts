@@ -142,7 +142,7 @@ export class ManageHrTeamComponent implements OnInit {
     );
   };
 
-  public hasCapability = (): boolean => {
-    return this.objectUtil.isAuthorized("addTeam");
+  public hasCapability = (task): boolean => {
+    return this.objectUtil.isAuthorized(task);
   };
 }

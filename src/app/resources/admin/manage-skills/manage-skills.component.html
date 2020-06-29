@@ -24,7 +24,7 @@
               </div>
             </form>
           </div>
-          <div class="adminSearchAddBtn">
+          <div class="adminSearchAddBtn" *ngIf="hasCapability()">
             <span class="adminSearchPlusIcon" (click)="adminAddSkillEnable()"
               ><fa-icon [icon]="fontAwesome.faPlus"></fa-icon
             ></span>
@@ -89,7 +89,11 @@
                   class="btn btn-default skillSubmitBtn"
                   (click)="addSkillForm.valid && onCreate()"
                 >
-                  {{ addSkillForm.controls.id.value ? "Update" : "Create" }}
+                  {{
+                    addSkillForm.controls.id.value
+                      ? displayTextObject["update"]
+                      : displayTextObject["create"]
+                  }}
                 </button>
               </div>
             </form>

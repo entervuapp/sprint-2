@@ -8,11 +8,11 @@ export class LoaderService {
   public isLoading = new Subject<boolean>();
   constructor() {}
 
-  show = () => {
+  public show = (): void => {
     this.isLoading.next(true);
   };
 
-  hide = () => {
+  public hide = (): void => {
     this.isLoading.next(false);
   };
 }

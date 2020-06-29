@@ -19,11 +19,11 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
   styleUrls: ["./manage-skills.component.css"],
 })
 export class ManageSkillsComponent implements OnInit {
-  fontAwesome = FONT_AWESOME_ICONS_CONSTANTS;
+  public fontAwesome = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
-  filterSkillsList: ValueDescription[];
-  searchSkillCardEnable: boolean;
-  addSkillCardEnable: boolean;
+  public filterSkillsList: ValueDescription[];
+  public searchSkillCardEnable: boolean;
+  public addSkillCardEnable: boolean;
   public displayTextObject: object;
   public addSkillForm: FormGroup;
   public skillSearchControl: FormControl;
@@ -42,6 +42,8 @@ export class ManageSkillsComponent implements OnInit {
       skillSearch: "Skill search",
       skillId: "Skill ID",
       skillName: "Skill name",
+      update: "Update",
+      create: "Create",
     };
     this.initializeForm();
     this.searchSkillCardEnable = true;
@@ -245,5 +247,9 @@ export class ManageSkillsComponent implements OnInit {
         ? this.addSkillForm.controls.description.setErrors(null)
         : "";
     }
+  };
+
+  public hasCapability = (): boolean => {
+    return this.objectUtil.isAuthorized("addSkill");
   };
 }

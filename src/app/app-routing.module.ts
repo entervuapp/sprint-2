@@ -1,3 +1,4 @@
+import { ManageSkillsComponent } from "./resources/admin/manage-skills/manage-skills.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ROUTE_URL_PATH_CONSTANTS } from "./commons/constants/route-url-path.constants";
@@ -11,7 +12,6 @@ import { ChangePasswordComponent } from "./commons/components/change-password/ch
 import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.component";
 import { ManageCandidatesComponent } from "./resources/organization/manage-candidates/manage-candidates.component";
 import { OnGoingEventOrganizationComponent } from "./resources/organization/on-going-event-organization/on-going-event-organization.component";
-import { AdminDashboardComponent } from "./resources/admin/admin-dashboard/admin-dashboard.component";
 import { ManageHrTeamComponent } from "./resources/organization/manage-hr-team/manage-hr-team.component";
 
 const routes: Routes = [
@@ -60,7 +60,7 @@ const routes: Routes = [
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN,
-    component: AdminDashboardComponent,
+    component: ManageSkillsComponent,
   },
   {
     path: "**",

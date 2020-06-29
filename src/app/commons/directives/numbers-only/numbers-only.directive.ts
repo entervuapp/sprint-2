@@ -12,6 +12,7 @@ import {
 })
 export class NumbersOnlyDirective {
   @Output() onNgModelChange = new EventEmitter();
+
   constructor(private _el: ElementRef) {}
 
   @HostListener("input", ["$event"]) onInputChange(event) {
