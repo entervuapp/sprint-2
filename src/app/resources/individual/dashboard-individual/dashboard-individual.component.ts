@@ -1,6 +1,12 @@
+import { NewAny } from "src/app/commons/typings/typings";
 import { Component, OnInit } from "@angular/core";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
-import { from } from "rxjs";
+
+interface OrganizationNameButton {
+  companyName: string;
+  companyCode: string;
+  active: boolean;
+}
 
 @Component({
   selector: "app-dashboard-individual",
@@ -8,7 +14,7 @@ import { from } from "rxjs";
   styleUrls: ["./dashboard-individual.component.scss"],
 })
 export class DashboardIndividualComponent implements OnInit {
-  public organizationList: string[];
+  public organizationList: OrganizationNameButton[];
 
   constructor(private manageHeaderService: ManageHeaderService) {}
 
@@ -20,6 +26,19 @@ export class DashboardIndividualComponent implements OnInit {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
 
-    this.organizationList = ["TCS", "Infosys"];
+    this.organizationList = [
+      { companyCode: "TCS", companyName: "TCS", active: true },
+      { companyCode: "INFOSYS", companyName: "INFOSYS", active: false },
+    ];
   }
+
+  public onOrganizationClick = (organization: OrganizationNameButton): void => {
+    this.organizationList.forEach((element) => {
+      if (element && element.companyCode === organization.companyCode) {
+        element.active = true;
+      } else {
+        element.active = false;
+      }
+    });
+  };
 }

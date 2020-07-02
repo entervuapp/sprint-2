@@ -237,22 +237,33 @@ export default class ObjectUtil {
     switch (task) {
       case "addTeam":
         if (
-          userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
-          this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER
+          userRole ===
+          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+            this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER)
         ) {
           hasCapability = true;
         }
         break;
       case "addSkill":
         if (
-          userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
-          this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER
+          userRole ===
+          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+            this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER)
         ) {
           hasCapability = true;
         }
         break;
       case "deleteSkill":
         if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER) {
+          hasCapability = true;
+        }
+        break;
+      case "deleteTeam":
+        if (
+          userRole ===
+          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+            this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER)
+        ) {
           hasCapability = true;
         }
         break;

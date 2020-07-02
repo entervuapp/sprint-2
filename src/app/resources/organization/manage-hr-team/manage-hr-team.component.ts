@@ -78,17 +78,17 @@ export class ManageHrTeamComponent implements OnInit {
         .organizationSignUp(requestBody)
         .subscribe(
           (data) => {
-            this.objectUtil.showAlert(
-              this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS
-            );
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
+            ]);
             this.onReset();
             this.getTeamMembers();
           },
           (errors) => {
             if (errors) {
-              this.objectUtil.showAlert(
-                this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
-              );
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
             }
           }
         )

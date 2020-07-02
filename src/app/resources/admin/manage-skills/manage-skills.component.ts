@@ -12,6 +12,7 @@ import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageSkillsService } from "./manage-skills/manage-skills.service";
 import { Subscription } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 
 @Component({
   selector: "app-manage-skills",
@@ -27,6 +28,7 @@ export class ManageSkillsComponent implements OnInit {
   public displayTextObject: object;
   public addSkillForm: FormGroup;
   public skillSearchControl: FormControl;
+  public SHARED_CONSTANTS;
 
   constructor(
     public manageHeaderService: ManageHeaderService,
@@ -36,6 +38,7 @@ export class ManageSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.displayTextObject = {
       searchSkill: "Search Skill",
       addSkills: "Add skills",
@@ -161,7 +164,9 @@ export class ManageSkillsComponent implements OnInit {
           (errors) => {
             if (errors) {
               console.log(errors);
-              this.objectUtil.showAlert(errors);
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
             }
           }
         )
@@ -192,7 +197,9 @@ export class ManageSkillsComponent implements OnInit {
           (errors) => {
             if (errors) {
               console.log(errors);
-              this.objectUtil.showAlert(errors);
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
             }
           }
         )
@@ -249,7 +256,7 @@ export class ManageSkillsComponent implements OnInit {
     }
   };
 
-  public hasCapability = (): boolean => {
-    return this.objectUtil.isAuthorized("addSkill");
+  public hasCapability = (task): boolean => {
+    return this.objectUtil.isAuthorized(task);
   };
 }

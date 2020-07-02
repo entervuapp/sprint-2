@@ -24,7 +24,7 @@
               </div>
             </form>
           </div>
-          <div class="adminSearchAddBtn" *ngIf="hasCapability()">
+          <div class="adminSearchAddBtn" *ngIf="hasCapability('addSkill')">
             <span class="adminSearchPlusIcon" (click)="adminAddSkillEnable()"
               ><fa-icon [icon]="fontAwesome.faPlus"></fa-icon
             ></span>
@@ -127,7 +127,9 @@
                       (click)="onEditOfSkill(skill)"
                     ></fa-icon
                   ></span> -->
-                  <span class="skillDeleteIcon"
+                  <span
+                    class="skillDeleteIcon"
+                    *ngIf="hasCapability('deleteSkill')"
                     ><fa-icon
                       [icon]="fontAwesome.faTrash"
                       (click)="onDeleteOfSkill(skill)"

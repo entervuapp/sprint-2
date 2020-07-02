@@ -194,7 +194,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       this.manageEventsService.updateEvent(requestBody).subscribe(
         (response) => {
           this.getEventsList();
-          this.objectUtil.showAlert(response);
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
+          ]);
           this.clearSkillFields();
           this.onReset();
         },
@@ -210,7 +212,6 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       this.manageEventsService.createEvent(requestBody).subscribe(
         (response) => {
           this.getEventsList();
-          this.objectUtil.showAlert(response);
           this.clearSkillFields();
           this.onReset();
           this.objectUtil.showAlert(

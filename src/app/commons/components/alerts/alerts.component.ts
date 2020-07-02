@@ -28,12 +28,16 @@ export class AlertsComponent implements OnInit, OnChanges {
       changes.hasOwnProperty("alertsList") &&
       changes.alertsList.currentValue
     ) {
-      this.alertsList = changes.alertsList.currentValue;
+      if (changes.alertsList.currentValue.length) {
+        this.alertsList = changes.alertsList.currentValue;
+      } else {
+        this.alertsList = [];
+      }
     }
   }
 
   public close = (idx): void => {
-    if (this.onClose) {
+    if (this.onClose && idx + 1) {
       this.onClose.emit(idx);
     }
   };

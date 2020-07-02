@@ -5,6 +5,7 @@ import { SkillWithCount } from "../../../commons/typings/typings";
 import { ManageEventsService } from "../../../resources/organization/manage-events/manage-events/manage-events.service";
 import { ManageCandidateService } from "../../../resources/organization/manage-candidates/manage-candidates/manage-candidate.service";
 import ObjectUtil from "../../../commons/utils/object-utils";
+import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 
 @Component({
   selector: "app-on-going-event-organization",
@@ -17,6 +18,7 @@ export class OnGoingEventOrganizationComponent implements OnInit {
   public selectedSlide: SkillWithCount;
   public eventDetails: object;
   public candidatesList: any[];
+  public SHARED_CONSTANTS;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -26,6 +28,7 @@ export class OnGoingEventOrganizationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this._subscriptions.add(
       this.activatedRoute.queryParams.subscribe((params) => {
         this.eventId = parseInt(params["id"]);
@@ -55,7 +58,9 @@ export class OnGoingEventOrganizationComponent implements OnInit {
           (errors) => {
             console.log("error", errors);
             if (errors) {
-              this.objectUtil.showAlert(errors);
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
             }
           }
         )
@@ -75,7 +80,9 @@ export class OnGoingEventOrganizationComponent implements OnInit {
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.objectUtil.showAlert(errors);
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
           }
         }
       )

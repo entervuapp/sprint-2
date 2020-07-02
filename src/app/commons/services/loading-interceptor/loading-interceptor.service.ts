@@ -61,16 +61,16 @@ export class LoadingInterceptorService extends AppComponent
           //client error
           errorMessage = `Error: ${errors.error.message}`;
           console.log("From Interceptor, client side error", errorMessage);
-          this.objectUtil.showAlert(
-            this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
-          );
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+          ]);
         } else {
           //server side error
           errorMessage = `Error code: ${errors.status}\nMessage: ${errors.message}`;
           console.log("From Interceptor, server side error", errorMessage);
-          this.objectUtil.showAlert(
-            this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
-          );
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+          ]);
         }
         return throwError(errorMessage);
       }),
