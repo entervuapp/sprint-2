@@ -24,7 +24,7 @@ import { NewAny } from "../../typings/typings";
 export class LoginFormComponent extends AppComponent implements OnInit {
   public myForm: FormGroup;
   public displayTextObject: NewAny;
-  public SHARED_CONSTANTS: SHARED_CONSTANTS;
+  public SHARED_CONSTANTS;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   public ROUTE_URL_PATH_CONSTANTS;
   private _subscriptions = new Subscription();
@@ -79,7 +79,9 @@ export class LoginFormComponent extends AppComponent implements OnInit {
         (errors) => {
           if (errors) {
             console.log("login error", errors);
-            this.objectUtil.showAlert(errors);
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
           }
         }
       )

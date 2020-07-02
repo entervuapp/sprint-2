@@ -9,11 +9,11 @@ export class HighlightRequiredFieldsDirective {
   @Input("formGroup") formObj;
 
   @HostListener("submit")
-  onFormSubmit() {
+  onFormSubmit(): void {
     this.markAllRequiredFieldsAsTouched(this.formObj);
   }
 
-  markAllRequiredFieldsAsTouched = (formGroup) => {
+  public markAllRequiredFieldsAsTouched = (formGroup): void => {
     if (formGroup && formGroup.controls) {
       Object.keys(formGroup.controls).forEach((eachControlName) => {
         if (formGroup.controls[eachControlName] instanceof FormControl) {

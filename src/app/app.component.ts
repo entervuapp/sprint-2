@@ -145,7 +145,7 @@ export class AppComponent {
   }
 
   public onClose = (idx): void => {
-    if (idx) {
+    if (idx + 1) {
       this.alertsList.splice(idx, 1);
     }
   };

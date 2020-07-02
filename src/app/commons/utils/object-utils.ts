@@ -12,7 +12,7 @@ export default class ObjectUtil {
     private localStorageService: LocalStorageService
   ) {}
 
-  checkPasswordStrength = (enteredPassword) => {
+  public checkPasswordStrength = (enteredPassword): number => {
     let array = [];
     if (enteredPassword && enteredPassword.length > 7) {
       array[0] = enteredPassword.match(/[A-Z]/);
@@ -28,16 +28,19 @@ export default class ObjectUtil {
     return sum;
   };
 
-  isPasswordAndConfirmPasswordMatching = (password, confirmPassword) => {
+  public isPasswordAndConfirmPasswordMatching = (
+    password,
+    confirmPassword
+  ): boolean => {
     return password === confirmPassword ? true : false;
   };
 
-  checkEmailValidity = (enteredEmail) => {
+  public checkEmailValidity = (enteredEmail): boolean => {
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     return reg.test(enteredEmail);
   };
 
-  checkForFormErrors = (formObj, property): boolean => {
+  public checkForFormErrors = (formObj, property: string): boolean => {
     let isError = false;
     if (formObj && formObj instanceof FormGroup) {
       switch (property) {
@@ -226,16 +229,47 @@ export default class ObjectUtil {
     }
   };
 
-  public isAuthorized = (task): boolean => {
+  public isAuthorized = (task: string): boolean => {
     let userRole = this.localStorageService.get(
       this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
     );
-    if (
-      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
-      this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER
-    ) {
-      return true;
+    let hasCapability = false;
+    switch (task) {
+      case "addTeam":
+        if (
+          userRole ===
+          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+            this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER)
+        ) {
+          hasCapability = true;
+        }
+        break;
+      case "addSkill":
+        if (
+          userRole ===
+          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+            this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER)
+        ) {
+          hasCapability = true;
+        }
+        break;
+      case "deleteSkill":
+        if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER) {
+          hasCapability = true;
+        }
+        break;
+      case "deleteTeam":
+        if (
+          userRole ===
+          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+            this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER)
+        ) {
+          hasCapability = true;
+        }
+        break;
+      default:
+        break;
     }
-    return false;
+    return hasCapability;
   };
 }

@@ -9,10 +9,11 @@ import {
 import { Observable, throwError } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { LoaderService } from "../loader/loader.service";
-import { retry, catchError } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 import { AppComponent } from "src/app/app.component";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { LocalStorageService } from "../local-storage/local-storage.service";
+import ObjectUtil from "../../utils/object-utils";
 
 @Injectable({
   providedIn: "root",
@@ -23,7 +24,8 @@ export class LoadingInterceptorService extends AppComponent
   counter: number = 0;
   constructor(
     private loaderService: LoaderService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private objectUtil: ObjectUtil
   ) {
     super();
   }
@@ -59,10 +61,16 @@ export class LoadingInterceptorService extends AppComponent
           //client error
           errorMessage = `Error: ${errors.error.message}`;
           console.log("From Interceptor, client side error", errorMessage);
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+          ]);
         } else {
           //server side error
           errorMessage = `Error code: ${errors.status}\nMessage: ${errors.message}`;
           console.log("From Interceptor, server side error", errorMessage);
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+          ]);
         }
         return throwError(errorMessage);
       }),

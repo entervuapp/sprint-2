@@ -86,17 +86,17 @@ export class ChangePasswordComponent implements OnInit {
     this._subscriptions.add(
       this.changePasswordService.updatePassword(requestBody).subscribe(
         (response) => {
-          this.objectUtil.showAlert(
-            this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS
-          );
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
+          ]);
           this.onReset();
         },
         (errors) => {
           if (errors) {
             console.log(errors);
-            this.objectUtil.showAlert(
-              this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
-            );
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
           }
         }
       )

@@ -1,14 +1,16 @@
 <div class="individualDashboard">
   <div class="companyList">
-    <button class="btn companySingleBtn active">Infosys</button>
-    <button class="btn companySingleBtn">Tcs</button>
+    <button
+      class="btn companySingleBtn"
+      *ngFor="let organization of organizationList"
+      [ngClass]="{ active: organization.active }"
+      (click)="onOrganizationClick(organization)"
+    >
+      {{ organization.companyName }}
+    </button>
   </div>
 
   <app-carousel></app-carousel>
-
-  <!-- <div class="appAutoCompleteWrapper">
-    <app-auto-complete></app-auto-complete>
-  </div> -->
 
   <app-candidate-queue></app-candidate-queue>
 </div>

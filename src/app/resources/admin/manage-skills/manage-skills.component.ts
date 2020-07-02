@@ -12,6 +12,7 @@ import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageSkillsService } from "./manage-skills/manage-skills.service";
 import { Subscription } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 
 @Component({
   selector: "app-manage-skills",
@@ -19,14 +20,15 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
   styleUrls: ["./manage-skills.component.css"],
 })
 export class ManageSkillsComponent implements OnInit {
-  fontAwesome = FONT_AWESOME_ICONS_CONSTANTS;
+  public fontAwesome = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
-  filterSkillsList: ValueDescription[];
-  searchSkillCardEnable: boolean;
-  addSkillCardEnable: boolean;
+  public filterSkillsList: ValueDescription[];
+  public searchSkillCardEnable: boolean;
+  public addSkillCardEnable: boolean;
   public displayTextObject: object;
   public addSkillForm: FormGroup;
   public skillSearchControl: FormControl;
+  public SHARED_CONSTANTS;
 
   constructor(
     public manageHeaderService: ManageHeaderService,
@@ -36,12 +38,15 @@ export class ManageSkillsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.displayTextObject = {
       searchSkill: "Search Skill",
       addSkills: "Add skills",
       skillSearch: "Skill search",
       skillId: "Skill ID",
       skillName: "Skill name",
+      update: "Update",
+      create: "Create",
     };
     this.initializeForm();
     this.searchSkillCardEnable = true;
@@ -159,7 +164,9 @@ export class ManageSkillsComponent implements OnInit {
           (errors) => {
             if (errors) {
               console.log(errors);
-              this.objectUtil.showAlert(errors);
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
             }
           }
         )
@@ -190,7 +197,9 @@ export class ManageSkillsComponent implements OnInit {
           (errors) => {
             if (errors) {
               console.log(errors);
-              this.objectUtil.showAlert(errors);
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
             }
           }
         )
@@ -245,5 +254,9 @@ export class ManageSkillsComponent implements OnInit {
         ? this.addSkillForm.controls.description.setErrors(null)
         : "";
     }
+  };
+
+  public hasCapability = (task): boolean => {
+    return this.objectUtil.isAuthorized(task);
   };
 }

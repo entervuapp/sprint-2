@@ -16,6 +16,7 @@ import {
   SkillAndActive,
 } from "../../../commons/typings/typings";
 import { ManageCandidateService } from "./manage-candidates/manage-candidate.service";
+import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 
 @Component({
   selector: "app-manage-candidates",
@@ -29,6 +30,7 @@ export class ManageCandidatesComponent implements OnInit {
   myForm: FormGroup;
   eventId: number;
   candidatesList: any[];
+  public SHARED_CONSTANTS;
   originalCandidatesList: any[];
   public candidateSearchControl: FormControl;
   public skillTabsList: SkillAndActive[];
@@ -48,6 +50,7 @@ export class ManageCandidatesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.candidateSearchControl = new FormControl("");
     this.displayTextObject = {
       name: "Name",
@@ -114,7 +117,9 @@ export class ManageCandidatesComponent implements OnInit {
           (errors) => {
             console.log("error", errors);
             if (errors) {
-              this.objectUtil.showAlert(errors);
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
             }
           }
         )
@@ -140,14 +145,18 @@ export class ManageCandidatesComponent implements OnInit {
     this._subscriptions.add(
       this.manageCandidateService.addCandidate(requestBody).subscribe(
         (response) => {
-          this.objectUtil.showAlert(response);
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
+          ]);
           this.getCandidatesList(this.eventId);
           this.onCancel();
         },
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.objectUtil.showAlert(errors);
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
           }
         }
       )
@@ -158,14 +167,18 @@ export class ManageCandidatesComponent implements OnInit {
     this._subscriptions.add(
       this.manageCandidateService.updateCandidate(requestBody).subscribe(
         (response) => {
-          this.objectUtil.showAlert(response);
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
+          ]);
           this.getCandidatesList(this.eventId);
           this.onCancel();
         },
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.objectUtil.showAlert(errors);
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
           }
         }
       )
@@ -213,7 +226,9 @@ export class ManageCandidatesComponent implements OnInit {
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.objectUtil.showAlert(errors);
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
           }
         }
       )
@@ -276,7 +291,9 @@ export class ManageCandidatesComponent implements OnInit {
         (errors) => {
           console.log("error", errors);
           if (errors) {
-            this.objectUtil.showAlert(errors);
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
           }
         }
       )
