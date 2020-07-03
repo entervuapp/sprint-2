@@ -13,6 +13,7 @@ import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.c
 import { ManageCandidatesComponent } from "./resources/organization/manage-candidates/manage-candidates.component";
 import { OnGoingEventOrganizationComponent } from "./resources/organization/on-going-event-organization/on-going-event-organization.component";
 import { ManageHrTeamComponent } from "./resources/organization/manage-hr-team/manage-hr-team.component";
+import { EditProfileIndividualComponent } from "./resources/individual/edit-profile-individual/edit-profile-individual.component";
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE,
     component: EditProfileOrganizationComponent,
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_INDIVIDUAL_PROFILE,
+    component: EditProfileIndividualComponent,
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
