@@ -1,3 +1,4 @@
+import { NewAny, ValueDescriptionId } from "src/app/commons/typings/typings";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -17,10 +18,23 @@ export class EditProfileIndividualComponent implements OnInit {
   myForm: FormGroup;
   fileData: File = null;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
-
+  public displayTestObject: NewAny;
   constructor(private fb: FormBuilder, private objectUtil: ObjectUtil) {}
 
   ngOnInit() {
+    this.displayTestObject = {
+      editProfile: "Edit profile",
+      update: "Update",
+      reset: "Reset",
+      mainSkill: "Main skill",
+      firstName: "First name",
+      lastName: "Last name",
+      male: "Male",
+      female: "Female",
+      emailId: "Email Id",
+      mobile: "Mobile",
+      skill: "Skill",
+    };
     this.initializeForm();
   }
 
@@ -42,8 +56,12 @@ export class EditProfileIndividualComponent implements OnInit {
         Validators.minLength(10),
       ]),
       experience: new FormControl("", [Validators.required]),
-      skill: new FormControl("", [Validators.required]),
-      resume: new FormControl("", [Validators.required]),
+      skill: new FormGroup({
+        value: new FormControl("", [Validators.required]),
+        id: new FormControl("", [Validators.required]),
+        description: new FormControl("", [Validators.required]),
+      }),
+      resume: new FormControl("", []),
     });
   };
 
@@ -73,5 +91,9 @@ export class EditProfileIndividualComponent implements OnInit {
 
   public onReset = (): void => {
     console.log("on reset", this.myForm.value);
+  };
+
+  public onSkillSelect = (skill: ValueDescriptionId): void => {
+    this.myForm.controls.skill.patchValue({ ...skill });
   };
 }

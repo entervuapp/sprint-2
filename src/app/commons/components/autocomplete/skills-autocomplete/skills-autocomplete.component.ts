@@ -6,16 +6,13 @@ import {
   OnChanges,
   EventEmitter,
 } from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SkillsAutocompleteService } from "./skills-autocomplete/skills-autocomplete.service";
 import { Subscription } from "rxjs";
-import { ValueDescription } from "../../../typings/typings";
+import { ValueDescriptionId, NewAny } from "../../../typings/typings";
 import ObjectUtil from "../../../utils/object-utils";
+import { SHARED_CONSTANTS } from "../../../constants/shared.constants";
+import FONT_AWESOME_ICONS_CONSTANTS from "../../../constants/font-awesome-icons";
 
 @Component({
   selector: "app-skills-autocomplete",
@@ -23,154 +20,129 @@ import ObjectUtil from "../../../utils/object-utils";
   styleUrls: ["./skills-autocomplete.component.css"],
 })
 export class SkillsAutocompleteComponent implements OnInit, OnChanges {
-  public formControl: FormGroup;
-  private skillsList: ValueDescription[];
-  public filteredSkillList: ValueDescription[];
-  public isSkillHasError: boolean;
+  public formGroup: FormGroup;
+  public FONT_AWESOME_ICONS_CONSTANTS;
+  private skillsList: ValueDescriptionId[];
+  public filteredSkillList: ValueDescriptionId[];
   private _subscriptions = new Subscription();
+  public displayTextObject: NewAny;
+  public SHARED_CONSTANTS;
 
   @Input() isRequired: boolean;
   @Input() placeholderText: string;
   @Input() labelName: string;
   @Input() resetField: boolean;
   @Input() isTouched: boolean;
-  @Input() renderSkill: ValueDescription;
+  @Input() renderSkill: ValueDescriptionId;
   @Output() onSelect = new EventEmitter();
   @Output() onChange = new EventEmitter();
   constructor(
     private skillsAutocompleteService: SkillsAutocompleteService,
-    private fb: FormBuilder,
     public objectUtil: ObjectUtil
   ) {}
 
   ngOnInit() {
-    this.isSkillHasError = this.isSkillHasError || false;
-    this.placeholderText = this.placeholderText || "Select skill";
-    this.labelName = this.labelName || "Skill";
-    this.skillsList = [];
+    this.FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
+    this.placeholderText = this.placeholderText || "Skill";
+    this.isRequired = this.isRequired || false;
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
+    this.displayTextObject = {
+      skill: "Skill",
+    };
     this.filteredSkillList = [];
-    this._subscriptions.add(
-      this.formControl.get("description").valueChanges.subscribe((response) => {
-        if (response && response.length && response.length > 2) {
-          this.filteredSkillList = this.skillsList.filter(
-            (skill) =>
-              skill.description
-                .toLowerCase()
-                .indexOf(response.toLowerCase()) !== -1
-          );
-        } else {
-          this.filteredSkillList = [];
-        }
-        if (this.onChange) {
-          this.onChange.emit(response);
-        }
-      })
-    );
-
+    this.skillsList = [];
+    this.initializeForm(this.isRequired);
     this.getSkills();
-  }
-
-  ngOnChanges(changes): void {
-    if (
-      changes &&
-      changes.hasOwnProperty("isRequired") &&
-      changes.isRequired.currentValue !== changes.isRequired.previousValue
-    ) {
-      this.isRequired = changes.isRequired.currentValue;
-      if (this.isRequired) {
-        this.formControl = this.fb.group({
-          description: new FormControl("", [
-            Validators.required,
-            Validators.minLength(3),
-          ]),
-          value: new FormControl("", [Validators.required]),
-        });
-      } else {
-        this.formControl = this.fb.group({
-          description: new FormControl("", []),
-          value: new FormControl("", []),
-        });
-      }
-    }
-
-    if (
-      changes &&
-      changes.hasOwnProperty("resetField") &&
-      changes.resetField.currentValue
-    ) {
-      this.resetField = changes.resetField.currentValue;
-      this.clearField();
-    }
-
-    if (
-      changes &&
-      changes.hasOwnProperty("isTouched") &&
-      changes.isTouched.currentValue
-    ) {
-      this.isTouched = changes.isTouched.currentValue;
-      if (this.isTouched) {
-        this.formControl.controls.description.markAsTouched();
-        this.formControl.controls.value.markAsTouched();
-        this.checkForError(this.formControl, "description");
-      }
-    }
-
-    if (
-      changes &&
-      changes.hasOwnProperty("renderSkill") &&
-      changes.renderSkill.currentValue
-    ) {
-      this.renderSkill = changes.renderSkill.currentValue;
-      if (this.renderSkill) {
-        this.formControl.setValue({ ...this.renderSkill });
-        this.filteredSkillList = [];
-      }
-    }
   }
 
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
   }
 
-  public onOptionSelect = (skill: ValueDescription): void => {
-    this.formControl.setValue({
-      value: skill.value,
-      description: skill.description,
-    });
-    if (this.onSelect) {
-      this.onSelect.emit({
-        value: this.formControl.value.value,
-        description: this.formControl.value.description,
+  ngOnChanges(changes): void {
+    console.log(changes);
+    if (
+      changes &&
+      changes.hasOwnProperty("isTouched") &&
+      changes.isTouched.currentValue !== changes.isTouched.previousValue
+    ) {
+      this.isTouched = changes.isTouched.currentValue;
+      this.isTouched ? this.formGroup.controls.description.markAsTouched() : "";
+    }
+  }
+
+  private initializeForm = (isRequired): void => {
+    if (isRequired) {
+      this.formGroup = new FormGroup({
+        value: new FormControl("", [Validators.required]),
+        id: new FormControl("", [Validators.required]),
+        description: new FormControl("", [Validators.required]),
+      });
+    } else {
+      this.formGroup = new FormGroup({
+        value: new FormControl("", []),
+        id: new FormControl("", []),
+        description: new FormControl("", []),
       });
     }
-    this.filteredSkillList = [];
   };
+
+  public checkForError(formObj: FormGroup, property: string): boolean {
+    // this.isSkillHasError = this.objectUtil.checkForFormErrors(
+    //   formObj,
+    //   property
+    // );
+    return this.objectUtil.checkForFormErrors(formObj, property);
+  }
 
   private getSkills = (): void => {
     this._subscriptions.add(
       this.skillsAutocompleteService.getSkills().subscribe(
-        (response) => {
-          this.skillsList = [...response];
+        (data) => {
+          this.skillsList = [...data.response];
         },
         (errors) => {
-          console.log(errors);
+          if (errors) {
+            console.log("errors", errors);
+            this.objectUtil.showAlert(
+              this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+            );
+          }
         }
       )
     );
   };
 
-  public checkForError(formObj: FormGroup, property: string): boolean {
-    this.isSkillHasError = this.objectUtil.checkForFormErrors(
-      formObj,
-      property
-    );
-    return this.objectUtil.checkForFormErrors(formObj, property);
-  }
+  public onSkillChange = (): void => {
+    if (
+      this.formGroup.controls.description.value &&
+      this.formGroup.controls.description.value.length &&
+      this.formGroup.controls.description.value.length > 2
+    ) {
+      this.filteredSkillList = this.skillsList.filter(
+        (skill) =>
+          skill.description
+            .toLowerCase()
+            .indexOf(
+              this.formGroup.controls.description.value.toLowerCase()
+            ) !== -1
+      );
+    } else {
+      this.filteredSkillList = [];
+    }
+  };
 
-  private clearField = (): void => {
-    this.formControl.setValue({ value: "", description: "" });
-    this.formControl.markAsPristine();
-    this.formControl.markAsUntouched();
-    this.isTouched = false;
+  public onSkillOptionSelect = (skill: ValueDescriptionId): void => {
+    if (skill) {
+      this.formGroup.setValue({
+        value: skill.value,
+        id: skill.id,
+        description: skill.description,
+      });
+      this.filteredSkillList = [];
+      if (this.onSelect) {
+        this.onSelect.emit({ ...skill });
+      }
+    }
   };
 }

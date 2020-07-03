@@ -1,12 +1,7 @@
 <div class="ev_loginForm">
   <div class="login-form">
-    <form
-      [formGroup]="myForm"
-      appHighlightRequiredFields
-      appFocusInvalidInput
-      appFocusFirstEmptyInput
-    >
-      <h2 class="text-center">Edit profile</h2>
+    <form [formGroup]="myForm" appHighlightRequiredFields appFocusInvalidInput>
+      <h2 class="text-center">{{ displayTestObject["editProfile"] }}</h2>
       <div class="form-group">
         <div class="input-group">
           <app-image-upload-and-preview
@@ -28,7 +23,7 @@
             class="form-control"
             name="firstName"
             id="firstName"
-            placeholder="First Name"
+            [placeholder]="displayTestObject['firstName']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'firstName')
             }"
@@ -39,7 +34,7 @@
           *ngIf="checkForError(myForm, 'firstName')"
           [formObject]="myForm"
           [controlName]="'firstName'"
-          [fieldName]="'First name'"
+          [fieldName]="displayTestObject['firstName']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -56,7 +51,7 @@
             class="form-control"
             name="lastName"
             id="lastName"
-            placeholder="Last Name"
+            [placeholder]="displayTestObject['lastName']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'lastName')
             }"
@@ -73,7 +68,7 @@
                 name="gender"
                 value="male"
                 formControlName="gender"
-              />Male</label
+              />{{ displayTestObject["male"] }}</label
             >
             <label
               ><input
@@ -81,7 +76,7 @@
                 name="gender"
                 value="female"
                 formControlName="gender"
-              />Female</label
+              />{{ displayTestObject["female"] }}</label
             >
           </div>
         </div>
@@ -100,7 +95,7 @@
             class="form-control"
             name="email"
             id="email"
-            placeholder="Email id"
+            [placeholder]="displayTestObject['emailId']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'email')
             }"
@@ -111,7 +106,7 @@
           *ngIf="checkForError(myForm, 'email')"
           [formObject]="myForm"
           [controlName]="'email'"
-          [fieldName]="'Email'"
+          [fieldName]="displayTestObject['emailId']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -128,7 +123,7 @@
             class="form-control"
             name="mobile"
             id="mobile"
-            placeholder="Mobile Number"
+            [placeholder]="displayTestObject['mobile']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'mobile')
             }"
@@ -139,7 +134,7 @@
           *ngIf="checkForError(myForm, 'mobile')"
           [formObject]="myForm"
           [controlName]="'mobile'"
-          [fieldName]="'Mobile'"
+          [fieldName]="displayTestObject['mobile']"
           appNumbersOnly
         ></app-error-message>
       </div>
@@ -172,35 +167,13 @@
           [fieldName]="'Experience'"
         ></app-error-message>
       </div>
-      <div class="form-group">
-        <div class="input-group">
-          <span
-            class="input-group-addon"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'skill')
-            }"
-            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faLock"></fa-icon
-          ></span>
-          <input
-            type="text"
-            class="form-control"
-            name="skill"
-            id="skill"
-            placeholder="Skill"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'skill')
-            }"
-            formControlName="skill"
-          />
-        </div>
-        <app-error-message
-          *ngIf="checkForError(myForm, 'skill')"
-          [formObject]="myForm"
-          [controlName]="'skill'"
-          [fieldName]="'Skill'"
-        ></app-error-message>
-      </div>
-      <div class="form-group">
+      <app-skills-autocomplete
+        [placeholderText]="displayTestObject['mainSkill']"
+        [isTouched]="myForm.controls.skill.controls.description.touched"
+        [isRequired]="true"
+        (onSelect)="onSkillSelect($event)"
+      ></app-skills-autocomplete>
+      <!-- <div class="form-group">
         <div class="input-group">
           <app-upload-resume
             (onResumeChange)="onResumeChange($event)"
@@ -212,11 +185,11 @@
           [controlName]="'resume'"
           [fieldName]="'Resume'"
         ></app-error-message>
-      </div>
+      </div> -->
       <div class="form-group">
         <app-save-cancel-buttons
-          saveButtonName="Update"
-          cancelButtonName="Reset"
+          [saveButtonName]="displayTestObject['update']"
+          [cancelButtonName]="displayTestObject['reset']"
           (onSave)="myForm.valid && onUpdate()"
           (onCancel)="onReset()"
         ></app-save-cancel-buttons>

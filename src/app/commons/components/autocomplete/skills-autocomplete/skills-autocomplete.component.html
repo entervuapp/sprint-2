@@ -1,35 +1,49 @@
-<div class="autoCompleteCard">
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="form-group autoFormGroup">
-        <label for="skill">{{ labelName }}</label>
-        <input
-          type="text"
-          class="form-control autoFormControl"
-          id="skill"
-          [formControl]="formControl.controls.description"
-          [ngClass]="{
-            'input-field-error': isSkillHasError
-          }"
-        />
-        <app-error-message
-          *ngIf="checkForError(formControl, 'description')"
-          [formObject]="formControl"
-          [controlName]="'description'"
-          [fieldName]="'Skill'"
-        ></app-error-message>
-      </div>
-      <div
-        class="listArrayCard"
-        *ngIf="filteredSkillList && filteredSkillList.length"
-      >
-        <p
-          *ngFor="let skill of filteredSkillList"
-          (click)="onOptionSelect(skill)"
-        >
-          {{ skill.description }}
-        </p>
-      </div>
-    </div>
+<div class="form-group formGroupAddEvents autoFormGroup">
+  <!-- <label for="text"
+    >{{ displayTextObject["skill"]
+    }}<span
+      [ngClass]="{
+        error: checkForError(formGroup, 'description')
+      }"
+      >*</span
+    ></label
+  > -->
+  <div class="input-group">
+    <span
+      class="input-group-addon"
+      [ngClass]="{
+        'input-field-error': checkForError(formGroup, 'description')
+      }"
+      ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faLock"></fa-icon
+    ></span>
+    <input
+      type="text"
+      class="form-control autoFormControl"
+      [ngClass]="{
+        'input-field-error': checkForError(formGroup, 'description')
+      }"
+      id="skill"
+      [placeholder]="placeholderText"
+      name="skill"
+      [formControl]="formGroup.controls.description"
+      (keyup)="onSkillChange()"
+    />
+  </div>
+  <app-error-message
+    *ngIf="checkForError(formGroup, 'description')"
+    [formObject]="formGroup"
+    [controlName]="'description'"
+    [fieldName]="'Skill'"
+  ></app-error-message>
+  <div
+    class="listArrayCard"
+    *ngIf="filteredSkillList && filteredSkillList.length"
+  >
+    <p
+      *ngFor="let skill of filteredSkillList"
+      (click)="onSkillOptionSelect(skill)"
+    >
+      {{ skill.description }}
+    </p>
   </div>
 </div>
