@@ -23,11 +23,12 @@ import { Router } from "@angular/router";
 })
 export class RegistrationIndividualComponent extends AppComponent
   implements OnInit {
-  myForm: FormGroup;
+  public myForm: FormGroup;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   private SHARED_CONSTANTS;
   private ROUTE_URL_PATH_CONSTANTS;
+  public displayTextObject: object;
 
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
@@ -44,6 +45,18 @@ export class RegistrationIndividualComponent extends AppComponent
   }
 
   ngOnInit() {
+    this.displayTextObject = {
+      signUp: "Sign Up",
+      firstName: "First name",
+      lastName: "Last name",
+      emailId: "Email Id",
+      mobileNumber: "Mobile number",
+      password: "Password",
+      confirmPassword: "Confirm password",
+      register: "Register",
+      dontHaveAccount: "Don't have an account?",
+      loginHere: "Login here!",
+    };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.initializeForm();
@@ -76,7 +89,7 @@ export class RegistrationIndividualComponent extends AppComponent
     }
   };
 
-  public checkForError = (formObj, property): boolean => {
+  public checkForError = (formObj, property: string): boolean => {
     return this.objectUtil.checkForFormErrors(formObj, property);
   };
 
@@ -94,13 +107,11 @@ export class RegistrationIndividualComponent extends AppComponent
           : "ENTERVU_ROLE_CANDIDATE",
     };
     delete requestBody.confirmPassword;
-    console.log("onRegister can", JSON.stringify(requestBody));
     this._subscriptions.add(
       this.registrationIndividualService
         .inidivualRegistration(requestBody)
         .subscribe(
           (response) => {
-            console.log("success candidate registration");
             this.sendEmailForVerification();
             this.doLogin(requestBody);
           },
@@ -116,7 +127,7 @@ export class RegistrationIndividualComponent extends AppComponent
     );
   };
 
-  private doLogin = (requestBody) => {
+  private doLogin = (requestBody): void => {
     let requestBodyfroLogin = {
       email: requestBody.officeEmail,
       password: requestBody.password,
@@ -124,7 +135,6 @@ export class RegistrationIndividualComponent extends AppComponent
     this._subscriptions.add(
       this.loginFormService.signIn(requestBodyfroLogin).subscribe(
         (response) => {
-          console.log("login success", response);
           this.prepareLocalStorages(response);
           this.handleNavigation();
         },
@@ -160,7 +170,7 @@ export class RegistrationIndividualComponent extends AppComponent
 
   private sendEmailForVerification = () => {};
 
-  private handleNavigation = () => {
+  private handleNavigation = (): void => {
     if (
       this.localStorageService.get(
         this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE

@@ -6,7 +6,7 @@
       appFocusInvalidInput
       appFocusFirstEmptyInput
     >
-      <h2 class="text-center">Sign up</h2>
+      <h2 class="text-center">{{ displayTextObject["signUp"] }}</h2>
       <div class="form-group">
         <div class="input-group">
           <span
@@ -21,7 +21,7 @@
             class="form-control"
             name="firstName"
             id="firstName"
-            placeholder="First Name"
+            [placeholder]="displayTextObject['firstName']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'firstName')
             }"
@@ -32,7 +32,7 @@
           *ngIf="checkForError(myForm, 'firstName')"
           [formObject]="myForm"
           [controlName]="'firstName'"
-          [fieldName]="'First name'"
+          [fieldName]="displayTextObject['firstName']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -49,7 +49,7 @@
             class="form-control"
             name="lastName"
             id="lastName"
-            placeholder="Last Name"
+            [placeholder]="displayTextObject['lastName']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'lastName')
             }"
@@ -71,7 +71,7 @@
             class="form-control"
             name="email"
             id="email"
-            placeholder="Email id"
+            [placeholder]="displayTextObject['emailId']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'officeEmail')
             }"
@@ -82,7 +82,7 @@
           *ngIf="checkForError(myForm, 'officeEmail')"
           [formObject]="myForm"
           [controlName]="'officeEmail'"
-          [fieldName]="'Email'"
+          [fieldName]="displayTextObject['emailId']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -99,7 +99,7 @@
             class="form-control"
             name="mobile"
             id="mobile"
-            placeholder="Mobile Number"
+            [placeholder]="displayTextObject['mobileNumber']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'mobile')
             }"
@@ -111,7 +111,7 @@
           *ngIf="checkForError(myForm, 'mobile')"
           [formObject]="myForm"
           [controlName]="'mobile'"
-          [fieldName]="'Mobile'"
+          [fieldName]="displayTextObject['mobileNumber']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -128,7 +128,7 @@
             class="form-control"
             name="password"
             id="password"
-            placeholder="Password"
+            [placeholder]="displayTextObject['password']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'password')
             }"
@@ -139,7 +139,7 @@
           *ngIf="checkForError(myForm, 'password')"
           [formObject]="myForm"
           [controlName]="'password'"
-          [fieldName]="'Password'"
+          [fieldName]="displayTextObject['password']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -155,7 +155,7 @@
             type="password"
             class="form-control"
             name="confirmPassword"
-            placeholder="Confirm Password"
+            [placeholder]="displayTextObject['confirmPassword']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'confirmPassword')
             }"
@@ -166,7 +166,7 @@
           *ngIf="checkForError(myForm, 'confirmPassword')"
           [formObject]="myForm"
           [controlName]="'confirmPassword'"
-          [fieldName]="'Confirm Password'"
+          [fieldName]="displayTextObject['confirmPassword']"
         ></app-error-message>
       </div>
       <div class="form-group">
@@ -175,12 +175,13 @@
           class="btn btn-primary login-btn btn-block"
           (click)="onRegister()"
         >
-          Register
+          {{ displayTextObject["register"] }}
         </button>
       </div>
     </form>
     <p class="text-center loginAndRegisterTxt">
-      Don't have an account? <a href="#" (click)="showLogin()">Login here!</a>
+      {{ displayTextObject["dontHaveAccount"] }}
+      <a href="#" (click)="showLogin()">{{ displayTextObject["loginHere"] }}</a>
     </p>
   </div>
 </div>

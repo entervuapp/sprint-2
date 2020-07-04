@@ -9,14 +9,14 @@
             class="aboutHeaderTitle"
             [ngClass]="{ active: activated === 'whatWeAre' }"
             (click)="handleAboutUsAndContactUs($event)"
-            >what we Are</span
+            >{{ displayTextObject["whatWeAre"] }}</span
           >
           <span
             id="contactUs"
             class="aboutHeaderTitle"
             [ngClass]="{ active: activated === 'contactUs' }"
             (click)="handleAboutUsAndContactUs($event)"
-            >Contact Us</span
+            >{{ displayTextObject["contactUs"] }}</span
           >
         </div>
         <div class="aboutUsContent">
