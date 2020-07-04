@@ -66,6 +66,7 @@ export class LoginFormComponent extends AppComponent implements OnInit {
   };
 
   public onSignIn = (): void => {
+    this.objectUtil.showAlert([]);
     let requestBody = {
       email: this.myForm.value.username,
       password: this.myForm.value.password,

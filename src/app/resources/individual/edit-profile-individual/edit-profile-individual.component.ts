@@ -8,6 +8,7 @@ import {
 } from "@angular/forms";
 import ObjectUtil from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
+import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 
 @Component({
   selector: "app-edit-profile-individual",
@@ -19,7 +20,11 @@ export class EditProfileIndividualComponent implements OnInit {
   fileData: File = null;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   public displayTestObject: NewAny;
-  constructor(private fb: FormBuilder, private objectUtil: ObjectUtil) {}
+  constructor(
+    private fb: FormBuilder,
+    private objectUtil: ObjectUtil,
+    private manageHeaderService: ManageHeaderService
+  ) {}
 
   ngOnInit() {
     this.displayTestObject = {
@@ -35,6 +40,12 @@ export class EditProfileIndividualComponent implements OnInit {
       mobile: "Mobile",
       skill: "Skill",
     };
+    if (
+      this.manageHeaderService &&
+      this.manageHeaderService.updateHeaderVisibility
+    ) {
+      this.manageHeaderService.updateHeaderVisibility(true);
+    }
     this.initializeForm();
   }
 

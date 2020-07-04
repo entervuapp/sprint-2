@@ -7,11 +7,17 @@ import { ManageHeaderService } from "../../commons/services/manage-header/manage
   styleUrls: ["./main-screen.component.scss"],
 })
 export class MainScreenComponent implements OnInit {
-  activated: string;
-  handleFormsDisplay: {};
+  public activated: string;
+  public handleFormsDisplay: object;
+  public displayTextObject: object;
+
   constructor(private manageHeaderService: ManageHeaderService) {}
 
   ngOnInit() {
+    this.displayTextObject = {
+      whatWeAre: "What we are",
+      contactUs: "Contact us",
+    };
     this.activated = "whatWeAre";
     this.handleFormsDisplay = {
       organizationRegistration: false,
@@ -25,12 +31,11 @@ export class MainScreenComponent implements OnInit {
     }
   }
 
-  handleAboutUsAndContactUs = (event) => {
-    console.log("handle about contact", event.target.id);
+  public handleAboutUsAndContactUs = (event): void => {
     this.activated = event.target.id;
   };
 
-  handleViewOnSlide = (event) => {
+  public handleViewOnSlide = (event): void => {
     if (event && event.buttonName === "organizationButton") {
       this.handleFormsDisplay = {
         organizationRegistration: false,
@@ -51,7 +56,7 @@ export class MainScreenComponent implements OnInit {
   };
   1;
 
-  handleSignUpDisplay = () => {
+  public handleSignUpDisplay = (): void => {
     if (this.handleFormsDisplay && this.handleFormsDisplay["organization"]) {
       this.handleFormsDisplay = {
         organizationRegistration: true,
@@ -71,7 +76,7 @@ export class MainScreenComponent implements OnInit {
     }
   };
 
-  showLoginScreen = () => {
+  public showLoginScreen = (): void => {
     this.handleActiveAndInactive("login");
   };
 
