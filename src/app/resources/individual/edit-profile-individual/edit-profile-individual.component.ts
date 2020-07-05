@@ -23,7 +23,7 @@ export class EditProfileIndividualComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
-    private manageHeaderService: ManageHeaderService
+    public manageHeaderService: ManageHeaderService
   ) {}
 
   ngOnInit() {

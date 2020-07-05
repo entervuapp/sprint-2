@@ -94,6 +94,7 @@ export class RegistrationIndividualComponent extends AppComponent
   };
 
   public onRegister = (): void => {
+    this.objectUtil.showAlert([]);
     if (this.myForm.valid === false) {
       return;
     }

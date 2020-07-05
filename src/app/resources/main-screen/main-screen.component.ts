@@ -11,7 +11,7 @@ export class MainScreenComponent implements OnInit {
   public handleFormsDisplay: object;
   public displayTextObject: object;
 
-  constructor(private manageHeaderService: ManageHeaderService) {}
+  constructor(public manageHeaderService: ManageHeaderService) {}
 
   ngOnInit() {
     this.displayTextObject = {

@@ -22,6 +22,7 @@ export class EditProfileOrganizationComponent implements OnInit {
   public SHARED_CONSTANTS;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
+  public displayTextObject: object;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +32,17 @@ export class EditProfileOrganizationComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.displayTextObject = {
+      editProfile: "Edit profile",
+      update: "Update",
+      reset: "Reset",
+      firstName: "First name",
+      lastName: "Last name",
+      officeEmail: "Office email",
+      companyCode: "Company code",
+      companyName: "Company name",
+      address: "Address",
+    };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);

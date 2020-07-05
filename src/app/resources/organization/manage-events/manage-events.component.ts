@@ -21,6 +21,7 @@ import { Subscription } from "rxjs";
 import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/manage-skills.service";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
+import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 
 @Component({
   selector: "app-manage-events",
@@ -53,7 +54,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     public manageEventsService: ManageEventsService,
     public router: Router,
     private manageSkillsService: ManageSkillsService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public manageHeaderService: ManageHeaderService
   ) {
     super();
   }
@@ -77,6 +79,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       viewEvent: "View event",
       offeredMembers: "Offered members",
     };
+    if (
+      this.manageHeaderService &&
+      this.manageHeaderService.updateHeaderVisibility
+    ) {
+      this.manageHeaderService.updateHeaderVisibility(true);
+    }
     this.resetField = false;
     this.getSkillOptions();
     this.initializeForm();

@@ -16,7 +16,7 @@ interface OrganizationNameButton {
 export class DashboardIndividualComponent implements OnInit {
   public organizationList: OrganizationNameButton[];
 
-  constructor(private manageHeaderService: ManageHeaderService) {}
+  constructor(public manageHeaderService: ManageHeaderService) {}
 
   ngOnInit() {
     if (
