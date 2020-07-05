@@ -79,16 +79,16 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       viewEvent: "View event",
       offeredMembers: "Offered members",
     };
+    this.resetField = false;
+    this.getSkillOptions();
+    this.initializeForm();
+    this.getEventsList();
     if (
       this.manageHeaderService &&
       this.manageHeaderService.updateHeaderVisibility
     ) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
-    this.resetField = false;
-    this.getSkillOptions();
-    this.initializeForm();
-    this.getEventsList();
   }
 
   ngOnDestroy(): void {
@@ -449,6 +449,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public navigateToScreen = (screen, event?) => {
+    this.objectUtil.showAlert([]);
     if (screen && event) {
       let queryParam = { id: event.id };
       this.navigateTo(screen, queryParam);

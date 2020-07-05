@@ -9,13 +9,13 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 export class ManageCandidateService {
   constructor(private http: HttpClient) {}
 
-  getCandidates = (): Observable<any> => {
+  public getCandidates = (): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES.GET_CANDIDATES;
     return this.http.get(url);
   };
 
-  addCandidate = (requestBody): Observable<any> => {
+  public addCandidate = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
@@ -23,7 +23,7 @@ export class ManageCandidateService {
     return this.http.post(url, requestBody, { headers: headersData });
   };
 
-  updateCandidate = (requestBody): Observable<any> => {
+  public updateCandidate = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
@@ -34,7 +34,7 @@ export class ManageCandidateService {
     return this.http.put(url, requestBody, { headers: headersData });
   };
 
-  deleteEvent = (idx): Observable<any> => {
+  public deleteEvent = (idx): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES
         .DELETE_CANDIDATE +

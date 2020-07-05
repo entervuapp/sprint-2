@@ -6,7 +6,6 @@ import {
   Validators,
 } from "@angular/forms";
 import ObjectUtil from "../../../commons/utils/object-utils";
-import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { ActivatedRoute } from "@angular/router";
 import { ManageEventsService } from "../../organization/manage-events/manage-events/manage-events.service";
@@ -24,18 +23,16 @@ import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
   styleUrls: ["./manage-candidates.component.scss"],
 })
 export class ManageCandidatesComponent implements OnInit {
-  eventDetails;
+  private eventDetails: object;
   private _subscriptions = new Subscription();
-  skillDropDownList: ValueDescription[];
-  myForm: FormGroup;
-  eventId: number;
-  candidatesList: any[];
+  public skillDropDownList: ValueDescription[];
+  public myForm: FormGroup;
+  private eventId: number;
+  public candidatesList: any[];
   public SHARED_CONSTANTS;
-  originalCandidatesList: any[];
+  private originalCandidatesList: any[];
   public candidateSearchControl: FormControl;
   public skillTabsList: SkillAndActive[];
-  FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
-  fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
   public displayTextObject: object;
 
   @ViewChild("skillSelect") skillSelect: ElementRef;
@@ -58,6 +55,9 @@ export class ManageCandidatesComponent implements OnInit {
       email: "Email",
       skill: "Skill",
       addCandidate: "Add candidate",
+      reset: "Reset",
+      add: "Add",
+      update: "Update",
     };
     this.originalCandidatesList = [];
     this.eventDetails = {};
@@ -239,10 +239,10 @@ export class ManageCandidatesComponent implements OnInit {
     this.skillDropDownList = [];
     if (
       this.eventDetails &&
-      this.eventDetails.skillsList &&
-      this.eventDetails.skillsList.length
+      this.eventDetails["skillsList"] &&
+      this.eventDetails["skillsList"].length
     ) {
-      this.eventDetails.skillsList.forEach((eachSkill, key) => {
+      this.eventDetails["skillsList"].forEach((eachSkill, key) => {
         let skillObj = {
           skill: {
             description: eachSkill.skill.description,
