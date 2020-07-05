@@ -6,7 +6,6 @@ import { RegistrationOrganizationComponent } from "./registration-organization/r
 import { CommonsModule } from "src/app/commons/commons.module";
 import { DirectivesModule } from "src/app/commons/directives/directives.module";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { DashboardOrganizationComponent } from "./dashboard-organization/dashboard-organization.component";
 import { EditProfileOrganizationComponent } from "./edit-profile-organization/edit-profile-organization.component";
 import { ManageCandidatesComponent } from "./manage-candidates/manage-candidates.component";
 import { ManageHrTeamComponent } from "./manage-hr-team/manage-hr-team.component";
@@ -15,7 +14,6 @@ import { OnGoingEventOrganizationComponent } from "./on-going-event-organization
 
 const COMPONENTS_LIST = [
   RegistrationOrganizationComponent,
-  DashboardOrganizationComponent,
   EditProfileOrganizationComponent,
   ManageCandidatesComponent,
   ManageHrTeamComponent,

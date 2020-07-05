@@ -79,6 +79,7 @@ export class RegistrationOrganizationComponent extends AppComponent
   };
 
   onRegister = () => {
+    this.objectUtil.showAlert([]);
     let requestBody = {
       ...this.myForm.value,
       clientName: "entervu",

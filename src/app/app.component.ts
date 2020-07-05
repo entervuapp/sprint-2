@@ -17,7 +17,7 @@ export class AppComponent {
   private alertsList: Alerts[];
 
   constructor(
-    private manageHeaderService?: ManageHeaderService,
+    public manageHeaderService?: ManageHeaderService,
     private cdr?: ChangeDetectorRef,
     public router?: Router,
     public alertService?: AlertService

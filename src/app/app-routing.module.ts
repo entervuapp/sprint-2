@@ -1,3 +1,4 @@
+import { ManageEventsComponent } from "./resources/organization/manage-events/manage-events.component";
 import { ManageSkillsComponent } from "./resources/admin/manage-skills/manage-skills.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
@@ -6,7 +7,6 @@ import { ROUTE_URL_PATH_CONSTANTS } from "./commons/constants/route-url-path.con
 import { DashboardIndividualComponent } from "./resources/individual/dashboard-individual/dashboard-individual.component";
 import { MainScreenComponent } from "./resources/main-screen/main-screen.component";
 import { PageNotFoundComponent } from "./commons/components/page-not-found/page-not-found.component";
-import { DashboardOrganizationComponent } from "./resources/organization/dashboard-organization/dashboard-organization.component";
 import { EditProfileOrganizationComponent } from "./resources/organization/edit-profile-organization/edit-profile-organization.component";
 import { ChangePasswordComponent } from "./commons/components/change-password/change-password.component";
 import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.component";
@@ -20,7 +20,6 @@ const routes: Routes = [
     path: "",
     component: MainScreenComponent,
     // component: DashboardIndividualComponent,
-    // component: DashboardOrganizationComponent,
     pathMatch: "full",
   },
   {
@@ -29,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD,
-    component: DashboardOrganizationComponent,
+    component: ManageEventsComponent,
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE,

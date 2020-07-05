@@ -7,7 +7,7 @@
       appFocusInvalidInput
       appFocusFirstEmptyInput
     >
-      <h2>Edit profile</h2>
+      <h2>{{ displayTextObject["editProfile"] }}</h2>
       <div class="form-group formGroupOrgProfile">
         <div class="input-group orgEditPhotoBlock">
           <app-image-upload-and-preview
@@ -23,7 +23,7 @@
               class="form-control"
               name="firstName"
               id="firstName"
-              placeholder="First Name"
+              [placeholder]="displayTextObject['firstName']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'firstName')
               }"
@@ -34,7 +34,7 @@
             *ngIf="checkForError(myForm, 'firstName')"
             [formObject]="myForm"
             [controlName]="'firstName'"
-            [fieldName]="'First name'"
+            [fieldName]="displayTextObject['firstName']"
           ></app-error-message>
         </div>
         <div class="form-group formGroupOrgProfile">
@@ -44,7 +44,7 @@
               class="form-control"
               name="lastName"
               id="lastName"
-              placeholder="Last Name"
+              [placeholder]="displayTextObject['lastName']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'lastName')
               }"
@@ -59,7 +59,7 @@
               class="form-control"
               name="officeEmail"
               id="officeEmail"
-              placeholder="Office email"
+              [placeholder]="displayTextObject['officeEmail']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'officeEmail')
               }"
@@ -70,7 +70,7 @@
             *ngIf="checkForError(myForm, 'officeEmail')"
             [formObject]="myForm"
             [controlName]="'officeEmail'"
-            [fieldName]="'Office Email'"
+            [fieldName]="displayTextObject['officeEmail']"
           ></app-error-message>
         </div>
         <div class="form-group formGroupOrgProfile">
@@ -80,7 +80,7 @@
               class="form-control"
               name="companyName"
               id="companyName"
-              placeholder="Company name"
+              [placeholder]="displayTextObject['companyName']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'companyName')
               }"
@@ -91,7 +91,7 @@
             *ngIf="checkForError(myForm, 'companyName')"
             [formObject]="myForm"
             [controlName]="'companyName'"
-            [fieldName]="'Company name'"
+            [fieldName]="displayTextObject['companyName']"
             appNumbersOnly
           ></app-error-message>
         </div>
@@ -102,7 +102,7 @@
               class="form-control"
               name="companyCode"
               id="companyCode"
-              placeholder="Company code"
+              [placeholder]="displayTextObject['companyCode']"
               appNumbersOnly
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'companyCode')
@@ -114,7 +114,7 @@
             *ngIf="checkForError(myForm, 'companyCode')"
             [formObject]="myForm"
             [controlName]="'companyCode'"
-            [fieldName]="'Company code'"
+            [fieldName]="displayTextObject['companyCode']"
           ></app-error-message>
         </div>
         <div class="form-group formGroupOrgProfile">
@@ -124,7 +124,7 @@
               class="form-control"
               name="address"
               id="address"
-              placeholder="Address"
+              [placeholder]="displayTextObject['address']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'address')
               }"
@@ -135,14 +135,14 @@
             *ngIf="checkForError(myForm, 'address')"
             [formObject]="myForm"
             [controlName]="'address'"
-            [fieldName]="'Address'"
+            [fieldName]="displayTextObject['address']"
           ></app-error-message>
         </div>
       </div>
       <div class="form-group formGroupOrgProfile">
         <app-save-cancel-buttons
-          saveButtonName="Update"
-          cancelButtonName="Reset"
+          [saveButtonName]="displayTextObject['update']"
+          [cancelButtonName]="displayTextObject['reset']"
           (onSave)="myForm.valid && onUpdate()"
           (onCancel)="onReset()"
         ></app-save-cancel-buttons>

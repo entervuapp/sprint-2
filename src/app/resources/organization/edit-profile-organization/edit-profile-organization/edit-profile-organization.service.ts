@@ -9,13 +9,13 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 export class EditProfileOrganizationService {
   constructor(private http: HttpClient) {}
 
-  getProfile = (idx): Observable<any> => {
+  public getProfile = (idx): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.PROFILE.GET_PROFILE + "/" + idx;
     return this.http.get(url);
   };
 
-  updateProfile = (requestBody): Observable<any> => {
+  public updateProfile = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
@@ -25,7 +25,7 @@ export class EditProfileOrganizationService {
     return this.http.put(url, requestBody, { headers: headersData });
   };
 
-  deleteProfile = (idx): Observable<any> => {
+  public deleteProfile = (idx): Observable<any> => {
     let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION + "/" + idx;
     return this.http.delete(url);
   };
