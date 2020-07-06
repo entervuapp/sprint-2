@@ -426,6 +426,8 @@ body {
 }
 .headerRightSide {
   display: inline-block;
+  width: 230px;
+  text-align: right;
 }
 .headerRightSide .navbarRightUl {
   padding: 0px 0px;
@@ -455,6 +457,7 @@ body {
 .individualProfileContent .individualProfileUl {
   padding: 0px;
   margin: 0px;
+  text-align: left;
 }
 .individualProfileContent .individualProfileUl li {
   display: block;
