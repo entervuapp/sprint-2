@@ -5,12 +5,12 @@
       appHighlightRequiredFields
       appFocusInvalidInput
     >
-      <h2>{{ displayTextObj["addEvent"] }}</h2>
+      <h2>{{ displayTextObject["addEvent"] }}</h2>
       <div class="addEventsFormCard">
         <div class="addEventsForm">
           <div class="form-group formGroupAddEvents">
             <label for="text"
-              >{{ displayTextObj["name"] }}
+              >{{ displayTextObject["name"] }}
               <span
                 [ngClass]="{
                   error: checkForError(formGroupObject, 'name')
@@ -33,12 +33,12 @@
               *ngIf="checkForError(formGroupObject, 'name')"
               [formObject]="formGroupObject"
               [controlName]="'name'"
-              [fieldName]="'Name'"
+              [fieldName]="displayTextObject['name']"
             ></app-error-message>
           </div>
           <div class="form-group formGroupAddEvents">
             <label for="text"
-              >{{ displayTextObj["eventDate"]
+              >{{ displayTextObject["eventDate"]
               }}<span
                 [ngClass]="{
                   error: checkForError(formGroupObject, 'eventDate')
@@ -67,7 +67,7 @@
           </div>
           <div class="form-group formGroupAddEvents">
             <label for="text"
-              >{{ displayTextObj["eventTime"] }}
+              >{{ displayTextObject["eventTime"] }}
               <span
                 [ngClass]="{
                   error: checkForError(formGroupObject, 'eventTime')
@@ -88,7 +88,7 @@
           <div>
             <div class="form-group formGroupAddEvents autoFormGroup">
               <label for="text"
-                >{{ displayTextObj["skill"]
+                >{{ displayTextObject["skill"]
                 }}<span
                   *ngIf="
                     formGroupObject.controls.skill['controls'].description
@@ -138,7 +138,7 @@
             </div>
             <div class="form-group formGroupAddEvents">
               <label for="text"
-                >{{ displayTextObj["numberOfRounds"]
+                >{{ displayTextObject["numberOfRounds"]
                 }}<span
                   *ngIf="
                     formGroupObject.controls.numberOfRounds.value ||
@@ -243,7 +243,7 @@
   </div>
 
   <div class="EventListBlock">
-    <h2>{{ displayTextObj["events"] }}</h2>
+    <h2>{{ displayTextObject["events"] }}</h2>
     <div class="addEventsTable" *ngIf="eventsList && eventsList.length">
       <div
         class="eventListCard"
@@ -317,7 +317,7 @@
                   )
                 "
               >
-                {{ displayTextObj["addMembers"] }}
+                {{ displayTextObject["addMembers"] }}
               </p>
               <!-- <p
                 class="eventAddMembers"
@@ -329,13 +329,13 @@
                   )
                 "
               >
-                {{ displayTextObj["viewEvent"] }}
+                {{ displayTextObject["viewEvent"] }}
               </p> -->
             </div>
             <div class="col-sm-4"></div>
             <div class="col-sm-4">
               <p class="eventOfferedMem">
-                {{ displayTextObj["offeredMembers"] }}
+                {{ displayTextObject["offeredMembers"] }}
               </p>
             </div>
           </div>
@@ -356,7 +356,9 @@
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title roundsModalTitle">Add Round Details</h4>
+        <h4 class="modal-title roundsModalTitle">
+          {{ displayTextObject["addRoundDetails"] }}
+        </h4>
         <button type="button" class="close" data-dismiss="modal">
           &times;
         </button>
@@ -373,7 +375,9 @@
                   let i = index
                 "
               >
-                <label for="time">Round {{ i + 1 }}:</label>
+                <label for="time"
+                  >{{ displayTextObject["round"] }} {{ i + 1 }}:</label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -392,12 +396,12 @@
                 class="btn btn-primary"
                 (click)="onRoundNamesSubmit()"
               >
-                Submit
+                {{ displayTextObject["submit"] }}
               </button>
             </div>
           </div>
           <div class="addRoundsDetailsOptionsCard">
-            <h3>Options</h3>
+            <h3>{{ displayTextObject["options"] }}</h3>
             <span
               class="DetailsOptions"
               *ngFor="let roundName of SHARED_CONSTANTS.EVU_ROUND_NAMES"
@@ -409,7 +413,7 @@
             class="addRoundsPrevOptionsCard"
             *ngIf="newRoundNames && newRoundNames.length"
           >
-            <h3>Previous Options</h3>
+            <h3>{{ displayTextObject["previousOptions"] }}</h3>
             <span
               class="DetailsOptions"
               *ngFor="let newRound of newRoundNames"

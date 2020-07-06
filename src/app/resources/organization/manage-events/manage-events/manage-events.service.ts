@@ -9,7 +9,7 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 export class ManageEventsService {
   constructor(private http: HttpClient) {}
 
-  getEvents = (requestBody): Observable<any> => {
+  public getEvents = (requestBody): Observable<any> => {
     let params = new HttpParams();
     Object.keys(requestBody).forEach((key) => {
       params = params.set(key, requestBody[key]);
@@ -18,7 +18,7 @@ export class ManageEventsService {
     return this.http.get(url, { params });
   };
 
-  findEvent = (requestBody): Observable<any> => {
+  public findEvent = (requestBody): Observable<any> => {
     let params = new HttpParams();
     Object.keys(requestBody).forEach((key) => {
       params = params.set(key, requestBody[key]);
@@ -27,13 +27,13 @@ export class ManageEventsService {
     return this.http.get(url, { params });
   };
 
-  createEvent = (requestBody): Observable<any> => {
+  public createEvent = (requestBody): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.CREATE_EVENTS;
     return this.http.post(url, requestBody);
   };
 
-  updateEvent = (requestBody): Observable<any> => {
+  public updateEvent = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
@@ -43,7 +43,7 @@ export class ManageEventsService {
     return this.http.put(url, requestBody, { headers: headersData });
   };
 
-  deleteEvent = (idx): Observable<any> => {
+  public deleteEvent = (idx): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.CREATE_EVENTS +
       "/" +

@@ -34,7 +34,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   eventsList: any[];
   private _subscriptions = new Subscription();
   formGroupObject: FormGroup;
-  public displayTextObj: object;
+  public displayTextObject: object;
   skillsList: SkillAndRound[];
   skillOptionsList: ValueDescriptionId[];
   filteredSkillOptionsList: ValueDescriptionId[];
@@ -67,7 +67,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     this.mininumEventDate = this.stringDateFormat();
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.eventsList = [];
-    this.displayTextObj = {
+    this.displayTextObject = {
       name: "Name",
       eventDate: "Date",
       eventTime: "Time",
@@ -78,6 +78,11 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       addMembers: "Add members+",
       viewEvent: "View event",
       offeredMembers: "Offered members",
+      addRoundDetails: "Add Round Details",
+      round: "Round",
+      submit: "Submit",
+      options: "Options",
+      previousOptions: "Previous Options",
     };
     this.resetField = false;
     this.getSkillOptions();

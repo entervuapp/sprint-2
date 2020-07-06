@@ -58,6 +58,10 @@ export class ManageCandidatesComponent implements OnInit {
       reset: "Reset",
       add: "Add",
       update: "Update",
+      candidateList: "Candidates list",
+      edit: "Edit",
+      delete: "Delete",
+      headerList: ["#", "Name", "Email", "Mobile", "Skill", "Actions"],
     };
     this.originalCandidatesList = [];
     this.eventDetails = {};
@@ -81,7 +85,7 @@ export class ManageCandidatesComponent implements OnInit {
     this._subscriptions.unsubscribe();
   }
 
-  private initializeForm = () => {
+  private initializeForm = (): void => {
     this.myForm = this.fb.group({
       id: new FormControl(null),
       name: new FormControl("", [Validators.required, Validators.minLength(3)]),
@@ -104,7 +108,7 @@ export class ManageCandidatesComponent implements OnInit {
     });
   };
 
-  private getEventDetails = (eventId) => {
+  private getEventDetails = (eventId): void => {
     if (eventId) {
       this._subscriptions.add(
         this.manageEventsService.findEvent(eventId).subscribe(
@@ -127,7 +131,7 @@ export class ManageCandidatesComponent implements OnInit {
     }
   };
 
-  checkForError(formObj, property) {
+  public checkForError(formObj, property: string): boolean {
     return this.objectUtil.checkForFormErrors(formObj, property);
   }
 
@@ -141,7 +145,7 @@ export class ManageCandidatesComponent implements OnInit {
     }
   };
 
-  private addCandidate = (requestBody) => {
+  private addCandidate = (requestBody): void => {
     this._subscriptions.add(
       this.manageCandidateService.addCandidate(requestBody).subscribe(
         (response) => {
@@ -163,7 +167,7 @@ export class ManageCandidatesComponent implements OnInit {
     );
   };
 
-  private updateCandidate = (requestBody) => {
+  private updateCandidate = (requestBody): void => {
     this._subscriptions.add(
       this.manageCandidateService.updateCandidate(requestBody).subscribe(
         (response) => {
@@ -185,7 +189,7 @@ export class ManageCandidatesComponent implements OnInit {
     );
   };
 
-  public onCancel = () => {
+  public onCancel = (): void => {
     this.myForm.reset();
     setTimeout(() => {
       this.myForm.controls.eventId.setValue(this.eventId);
@@ -193,7 +197,7 @@ export class ManageCandidatesComponent implements OnInit {
     }, 500);
   };
 
-  onEdit = (candidate) => {
+  public onEdit = (candidate): void => {
     const {
       name,
       email,
@@ -217,7 +221,7 @@ export class ManageCandidatesComponent implements OnInit {
     this.skillSelect.nativeElement.value = this.myForm.value.skill.value;
   };
 
-  onDelete = (candidate) => {
+  public onDelete = (candidate): void => {
     this._subscriptions.add(
       this.manageCandidateService.deleteEvent(candidate.id).subscribe(
         (response) => {
@@ -235,7 +239,7 @@ export class ManageCandidatesComponent implements OnInit {
     );
   };
 
-  private prepareSkillDropDwon = () => {
+  private prepareSkillDropDwon = (): void => {
     this.skillDropDownList = [];
     if (
       this.eventDetails &&
@@ -300,7 +304,7 @@ export class ManageCandidatesComponent implements OnInit {
     );
   };
 
-  private filterCandidatesForSkill = (activeSkill?) => {
+  private filterCandidatesForSkill = (activeSkill?): void => {
     if (!activeSkill) {
       activeSkill = this.skillTabsList.find((item) => item.active);
     }
@@ -312,7 +316,7 @@ export class ManageCandidatesComponent implements OnInit {
     }
   };
 
-  public onSkillSelect = (selectedSkill = null) => {
+  public onSkillSelect = (selectedSkill = null): void => {
     if (!selectedSkill) {
       selectedSkill = this.skillDropDownList.find(
         (skill) => skill.value === this.skillSelect.nativeElement.value
@@ -324,7 +328,7 @@ export class ManageCandidatesComponent implements OnInit {
     });
   };
 
-  public onCandidateSearch = () => {
+  public onCandidateSearch = (): void => {
     let activeSkill = this.skillTabsList.find((item) => item.active);
     if (activeSkill && activeSkill.skill && activeSkill.skill.description) {
       this.candidatesList = this.originalCandidatesList

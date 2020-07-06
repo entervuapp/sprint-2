@@ -112,7 +112,7 @@
   </div>
 
   <div class="candidatesListBlock">
-    <h3>Candidates list</h3>
+    <h3>{{ displayTextObject["candidateList"] }}</h3>
     <div class="manageCandidatesList">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li
@@ -153,12 +153,12 @@
           <table class="table table-bordered table-md">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Mobile</th>
-                <th scope="col">Skill</th>
-                <th scope="col">Actions</th>
+                <th
+                  scope="col"
+                  *ngFor="let header of displayTextObject['headerList']"
+                >
+                  {{ header }}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -170,11 +170,11 @@
                 <td>{{ candidate.skill.description }}</td>
                 <td>
                   <a href="javascript:void(0)" (click)="onEdit(candidate)">
-                    Edit
+                    {{ displayTextObject["edit"] }}
                   </a>
                   |
                   <a href="javascript:void(0)" (click)="onDelete(candidate)">
-                    Delete
+                    {{ displayTextObject["delete"] }}
                   </a>
                 </td>
               </tr>

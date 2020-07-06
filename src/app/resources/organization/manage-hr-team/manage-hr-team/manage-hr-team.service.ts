@@ -9,13 +9,13 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 export class ManageHrTeamService {
   constructor(private http: HttpClient) {}
 
-  getTeamMembers = (): Observable<any> => {
+  public getTeamMembers = (): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS;
     return this.http.get(url);
   };
 
-  findEvent = (idx): Observable<any> => {
+  public findEvent = (idx): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS +
       "/" +
@@ -23,7 +23,7 @@ export class ManageHrTeamService {
     return this.http.get(url);
   };
 
-  addMember = (requestBody): Observable<any> => {
+  public addMember = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
@@ -31,7 +31,7 @@ export class ManageHrTeamService {
     return this.http.post(url, requestBody, { headers: headersData });
   };
 
-  deleteTeamMember = (idx): Observable<any> => {
+  public deleteTeamMember = (idx): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM
         .DELETE_TEAM_MEMBERS +
