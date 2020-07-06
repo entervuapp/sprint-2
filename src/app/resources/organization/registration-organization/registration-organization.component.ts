@@ -28,6 +28,8 @@ export class RegistrationOrganizationComponent extends AppComponent
   ROUTE_URL_PATH_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
+  public displayTextObject: Object;
+
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
 
@@ -43,8 +45,19 @@ export class RegistrationOrganizationComponent extends AppComponent
   }
 
   ngOnInit() {
+    this.displayTextObject = {
+      signUp: "Sign up",
+    };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
+    this.initializeForm();
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.unsubscribe();
+  }
+
+  private initializeForm = (): void => {
     this.myForm = this.fb.group({
       firstName: new FormControl("", [
         Validators.required,
@@ -66,19 +79,15 @@ export class RegistrationOrganizationComponent extends AppComponent
       ]),
       confirmPassword: new FormControl("", [Validators.required]),
     });
-  }
+  };
 
-  ngOnDestroy(): void {
-    this._subscriptions.unsubscribe();
-  }
-
-  showLogin = () => {
+  public showLogin = (): void => {
     if (this.onLoginClick) {
       this.onLoginClick.emit();
     }
   };
 
-  onRegister = () => {
+  public onRegister = (): void => {
     this.objectUtil.showAlert([]);
     let requestBody = {
       ...this.myForm.value,
@@ -121,7 +130,7 @@ export class RegistrationOrganizationComponent extends AppComponent
     return this.objectUtil.checkForFormErrors(formObj, property);
   };
 
-  private doLogin = (requestBody) => {
+  private doLogin = (requestBody): void => {
     let requestBodyfroLogin = {
       email: requestBody.officeEmail,
       password: requestBody.password,
@@ -165,9 +174,9 @@ export class RegistrationOrganizationComponent extends AppComponent
     );
   };
 
-  private sendEmailForVerification = () => {};
+  private sendEmailForVerification = (): void => {};
 
-  private handleNavigation = () => {
+  private handleNavigation = (): void => {
     if (
       this.localStorageService.get(
         this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE

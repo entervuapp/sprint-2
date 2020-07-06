@@ -5,7 +5,6 @@ import {
   FormBuilder,
   Validators,
 } from "@angular/forms";
-import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import ObjectUtil from "../../../commons/utils/object-utils";
 import { ManageHrTeamService } from "./manage-hr-team/manage-hr-team.service";
 import { Subscription } from "rxjs";
@@ -20,11 +19,11 @@ import { RegistrationOrganizationService } from "../registration-organization/re
   styleUrls: ["./manage-hr-team.component.scss"],
 })
 export class ManageHrTeamComponent implements OnInit {
-  myForm: FormGroup;
+  public myForm: FormGroup;
   public SHARED_CONSTANTS;
-  FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   public teamMembersList: any[];
+  public displayTextObject: object;
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +35,13 @@ export class ManageHrTeamComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.displayTextObject = {
+      headerList: ["Name", "Email", "Mobile", "Actions"],
+      addTeam: "Add team",
+      officeEmail: "Office email",
+      teamList: "Team list",
+      delete: "Delete",
+    };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.teamMembersList = [];
     this.myForm = this.fb.group({
@@ -52,11 +58,11 @@ export class ManageHrTeamComponent implements OnInit {
     this._subscriptions.unsubscribe();
   }
 
-  checkForError = (formObj, property) => {
+  public checkForError = (formObj, property: string): boolean => {
     return this.objectUtil.checkForFormErrors(formObj, property);
   };
 
-  onAdd = () => {
+  public onAdd = (): void => {
     let requestBody = {
       ...this.myForm.value,
       role: this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER,
@@ -95,13 +101,13 @@ export class ManageHrTeamComponent implements OnInit {
     );
   };
 
-  onEdit = (invitation) => {
+  public onEdit = (invitation): void => {
     const { id, officeEmail } = invitation;
     this.myForm.controls["officeEmail"].patchValue(officeEmail);
     this.myForm.controls["id"].patchValue(id);
   };
 
-  onDeleteOfTeamMember = (member) => {
+  public onDeleteOfTeamMember = (member): void => {
     if (member && member.id) {
       this._subscriptions.add(
         this.manageHrTeamService.deleteTeamMember(member.id).subscribe(
@@ -118,13 +124,13 @@ export class ManageHrTeamComponent implements OnInit {
     }
   };
 
-  sendInvite = () => {};
+  public sendInvite = (): void => {};
 
-  onReset = () => {
+  public onReset = (): void => {
     this.myForm.reset();
   };
 
-  private getTeamMembers = () => {
+  private getTeamMembers = (): void => {
     this._subscriptions.add(
       this.manageHrTeamService.getTeamMembers().subscribe(
         (response) => {

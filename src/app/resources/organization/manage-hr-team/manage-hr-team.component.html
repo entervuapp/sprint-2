@@ -1,7 +1,7 @@
 <div class="manageTeamBlock">
   <div class="container">
     <div class="manageTeamhead1" *ngIf="hasCapability('addTeam')">
-      <h2>Add Team</h2>
+      <h2>{{ displayTextObject["addTeam"] }}</h2>
       <form
         [formGroup]="myForm"
         appHighlightRequiredFields
@@ -10,13 +10,13 @@
         <div class="addTeamMemberForm">
           <div class="form-group addTeamFormGroup">
             <div class="input-group formGroupAddTeamMember">
-              <label for="email">Email</label>
+              <label for="email">{{ displayTextObject["officeEmail"] }}</label>
               <input
                 type="email"
                 class="form-control"
                 name="email"
                 id="email"
-                placeholder="email"
+                [placeholder]="displayTextObject['officeEmail']"
                 [ngClass]="{
                   'input-field-error': checkForError(myForm, 'officeEmail')
                 }"
@@ -27,7 +27,7 @@
               *ngIf="checkForError(myForm, 'officeEmail')"
               [formObject]="myForm"
               [controlName]="'officeEmail'"
-              [fieldName]="'Office Email'"
+              [fieldName]="displayTextObject['officeEmail']"
             ></app-error-message>
           </div>
         </div>
@@ -46,7 +46,7 @@
     </div>
 
     <div class="manageTeamhead2">
-      <h3>Team List</h3>
+      <h3>{{ displayTextObject["teamList"] }}</h3>
       <div class="addTeamMemberTable">
         <div
           class="table-responsive manageCandidatesListTabel tab-pane fade show active"
@@ -57,10 +57,12 @@
           <table class="table table-bordered table-md">
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Mobile</th>
-                <th scope="col">Email</th>
-                <th scope="col">Actions</th>
+                <th
+                  scope="col"
+                  *ngFor="let header of displayTextObject['headerList']"
+                >
+                  {{ header }}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +80,7 @@
                     href="javascript:void(0)"
                     (click)="onDeleteOfTeamMember(member)"
                   >
-                    Delete
+                    {{ displayTextObject["delete"] }}
                   </a>
                 </td>
               </tr>
