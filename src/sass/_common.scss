@@ -629,10 +629,21 @@ body {
   position: fixed;
   top: 50%;
   right: 50%;
+  height: 90px;
+  width: 90px;
   background-position: center;
-  z-index: 1000;
-  opacity: 0.4;
+  color: #00aff5;
   filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.spinner-overlay {
+  position: absolute;
+  background: #424242;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  opacity: 0.5;
 }
 
 .cursor-pointer {
