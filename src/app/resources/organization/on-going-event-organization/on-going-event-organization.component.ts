@@ -47,7 +47,7 @@ export class OnGoingEventOrganizationComponent implements OnInit {
     this.selectedSlide = { ...slide };
   };
 
-  private getEventDetails = (eventId) => {
+  private getEventDetails = (eventId): void => {
     if (eventId) {
       this._subscriptions.add(
         this.manageEventsService.findEvent(eventId).subscribe(

@@ -9,7 +9,7 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 export class RegistrationOrganizationService {
   constructor(private http: HttpClient) {}
 
-  organizationSignUp = (requestBody): Observable<any> => {
+  public organizationSignUp = (requestBody): Observable<any> => {
     let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.REGISTRATION.HR;
     return this.http.post(url, requestBody);
   };
