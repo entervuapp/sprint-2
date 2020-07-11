@@ -5,6 +5,7 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../../constants/route-url-path.constan
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
 import { NewAny } from "../../typings/typings";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
+import { ManageHeaderService } from "../../services/manage-header/manage-header.service";
 
 @Component({
   selector: "app-profile",
@@ -19,7 +20,8 @@ export class ProfileComponent extends AppComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public manageHeaderService: ManageHeaderService
   ) {
     super();
   }
@@ -37,15 +39,17 @@ export class ProfileComponent extends AppComponent implements OnInit {
 
   public navigateToScreen = (screen): void => {
     if (screen) {
-      screen === "logout" ? this.localStorageService.clearAll() : "";
+      screen === "logout"
+        ? (this.localStorageService.clearAll(),
+          this.manageHeaderService.updateHeaderVisibility(false))
+        : "";
       if (screen === "My profile") {
         let userRole = this.localStorageService.get(
           this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
         );
         if (
-          userRole ===
-          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
-            this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER)
+          userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+          userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER
         ) {
           screen = this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
             .EDIT_ORGANIZATION_PROFILE;

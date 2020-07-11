@@ -131,20 +131,31 @@ export class ManageHrTeamComponent implements OnInit {
   };
 
   private getTeamMembers = (): void => {
-    this._subscriptions.add(
-      this.manageHrTeamService.getTeamMembers().subscribe(
-        (response) => {
-          let teams = [...response];
-          this.teamMembersList = teams.filter(
-            (member) => member.organization === "PK Global"
-          );
-        },
-        (errors) => {
-          if (errors) {
-            console.log(errors);
-          }
-        }
+    let userDetails = JSON.parse(
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
       )
+    );
+    this._subscriptions.add(
+      this.manageHrTeamService
+        .getTeamMembers(userDetails.companyCode)
+        .subscribe(
+          (data) => {
+            if (data && data["response"] && data["response"].length > 0) {
+              this.teamMembersList = [...data.response];
+            } else {
+              this.teamMembersList = [];
+            }
+            // this.teamMembersList = teams.filter(
+            //   (member) => member.organization === "PK Global"
+            // );
+          },
+          (errors) => {
+            if (errors) {
+              console.log(errors);
+            }
+          }
+        )
     );
   };
 

@@ -44,7 +44,8 @@ const routes: Routes = [
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
-    component: MainScreenComponent,
+    redirectTo: "",
+    pathMatch: "full",
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.QA_DASHBOARD,

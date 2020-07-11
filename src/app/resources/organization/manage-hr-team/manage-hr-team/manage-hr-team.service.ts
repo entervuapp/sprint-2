@@ -9,9 +9,11 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 export class ManageHrTeamService {
   constructor(private http: HttpClient) {}
 
-  public getTeamMembers = (): Observable<any> => {
+  public getTeamMembers = (companyCode): Observable<any> => {
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS;
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS +
+      companyCode +
+      "/team";
     return this.http.get(url);
   };
 
