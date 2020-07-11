@@ -9,13 +9,11 @@ import { API_URLS_CONSTANTS } from "../../../../commons/constants/api-urls";
 export class ManageEventsService {
   constructor(private http: HttpClient) {}
 
-  public getEvents = (requestBody): Observable<any> => {
-    let params = new HttpParams();
-    Object.keys(requestBody).forEach((key) => {
-      params = params.set(key, requestBody[key]);
-    });
-    let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_EVENTS;
-    return this.http.get(url, { params });
+  public getEvents = (comapnyCode): Observable<any> => {
+    let url =
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_EVENTS +
+      comapnyCode;
+    return this.http.get(url);
   };
 
   public findEvent = (requestBody): Observable<any> => {
@@ -45,7 +43,7 @@ export class ManageEventsService {
 
   public deleteEvent = (idx): Observable<any> => {
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.CREATE_EVENTS +
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.DELETE_EVENT +
       "/" +
       idx;
     return this.http.delete(url);

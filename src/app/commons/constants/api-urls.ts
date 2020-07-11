@@ -14,7 +14,7 @@ export class API_URLS_CONSTANTS {
         HR: `${BASE_URL}/entervu/company/register`,
       },
       MANAGE_EVENTS: {
-        GET_EVENTS: `${BASE_URL}/entervu/event`,
+        GET_EVENTS: `${BASE_URL}/entervu/event/`,
         CREATE_EVENTS: `${BASE_URL}/entervu/event`,
         UPDATE_EVENTS: `${BASE_URL}/entervu/event`,
         DELETE_EVENT: `${BASE_URL}/entervu/event`,
@@ -26,10 +26,10 @@ export class API_URLS_CONSTANTS {
         DELETE_CANDIDATE: `${LOCAL_URL}/candidates`,
       },
       MANAGE_HR_TEAM: {
-        GET_TEAM_MEMBERS: `${LOCAL_URL}/teams`,
-        ADD_TEAM_MEMBERS: `${LOCAL_URL}/teams`,
-        UPDATE_TEAM_MEMBERS: `${LOCAL_URL}/teams`,
-        DELETE_TEAM_MEMBERS: `${LOCAL_URL}/teams`,
+        GET_TEAM_MEMBERS: `${BASE_URL}/entervu/company/`,
+        ADD_TEAM_MEMBERS: `${BASE_URL}/teams`,
+        UPDATE_TEAM_MEMBERS: `${BASE_URL}/teams`,
+        DELETE_TEAM_MEMBERS: `${BASE_URL}/teams`,
       },
       PROFILE: {
         GET_PROFILE: `${LOCAL_URL}/profiles`,

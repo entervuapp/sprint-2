@@ -67,9 +67,9 @@
             </thead>
             <tbody>
               <tr *ngFor="let member of teamMembersList; let i = index">
-                <td scope="row">{{ member.name }}</td>
+                <td scope="row">{{ member.firstName }}</td>
+                <td scope="row">{{ member.email }}</td>
                 <td scope="row">{{ member.mobile }}</td>
-                <td scope="row">{{ member.officeEmail }}</td>
                 <td>
                   <!-- <a href="javascript:void(0)" (click)="onEdit(member)">
                   Edit

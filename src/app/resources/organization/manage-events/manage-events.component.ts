@@ -416,7 +416,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
       )
     );
-    let requestBody = { companyCode: userDetails["companyCode"] };
+    let requestBody = userDetails["companyCode"];
     this._subscriptions.add(
       this.manageEventsService.getEvents(requestBody).subscribe(
         (data) => {
