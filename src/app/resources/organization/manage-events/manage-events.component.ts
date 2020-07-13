@@ -110,10 +110,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         creationDate: new FormControl(
           formData && formData.creationDate ? formData.creationDate : ""
         ),
-        name: new FormControl(formData && formData.name ? formData.name : "", [
-          Validators.required,
-          Validators.minLength(3),
-        ]),
+        name: new FormControl(
+          formData && formData.eventName ? formData.eventName : "",
+          [Validators.required, Validators.minLength(3)]
+        ),
         eventDate: new FormControl(
           formData && formData.eventDate ? formData.eventDate : "",
           [Validators.required]
@@ -337,27 +337,35 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onEditOfEvent = (event) => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
-    let requestBody = {
-      companyCode: userDetails["companyCode"],
-      id: event.id,
-    };
+    let requestBody = event && event.id ? event.id : null;
     this._subscriptions.add(
-      this.manageEventsService.findEvent(requestBody).subscribe((response) => {
-        this.initializeForm({ ...response });
+      this.manageEventsService.findEvent(requestBody).subscribe((data) => {
+        console.log(data.response);
+        if (data && data.response) {
+          this.prepareSkillsForEdit(data.response);
+          this.initializeForm({ ...data.response });
+        }
       })
     );
   };
 
+  public prepareSkillsForEdit = (response) => {
+    console.log(response.eventSkill);
+    response.eventSkill.forEach(element => {
+      
+    });
+  };
+
   public onDeleteOfEvent = (event) => {
     if (event && event.id !== null && event.id !== undefined) {
+      let requestBody = {
+        eventId: event && event.id ? event.id : null,
+      };
       this._subscriptions.add(
-        this.manageEventsService.deleteEvent(event.id).subscribe(
+        this.manageEventsService.deleteEvent(requestBody).subscribe(
           (response) => {
+            console.log("deleted event");
+
             this.getEventsList();
           },
           (errors) => {

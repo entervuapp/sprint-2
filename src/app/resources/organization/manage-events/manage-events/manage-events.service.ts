@@ -16,13 +16,11 @@ export class ManageEventsService {
     return this.http.get(url);
   };
 
-  public findEvent = (requestBody): Observable<any> => {
-    let params = new HttpParams();
-    Object.keys(requestBody).forEach((key) => {
-      params = params.set(key, requestBody[key]);
-    });
-    let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_EVENTS;
-    return this.http.get(url, { params });
+  public findEvent = (eventId): Observable<any> => {
+    let url =
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.FIND_EVENTS +
+      eventId;
+    return this.http.get(url);
   };
 
   public createEvent = (requestBody): Observable<any> => {
@@ -41,11 +39,13 @@ export class ManageEventsService {
     return this.http.put(url, requestBody, { headers: headersData });
   };
 
-  public deleteEvent = (idx): Observable<any> => {
+  public deleteEvent = (paramsData): Observable<any> => {
+    let params = new HttpParams();
+    Object.keys(paramsData).forEach((key) => {
+      params = params.set(key, paramsData[key]);
+    });
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.DELETE_EVENT +
-      "/" +
-      idx;
-    return this.http.delete(url);
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.DELETE_EVENT;
+    return this.http.delete(url, { params });
   };
 }
