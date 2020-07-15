@@ -15,6 +15,12 @@ export class ManageEventsService {
       comapnyCode;
     return this.http.get(url);
   };
+  public getAllEvents = (comapnyCode): Observable<any> => {
+    let url =
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_ALL_EVENTS +
+      comapnyCode;
+    return this.http.get(url);
+  };
 
   public findEvent = (eventId): Observable<any> => {
     let url =
@@ -33,9 +39,7 @@ export class ManageEventsService {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.UPDATE_EVENTS +
-      "/" +
-      requestBody.id;
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.UPDATE_EVENTS;
     return this.http.put(url, requestBody, { headers: headersData });
   };
 

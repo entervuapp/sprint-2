@@ -129,10 +129,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         }),
         numberOfRounds: new FormControl("", []),
       });
-      this.skillsList =
-        formData && formData.skillsList && formData.skillsList.length > 0
-          ? formData.skillsList
-          : [];
+      // this.skillsList =
+      //   formData && formData.eventSkills && formData.eventSkills.length > 0
+      //     ? formData.eventSkills
+      //     : [];
     } else {
       this.formGroupObject = this.fb.group({
         id: new FormControl(null),
@@ -178,7 +178,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       eventTime: this.formGroupObject.value.eventTime,
       createdBy: this.getUserDetails("email"),
       companyCode: this.getUserDetails("companyCode"),
-      eventSkills: this.prepareSkillList([...this.skillsList]),
+      eventSkills: this.prepareSkillList(
+        [...this.skillsList],
+        this.formGroupObject
+      ),
     };
     console.log("onSubmit ", requestBody);
     if (
@@ -342,18 +345,31 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       this.manageEventsService.findEvent(requestBody).subscribe((data) => {
         console.log(data.response);
         if (data && data.response) {
-          this.prepareSkillsForEdit(data.response);
+          this.skillsList = this.reverseSkillsFormat({ ...data.response });
           this.initializeForm({ ...data.response });
         }
       })
     );
   };
 
-  public prepareSkillsForEdit = (response) => {
-    console.log(response.eventSkill);
-    response.eventSkill.forEach(element => {
-      
-    });
+  public reverseSkillsFormat = (response) => {
+    let skillList = [];
+    let list =
+      response && response.eventSkills && response.eventSkills.length > 0
+        ? response.eventSkills
+        : [];
+    if (list && list.length > 0) {
+      list.map((skillObj) => {
+        let eachSkill = {
+          id: skillObj.id,
+          skill: skillObj.skill,
+          numberOfRounds: skillObj.rounds,
+          roundDetailsList: skillObj.roundDetails,
+        };
+        skillList.push(eachSkill);
+      });
+    }
+    return skillList;
   };
 
   public onDeleteOfEvent = (event) => {
@@ -426,7 +442,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     );
     let requestBody = userDetails["companyCode"];
     this._subscriptions.add(
-      this.manageEventsService.getEvents(requestBody).subscribe(
+      this.manageEventsService.getAllEvents(requestBody).subscribe(
         (data) => {
           if (data && data["response"] && data["response"].length) {
             this.eventsList = data["response"];
@@ -448,7 +464,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     let skillList = [];
     if (event && event.eventSkills && event.eventSkills.length) {
       event.eventSkills.map((item) =>
-        skillList.push(this.fetchSkillName(item.skillId))
+        skillList.push(this.fetchSkillName(item.skill.id))
       );
     }
     let displayText = skillList.join(", ");
@@ -731,20 +747,34 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     }
   };
 
-  private prepareSkillList = (list) => {
+  private prepareSkillList = (list, formGroupObject) => {
     let skillList = [];
     if (list && list.length > 0) {
+      let temp = {};
       list.map((skillObj) => {
-        let temp = {
-          id: null,
-          skillId: skillObj.skill.id,
-          rounds: skillObj.numberOfRounds,
-          roundDetails: skillObj.roundDetailsList,
-        };
-        if (temp && temp.roundDetails && temp.roundDetails.length) {
-          temp.roundDetails.forEach((element) => {
-            delete element.id;
-          });
+        if (
+          formGroupObject &&
+          formGroupObject.value &&
+          formGroupObject.value.id
+        ) {
+          temp = {
+            id: skillObj.id,
+            skill: skillObj.skill,
+            rounds: skillObj.numberOfRounds,
+            roundDetails: skillObj.roundDetailsList,
+          };
+        } else {
+          temp = {
+            id: null,
+            skill: skillObj.skill,
+            rounds: skillObj.numberOfRounds,
+            roundDetails: skillObj.roundDetailsList,
+          };
+          if (temp && temp["roundDetails"] && temp["roundDetails"].length) {
+            temp["roundDetails"].forEach((element) => {
+              delete element.id;
+            });
+          }
         }
         skillList.push(temp);
       });

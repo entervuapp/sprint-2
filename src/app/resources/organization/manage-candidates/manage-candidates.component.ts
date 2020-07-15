@@ -12,6 +12,7 @@ import { ManageEventsService } from "../../organization/manage-events/manage-eve
 import { Subscription } from "rxjs";
 import {
   ValueDescription,
+  ValueDescriptionId,
   SkillAndActive,
 } from "../../../commons/typings/typings";
 import { ManageCandidateService } from "./manage-candidates/manage-candidate.service";
@@ -25,7 +26,7 @@ import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 export class ManageCandidatesComponent implements OnInit {
   private eventDetails: object;
   private _subscriptions = new Subscription();
-  public skillDropDownList: ValueDescription[];
+  public skillDropDownList: ValueDescriptionId[];
   public myForm: FormGroup;
   private eventId: number;
   public candidatesList: any[];
@@ -99,6 +100,7 @@ export class ManageCandidatesComponent implements OnInit {
       inRound: new FormControl("", []),
       skill: new FormGroup({
         value: new FormControl("", [Validators.required]),
+        id: new FormControl("", []),
         description: new FormControl("", [
           Validators.required,
           Validators.minLength(2),
@@ -112,8 +114,8 @@ export class ManageCandidatesComponent implements OnInit {
     if (eventId) {
       this._subscriptions.add(
         this.manageEventsService.findEvent(eventId).subscribe(
-          (response) => {
-            this.eventDetails = { ...response };
+          (data) => {
+            this.eventDetails = { ...data.response };
             this.prepareSkillDropDwon();
             this.onSkillSelect(this.skillDropDownList[0]);
             this.getCandidatesList(this.eventId);
@@ -243,15 +245,12 @@ export class ManageCandidatesComponent implements OnInit {
     this.skillDropDownList = [];
     if (
       this.eventDetails &&
-      this.eventDetails["skillsList"] &&
-      this.eventDetails["skillsList"].length
+      this.eventDetails["eventSkills"] &&
+      this.eventDetails["eventSkills"].length
     ) {
-      this.eventDetails["skillsList"].forEach((eachSkill, key) => {
+      this.eventDetails["eventSkills"].forEach((eachSkill, key) => {
         let skillObj = {
-          skill: {
-            description: eachSkill.skill.description,
-            value: eachSkill.skill.value,
-          },
+          skill: { ...eachSkill.skill },
           active: key === 0 ? true : false,
         };
         this.skillDropDownList.push(skillObj.skill);
@@ -324,6 +323,7 @@ export class ManageCandidatesComponent implements OnInit {
     }
     this.myForm.controls.skill.setValue({
       value: selectedSkill["value"],
+      id: selectedSkill["id"],
       description: selectedSkill["description"],
     });
   };

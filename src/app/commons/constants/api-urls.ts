@@ -9,8 +9,8 @@ export class API_URLS_CONSTANTS {
     CHANGE_PASSWORD: {
       URL: `${BASE_URL}/entervu/password`,
     },
-    DELETE_USER:{
-      URL: `${BASE_URL}/entervu/user`
+    DELETE_USER: {
+      URL: `${BASE_URL}/entervu/user`,
     },
     ORGANIZATION: {
       REGISTRATION: {
@@ -18,6 +18,7 @@ export class API_URLS_CONSTANTS {
       },
       MANAGE_EVENTS: {
         GET_EVENTS: `${BASE_URL}/entervu/event/company/`,
+        GET_ALL_EVENTS: `${BASE_URL}/entervu/company/`,
         FIND_EVENTS: `${BASE_URL}/entervu/event/`,
         CREATE_EVENTS: `${BASE_URL}/entervu/event`,
         UPDATE_EVENTS: `${BASE_URL}/entervu/event`,

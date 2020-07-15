@@ -112,13 +112,13 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     this.localStorageService.set(
       this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
       JSON.stringify({
-        firstName: response && response.companyCode ? response.companyCode : "",
-        lastName: response && response.companyCode ? response.companyCode : "",
+        firstName: response && response.firstName ? response.firstName : "",
+        lastName: response && response.lastName ? response.lastName : "",
         email: response && response.email ? response.email : "",
         companyName:
-          response && response.companyName ? response.companyName : "",
+          response && response.companyName ? response.companyName : "test1",
         companyCode:
-          response && response.companyCode ? response.companyCode : "",
+          response && response.companyCode ? response.companyCode : "test1",
       })
     );
   };
