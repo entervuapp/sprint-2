@@ -10,7 +10,7 @@ export class API_URLS_CONSTANTS {
       URL: `${BASE_URL}/entervu/password`,
     },
     DELETE_USER: {
-      URL: `${BASE_URL}/entervu/user`,
+      URL: `${BASE_URL}/entervu/user/`,
     },
     ORGANIZATION: {
       REGISTRATION: {
@@ -18,15 +18,15 @@ export class API_URLS_CONSTANTS {
       },
       MANAGE_EVENTS: {
         GET_EVENTS: `${BASE_URL}/entervu/event/company/`,
-        GET_ALL_EVENTS: `${BASE_URL}/entervu/company/`,
         FIND_EVENTS: `${BASE_URL}/entervu/event/`,
         CREATE_EVENTS: `${BASE_URL}/entervu/event`,
         UPDATE_EVENTS: `${BASE_URL}/entervu/event`,
         DELETE_EVENT: `${BASE_URL}/entervu/event`,
       },
       MANAGE_CANDIDATES: {
+        FIND_CANDIDATE_BY_EMAIL: `${BASE_URL}/entervu/candidate/`,
         GET_CANDIDATES: `${LOCAL_URL}/candidates`,
-        ADD_CANDIDATE: `${LOCAL_URL}/candidates`,
+        ADD_CANDIDATE: `${BASE_URL}/entervu/event/candidate`,
         UPDATE_CANDIDATE: `${LOCAL_URL}/candidates`,
         DELETE_CANDIDATE: `${LOCAL_URL}/candidates`,
       },
@@ -37,7 +37,7 @@ export class API_URLS_CONSTANTS {
         DELETE_TEAM_MEMBERS: `${BASE_URL}/teams`,
       },
       PROFILE: {
-        GET_PROFILE: `${LOCAL_URL}/profiles`,
+        GET_PROFILE: `${BASE_URL}/entervu/user/`,
         UPDATE_PROFILE: `${LOCAL_URL}/profiles`,
         DELETE_PROFILE: `${LOCAL_URL}/profiles`,
       },

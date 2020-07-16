@@ -42,4 +42,11 @@ export class ManageCandidateService {
       idx;
     return this.http.delete(url);
   };
+
+  public findEmail = (email): Observable<any> => {
+    let url =
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES
+        .FIND_CANDIDATE_BY_EMAIL + email;
+    return this.http.get(url);
+  };
 }

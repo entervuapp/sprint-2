@@ -1,33 +1,12 @@
-<!-- The Modal -->
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">{{ displayTextObject["heading"] }}</h4>
-        <button type="button" class="close" (click)="hideModal()">
-          &times;
-        </button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        {{ displayTextObject["message"] }}
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <app-save-cancel-buttons></app-save-cancel-buttons>
-        <!-- this button is hidden, used to close from typescript -->
-        <button
-          type="button"
-          id="close-modal"
-          data-dismiss="modal"
-          style="display: none;"
-        >
-          {{ displayTextObject["close"] }}
-        </button>
-      </div>
-    </div>
-  </div>
+<h4 mat-dialog-title>{{ data.title }}</h4>
+<div>
+  <span>{{ data.message }}</span>
+</div>
+<div>
+  <app-save-cancel-buttons
+    saveButtonName="Ok"
+    cancelButtonName="Cancel"
+    (onSave)="onSave()"
+    (onCancel)="onCancel()"
+  ></app-save-cancel-buttons>
 </div>

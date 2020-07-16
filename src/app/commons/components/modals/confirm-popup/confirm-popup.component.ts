@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, OnChanges } from "@angular/core";
+import { Component, OnInit, Input, Inject } from "@angular/core";
 import { NewAny } from "src/app/commons/typings/typings";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
 @Component({
   selector: "app-confirm-popup",
@@ -10,15 +11,25 @@ export class ConfirmPopupComponent implements OnInit {
   public displayTextObject: NewAny;
   @Input() showModalPopup: boolean;
 
-  constructor() {}
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmPopupComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit() {
     this.displayTextObject = {
-      heading: "Confirm alert",
+      heading: "Confirm",
       message: "Are you sure?",
-      close: "Close",
+      cancel: "Cancel",
+      ok: "Ok",
     };
   }
 
-  hideModal = () => {};
+  public onSave = (): void => {
+    this.dialogRef.close("ok");
+  };
+
+  public onCancel = (): void => {
+    this.dialogRef.close("cancel");
+  };
 }

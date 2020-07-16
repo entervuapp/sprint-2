@@ -15,12 +15,6 @@ export class ManageEventsService {
       comapnyCode;
     return this.http.get(url);
   };
-  public getAllEvents = (comapnyCode): Observable<any> => {
-    let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_EVENTS.GET_ALL_EVENTS +
-      comapnyCode;
-    return this.http.get(url);
-  };
 
   public findEvent = (eventId): Observable<any> => {
     let url =

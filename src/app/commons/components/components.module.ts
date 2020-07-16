@@ -7,6 +7,7 @@ import { SlickCarouselModule } from "ngx-slick-carousel";
 
 //services
 import { ChangePasswordService } from "./change-password/change-password/change-password.service";
+import { EmailAutocompleteService } from "./autocomplete/email-autocomplete/email-autocomplete/email-autocomplete.service";
 
 //components
 import { SaveCancelButtonsComponent } from "./save-cancel-buttons/save-cancel-buttons.component";
@@ -35,6 +36,7 @@ import { DisplayDateComponent } from "./display-date/display-date.component";
 import { ChangePasswordComponent } from "./change-password/change-password.component";
 import { CarouselComponent } from "./carousel/carousel.component";
 import { SkillsAutocompleteComponent } from "./autocomplete/skills-autocomplete/skills-autocomplete.component";
+import { EmailAutocompleteComponent } from "./autocomplete/email-autocomplete/email-autocomplete.component";
 
 const COMPONENTS_LIST = [
   SaveCancelButtonsComponent,
@@ -61,9 +63,10 @@ const COMPONENTS_LIST = [
   ChangePasswordComponent,
   CarouselComponent,
   SkillsAutocompleteComponent,
+  EmailAutocompleteComponent,
 ];
 
-const SERVICES_LIST = [ChangePasswordService];
+const SERVICES_LIST = [ChangePasswordService, EmailAutocompleteService];
 
 @NgModule({
   declarations: [...COMPONENTS_LIST],
