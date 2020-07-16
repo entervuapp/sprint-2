@@ -7,6 +7,7 @@ import { UtilsModule } from "./utils/utils.module";
 import { ConstantsModule } from "./constants/constants.module";
 import { ServicesModule } from "./services/services.module";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { MaterialComponentsModule } from "./material-components/material-components.module";
 
 const COMMONS_MODULES_LIST = [
   CommonModule,
@@ -17,6 +18,7 @@ const COMMONS_MODULES_LIST = [
   ConstantsModule,
   ServicesModule,
   FontAwesomeModule,
+  MaterialComponentsModule,
 ];
 
 @NgModule({

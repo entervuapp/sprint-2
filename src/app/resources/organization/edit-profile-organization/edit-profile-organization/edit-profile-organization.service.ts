@@ -11,7 +11,7 @@ export class EditProfileOrganizationService {
 
   public getProfile = (idx): Observable<any> => {
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.PROFILE.GET_PROFILE + "/" + idx;
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.PROFILE.GET_PROFILE + idx;
     return this.http.get(url);
   };
 

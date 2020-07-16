@@ -1,0 +1,29 @@
+<div class="form-group formGroupAddEvents autoFormGroup">
+  <div class="input-group">
+    <input
+      type="text"
+      class="form-control autoFormControl"
+      [ngClass]="{
+        'input-field-error': checkForError(formGroup, 'email')
+      }"
+      id="skill"
+      [placeholder]="displayTextObject['placeholder']"
+      name="skill"
+      [formControl]="formGroup.controls.email"
+    />
+  </div>
+  <app-error-message
+    *ngIf="checkForError(formGroup, 'email')"
+    [formObject]="formGroup"
+    [controlName]="'email'"
+    [fieldName]="'Email'"
+  ></app-error-message>
+  <div class="listArrayCard" *ngIf="emailList && emailList.length">
+    <p
+      *ngFor="let emailObj of emailList"
+      (click)="onEmailOptionSelect(emailObj)"
+    >
+      {{ emailObj.email }}
+    </p>
+  </div>
+</div>

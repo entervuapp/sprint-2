@@ -6,24 +6,13 @@
         <div class="form-group formGroupAddCandidate">
           <div class="input-group">
             <label for="email">{{ displayTextObject["email"] }}</label>
-            <input
-              type="text"
-              class="form-control"
-              name="email"
-              id="email"
-              [placeholder]="displayTextObject['email']"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'email')
-              }"
-              formControlName="email"
-            />
           </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'email')"
-            [formObject]="myForm"
-            [controlName]="'email'"
-            [fieldName]="displayTextObject['email']"
-          ></app-error-message>
+          <app-email-autocomplete
+            [isRequired]="true"
+            [isTouched]="myForm.controls.email.touched"
+            [resetField]="resetField"
+            (onSelect)="onEmailSelect($event)"
+          ></app-email-autocomplete>
         </div>
         <div class="form-group formGroupAddCandidate">
           <div class="input-group">
@@ -35,15 +24,15 @@
               id="name"
               [placeholder]="displayTextObject['name']"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'name')
+                'input-field-error': checkForError(myForm, 'firstName')
               }"
-              formControlName="name"
+              formControlName="firstName"
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'name')"
+            *ngIf="checkForError(myForm, 'firstName')"
             [formObject]="myForm"
-            [controlName]="'name'"
+            [controlName]="'firstName'"
             [fieldName]="displayTextObject['name']"
           ></app-error-message>
         </div>

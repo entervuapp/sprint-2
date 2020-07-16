@@ -1,14 +1,14 @@
 <div class="manageTeamBlock">
   <div class="container">
     <div class="manageTeamhead1" *ngIf="hasCapability('addTeam')">
-      <h2>{{ displayTextObject["addTeam"] }}</h2>
+      <h2>{{ displayTextObject["addTeamMember"] }}</h2>
       <form
         [formGroup]="myForm"
         appHighlightRequiredFields
         appFocusInvalidInput
       >
         <div class="addTeamMemberForm">
-          <div class="form-group addTeamFormGroup">
+          <div class="form-group">
             <div class="input-group formGroupAddTeamMember">
               <label for="email">{{ displayTextObject["officeEmail"] }}</label>
               <input

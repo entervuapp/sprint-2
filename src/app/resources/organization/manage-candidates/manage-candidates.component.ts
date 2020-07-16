@@ -11,12 +11,12 @@ import { ActivatedRoute } from "@angular/router";
 import { ManageEventsService } from "../../organization/manage-events/manage-events/manage-events.service";
 import { Subscription } from "rxjs";
 import {
-  ValueDescription,
   ValueDescriptionId,
   SkillAndActive,
 } from "../../../commons/typings/typings";
 import { ManageCandidateService } from "./manage-candidates/manage-candidate.service";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
+import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 
 @Component({
   selector: "app-manage-candidates",
@@ -35,6 +35,8 @@ export class ManageCandidatesComponent implements OnInit {
   public candidateSearchControl: FormControl;
   public skillTabsList: SkillAndActive[];
   public displayTextObject: object;
+  public resetField: boolean;
+  private candidateData: object;
 
   @ViewChild("skillSelect") skillSelect: ElementRef;
 
@@ -44,10 +46,13 @@ export class ManageCandidatesComponent implements OnInit {
     private objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private manageEventsService: ManageEventsService,
-    private manageCandidateService: ManageCandidateService
+    private manageCandidateService: ManageCandidateService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
+    this.candidateData = {};
+    this.resetField = false;
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.candidateSearchControl = new FormControl("");
     this.displayTextObject = {
@@ -87,9 +92,17 @@ export class ManageCandidatesComponent implements OnInit {
   }
 
   private initializeForm = (): void => {
+    let userDetails = JSON.parse(
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
+      )
+    );
     this.myForm = this.fb.group({
       id: new FormControl(null),
-      name: new FormControl("", [Validators.required, Validators.minLength(3)]),
+      firstName: new FormControl("", [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
       email: new FormControl("", [Validators.required, Validators.email]),
       mobile: new FormControl("", [
         Validators.required,
@@ -97,7 +110,7 @@ export class ManageCandidatesComponent implements OnInit {
         Validators.maxLength(10),
       ]),
       eventId: new FormControl(this.eventId, []),
-      inRound: new FormControl("", []),
+      roundId: new FormControl("", []),
       skill: new FormGroup({
         value: new FormControl("", [Validators.required]),
         id: new FormControl("", []),
@@ -106,7 +119,10 @@ export class ManageCandidatesComponent implements OnInit {
           Validators.minLength(2),
         ]),
       }),
-      invitedBy: new FormControl("", []),
+      invitedBy: new FormControl(
+        userDetails && userDetails.email ? userDetails.email : "",
+        [Validators.required]
+      ),
     });
   };
 
@@ -138,11 +154,10 @@ export class ManageCandidatesComponent implements OnInit {
   }
 
   public onSave = (): void => {
-    let requestBody = { ...this.myForm.value };
-    if (requestBody && requestBody.id) {
+    let requestBody = this.prepareRequestBody({ ...this.myForm.value });
+    if (requestBody && requestBody["id"]) {
       this.updateCandidate(requestBody);
     } else {
-      requestBody.inRound = 1;
       this.addCandidate(requestBody);
     }
   };
@@ -193,9 +208,11 @@ export class ManageCandidatesComponent implements OnInit {
 
   public onCancel = (): void => {
     this.myForm.reset();
+    this.resetField = true;
     setTimeout(() => {
       this.myForm.controls.eventId.setValue(this.eventId);
       this.onSkillSelect();
+      this.resetField = false;
     }, 500);
   };
 
@@ -207,7 +224,7 @@ export class ManageCandidatesComponent implements OnInit {
       skill,
       id,
       eventId,
-      inRound,
+      roundId,
       invitedBy,
     } = candidate;
     this.myForm.patchValue({
@@ -217,7 +234,7 @@ export class ManageCandidatesComponent implements OnInit {
       skill,
       id,
       eventId,
-      inRound,
+      roundId,
       invitedBy,
     });
     this.skillSelect.nativeElement.value = this.myForm.value.skill.value;
@@ -351,5 +368,52 @@ export class ManageCandidatesComponent implements OnInit {
               .indexOf(this.candidateSearchControl.value.toLowerCase()) !== -1
         );
     }
+  };
+
+  public onBlurOfEmail = (event): void => {
+    if (
+      event &&
+      event.target &&
+      event.target.value &&
+      this.objectUtil.checkEmailValidity(event.target.value)
+    ) {
+      this._subscriptions.add(
+        this.manageCandidateService.findEmail(event.target.value).subscribe(
+          (response) => {
+            console.log(response);
+          },
+          (errors) => {
+            console.log("error", errors);
+            if (errors) {
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
+            }
+          }
+        )
+      );
+    }
+  };
+
+  public onEmailSelect = (userObj): void => {
+    if (userObj && userObj.email) {
+      const { firstName, mobile, email } = userObj;
+      this.candidateData = { ...userObj };
+      this.candidateData["candidateId"] = userObj.id;
+      this.myForm.controls.firstName.setValue(firstName);
+      this.myForm.controls.mobile.setValue(mobile);
+      this.myForm.controls.email.setValue(email);
+    }
+  };
+
+  private prepareRequestBody = (form): object => {
+    let request = {
+      eventId: form && form.eventId ? form.eventId : null,
+      skillId: form && form.skill && form.skill.id ? form.skill.id : null,
+      roundId: form && form.roundId ? form.roundId : 1,
+      invitedBy: form && form.invitedBy ? form.invitedBy : null,
+      candidates: [{ ...this.candidateData }],
+    };
+    return request;
   };
 }

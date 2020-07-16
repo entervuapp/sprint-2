@@ -17,14 +17,6 @@ export class ManageHrTeamService {
     return this.http.get(url);
   };
 
-  public findEvent = (idx): Observable<any> => {
-    let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS +
-      "/" +
-      idx;
-    return this.http.get(url);
-  };
-
   public addMember = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
@@ -34,7 +26,7 @@ export class ManageHrTeamService {
   };
 
   public deleteTeamMember = (idx): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.DELETE_USER.URL;
+    let url = API_URLS_CONSTANTS.API_URLS.DELETE_USER.URL + idx;
     return this.http.delete(url);
   };
 }

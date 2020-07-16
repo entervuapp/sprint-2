@@ -442,7 +442,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     );
     let requestBody = userDetails["companyCode"];
     this._subscriptions.add(
-      this.manageEventsService.getAllEvents(requestBody).subscribe(
+      this.manageEventsService.getEvents(requestBody).subscribe(
         (data) => {
           if (data && data["response"] && data["response"].length) {
             this.eventsList = data["response"];

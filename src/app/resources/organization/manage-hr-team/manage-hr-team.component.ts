@@ -12,6 +12,8 @@ import { ManageHeaderService } from "../../../commons/services/manage-header/man
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmPopupComponent } from "../../../commons/components/modals/confirm-popup/confirm-popup.component";
 
 @Component({
   selector: "app-manage-hr-team",
@@ -31,13 +33,14 @@ export class ManageHrTeamComponent implements OnInit {
     private manageHrTeamService: ManageHrTeamService,
     public manageHeaderService: ManageHeaderService,
     private localStorageService: LocalStorageService,
-    private registrationOrganizationService: RegistrationOrganizationService
+    private registrationOrganizationService: RegistrationOrganizationService,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit() {
     this.displayTextObject = {
       headerList: ["Name", "Email", "Mobile", "Actions"],
-      addTeam: "Add team",
+      addTeamMember: "Add team member",
       officeEmail: "Office email",
       teamList: "Team list",
       delete: "Delete",
@@ -108,20 +111,35 @@ export class ManageHrTeamComponent implements OnInit {
   };
 
   public onDeleteOfTeamMember = (member): void => {
-    if (member && member.id) {
-      this._subscriptions.add(
-        this.manageHrTeamService.deleteTeamMember(member.id).subscribe(
-          (response) => {
-            this.getTeamMembers();
-          },
-          (errors) => {
-            if (errors) {
-              console.log(errors);
-            }
-          }
-        )
-      );
-    }
+    const data = { message: "Are you sure?", title: "Confirm?" };
+    const dialogRef = this.matDialog.open(ConfirmPopupComponent, {
+      data: data,
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === "ok") {
+        if (member && member.id) {
+          this._subscriptions.add(
+            this.manageHrTeamService.deleteTeamMember(member.id).subscribe(
+              (data) => {
+                this.objectUtil.showAlert([
+                  ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
+                ]);
+                this.getTeamMembers();
+              },
+              (errors) => {
+                if (errors) {
+                  this.objectUtil.showAlert([
+                    ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+                  ]);
+                }
+              }
+            )
+          );
+        }
+      }
+    });
   };
 
   public sendInvite = (): void => {};

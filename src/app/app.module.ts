@@ -11,13 +11,17 @@ import { PipesModule } from "./commons/pipes/pipes.module";
 // Import your library
 import { SlickCarouselModule } from "ngx-slick-carousel";
 
+//modals
+import { ConfirmPopupComponent } from "./commons/components/modals/confirm-popup/confirm-popup.component";
+import { MatDialogModule } from "@angular/material/dialog";
+
 //Modules
 import { ResourcesModule } from "./resources/resources.module";
 import { CommonsModule } from "./commons/commons.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { LoadingInterceptorService } from "./commons/services/loading-interceptor/loading-interceptor.service";
 import { DatePipe } from "@angular/common";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatDialogModule,
     ReactiveFormsModule,
     RouterModule,
     HttpClientModule,
@@ -35,7 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CommonsModule,
     PipesModule,
   ],
-  entryComponents: [],
+  entryComponents: [ConfirmPopupComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -45,6 +50,5 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DatePipe,
   ],
   bootstrap: [AppComponent],
-  
 })
 export class AppModule {}

@@ -5,9 +5,17 @@ import {
   MatAutocompleteModule,
   MatInputModule,
   MatButtonModule,
+  MatDialogContent,
+  MatDialogActions,
 } from "@angular/material";
+import { MatDialogModule } from "@angular/material/dialog";
 
-const MATERIALS_LIST = [MatAutocompleteModule, MatInputModule, MatButtonModule];
+const MATERIALS_LIST = [
+  MatAutocompleteModule,
+  MatInputModule,
+  MatButtonModule,
+  MatDialogModule,
+];
 
 @NgModule({
   declarations: [],
