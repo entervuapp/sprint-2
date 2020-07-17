@@ -49,4 +49,11 @@ export class ManageCandidateService {
         .FIND_CANDIDATE_BY_EMAIL + email;
     return this.http.get(url);
   };
+
+  public getCandidatesOfEvent = (eventId): Observable<any> => {
+    let url =
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES
+        .GET_EVENT_CANDIDATES + eventId;
+    return this.http.get(url);
+  };
 }

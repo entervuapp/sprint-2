@@ -78,6 +78,28 @@
             <input
               type="text"
               class="form-control"
+              name="mobile"
+              id="mobile"
+              [placeholder]="displayTextObject['mobile']"
+              [ngClass]="{
+                'input-field-error': checkForError(myForm, 'mobile')
+              }"
+              formControlName="mobile"
+              appNumbersOnly
+            />
+          </div>
+          <app-error-message
+            *ngIf="checkForError(myForm, 'mobile')"
+            [formObject]="myForm"
+            [controlName]="'mobile'"
+            [fieldName]="displayTextObject['mobile']"
+          ></app-error-message>
+        </div>
+        <div class="form-group formGroupOrgProfile">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
               name="companyName"
               id="companyName"
               [placeholder]="displayTextObject['companyName']"
@@ -92,7 +114,6 @@
             [formObject]="myForm"
             [controlName]="'companyName'"
             [fieldName]="displayTextObject['companyName']"
-            appNumbersOnly
           ></app-error-message>
         </div>
         <div class="form-group formGroupOrgProfile">
@@ -103,7 +124,6 @@
               name="companyCode"
               id="companyCode"
               [placeholder]="displayTextObject['companyCode']"
-              appNumbersOnly
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'companyCode')
               }"

@@ -11,6 +11,7 @@ import { ManageHeaderService } from "../../../commons/services/manage-header/man
 import { EditProfileOrganizationService } from "./edit-profile-organization/edit-profile-organization.service";
 import { Subscription } from "rxjs";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
+import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 
 @Component({
   selector: "app-edit-profile-organization",
@@ -19,6 +20,7 @@ import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 })
 export class EditProfileOrganizationComponent implements OnInit {
   public myForm: FormGroup;
+  private userData: object;
   public SHARED_CONSTANTS;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
@@ -28,7 +30,8 @@ export class EditProfileOrganizationComponent implements OnInit {
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
-    private editProfileOrganizationService: EditProfileOrganizationService
+    private editProfileOrganizationService: EditProfileOrganizationService,
+    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
@@ -42,6 +45,7 @@ export class EditProfileOrganizationComponent implements OnInit {
       companyCode: "Company code",
       companyName: "Company name",
       address: "Address",
+      mobile: "Mobile",
     };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     if (this.manageHeaderService) {
@@ -64,17 +68,27 @@ export class EditProfileOrganizationComponent implements OnInit {
       ]),
       lastName: new FormControl(data && data.lastName ? data.lastName : ""),
       id: new FormControl(data && data.id ? data.id : null),
-      officeEmail: new FormControl(
-        data && data.officeEmail ? data.officeEmail : "",
-        [Validators.required, Validators.email]
-      ),
+      mobile: new FormControl(data && data.mobile ? data.mobile : null, [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(10),
+      ]),
+      officeEmail: new FormControl(data && data.email ? data.email : "", [
+        Validators.required,
+        Validators.email,
+      ]),
       companyName: new FormControl(
-        data && data.companyName ? data.companyName : "",
+        data && data.organization && data.organization.companyName
+          ? data.organization.companyName
+          : "",
         [Validators.required, Validators.min(3)]
       ),
       companyCode: new FormControl(
         {
-          value: data && data.companyCode ? data.companyCode : "",
+          value:
+            data && data.organization && data.organization.companyCode
+              ? data.organization.companyCode
+              : "",
           disabled: true,
         },
         [Validators.required, Validators.min(3)]
@@ -100,6 +114,19 @@ export class EditProfileOrganizationComponent implements OnInit {
 
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
+    requestBody.clientName =
+      this.userData &&
+      this.userData["client"] &&
+      this.userData["client"].clientName
+        ? this.userData["client"].clientName
+        : "";
+    requestBody.role =
+      this.userData &&
+      this.userData["roles"] &&
+      this.userData["roles"][0] &&
+      this.userData["roles"][0].name
+        ? this.userData["roles"][0].name
+        : "";
     this._subscriptions.add(
       this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
         (response) => {
@@ -124,10 +151,16 @@ export class EditProfileOrganizationComponent implements OnInit {
   };
 
   private getUserProfile = (): void => {
+    let userDetails = JSON.parse(
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
+      )
+    );
     this._subscriptions.add(
-      this.editProfileOrganizationService.getProfile(1).subscribe(
-        (response) => {
-          this.initializeForm({ ...response });
+      this.editProfileOrganizationService.getProfile(userDetails.id).subscribe(
+        (data) => {
+          this.initializeForm({ ...data.response });
+          this.userData = { ...data.response };
         },
         (errors) => {
           if (errors) {

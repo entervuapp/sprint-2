@@ -67,7 +67,7 @@ export class ManageCandidatesComponent implements OnInit {
       candidateList: "Candidates list",
       edit: "Edit",
       delete: "Delete",
-      headerList: ["#", "Name", "Email", "Mobile", "Skill", "Actions"],
+      headerList: ["#", "Name", "Email", "Mobile", "Invited by", "Actions"],
     };
     this.originalCandidatesList = [];
     this.eventDetails = {};
@@ -134,7 +134,8 @@ export class ManageCandidatesComponent implements OnInit {
             this.eventDetails = { ...data.response };
             this.prepareSkillDropDwon();
             this.onSkillSelect(this.skillDropDownList[0]);
-            this.getCandidatesList(this.eventId);
+            // this.getCandidatesList(this.eventId);
+            this.filterCandidatesForSkill();
           },
           (errors) => {
             console.log("error", errors);
@@ -169,8 +170,10 @@ export class ManageCandidatesComponent implements OnInit {
           this.objectUtil.showAlert([
             ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
           ]);
-          this.getCandidatesList(this.eventId);
           this.onCancel();
+          if (this.eventId) {
+            this.getEventDetails(this.eventId);
+          }
         },
         (errors) => {
           console.log("error", errors);
@@ -191,8 +194,10 @@ export class ManageCandidatesComponent implements OnInit {
           this.objectUtil.showAlert([
             ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
           ]);
-          this.getCandidatesList(this.eventId);
           this.onCancel();
+          if (this.eventId) {
+            this.getEventDetails(this.eventId);
+          }
         },
         (errors) => {
           console.log("error", errors);
@@ -244,7 +249,7 @@ export class ManageCandidatesComponent implements OnInit {
     this._subscriptions.add(
       this.manageCandidateService.deleteEvent(candidate.id).subscribe(
         (response) => {
-          this.getCandidatesList(this.eventId);
+          // this.getCandidatesList(this.eventId);
         },
         (errors) => {
           console.log("error", errors);
@@ -260,6 +265,7 @@ export class ManageCandidatesComponent implements OnInit {
 
   private prepareSkillDropDwon = (): void => {
     this.skillDropDownList = [];
+    this.skillTabsList = [];
     if (
       this.eventDetails &&
       this.eventDetails["eventSkills"] &&
@@ -300,12 +306,9 @@ export class ManageCandidatesComponent implements OnInit {
 
   private getCandidatesList = (eventId): void => {
     this._subscriptions.add(
-      this.manageCandidateService.getCandidates().subscribe(
-        (response) => {
-          let allCandidatesList = [...response];
-          this.originalCandidatesList = allCandidatesList.filter(
-            (item) => item.eventId === eventId
-          );
+      this.manageCandidateService.getCandidatesOfEvent(this.eventId).subscribe(
+        (data) => {
+          this.originalCandidatesList = [...data.response];
           this.filterCandidatesForSkill();
         },
         (errors) => {
@@ -321,14 +324,35 @@ export class ManageCandidatesComponent implements OnInit {
   };
 
   private filterCandidatesForSkill = (activeSkill?): void => {
+    this.candidatesList = [];
+    this.originalCandidatesList = [];
     if (!activeSkill) {
       activeSkill = this.skillTabsList.find((item) => item.active);
     }
+
     if (activeSkill && activeSkill.skill && activeSkill.skill.description) {
-      this.candidatesList = this.originalCandidatesList.filter(
-        (candidate) =>
-          candidate.skill.description === activeSkill.skill.description
-      );
+      for (let i = 0; i < this.eventDetails["eventSkills"].length; i++) {
+        if (
+          this.eventDetails["eventSkills"][i].skill.id === activeSkill.skill.id
+        ) {
+          for (
+            let j = 0;
+            j < this.eventDetails["eventSkills"][i].roundDetails.length;
+            j++
+          ) {
+            this.originalCandidatesList = [
+              ...this.originalCandidatesList,
+              ...this.eventDetails["eventSkills"][i].roundDetails[j].candidates,
+            ];
+          }
+          this.candidatesList = [...this.originalCandidatesList];
+          break;
+        }
+      }
+      // this.candidatesList = this.originalCandidatesList.filter(
+      //   (candidate) =>
+      //     candidate.skill.description === activeSkill.skill.description
+      // );
     }
   };
 
@@ -348,25 +372,34 @@ export class ManageCandidatesComponent implements OnInit {
   public onCandidateSearch = (): void => {
     let activeSkill = this.skillTabsList.find((item) => item.active);
     if (activeSkill && activeSkill.skill && activeSkill.skill.description) {
-      this.candidatesList = this.originalCandidatesList
-        .filter(
-          (candidate) =>
-            candidate.skill.description === activeSkill.skill.description
-        )
-        .filter(
-          (candidate) =>
-            candidate.name
+      this.candidatesList = this.originalCandidatesList.filter(
+        (candidateObj) =>
+          (candidateObj &&
+            candidateObj.candidate &&
+            candidateObj.candidate.firstName &&
+            candidateObj.candidate.firstName
               .toLowerCase()
               .indexOf(this.candidateSearchControl.value.toLowerCase()) !==
-              -1 ||
-            candidate.email
+              -1) ||
+          (candidateObj &&
+            candidateObj.candidate &&
+            candidateObj.candidate.email &&
+            candidateObj.candidate.email
               .toLowerCase()
               .indexOf(this.candidateSearchControl.value.toLowerCase()) !==
-              -1 ||
-            candidate.mobile
+              -1) ||
+          (candidateObj &&
+            candidateObj.candidate &&
+            candidateObj.candidate.mobile &&
+            candidateObj.candidate.mobile.indexOf(
+              this.candidateSearchControl.value.toLowerCase()
+            ) !== -1) ||
+          (candidateObj &&
+            candidateObj.invitedBy &&
+            candidateObj.invitedBy
               .toLowerCase()
-              .indexOf(this.candidateSearchControl.value.toLowerCase()) !== -1
-        );
+              .indexOf(this.candidateSearchControl.value.toLowerCase()) !== -1)
+      );
     }
   };
 
@@ -407,13 +440,55 @@ export class ManageCandidatesComponent implements OnInit {
   };
 
   private prepareRequestBody = (form): object => {
+    let skillIdAndRoundId = this.getSkillId(form.skill);
     let request = {
       eventId: form && form.eventId ? form.eventId : null,
-      skillId: form && form.skill && form.skill.id ? form.skill.id : null,
-      roundId: form && form.roundId ? form.roundId : 1,
+      skillId:
+        skillIdAndRoundId && skillIdAndRoundId["skillId"]
+          ? skillIdAndRoundId["skillId"]
+          : null,
+      roundId:
+        skillIdAndRoundId && skillIdAndRoundId["roundId"]
+          ? skillIdAndRoundId["roundId"]
+          : null,
       invitedBy: form && form.invitedBy ? form.invitedBy : null,
       candidates: [{ ...this.candidateData }],
     };
     return request;
+  };
+
+  private getSkillId = (skill) => {
+    let temp = {
+      skillId: null,
+      roundId: null,
+    };
+    if (
+      this.eventDetails &&
+      this.eventDetails["eventSkills"] &&
+      this.eventDetails["eventSkills"].length
+    ) {
+      for (let i = 0; i < this.eventDetails["eventSkills"].length; i++) {
+        if (this.eventDetails["eventSkills"][i].skill.id === skill.id) {
+          temp.skillId = this.eventDetails["eventSkills"][i].id;
+          for (
+            let j = 0;
+            j < this.eventDetails["eventSkills"][i].roundDetails.length;
+            j++
+          ) {
+            if (
+              this.eventDetails["eventSkills"][i].roundDetails[j]
+                .roundNumber === "1"
+            ) {
+              temp.roundId = this.eventDetails["eventSkills"][i].roundDetails[
+                j
+              ].id;
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+    return temp;
   };
 }
