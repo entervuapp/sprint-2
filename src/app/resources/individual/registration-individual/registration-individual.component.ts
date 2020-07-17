@@ -165,6 +165,7 @@ export class RegistrationIndividualComponent extends AppComponent
         email: response && response.email ? response.email : "",
         firstName: response && response.firstName ? response.firstName : "",
         lastName: response && response.lastName ? response.lastName : "",
+        id: response && response.id ? response.id : "",
       })
     );
   };

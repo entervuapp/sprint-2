@@ -11,7 +11,7 @@ import { EditProfileIndividualComponent } from "./edit-profile-individual/edit-p
 const INDIVIDUAL_SCREENS = [
   DashboardIndividualComponent,
   RegistrationIndividualComponent,
-  EditProfileIndividualComponent
+  EditProfileIndividualComponent,
 ];
 
 @NgModule({
@@ -22,8 +22,8 @@ const INDIVIDUAL_SCREENS = [
     FormsModule,
     ReactiveFormsModule,
     CommonsModule,
-    DirectivesModule
+    DirectivesModule,
   ],
-  exports: [...INDIVIDUAL_SCREENS]
+  exports: [...INDIVIDUAL_SCREENS],
 })
 export class IndividualModule {}

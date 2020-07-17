@@ -115,6 +115,7 @@ export class LoginFormComponent extends AppComponent implements OnInit {
         firstName: response && response.firstName ? response.firstName : "",
         lastName: response && response.lastName ? response.lastName : "",
         email: response && response.email ? response.email : "",
+        id: response && response.id ? response.id : "",
         companyName:
           response && response.companyName ? response.companyName : "test1",
         companyCode:

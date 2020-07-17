@@ -2,7 +2,22 @@
 2. change password has to be removed and place it with remember password. remove query for fetching passwords
 3. user should verify email to login
 4. candidate is able to change the url manually to admin and able to add skills
+5. show events list for candidates where he is expected
+6. super admin screens for events, candidates
 
+
+---------------PHASE 2 START--------------
+1. ADD PANEL DETAILS IN EVENT(PHASE 2)
+2. available candidate profile view for HR(phase 2)
+3. candidate looking for job and last updated (phase 2)
+4. candidate rating for last 3 months(phase 2) (negative)
+5. whether candidate will join(phase 2)
+6. working experience and working span in each organization(phase 2)
+7. how many offers holding(phase 2)
+8. QA module(phase 2)
+9. Ask questions from candidate and give points to him, the points can be converted to money, gifts.
+10. Excel for events (Phase 2)
+---------------PHASE 2 END--------------
 
 
 //issues
@@ -22,10 +37,11 @@
 /// below items for pricing
 1. To transfer a completed event to the future date, with all the candidates as ease.
 2. To view all past events
-3. email and mobile number ?
+3. email and mobile number sell?
 4. You can add only 5 team members in a day
 5. For creating more than 1 event on a day 
 6. for organizing more than 1 event on a day
+7. change for QA which was asked in that organization
 
 
 
