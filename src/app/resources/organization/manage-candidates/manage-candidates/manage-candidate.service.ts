@@ -23,24 +23,20 @@ export class ManageCandidateService {
     return this.http.post(url, requestBody, { headers: headersData });
   };
 
-  public updateCandidate = (requestBody): Observable<any> => {
+  public updateCandidateInEvent = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES
-        .UPDATE_CANDIDATE +
-      "/" +
-      requestBody.id;
+        .UPDATE_CANDIDATE_IN_EVENT;
     return this.http.put(url, requestBody, { headers: headersData });
   };
 
-  public deleteEvent = (idx): Observable<any> => {
+  public deleteCandidateFromEvent = (requestBody): Observable<any> => {
     let url =
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_CANDIDATES
-        .DELETE_CANDIDATE +
-      "/" +
-      idx;
-    return this.http.delete(url);
+        .DELETE_CANDIDATE_FROM_EVENT;
+    return this.http.put(url, requestBody);
   };
 
   public findEmail = (email): Observable<any> => {

@@ -61,6 +61,7 @@ export default class ObjectUtil {
         case "address":
         case "experience":
         case "mobile":
+        case "contactNumber":
         case "comments":
         case "companyCode":
         case "companyName":

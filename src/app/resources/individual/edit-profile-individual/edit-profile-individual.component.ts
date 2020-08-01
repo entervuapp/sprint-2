@@ -78,10 +78,10 @@ export class EditProfileIndividualComponent implements OnInit {
         { value: data && data.email ? data.email : "", disabled: true },
         [Validators.required, Validators.email]
       ),
-      mobile: new FormControl(data && data.mobile ? data.mobile : "", [
-        Validators.required,
-        Validators.minLength(10),
-      ]),
+      contactNumber: new FormControl(
+        data && data.contactNumber ? data.contactNumber : "",
+        [Validators.required, Validators.minLength(10)]
+      ),
       experience: new FormControl(
         data && data.experience ? data.experience : "",
         [Validators.required]
@@ -129,6 +129,15 @@ export class EditProfileIndividualComponent implements OnInit {
   public onUpdate = (): void => {
     let requestBody = {
       ...this.myForm.getRawValue(),
+    };
+    requestBody["address"] = {
+      id: 0,
+      addressLine1: "string",
+      addressLine2: "string",
+      district: "string",
+      state: "string",
+      postalCode: "string",
+      country: "string",
     };
     requestBody.candidateId = requestBody.id;
     requestBody.clientName =
