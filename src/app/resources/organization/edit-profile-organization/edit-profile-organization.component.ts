@@ -68,11 +68,14 @@ export class EditProfileOrganizationComponent implements OnInit {
       ]),
       lastName: new FormControl(data && data.lastName ? data.lastName : ""),
       id: new FormControl(data && data.id ? data.id : null),
-      mobile: new FormControl(data && data.mobile ? data.mobile : null, [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(10),
-      ]),
+      contactNumber: new FormControl(
+        data && data.contactNumber ? data.contactNumber : null,
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ]
+      ),
       officeEmail: new FormControl(data && data.email ? data.email : "", [
         Validators.required,
         Validators.email,

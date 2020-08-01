@@ -76,7 +76,11 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
     ) {
       this.resetField = changes.resetField.currentValue;
       this.emailList = [];
-      this.initializeForm();
+      if (this.formGroup && this.formGroup.reset) {
+        this.formGroup.reset();
+      } else {
+        this.initializeForm();
+      }
     }
 
     if (
@@ -85,7 +89,11 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
       changes.isRequired.currentValue !== changes.isRequired.previousValue
     ) {
       this.isRequired = changes.isRequired.currentValue;
-      this.initializeForm();
+      if (this.formGroup && this.formGroup.reset) {
+        this.formGroup.reset();
+      } else {
+        this.initializeForm();
+      }
     }
   }
 
@@ -106,7 +114,7 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
         organization: new FormControl("", []),
         provider: new FormControl("", []),
         providerId: new FormControl("", []),
-        roles: new FormArray([this.prepateRolesFormGroup()]),
+        roles: new FormArray([this.prepareRolesFormGroup()]),
       });
     } else {
       this.formGroup = this.fb.group({
@@ -124,7 +132,7 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
         organization: new FormControl("", []),
         provider: new FormControl("", []),
         providerId: new FormControl("", []),
-        roles: new FormArray([this.prepateRolesFormGroup()]),
+        roles: new FormArray([this.prepareRolesFormGroup()]),
       });
     }
   };
@@ -166,7 +174,7 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
     }
   };
 
-  private prepateRolesFormGroup = (): FormGroup => {
+  private prepareRolesFormGroup = (): FormGroup => {
     return new FormGroup({
       id: new FormControl("", []),
       name: new FormControl("", []),

@@ -70,7 +70,7 @@ export class RegistrationIndividualComponent extends AppComponent
       ]),
       lastName: new FormControl(""),
       officeEmail: new FormControl("", [Validators.required, Validators.email]),
-      mobile: new FormControl("", [
+      contactNumber: new FormControl("", [
         Validators.required,
         Validators.minLength(10),
       ]),

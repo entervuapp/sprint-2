@@ -46,16 +46,16 @@
               id="mobile"
               [placeholder]="displayTextObject['mobile']"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'mobile')
+                'input-field-error': checkForError(myForm, 'contactNumber')
               }"
-              formControlName="mobile"
+              formControlName="contactNumber"
               appNumbersOnly
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'mobile')"
+            *ngIf="checkForError(myForm, 'contactNumber')"
             [formObject]="myForm"
-            [controlName]="'mobile'"
+            [controlName]="'contactNumber'"
             [fieldName]="displayTextObject['mobile']"
           ></app-error-message>
         </div>
@@ -158,11 +158,14 @@
                 <td>{{ candidateObj.candidate.mobile }}</td>
                 <td>{{ candidateObj.invitedBy }}</td>
                 <td>
-                  <a href="javascript:void(0)" (click)="onEdit(candidate)">
+                  <a href="javascript:void(0)" (click)="onEdit(candidateObj)">
                     {{ displayTextObject["edit"] }}
                   </a>
                   |
-                  <a href="javascript:void(0)" (click)="onDelete(candidate)">
+                  <a
+                    href="javascript:void(0)"
+                    (click)="onCandidateDelete(candidateObj)"
+                  >
                     {{ displayTextObject["delete"] }}
                   </a>
                 </td>

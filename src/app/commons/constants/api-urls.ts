@@ -27,8 +27,8 @@ export class API_URLS_CONSTANTS {
         FIND_CANDIDATE_BY_EMAIL: `${BASE_URL}/entervu/candidate/`,
         GET_CANDIDATES: `${LOCAL_URL}/candidates`,
         ADD_CANDIDATE: `${BASE_URL}/entervu/event/candidate`,
-        UPDATE_CANDIDATE: `${LOCAL_URL}/candidates`,
-        DELETE_CANDIDATE: `${LOCAL_URL}/candidates`,
+        UPDATE_CANDIDATE_IN_EVENT: `${BASE_URL}/entervu/event/candidate`,
+        DELETE_CANDIDATE_FROM_EVENT: `${BASE_URL}/entervu/event/candidate`,
         GET_EVENT_CANDIDATES: `${BASE_URL}/entervu/candidate/event/`,
       },
       MANAGE_HR_TEAM: {

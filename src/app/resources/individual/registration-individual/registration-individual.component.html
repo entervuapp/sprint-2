@@ -90,7 +90,7 @@
           <span
             class="input-group-addon"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'mobile')
+              'input-field-error': checkForError(myForm, 'contactNumber')
             }"
             ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faMobile"></fa-icon
           ></span>
@@ -101,16 +101,16 @@
             id="mobile"
             [placeholder]="displayTextObject['mobileNumber']"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'mobile')
+              'input-field-error': checkForError(myForm, 'contactNumber')
             }"
             appNumbersOnly
-            formControlName="mobile"
+            formControlName="contactNumber"
           />
         </div>
         <app-error-message
-          *ngIf="checkForError(myForm, 'mobile')"
+          *ngIf="checkForError(myForm, 'contactNumber')"
           [formObject]="myForm"
-          [controlName]="'mobile'"
+          [controlName]="'contactNumber'"
           [fieldName]="displayTextObject['mobileNumber']"
         ></app-error-message>
       </div>
