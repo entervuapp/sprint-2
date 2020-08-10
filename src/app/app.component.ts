@@ -23,6 +23,9 @@ export class AppComponent {
     public alertService?: AlertService
   ) {
     this.isHeaderVisible = false;
+  }
+
+  ngOnInit(): void {
     if (
       this.manageHeaderService &&
       this.manageHeaderService.getHeaderVisibility

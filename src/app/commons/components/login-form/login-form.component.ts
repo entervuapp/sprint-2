@@ -13,7 +13,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
-import ObjectUtil from "../../utils/object-utils";
+import { ObjectUtil } from "../../utils/object-utils";
 import { NewAny } from "../../typings/typings";
 
 @Component({

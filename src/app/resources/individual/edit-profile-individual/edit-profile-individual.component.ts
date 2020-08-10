@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { EditProfileIndividualService } from "./edit-profile-individual/edit-profile-individual.service";
@@ -27,12 +27,13 @@ export class EditProfileIndividualComponent implements OnInit {
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   public displayTestObject: NewAny;
   public SHARED_CONSTANTS;
+
   constructor(
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
-    public manageHeaderService: ManageHeaderService,
     private editProfileIndividualService: EditProfileIndividualService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public manageHeaderService: ManageHeaderService
   ) {}
 
   ngOnInit() {
@@ -50,13 +51,13 @@ export class EditProfileIndividualComponent implements OnInit {
       mobile: "Mobile",
       skill: "Skill",
     };
+    this.initializeForm(null);
     if (
       this.manageHeaderService &&
       this.manageHeaderService.updateHeaderVisibility
     ) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
-    this.initializeForm(null);
     this.getUserProfile();
   }
 

@@ -4,6 +4,7 @@ import { AppComponent } from "src/app/app.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
+import { ObjectUtil } from "../../utils/object-utils";
 
 interface Menu {
   DISPLAY_TEXT: string;
@@ -25,7 +26,8 @@ export class HeaderComponent extends AppComponent implements OnInit {
   constructor(
     public router: Router,
     private activatedRoute: ActivatedRoute,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    public objectUtil: ObjectUtil
   ) {
     super();
   }
@@ -87,6 +89,7 @@ export class HeaderComponent extends AppComponent implements OnInit {
   };
 
   public navigateToScreen = (menu): void => {
+    this.objectUtil.showAlert([]);
     switch (menu.DISPLAY_TEXT) {
       case "EVENTS":
         this.activeModule = menu.DISPLAY_TEXT;

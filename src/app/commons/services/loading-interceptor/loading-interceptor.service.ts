@@ -13,7 +13,7 @@ import { catchError } from "rxjs/operators";
 import { AppComponent } from "src/app/app.component";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { LocalStorageService } from "../local-storage/local-storage.service";
-import ObjectUtil from "../../utils/object-utils";
+import { ObjectUtil } from "../../utils/object-utils";
 
 @Injectable({
   providedIn: "root",

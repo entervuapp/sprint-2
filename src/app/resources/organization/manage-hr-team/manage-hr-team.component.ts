@@ -5,7 +5,7 @@ import {
   FormBuilder,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import { ManageHrTeamService } from "./manage-hr-team/manage-hr-team.service";
 import { Subscription } from "rxjs";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";

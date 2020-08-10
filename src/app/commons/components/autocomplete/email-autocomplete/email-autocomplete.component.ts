@@ -14,7 +14,7 @@ import {
   Output,
 } from "@angular/core";
 import { EmailAutocompleteService } from "./email-autocomplete/email-autocomplete.service";
-import ObjectUtil from "../../../utils/object-utils";
+import { ObjectUtil } from "../../../utils/object-utils";
 import { SHARED_CONSTANTS } from "../../../constants/shared.constants";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 

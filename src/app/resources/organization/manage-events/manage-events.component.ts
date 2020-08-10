@@ -7,7 +7,7 @@ import {
   FormGroupDirective,
   AbstractControl,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import { ManageEventsService } from "./manage-events/manage-events.service";
 import {
   ValueDescriptionId,

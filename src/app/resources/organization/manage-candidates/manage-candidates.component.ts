@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { ActivatedRoute } from "@angular/router";
 import { ManageEventsService } from "../../organization/manage-events/manage-events/manage-events.service";
