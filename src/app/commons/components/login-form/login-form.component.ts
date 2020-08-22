@@ -15,6 +15,7 @@ import { LocalStorageService } from "../../services/local-storage/local-storage.
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import ObjectUtil from "../../utils/object-utils";
 import { NewAny } from "../../typings/typings";
+import { SharedService } from "../../rest-services/shared/shared.service";
 
 @Component({
   selector: "app-login-form",
@@ -36,7 +37,8 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     private loginFormService: LoginFormService,
     public router: Router,
     public localStorageService: LocalStorageService,
-    private objectUtil: ObjectUtil
+    private objectUtil: ObjectUtil,
+    private sharedService: SharedService
   ) {
     super();
   }
@@ -74,8 +76,8 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     this._subscriptions.add(
       this.loginFormService.signIn(requestBody).subscribe(
         (response) => {
-          this.prepareLocalStorages(response);
-          this.handleNavigation();
+          this.prepareLocalStorages(response, "token");
+          this.getUserDetails();
         },
         (errors) => {
           if (errors) {
@@ -100,28 +102,19 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     return false;
   }
 
-  private prepareLocalStorages = (response): void => {
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
-      response.roles[0]
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
-      response.accessToken
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
-      JSON.stringify({
-        firstName: response && response.firstName ? response.firstName : "",
-        lastName: response && response.lastName ? response.lastName : "",
-        email: response && response.email ? response.email : "",
-        id: response && response.id ? response.id : "",
-        companyName:
-          response && response.companyName ? response.companyName : "test1",
-        companyCode:
-          response && response.companyCode ? response.companyCode : "test1",
-      })
-    );
+  private prepareLocalStorages = (response, type): void => {
+    if (type === "role") {
+      this.localStorageService.set(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
+        response.roles[0]
+      );
+    }
+    if (type === "token") {
+      this.localStorageService.set(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
+        response.accessToken
+      );
+    }
   };
 
   private sendEmailForVerification = () => {};
@@ -149,5 +142,18 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     } else {
       this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
     }
+  };
+
+  private getUserDetails = (): void => {
+    this.sharedService.getLoggedInUserDetails().subscribe(
+      (response) => {
+        console.log(response);
+        this.prepareLocalStorages(response, "role");
+        this.handleNavigation();
+      },
+      (errors) => {
+        console.log(errors);
+      }
+    );
   };
 }

@@ -15,6 +15,7 @@ import { Subscription } from "rxjs";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
+import { SharedService } from "../../../commons/rest-services/shared/shared.service";
 
 @Component({
   selector: "app-registration-organization",
@@ -39,7 +40,8 @@ export class RegistrationOrganizationComponent extends AppComponent
     private objectUtil: ObjectUtil,
     private loginFormService: LoginFormService,
     private localStorageService: LocalStorageService,
-    private registrationOrganizationService: RegistrationOrganizationService
+    private registrationOrganizationService: RegistrationOrganizationService,
+    private sharedService: SharedService
   ) {
     super();
   }
@@ -64,20 +66,35 @@ export class RegistrationOrganizationComponent extends AppComponent
         Validators.minLength(3),
       ]),
       lastName: new FormControl(""),
-      officeEmail: new FormControl("", [Validators.required, Validators.email]),
-      companyCode: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      companyName: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
       password: new FormControl("", [
         Validators.required,
         Validators.minLength(8),
       ]),
       confirmPassword: new FormControl("", [Validators.required]),
+      officeEmail: new FormControl("", [Validators.required, Validators.email]),
+      clientName: new FormControl("entervu", [Validators.required]),
+      organizationRequest: new FormGroup({
+        code: new FormControl("", [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        name: new FormControl("", [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        contactNumber: new FormControl("", []),
+        address: new FormGroup({
+          addressLine1: new FormControl("", []),
+          addressLine2: new FormControl("", []),
+          district: new FormControl("", []),
+          state: new FormControl("", []),
+          postalCode: new FormControl("", []),
+          country: new FormControl("", []),
+        }),
+      }),
+      mobileNumber: new FormControl("", []),
+      gender: new FormControl("", []),
+      imageUrl: new FormControl("", []),
     });
   };
 
@@ -91,7 +108,6 @@ export class RegistrationOrganizationComponent extends AppComponent
     this.objectUtil.showAlert([]);
     let requestBody = {
       ...this.myForm.value,
-      clientName: "entervu",
       role:
         this.myForm.value &&
         this.myForm.value.companyCode &&
@@ -139,8 +155,8 @@ export class RegistrationOrganizationComponent extends AppComponent
       this.loginFormService.signIn(requestBodyfroLogin).subscribe(
         (response) => {
           console.log("login success", response);
-          this.prepareLocalStorages(response);
-          this.handleNavigation();
+          this.prepareLocalStorages(response, "token");
+          this.getUserDetails();
         },
         (errors) => {
           if (errors) {
@@ -153,28 +169,32 @@ export class RegistrationOrganizationComponent extends AppComponent
       )
     );
   };
-  private prepareLocalStorages = (response): void => {
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
-      response.roles[0]
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
-      response.accessToken
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
-      JSON.stringify({
-        firstName: response && response.firstName ? response.firstName : "",
-        lastName: response && response.lastName ? response.lastName : "",
-        email: response && response.email ? response.email : "",
-        id: response && response.id ? response.id : "",
-        companyName:
-          response && response.companyName ? response.companyName : "",
-        companyCode:
-          response && response.companyCode ? response.companyCode : "",
-      })
-    );
+  private prepareLocalStorages = (response, type): void => {
+    if (type === "role") {
+      this.localStorageService.set(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
+        response.roles[0]
+      );
+    }
+    if (type === "token") {
+      this.localStorageService.set(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
+        response.accessToken
+      );
+    }
+    // this.localStorageService.set(
+    //   this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
+    //   JSON.stringify({
+    //     firstName: response && response.firstName ? response.firstName : "",
+    //     lastName: response && response.lastName ? response.lastName : "",
+    //     email: response && response.email ? response.email : "",
+    //     id: response && response.id ? response.id : "",
+    //     companyName:
+    //       response && response.companyName ? response.companyName : "",
+    //     companyCode:
+    //       response && response.companyCode ? response.companyCode : "",
+    //   })
+    // );
   };
 
   private sendEmailForVerification = (): void => {};
@@ -202,5 +222,18 @@ export class RegistrationOrganizationComponent extends AppComponent
     } else {
       this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
     }
+  };
+
+  private getUserDetails = (): void => {
+    this.sharedService.getLoggedInUserDetails().subscribe(
+      (response) => {
+        console.log(response);
+        this.prepareLocalStorages(response, "role");
+        this.handleNavigation();
+      },
+      (errors) => {
+        console.log(errors);
+      }
+    );
   };
 }

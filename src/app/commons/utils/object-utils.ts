@@ -47,7 +47,10 @@ export default class ObjectUtil {
         case "email":
         case "officeEmail":
           if (
-            (formObj.controls[property].hasError("required") &&
+            (formObj &&
+              formObj.controls &&
+              formObj.controls[property] &&
+              formObj.controls[property].hasError("required") &&
               formObj.controls[property].touched) ||
             formObj.controls[property].hasError("email")
           ) {
@@ -69,11 +72,21 @@ export default class ObjectUtil {
         case "firstName":
         case "description":
           if (
-            ((formObj.controls[property].hasError("required") ||
+            formObj &&
+            formObj.controls &&
+            formObj.controls[property] &&
+            (formObj.controls[property].hasError("required") ||
               formObj.controls[property].hasError("duplicate")) &&
-              formObj.controls[property].touched) ||
-            formObj.controls[property].hasError("minlength") ||
-            formObj.controls[property].hasError("maxlength")
+            formObj.controls[property].touched
+          ) {
+            isError = true;
+          }
+          if (
+            formObj &&
+            formObj.controls &&
+            formObj.controls[property] &&
+            (formObj.controls[property].hasError("minlength") ||
+              formObj.controls[property].hasError("maxlength"))
           ) {
             isError = true;
           }
@@ -85,6 +98,40 @@ export default class ObjectUtil {
               formObj.controls[property].touched) ||
             formObj.controls[property].hasError("minlength") ||
             formObj.controls[property].hasError("maxlength")
+          ) {
+            isError = true;
+          }
+          break;
+        case "code":
+        case "name":
+          if (
+            formObj &&
+            formObj.controls &&
+            formObj.controls.organizationRequest &&
+            formObj.controls.organizationRequest["controls"] &&
+            formObj.controls.organizationRequest["controls"][property] &&
+            (formObj.controls.organizationRequest["controls"][
+              property
+            ].hasError("required") ||
+              formObj.controls.organizationRequest["controls"][
+                property
+              ].hasError("duplicate")) &&
+            formObj.controls.organizationRequest["controls"][property].touched
+          ) {
+            isError = true;
+          }
+          if (
+            (formObj &&
+              formObj.controls &&
+              formObj.controls.organizationRequest &&
+              formObj.controls.organizationRequest["controls"] &&
+              formObj.controls.organizationRequest["controls"][property] &&
+              formObj.controls.organizationRequest["controls"][
+                property
+              ].hasError("minlength")) ||
+            formObj.controls.organizationRequest["controls"][property].hasError(
+              "maxlength"
+            )
           ) {
             isError = true;
           }
