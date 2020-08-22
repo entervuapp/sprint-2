@@ -41,6 +41,8 @@ export class API_URLS_CONSTANTS {
         GET_PROFILE: `${BASE_URL}/entervu/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/company/user`,
         DELETE_PROFILE: `${BASE_URL}/entervu/user`,
+
+        GET_USER_PROFILE: `${BASE_URL}/entervu/company/user`,
       },
     },
     INDIVIDUAL: {

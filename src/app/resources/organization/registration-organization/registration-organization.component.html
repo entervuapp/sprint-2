@@ -90,7 +90,7 @@
           <span
             class="input-group-addon"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'companyCode')
+              'input-field-error': checkForError(myForm, 'code')
             }"
             ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faKey"></fa-icon
           ></span>
@@ -100,16 +100,16 @@
             name="companyCode"
             placeholder="Company Code"
             id="companyCode"
-            formControlName="companyCode"
+            [formControl]="myForm.controls.organizationRequest.controls.code"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'companyCode')
+              'input-field-error': checkForError(myForm, 'code')
             }"
           />
         </div>
         <app-error-message
-          *ngIf="checkForError(myForm, 'companyCode')"
+          *ngIf="checkForError(myForm, 'code')"
           [formObject]="myForm"
-          [controlName]="'companyCode'"
+          [controlName]="'code'"
           [fieldName]="'Company code'"
         ></app-error-message>
       </div>
@@ -118,7 +118,7 @@
           <span
             class="input-group-addon"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'companyName')
+              'input-field-error': checkForError(myForm, 'name')
             }"
             ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faBuilding"></fa-icon
           ></span>
@@ -128,16 +128,16 @@
             name="companyName"
             placeholder="Company Name"
             id="companyName"
-            formControlName="companyName"
+            [formControl]="myForm.controls.organizationRequest.controls.name"
             [ngClass]="{
-              'input-field-error': checkForError(myForm, 'companyName')
+              'input-field-error': checkForError(myForm, 'name')
             }"
           />
         </div>
         <app-error-message
-          *ngIf="checkForError(myForm, 'companyName')"
+          *ngIf="checkForError(myForm, 'name')"
           [formObject]="myForm"
-          [controlName]="'companyName'"
+          [controlName]="'name'"
           [fieldName]="'Company name'"
         ></app-error-message>
       </div>
