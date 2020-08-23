@@ -14,6 +14,7 @@ import { ManageCandidatesComponent } from "./resources/organization/manage-candi
 import { OnGoingEventOrganizationComponent } from "./resources/organization/on-going-event-organization/on-going-event-organization.component";
 import { ManageHrTeamComponent } from "./resources/organization/manage-hr-team/manage-hr-team.component";
 import { EditProfileIndividualComponent } from "./resources/individual/edit-profile-individual/edit-profile-individual.component";
+import { LoginFormComponent } from "./commons/components/login-form/login-form.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
     component: MainScreenComponent,
     // component: DashboardIndividualComponent,
     pathMatch: "full",
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGIN,
+    component: MainScreenComponent,
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD,

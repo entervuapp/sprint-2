@@ -10,9 +10,7 @@ export class SharedService {
   constructor(private http: HttpClient) {}
 
   public getLoggedInUserDetails = (): Observable<any> => {
-    // let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.PROFILE.GET_USER_PROFILE;
-    let url =
-      "https://visakharoyalinteriors.herokuapp.com/entervu/company/user";
+    let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.PROFILE.GET_USER_PROFILE;
     return this.http.get(url);
   };
 }

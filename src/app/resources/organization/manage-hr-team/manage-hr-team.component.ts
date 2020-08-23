@@ -5,7 +5,7 @@ import {
   FormBuilder,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import { ManageHrTeamService } from "./manage-hr-team/manage-hr-team.service";
 import { Subscription } from "rxjs";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
@@ -32,7 +32,7 @@ export class ManageHrTeamComponent implements OnInit {
     private objectUtil: ObjectUtil,
     private manageHrTeamService: ManageHrTeamService,
     public manageHeaderService: ManageHeaderService,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     private registrationOrganizationService: RegistrationOrganizationService,
     private matDialog: MatDialog
   ) {}

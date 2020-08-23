@@ -4,7 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { SkillWithCount } from "../../../commons/typings/typings";
 import { ManageEventsService } from "../../../resources/organization/manage-events/manage-events/manage-events.service";
 import { ManageCandidateService } from "../../../resources/organization/manage-candidates/manage-candidates/manage-candidate.service";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 
 @Component({

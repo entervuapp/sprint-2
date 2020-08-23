@@ -7,6 +7,7 @@ import { CanDeactivateGuardService } from "./can-deactivate-guard/can-deactivate
 import { LocalStorageService } from "./local-storage/local-storage.service";
 import { ManageHeaderService } from "./manage-header/manage-header.service";
 import { WindowRefService } from "./window-ref/window-ref.service";
+import { UserDetailsService } from "./user-details/user-details.service";
 
 const SERVICES_LIST = [
   LoadingInterceptorService,
@@ -16,6 +17,7 @@ const SERVICES_LIST = [
   LocalStorageService,
   ManageHeaderService,
   WindowRefService,
+  UserDetailsService,
 ];
 
 @NgModule({

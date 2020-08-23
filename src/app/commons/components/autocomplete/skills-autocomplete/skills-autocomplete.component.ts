@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { SkillsAutocompleteService } from "./skills-autocomplete/skills-autocomplete.service";
 import { Subscription } from "rxjs";
 import { ValueDescriptionId, NewAny } from "../../../typings/typings";
-import ObjectUtil from "../../../utils/object-utils";
+import { ObjectUtil } from "../../../utils/object-utils";
 import { SHARED_CONSTANTS } from "../../../constants/shared.constants";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../constants/font-awesome-icons";
 

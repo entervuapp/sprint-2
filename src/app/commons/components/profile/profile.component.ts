@@ -20,7 +20,7 @@ export class ProfileComponent extends AppComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     public manageHeaderService: ManageHeaderService
   ) {
     super();

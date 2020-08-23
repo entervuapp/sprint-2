@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { Subscription } from "rxjs";
 import { RegistrationIndividualService } from "./registration-individual/registration-individual.service";
@@ -26,7 +26,7 @@ export class RegistrationIndividualComponent extends AppComponent
   public myForm: FormGroup;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
-  private SHARED_CONSTANTS;
+  public SHARED_CONSTANTS;
   private ROUTE_URL_PATH_CONSTANTS;
   public displayTextObject: object;
 
@@ -38,7 +38,7 @@ export class RegistrationIndividualComponent extends AppComponent
     private objectUtil: ObjectUtil,
     private registrationIndividualService: RegistrationIndividualService,
     private loginFormService: LoginFormService,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     public router: Router
   ) {
     super();

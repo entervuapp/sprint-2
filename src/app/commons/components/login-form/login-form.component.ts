@@ -13,9 +13,10 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
-import ObjectUtil from "../../utils/object-utils";
+import { ObjectUtil } from "../../utils/object-utils";
 import { NewAny } from "../../typings/typings";
 import { SharedService } from "../../rest-services/shared/shared.service";
+import { UserDetailsService } from "../../services/user-details/user-details.service";
 
 @Component({
   selector: "app-login-form",
@@ -38,7 +39,8 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     public router: Router,
     public localStorageService: LocalStorageService,
     private objectUtil: ObjectUtil,
-    private sharedService: SharedService
+    public sharedService: SharedService,
+    public userDetailsService: UserDetailsService
   ) {
     super();
   }
@@ -76,8 +78,9 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     this._subscriptions.add(
       this.loginFormService.signIn(requestBody).subscribe(
         (response) => {
-          this.prepareLocalStorages(response, "token");
-          this.getUserDetails();
+          this.prepareLocalStorages(response);
+          this.setUserDetails();
+          this.handleNavigation();
         },
         (errors) => {
           if (errors) {
@@ -102,17 +105,11 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     return false;
   }
 
-  private prepareLocalStorages = (response, type): void => {
-    if (type === "role") {
-      this.localStorageService.set(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
-        response.roles[0]
-      );
-    }
-    if (type === "token") {
+  private prepareLocalStorages = (response): void => {
+    if (response && response["accessToken"]) {
       this.localStorageService.set(
         this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
-        response.accessToken
+        response["accessToken"]
       );
     }
   };
@@ -120,40 +117,32 @@ export class LoginFormComponent extends AppComponent implements OnInit {
   private sendEmailForVerification = () => {};
 
   private handleNavigation = (): void => {
+    let data = this.userDetailsService.get();
     if (
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+      data &&
+      data["user"] &&
+      data["user"].roles &&
+      data["user"].roles.length
     ) {
-      this.navigateTo(
-        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-      );
-    } else if (
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
-    ) {
-      this.navigateTo(
-        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
-      );
-    } else {
-      this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
-    }
-  };
-
-  private getUserDetails = (): void => {
-    this.sharedService.getLoggedInUserDetails().subscribe(
-      (response) => {
-        console.log(response);
-        this.prepareLocalStorages(response, "role");
-        this.handleNavigation();
-      },
-      (errors) => {
-        console.log(errors);
+      if (
+        data["user"].roles[0].name ===
+          this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
+        data["user"].roles[0].name ===
+          this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+      ) {
+        this.navigateTo(
+          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+        );
+      } else if (
+        data["user"].roles[0].name ===
+        this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
+      ) {
+        this.navigateTo(
+          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
+        );
+      } else {
+        this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
       }
-    );
+    }
   };
 }

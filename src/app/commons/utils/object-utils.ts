@@ -5,11 +5,11 @@ import { LocalStorageService } from "../services/local-storage/local-storage.ser
 import { SHARED_CONSTANTS } from "../constants/shared.constants";
 
 @Injectable()
-export default class ObjectUtil {
+export class ObjectUtil {
   private SHARED_CONSTANTS = SHARED_CONSTANTS;
   constructor(
     private alertService: AlertService,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService
   ) {}
 
   public checkPasswordStrength = (enteredPassword): number => {

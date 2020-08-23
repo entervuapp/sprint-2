@@ -8,7 +8,7 @@ import {
   FormBuilder,
 } from "@angular/forms";
 import { ValueDescription } from "../../../commons/typings/typings";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import { ManageSkillsService } from "./manage-skills/manage-skills.service";
 import { Subscription } from "rxjs";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";

@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { EditProfileOrganizationService } from "./edit-profile-organization/edit-profile-organization.service";
@@ -31,7 +31,7 @@ export class EditProfileOrganizationComponent implements OnInit {
     private objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private editProfileOrganizationService: EditProfileOrganizationService,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {
