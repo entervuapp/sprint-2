@@ -31,7 +31,7 @@ export class EditProfileOrganizationComponent implements OnInit {
     private objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private editProfileOrganizationService: EditProfileOrganizationService,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {

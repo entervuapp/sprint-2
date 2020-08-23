@@ -9,7 +9,7 @@ export class ObjectUtil {
   private SHARED_CONSTANTS = SHARED_CONSTANTS;
   constructor(
     private alertService: AlertService,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService
   ) {}
 
   public checkPasswordStrength = (enteredPassword): number => {

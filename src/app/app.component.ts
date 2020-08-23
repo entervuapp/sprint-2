@@ -5,6 +5,10 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { ROUTE_URL_PATH_CONSTANTS } from "./commons/constants/route-url-path.constants";
 import { AlertService } from "./commons/services/alert/alert.service";
 import { Alerts } from "./commons/typings/typings";
+import { UserDetailsService } from "./commons/services/user-details/user-details.service";
+import { LocalStorageService } from "./commons/services/local-storage/local-storage.service";
+import { SHARED_CONSTANTS } from "./commons/constants/shared.constants";
+import { SharedService } from "./commons/rest-services/shared/shared.service";
 
 @Component({
   selector: "app-root",
@@ -15,17 +19,22 @@ export class AppComponent {
   title = "EnterVu";
   public isHeaderVisible: boolean;
   private alertsList: Alerts[];
+  public SHARED_CONSTANTS;
 
   constructor(
     public manageHeaderService?: ManageHeaderService,
     private cdr?: ChangeDetectorRef,
     public router?: Router,
-    public alertService?: AlertService
+    public alertService?: AlertService,
+    public localStorageService?: LocalStorageService,
+    public userDetailsService?: UserDetailsService,
+    public sharedService?: SharedService
   ) {
     this.isHeaderVisible = false;
   }
 
   ngOnInit(): void {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     if (
       this.manageHeaderService &&
       this.manageHeaderService.getHeaderVisibility
@@ -35,6 +44,7 @@ export class AppComponent {
         this.cdr.detectChanges();
       });
     }
+    this.checkForSessionToken();
 
     //subscribe alerts
     if (this.alertService) {
@@ -52,6 +62,11 @@ export class AppComponent {
 
   public navigateTo(screen: string, queryParams?): void {
     switch (screen) {
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGIN:
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGIN}`,
+        ]);
+        break;
       case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD:
         this.router.navigate([
           `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD}`,
@@ -155,6 +170,39 @@ export class AppComponent {
   public onClose = (idx): void => {
     if (idx + 1) {
       this.alertsList.splice(idx, 1);
+    }
+  };
+
+  public checkForSessionToken = (): void => {
+    if (
+      !this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
+      )
+    ) {
+      this.navigateTo("");
+    } else {
+      this.setUserDetails();
+    }
+  };
+
+  public setUserDetails = (): void => {
+    if (
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
+      )
+    ) {
+      this.sharedService.getLoggedInUserDetails().subscribe(
+        (data) => {
+          if (data && data["response"]) {
+            this.userDetailsService.set(data["response"]);
+          }
+        },
+        (errors) => {
+          console.log(errors);
+        }
+      );
+    } else {
+      this.navigateTo("");
     }
   };
 }

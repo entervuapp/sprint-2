@@ -32,7 +32,7 @@ export class EditProfileIndividualComponent implements OnInit {
     private fb: FormBuilder,
     private objectUtil: ObjectUtil,
     private editProfileIndividualService: EditProfileIndividualService,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     public manageHeaderService: ManageHeaderService
   ) {}
 

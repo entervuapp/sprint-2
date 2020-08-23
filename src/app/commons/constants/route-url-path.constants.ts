@@ -12,5 +12,6 @@ export class ROUTE_URL_PATH_CONSTANTS {
     LOGOUT: "logout",
     QA_DASHBOARD: "qa-dashboard",
     ADMIN: "admin",
+    LOGIN: "",
   };
 }

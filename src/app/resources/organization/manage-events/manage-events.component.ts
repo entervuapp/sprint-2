@@ -22,6 +22,7 @@ import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/man
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 
 @Component({
   selector: "app-manage-events",
@@ -54,8 +55,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     public manageEventsService: ManageEventsService,
     public router: Router,
     private manageSkillsService: ManageSkillsService,
-    private localStorageService: LocalStorageService,
-    public manageHeaderService: ManageHeaderService
+    public localStorageService: LocalStorageService,
+    public manageHeaderService: ManageHeaderService,
+    public userDetailsService: UserDetailsService
   ) {
     super();
   }
@@ -176,8 +178,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       eventName: this.formGroupObject.value.name,
       eventDate: this.formGroupObject.value.eventDate,
       eventTime: this.formGroupObject.value.eventTime,
-      createdBy: this.getUserDetails("email"),
-      companyCode: this.getUserDetails("companyCode"),
+      createdBy: this.getUserData("email"),
+      companyCode: this.getUserData("companyCode"),
       eventSkills: this.prepareSkillList(
         [...this.skillsList],
         this.formGroupObject
@@ -435,12 +437,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   private getEventsList = () => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
-    let requestBody = userDetails["companyCode"];
+    let userDetails: object = this.userDetailsService.get();
+    let requestBody = userDetails["organization"]["companyCode"];
     this._subscriptions.add(
       this.manageEventsService.getEvents(requestBody).subscribe(
         (data) => {
@@ -732,7 +730,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     return displayText;
   };
 
-  private getUserDetails = (expectedField): string => {
+  private getUserData = (expectedField): string => {
     let userDetails = JSON.parse(
       this.localStorageService.get(
         this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS

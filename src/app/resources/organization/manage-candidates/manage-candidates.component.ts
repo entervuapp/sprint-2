@@ -48,7 +48,7 @@ export class ManageCandidatesComponent implements OnInit {
     public manageHeaderService: ManageHeaderService,
     private manageEventsService: ManageEventsService,
     private manageCandidateService: ManageCandidateService,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {

@@ -32,7 +32,7 @@ export class ManageHrTeamComponent implements OnInit {
     private objectUtil: ObjectUtil,
     private manageHrTeamService: ManageHrTeamService,
     public manageHeaderService: ManageHeaderService,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     private registrationOrganizationService: RegistrationOrganizationService,
     private matDialog: MatDialog
   ) {}

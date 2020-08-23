@@ -29,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
     private objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private changePasswordService: ChangePasswordService,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService
   ) {}
 
   ngOnInit() {

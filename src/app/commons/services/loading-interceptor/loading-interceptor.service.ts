@@ -24,7 +24,7 @@ export class LoadingInterceptorService extends AppComponent
   counter: number = 0;
   constructor(
     private loaderService: LoaderService,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     private objectUtil: ObjectUtil
   ) {
     super();
@@ -45,9 +45,10 @@ export class LoadingInterceptorService extends AppComponent
         headers: request.headers
           .set(
             "Authorization",
-            this.localStorageService.get(
-              this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
-            )
+            "Bearer " +
+              this.localStorageService.get(
+                this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
+              )
           )
           .append("Access-Control-Allow-Origin", "*"),
       });
