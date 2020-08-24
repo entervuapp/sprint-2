@@ -10,7 +10,7 @@ export class RegistrationIndividualService {
   constructor(private http: HttpClient) {}
 
   public inidivualRegistration = (requestBody): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.REGISTRATION.CANDIDATE;
+    let url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.USER.REIGSTRATION;
     return this.http.post(url, requestBody);
   };
 }

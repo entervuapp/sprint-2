@@ -15,6 +15,7 @@ import { OnGoingEventOrganizationComponent } from "./resources/organization/on-g
 import { ManageHrTeamComponent } from "./resources/organization/manage-hr-team/manage-hr-team.component";
 import { EditProfileIndividualComponent } from "./resources/individual/edit-profile-individual/edit-profile-individual.component";
 import { LoginFormComponent } from "./commons/components/login-form/login-form.component";
+import { UserDetailsResolverService } from "./commons/services/user-details-resolver/user-details-resolver.service";
 
 const routes: Routes = [
   {
@@ -34,10 +35,12 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD,
     component: ManageEventsComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE,
     component: EditProfileOrganizationComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_INDIVIDUAL_PROFILE,
@@ -63,6 +66,7 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_TEAM,
     component: ManageHrTeamComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ON_GOING_EVENT_ORGANIZATION,

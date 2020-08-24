@@ -15,7 +15,7 @@ import {
 } from "../../../commons/typings/typings";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { AppComponent } from "src/app/app.component";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Subscription } from "rxjs";
 import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/manage-skills.service";
@@ -46,6 +46,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   public SHARED_CONSTANTS;
   public newRoundNames: string[];
   public editedSkillRoundDetails = [];
+  public userDetails: object;
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
@@ -54,6 +55,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     public objectUtil: ObjectUtil,
     public manageEventsService: ManageEventsService,
     public router: Router,
+    public activatedRoute: ActivatedRoute,
     private manageSkillsService: ManageSkillsService,
     public localStorageService: LocalStorageService,
     public manageHeaderService: ManageHeaderService,
@@ -63,6 +65,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userDetails = null;
     this.newRoundNames = [];
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.skillObjForPopup = {};
@@ -89,13 +92,18 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     this.resetField = false;
     this.getSkillOptions();
     this.initializeForm();
-    this.getEventsList();
     if (
       this.manageHeaderService &&
       this.manageHeaderService.updateHeaderVisibility
     ) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
+    this.userDetails = this.userDetailsService.get();
+    if (!this.userDetails) {
+      this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
+      this.setUserDetails();
+    }
+    this.getEventsList();
   }
 
   ngOnDestroy(): void {
@@ -437,8 +445,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   private getEventsList = () => {
-    let userDetails: object = this.userDetailsService.get();
-    let requestBody = userDetails["organization"]["companyCode"];
+    let requestBody = this.userDetails["organization"]["companyCode"];
     this._subscriptions.add(
       this.manageEventsService.getEvents(requestBody).subscribe(
         (data) => {
@@ -731,16 +738,13 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   private getUserData = (expectedField): string => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
     if (expectedField === "email") {
-      return userDetails && userDetails.email ? userDetails.email : null;
+      return this.userDetails && this.userDetails["email"]
+        ? this.userDetails["email"]
+        : null;
     } else if (expectedField === "companyCode") {
-      return userDetails && userDetails.companyCode
-        ? userDetails.companyCode
+      return this.userDetails && this.userDetails["companyCode"]
+        ? this.userDetails["companyCode"]
         : null;
     }
   };

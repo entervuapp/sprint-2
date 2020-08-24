@@ -31,6 +31,7 @@ export class RegistrationOrganizationComponent extends AppComponent
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   public displayTextObject: Object;
+  private role: string;
 
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
@@ -49,6 +50,7 @@ export class RegistrationOrganizationComponent extends AppComponent
   }
 
   ngOnInit() {
+    this.role = "";
     this.displayTextObject = {
       signUp: "Sign up",
     };
@@ -117,6 +119,7 @@ export class RegistrationOrganizationComponent extends AppComponent
           ? this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN
           : this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE,
     };
+    this.role = this.myForm["role"];
     delete requestBody.confirmPassword;
 
     this._subscriptions.add(
@@ -152,8 +155,7 @@ export class RegistrationOrganizationComponent extends AppComponent
       this.loginFormService.signIn(requestBodyfroLogin).subscribe(
         (response) => {
           this.prepareLocalStorages(response);
-          this.setUserDetails();
-          this.handleNavigation();
+          this.getUserData();
         },
         (errors) => {
           if (errors) {
@@ -207,5 +209,26 @@ export class RegistrationOrganizationComponent extends AppComponent
         this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
       }
     }
+  };
+
+  private getUserData = (): void => {
+    let type =
+      this.role === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
+        ? "Individual"
+        : "Organization";
+    this.sharedService.getLoggedInUserDetails(type).subscribe(
+      (data) => {
+        this.userDetailsService.set(data["response"]);
+        this.handleNavigation();
+      },
+      (errors) => {
+        if (errors) {
+          console.log("errors", errors);
+          this.objectUtil.showAlert(
+            this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+          );
+        }
+      }
+    );
   };
 }

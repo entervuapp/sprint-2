@@ -9,8 +9,13 @@ import { API_URLS_CONSTANTS } from "../../constants/api-urls";
 export class SharedService {
   constructor(private http: HttpClient) {}
 
-  public getLoggedInUserDetails = (): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.PROFILE.GET_USER_PROFILE;
+  public getLoggedInUserDetails = (type): Observable<any> => {
+    let url = "";
+    if (type === "Organization") {
+      url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.USER.GET_PROFILE;
+    } else if (type === "Individual") {
+      url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.USER.GET_PROFILE;
+    }
     return this.http.get(url);
   };
 }

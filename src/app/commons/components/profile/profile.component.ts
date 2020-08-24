@@ -6,6 +6,7 @@ import { LocalStorageService } from "../../services/local-storage/local-storage.
 import { NewAny } from "../../typings/typings";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { ManageHeaderService } from "../../services/manage-header/manage-header.service";
+import { UserDetailsService } from "../../services/user-details/user-details.service";
 
 @Component({
   selector: "app-profile",
@@ -16,12 +17,14 @@ export class ProfileComponent extends AppComponent implements OnInit {
   public ROUTE_URL_PATH_CONSTANTS;
   public displayTextObject: NewAny;
   public SHARED_CONSTANTS;
+
   @Output() hideSettingsMenu = new EventEmitter();
 
   constructor(
     public router: Router,
     public localStorageService: LocalStorageService,
-    public manageHeaderService: ManageHeaderService
+    public manageHeaderService: ManageHeaderService,
+    public userDetailsService: UserDetailsService
   ) {
     super();
   }
@@ -41,12 +44,21 @@ export class ProfileComponent extends AppComponent implements OnInit {
     if (screen) {
       screen === "logout"
         ? (this.localStorageService.clearAll(),
-          this.manageHeaderService.updateHeaderVisibility(false))
+          this.manageHeaderService.updateHeaderVisibility(false),
+          this.userDetailsService.set(null))
         : "";
       if (screen === "My profile") {
-        let userRole = this.localStorageService.get(
-          this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
-        );
+        let userDetails = this.userDetailsService.get();
+        let userRole: string = "";
+        if (
+          userDetails &&
+          userDetails["user"] &&
+          userDetails["user"].roles &&
+          userDetails["user"].roles[0] &&
+          userDetails["user"].roles[0].name
+        ) {
+          userRole = userDetails["user"].roles[0].name;
+        }
         if (
           userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
           userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER

@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ManageHeaderService } from "../../commons/services/manage-header/manage-header.service";
+import { LocalStorageService } from "../../commons/services/local-storage/local-storage.service";
+import { SHARED_CONSTANTS } from "../../commons/constants/shared.constants";
 
 @Component({
   selector: "app-main-screen",
@@ -10,10 +12,15 @@ export class MainScreenComponent implements OnInit {
   public activated: string;
   public handleFormsDisplay: object;
   public displayTextObject: object;
+  public SHARED_CONSTANTS;
 
-  constructor(public manageHeaderService: ManageHeaderService) {}
+  constructor(
+    public manageHeaderService: ManageHeaderService,
+    public localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit() {
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.displayTextObject = {
       whatWeAre: "What we are",
       contactUs: "Contact us",
@@ -29,6 +36,7 @@ export class MainScreenComponent implements OnInit {
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(false);
     }
+    this.deletePreviousLocalStorage();
   }
 
   public handleAboutUsAndContactUs = (event): void => {
@@ -87,6 +95,18 @@ export class MainScreenComponent implements OnInit {
       } else {
         this.handleFormsDisplay[key] = false;
       }
+    }
+  };
+
+  private deletePreviousLocalStorage = (): void => {
+    if (
+      this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
+      )
+    ) {
+      this.localStorageService.delete(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
+      );
     }
   };
 }
