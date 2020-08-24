@@ -14,18 +14,22 @@ import { LocalStorageService } from "../../../commons/services/local-storage/loc
 import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ConfirmPopupComponent } from "../../../commons/components/modals/confirm-popup/confirm-popup.component";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
+import { AppComponent } from "src/app/app.component";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-manage-hr-team",
   templateUrl: "./manage-hr-team.component.html",
   styleUrls: ["./manage-hr-team.component.scss"],
 })
-export class ManageHrTeamComponent implements OnInit {
+export class ManageHrTeamComponent extends AppComponent implements OnInit {
   public myForm: FormGroup;
   public SHARED_CONSTANTS;
   private _subscriptions = new Subscription();
   public teamMembersList: any[];
   public displayTextObject: object;
+  public userDetails: object;
 
   constructor(
     private fb: FormBuilder,
@@ -34,8 +38,12 @@ export class ManageHrTeamComponent implements OnInit {
     public manageHeaderService: ManageHeaderService,
     public localStorageService: LocalStorageService,
     private registrationOrganizationService: RegistrationOrganizationService,
-    private matDialog: MatDialog
-  ) {}
+    private matDialog: MatDialog,
+    public userDetailsService: UserDetailsService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.displayTextObject = {
@@ -53,6 +61,11 @@ export class ManageHrTeamComponent implements OnInit {
     });
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
+    }
+    this.userDetails = this.userDetailsService.get();
+    if (!this.userDetails) {
+      this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
+      this.setUserDetails();
     }
     this.getTeamMembers();
   }
@@ -149,14 +162,9 @@ export class ManageHrTeamComponent implements OnInit {
   };
 
   private getTeamMembers = (): void => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
     this._subscriptions.add(
       this.manageHrTeamService
-        .getTeamMembers(userDetails.companyCode)
+        .getTeamMembers(this.userDetails["organization"].name)
         .subscribe(
           (data) => {
             if (data && data["response"] && data["response"].length > 0) {

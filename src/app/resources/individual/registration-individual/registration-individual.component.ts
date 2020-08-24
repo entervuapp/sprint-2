@@ -15,6 +15,9 @@ import { LocalStorageService } from "../../../commons/services/local-storage/loc
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Router } from "@angular/router";
+import { SharedService } from "../../../commons/rest-services/shared/shared.service";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
+import { typeofExpr } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-registration-individual",
@@ -29,6 +32,7 @@ export class RegistrationIndividualComponent extends AppComponent
   public SHARED_CONSTANTS;
   private ROUTE_URL_PATH_CONSTANTS;
   public displayTextObject: object;
+  private role: string;
 
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
@@ -39,12 +43,15 @@ export class RegistrationIndividualComponent extends AppComponent
     private registrationIndividualService: RegistrationIndividualService,
     private loginFormService: LoginFormService,
     public localStorageService: LocalStorageService,
-    public router: Router
+    public router: Router,
+    public sharedService: SharedService,
+    public userDetailsService: UserDetailsService
   ) {
     super();
   }
 
   ngOnInit() {
+    this.role = "";
     this.displayTextObject = {
       signUp: "Sign Up",
       firstName: "First name",
@@ -104,10 +111,11 @@ export class RegistrationIndividualComponent extends AppComponent
       email: this.myForm.value.officeEmail,
       role:
         this.myForm.value.companyCode && this.myForm.value.companyName
-          ? "ENTERVU_ROLE_HR_ADMIN"
-          : "ENTERVU_ROLE_CANDIDATE",
+          ? this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN
+          : this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE,
     };
     delete requestBody.confirmPassword;
+    this.role = this.myForm["role"];
     this._subscriptions.add(
       this.registrationIndividualService
         .inidivualRegistration(requestBody)
@@ -137,7 +145,7 @@ export class RegistrationIndividualComponent extends AppComponent
       this.loginFormService.signIn(requestBodyfroLogin).subscribe(
         (response) => {
           this.prepareLocalStorages(response);
-          this.handleNavigation();
+          this.getUserData();
         },
         (errors) => {
           if (errors) {
@@ -151,49 +159,65 @@ export class RegistrationIndividualComponent extends AppComponent
     );
   };
   private prepareLocalStorages = (response): void => {
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
-      response.roles[0]
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
-      response.accessToken
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
-      JSON.stringify({
-        email: response && response.email ? response.email : "",
-        firstName: response && response.firstName ? response.firstName : "",
-        lastName: response && response.lastName ? response.lastName : "",
-        id: response && response.id ? response.id : "",
-      })
-    );
+    if (response && response["accessToken"]) {
+      this.localStorageService.set(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
+        response["accessToken"]
+      );
+    }
   };
 
   private sendEmailForVerification = () => {};
 
   private handleNavigation = (): void => {
+    let userDetails = this.userDetailsService.get();
     if (
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+      userDetails &&
+      userDetails["user"] &&
+      userDetails["user"].roles &&
+      userDetails["user"].roles[0] &&
+      userDetails["user"].roles[0].name
     ) {
-      this.navigateTo(
-        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-      );
-    } else if (
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
-    ) {
-      this.navigateTo(
-        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
-      );
-    } else {
-      this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+      if (
+        userDetails["user"].roles[0].name ===
+          this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
+        userDetails["user"].roles[0].name ===
+          this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+      ) {
+        this.navigateTo(
+          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+        );
+      } else if (
+        userDetails["user"].roles[0].name ===
+        this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
+      ) {
+        this.navigateTo(
+          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
+        );
+      } else {
+        this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+      }
     }
+  };
+
+  private getUserData = (): void => {
+    let userType =
+      this.role === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
+        ? "Individual"
+        : "Organization";
+    this.sharedService.getLoggedInUserDetails(userType).subscribe(
+      (data) => {
+        this.userDetailsService.set(data["response"]);
+        this.handleNavigation();
+      },
+      (errors) => {
+        if (errors) {
+          console.log("errors", errors);
+          this.objectUtil.showAlert(
+            this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+          );
+        }
+      }
+    );
   };
 }

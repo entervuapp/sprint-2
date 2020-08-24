@@ -3,13 +3,15 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { AlertService } from "../services/alert/alert.service";
 import { LocalStorageService } from "../services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../constants/shared.constants";
+import { UserDetailsService } from "../services/user-details/user-details.service";
 
 @Injectable()
 export class ObjectUtil {
   private SHARED_CONSTANTS = SHARED_CONSTANTS;
   constructor(
     private alertService: AlertService,
-    public localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService,
+    private userDetailsService: UserDetailsService
   ) {}
 
   public checkPasswordStrength = (enteredPassword): number => {
@@ -278,9 +280,15 @@ export class ObjectUtil {
   };
 
   public isAuthorized = (task: string): boolean => {
-    let userRole = this.localStorageService.get(
-      this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
-    );
+    let userDetails = this.userDetailsService.get();
+    let userRole =
+      userDetails &&
+      userDetails["user"] &&
+      userDetails["user"].roles &&
+      userDetails["user"].roles[0] &&
+      userDetails["user"].roles[0].name
+        ? userDetails["user"].roles[0].name
+        : null;
     let hasCapability = false;
     switch (task) {
       case "addTeam":

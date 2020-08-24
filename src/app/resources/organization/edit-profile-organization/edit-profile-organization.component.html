@@ -61,15 +61,15 @@
               id="officeEmail"
               [placeholder]="displayTextObject['officeEmail']"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'officeEmail')
+                'input-field-error': checkForError(myForm, 'email')
               }"
-              formControlName="officeEmail"
+              formControlName="email"
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'officeEmail')"
+            *ngIf="checkForError(myForm, 'email')"
             [formObject]="myForm"
-            [controlName]="'officeEmail'"
+            [controlName]="'email'"
             [fieldName]="displayTextObject['officeEmail']"
           ></app-error-message>
         </div>

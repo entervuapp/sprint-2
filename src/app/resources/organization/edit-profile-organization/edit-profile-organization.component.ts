@@ -12,6 +12,7 @@ import { EditProfileOrganizationService } from "./edit-profile-organization/edit
 import { Subscription } from "rxjs";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 
 @Component({
   selector: "app-edit-profile-organization",
@@ -20,7 +21,7 @@ import { LocalStorageService } from "../../../commons/services/local-storage/loc
 })
 export class EditProfileOrganizationComponent implements OnInit {
   public myForm: FormGroup;
-  private userData: object;
+  private userDetails: object;
   public SHARED_CONSTANTS;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
@@ -31,7 +32,8 @@ export class EditProfileOrganizationComponent implements OnInit {
     private objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private editProfileOrganizationService: EditProfileOrganizationService,
-    public localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService,
+    public userDetailsService: UserDetailsService
   ) {}
 
   ngOnInit() {
@@ -51,8 +53,13 @@ export class EditProfileOrganizationComponent implements OnInit {
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
-    this.initializeForm(null);
-    this.getUserProfile();
+    this.userDetails = this.userDetailsService.get();
+    if (!this.userDetails) {
+      this.initializeForm(null);
+    } else {
+      this.initializeForm({ ...this.userDetails });
+    }
+    // this.getUserProfile();
   }
 
   ngOnDestroy(): void {
@@ -61,25 +68,31 @@ export class EditProfileOrganizationComponent implements OnInit {
 
   private initializeForm = (data): void => {
     this.myForm = this.fb.group({
-      avatar: new FormControl(data && data.avatar ? data.avatar : ""),
-      firstName: new FormControl(data && data.firstName ? data.firstName : "", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      lastName: new FormControl(data && data.lastName ? data.lastName : ""),
+      imageUrl: new FormControl(
+        data && data.user && data.user.imageUrl ? data.user.imageUrl : ""
+      ),
+      firstName: new FormControl(
+        data && data.user && data.user.firstName ? data.user.firstName : "",
+        [Validators.required, Validators.minLength(3)]
+      ),
+      lastName: new FormControl(
+        data && data.user && data.user.lastName ? data.user.lastName : ""
+      ),
       id: new FormControl(data && data.id ? data.id : null),
       contactNumber: new FormControl(
-        data && data.contactNumber ? data.contactNumber : null,
+        data && data.user && data.user.contactNumber
+          ? data.user.contactNumber
+          : null,
         [
           Validators.required,
           Validators.minLength(10),
           Validators.maxLength(10),
         ]
       ),
-      officeEmail: new FormControl(data && data.email ? data.email : "", [
-        Validators.required,
-        Validators.email,
-      ]),
+      email: new FormControl(
+        data && data.user && data.user.email ? data.user.email : "",
+        [Validators.required, Validators.email]
+      ),
       companyName: new FormControl(
         data && data.organization && data.organization.companyName
           ? data.organization.companyName
@@ -109,26 +122,26 @@ export class EditProfileOrganizationComponent implements OnInit {
 
   public onAvatarChange = (event): void => {
     if (event && event.image) {
-      this.myForm.controls["avatar"].setValue(event.image);
+      this.myForm.controls["imageUrl"].setValue(event.image);
     } else {
-      this.myForm.controls.avatar.setValue(null);
+      this.myForm.controls.imageUrl.setValue(null);
     }
   };
 
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
     requestBody.clientName =
-      this.userData &&
-      this.userData["client"] &&
-      this.userData["client"].clientName
-        ? this.userData["client"].clientName
+      this.userDetails &&
+      this.userDetails["client"] &&
+      this.userDetails["client"].clientName
+        ? this.userDetails["client"].clientName
         : "";
     requestBody.role =
-      this.userData &&
-      this.userData["roles"] &&
-      this.userData["roles"][0] &&
-      this.userData["roles"][0].name
-        ? this.userData["roles"][0].name
+      this.userDetails &&
+      this.userDetails["roles"] &&
+      this.userDetails["roles"][0] &&
+      this.userDetails["roles"][0].name
+        ? this.userDetails["roles"][0].name
         : "";
     this._subscriptions.add(
       this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
@@ -150,27 +163,27 @@ export class EditProfileOrganizationComponent implements OnInit {
   };
 
   public onReset = (): void => {
-    this.myForm.reset();
+    // this.myForm.reset();
+    setTimeout(() => {
+      this.initializeForm({ ...this.userDetails });
+    }, 500);
   };
 
   private getUserProfile = (): void => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
     this._subscriptions.add(
-      this.editProfileOrganizationService.getProfile(userDetails.id).subscribe(
-        (data) => {
-          this.initializeForm({ ...data.response });
-          this.userData = { ...data.response };
-        },
-        (errors) => {
-          if (errors) {
-            console.log(errors);
+      this.editProfileOrganizationService
+        .getProfile(this.userDetails["id"])
+        .subscribe(
+          (data) => {
+            this.initializeForm({ ...data.response });
+            this.userDetails = { ...data.response };
+          },
+          (errors) => {
+            if (errors) {
+              console.log(errors);
+            }
           }
-        }
-      )
+        )
     );
   };
 }
