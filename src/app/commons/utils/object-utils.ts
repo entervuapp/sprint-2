@@ -328,4 +328,13 @@ export class ObjectUtil {
     }
     return hasCapability;
   };
+
+  public decodeUserType = (token): string => {
+    let type: string = "";
+    let splitToken = token.split(".")[0];
+    let decodedJson = JSON.parse(atob(splitToken));
+    return decodedJson && decodedJson["userType"]
+      ? decodedJson["userType"]
+      : null;
+  };
 }

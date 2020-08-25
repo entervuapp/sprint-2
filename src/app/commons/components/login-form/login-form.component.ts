@@ -79,7 +79,9 @@ export class LoginFormComponent extends AppComponent implements OnInit {
       this.loginFormService.signIn(requestBody).subscribe(
         (response) => {
           this.prepareLocalStorages(response);
-          this.getUserData();
+          this.getUserData(
+            this.objectUtil.decodeUserType(response["accessToken"])
+          );
         },
         (errors) => {
           if (errors) {
@@ -145,20 +147,22 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     }
   };
 
-  private getUserData = (): void => {
-    this.sharedService.getLoggedInUserDetails().subscribe(
-      (data) => {
-        this.userDetailsService.set(data["response"]);
-        this.handleNavigation();
-      },
-      (errors) => {
-        if (errors) {
-          console.log("errors", errors);
-          this.objectUtil.showAlert(
-            this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
-          );
+  private getUserData = (type): void => {
+    if (type) {
+      this.sharedService.getLoggedInUserDetails(type).subscribe(
+        (data) => {
+          this.userDetailsService.set(data["response"]);
+          this.handleNavigation();
+        },
+        (errors) => {
+          if (errors) {
+            console.log("errors", errors);
+            this.objectUtil.showAlert(
+              this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+            );
+          }
         }
-      }
-    );
+      );
+    }
   };
 }

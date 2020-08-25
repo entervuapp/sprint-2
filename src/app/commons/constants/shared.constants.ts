@@ -22,7 +22,7 @@ export class SHARED_CONSTANTS {
     SUPER_USER: "ENTERVU_ROLE_SUPER_USER",
     HR_ADMIN: "ROLE_HR_ADMIN",
     HR_USER: "ENTERVU_ROLE_HR_USER",
-    CANDIDATE: "ENTERVU_ROLE_CANDIDATE",
+    CANDIDATE: "ROLE_CANDIDATE",
   };
 
   public static EVU_LOCAL_STORAGES = {
@@ -78,5 +78,11 @@ export class SHARED_CONSTANTS {
         NAVIGATE_TO: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN,
       },
     ],
+  };
+
+  public static USER_TYPES = {
+    ORGANIZATION: ["A", "U"],
+    CANDIDATE: ["C"],
+    SUPER_USER: ["S"],
   };
 }

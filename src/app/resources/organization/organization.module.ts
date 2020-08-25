@@ -11,6 +11,7 @@ import { ManageCandidatesComponent } from "./manage-candidates/manage-candidates
 import { ManageHrTeamComponent } from "./manage-hr-team/manage-hr-team.component";
 import { ManageEventsComponent } from "./manage-events/manage-events.component";
 import { OnGoingEventOrganizationComponent } from "./on-going-event-organization/on-going-event-organization.component";
+import { ServicesModule } from "../../commons/services/services.module";
 
 const COMPONENTS_LIST = [
   RegistrationOrganizationComponent,
@@ -31,6 +32,7 @@ const COMPONENTS_LIST = [
     CommonsModule,
     DirectivesModule,
     FontAwesomeModule,
+    ServicesModule,
   ],
   exports: [...COMPONENTS_LIST],
 })

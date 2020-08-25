@@ -1,3 +1,4 @@
+import { AppComponent } from "src/app/app.component";
 import { Injectable } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
@@ -10,18 +11,20 @@ import { SharedService } from "../../rest-services/shared/shared.service";
 import { LocalStorageService } from "../local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { UserDetailsService } from "../user-details/user-details.service";
+import { ObjectUtil } from "../../utils/object-utils";
 
 @Injectable({
   providedIn: "root",
 })
 export class UserDetailsResolverService implements Resolve<any> {
-  private SHARED_CONSTANTS = SHARED_CONSTANTS;
+  public SHARED_CONSTANTS = SHARED_CONSTANTS;
 
   constructor(
-    private sharedService: SharedService,
-    private router: Router,
-    private localStorageService: LocalStorageService,
-    private userDetailsService: UserDetailsService
+    public sharedService: SharedService,
+    public router: Router,
+    public localStorageService: LocalStorageService,
+    public userDetailsService: UserDetailsService,
+    public objectUtil: ObjectUtil
   ) {}
 
   resolve(
@@ -34,7 +37,12 @@ export class UserDetailsResolverService implements Resolve<any> {
         this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
       )
     ) {
-      let userData = this.sharedService.getLoggedInUserDetails();
+      let accessToken = this.localStorageService.get(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
+      );
+      let userData = this.sharedService.getLoggedInUserDetails(
+        this.objectUtil.decodeUserType(accessToken)
+      );
       return userData;
     }
   }

@@ -147,15 +147,17 @@ export class RegistrationOrganizationComponent extends AppComponent
   };
 
   private doLogin = (requestBody): void => {
-    let requestBodyfroLogin = {
+    let requestBodyforLogin = {
       email: requestBody.officeEmail,
       password: requestBody.password,
     };
     this._subscriptions.add(
-      this.loginFormService.signIn(requestBodyfroLogin).subscribe(
+      this.loginFormService.signIn(requestBodyforLogin).subscribe(
         (response) => {
           this.prepareLocalStorages(response);
-          this.getUserData();
+          this.getUserData(
+            this.objectUtil.decodeUserType(response["accessToken"])
+          );
         },
         (errors) => {
           if (errors) {
@@ -211,11 +213,7 @@ export class RegistrationOrganizationComponent extends AppComponent
     }
   };
 
-  private getUserData = (): void => {
-    let type =
-      this.role === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
-        ? "Individual"
-        : "Organization";
+  private getUserData = (type): void => {
     this.sharedService.getLoggedInUserDetails(type).subscribe(
       (data) => {
         this.userDetailsService.set(data["response"]);
