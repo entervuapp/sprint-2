@@ -1,3 +1,4 @@
+import { AppComponent } from "src/app/app.component";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -5,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 import { ObjectUtil } from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
@@ -19,7 +21,8 @@ import { UserDetailsService } from "../../../commons/services/user-details/user-
   templateUrl: "./edit-profile-organization.component.html",
   styleUrls: ["./edit-profile-organization.component.scss"],
 })
-export class EditProfileOrganizationComponent implements OnInit {
+export class EditProfileOrganizationComponent extends AppComponent
+  implements OnInit {
   public myForm: FormGroup;
   private userDetails: object;
   public SHARED_CONSTANTS;
@@ -33,8 +36,11 @@ export class EditProfileOrganizationComponent implements OnInit {
     public manageHeaderService: ManageHeaderService,
     private editProfileOrganizationService: EditProfileOrganizationService,
     public localStorageService: LocalStorageService,
-    public userDetailsService: UserDetailsService
-  ) {}
+    public userDetailsService: UserDetailsService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.displayTextObject = {
@@ -55,11 +61,10 @@ export class EditProfileOrganizationComponent implements OnInit {
     }
     this.userDetails = this.userDetailsService.get();
     if (!this.userDetails) {
-      this.initializeForm(null);
-    } else {
-      this.initializeForm({ ...this.userDetails });
+      this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
+      this.setUserDetails();
     }
-    // this.getUserProfile();
+    this.initializeForm({ ...this.userDetails });
   }
 
   ngOnDestroy(): void {
@@ -130,26 +135,37 @@ export class EditProfileOrganizationComponent implements OnInit {
 
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
+    requestBody["officeEmail"] = requestBody.email;
     requestBody.clientName =
       this.userDetails &&
-      this.userDetails["client"] &&
-      this.userDetails["client"].clientName
-        ? this.userDetails["client"].clientName
+      this.userDetails["user"] &&
+      this.userDetails["user"]["client"] &&
+      this.userDetails["user"]["client"].clientName
+        ? this.userDetails["user"]["client"].clientName
         : "";
     requestBody.role =
       this.userDetails &&
-      this.userDetails["roles"] &&
-      this.userDetails["roles"][0] &&
-      this.userDetails["roles"][0].name
-        ? this.userDetails["roles"][0].name
+      this.userDetails["user"] &&
+      this.userDetails["user"]["roles"] &&
+      this.userDetails["user"]["roles"][0] &&
+      this.userDetails["user"]["roles"][0].name
+        ? this.userDetails["user"]["roles"][0].name
         : "";
+
+    requestBody["address"] = {
+      addressLine1: "string",
+      addressLine2: "string",
+      district: "string",
+      state: "string",
+      postalCode: "string",
+      country: "string",
+    };
     this._subscriptions.add(
       this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
         (response) => {
           this.objectUtil.showAlert([
             ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
           ]);
-          this.getUserProfile();
         },
         (errors) => {
           if (errors) {
@@ -163,27 +179,8 @@ export class EditProfileOrganizationComponent implements OnInit {
   };
 
   public onReset = (): void => {
-    // this.myForm.reset();
     setTimeout(() => {
       this.initializeForm({ ...this.userDetails });
     }, 500);
-  };
-
-  private getUserProfile = (): void => {
-    this._subscriptions.add(
-      this.editProfileOrganizationService
-        .getProfile(this.userDetails["id"])
-        .subscribe(
-          (data) => {
-            this.initializeForm({ ...data.response });
-            this.userDetails = { ...data.response };
-          },
-          (errors) => {
-            if (errors) {
-              console.log(errors);
-            }
-          }
-        )
-    );
   };
 }

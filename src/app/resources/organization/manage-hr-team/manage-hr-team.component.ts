@@ -82,17 +82,9 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
     let requestBody = {
       ...this.myForm.value,
       role: this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER,
-      companyCode: JSON.parse(
-        this.localStorageService.get(
-          this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-        )
-      ).companyCode,
-      companyName: JSON.parse(
-        this.localStorageService.get(
-          this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-        )
-      ).companyName,
-      clientName: "entervu",
+      companyCode: this.userDetails["organization"].companyCode,
+      companyName: this.userDetails["organization"].companyName,
+      clientName: this.userDetails["user"]["client"].clientName,
     };
 
     this._subscriptions.add(

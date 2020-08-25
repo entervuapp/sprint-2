@@ -17,7 +17,7 @@ export class API_URLS_CONSTANTS {
         CHANGE_PASSWORD: `${BASE_URL}/entervu/password`,
         DELETE: `${BASE_URL}/entervu/user/`,
         REGISTRATION: `${BASE_URL}/entervu/company/register`,
-        GET_PROFILE: `${BASE_URL}/entervu/user/`,
+        GET_PROFILE: `${BASE_URL}/entervu/company/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/company/user`,
       },
       MANAGE_EVENTS: {
@@ -47,7 +47,7 @@ export class API_URLS_CONSTANTS {
         REIGSTRATION: `${BASE_URL}/entervu/candidate/register`,
         CHANGE_PASSWORD: `${BASE_URL}/entervu/password`,
         DELETE: `${BASE_URL}/entervu/user/`,
-        GET_PROFILE: `${BASE_URL}/entervu/user/`,
+        GET_PROFILE: `${BASE_URL}/entervu/candidate/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/candidate/user`,
       },
     },

@@ -9,6 +9,7 @@ import { UserDetailsService } from "./commons/services/user-details/user-details
 import { LocalStorageService } from "./commons/services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "./commons/constants/shared.constants";
 import { SharedService } from "./commons/rest-services/shared/shared.service";
+import { ObjectUtil } from "./commons/utils/object-utils";
 
 @Component({
   selector: "app-root",
@@ -28,7 +29,8 @@ export class AppComponent {
     public alertService?: AlertService,
     public localStorageService?: LocalStorageService,
     public userDetailsService?: UserDetailsService,
-    public sharedService?: SharedService
+    public sharedService?: SharedService,
+    public objectUtil?: ObjectUtil
   ) {
     this.isHeaderVisible = false;
   }
@@ -191,7 +193,12 @@ export class AppComponent {
         this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
       )
     ) {
-      this.sharedService.getLoggedInUserDetails().subscribe(
+      let type = this.objectUtil.decodeUserType(
+        this.localStorageService.get(
+          this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN
+        )
+      );
+      this.sharedService.getLoggedInUserDetails(type).subscribe(
         (data) => {
           if (data && data["response"]) {
             this.userDetailsService.set(data["response"]);
