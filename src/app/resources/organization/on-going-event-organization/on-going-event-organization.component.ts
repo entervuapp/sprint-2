@@ -24,7 +24,7 @@ export class OnGoingEventOrganizationComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private manageEventsService: ManageEventsService,
     private manageCandidateService: ManageCandidateService,
-    private objectUtil: ObjectUtil
+    public objectUtil: ObjectUtil
   ) {}
 
   ngOnInit() {

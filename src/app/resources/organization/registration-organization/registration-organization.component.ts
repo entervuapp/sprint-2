@@ -39,7 +39,7 @@ export class RegistrationOrganizationComponent extends AppComponent
   constructor(
     public router: Router,
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     private loginFormService: LoginFormService,
     public localStorageService: LocalStorageService,
     private registrationOrganizationService: RegistrationOrganizationService,
@@ -112,6 +112,7 @@ export class RegistrationOrganizationComponent extends AppComponent
     this.objectUtil.showAlert([]);
     let requestBody = {
       ...this.myForm.value,
+      mobileNumber: "1111111111",
       role:
         this.myForm.value &&
         this.myForm.value.companyCode &&

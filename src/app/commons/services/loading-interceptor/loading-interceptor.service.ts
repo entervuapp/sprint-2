@@ -25,7 +25,7 @@ export class LoadingInterceptorService extends AppComponent
   constructor(
     private loaderService: LoaderService,
     public localStorageService: LocalStorageService,
-    private objectUtil: ObjectUtil
+    public objectUtil: ObjectUtil
   ) {
     super();
   }

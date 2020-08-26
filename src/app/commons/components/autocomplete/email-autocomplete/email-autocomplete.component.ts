@@ -37,7 +37,7 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
 
   constructor(
     private emailAutocompleteService: EmailAutocompleteService,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     private fb: FormBuilder
   ) {}
 

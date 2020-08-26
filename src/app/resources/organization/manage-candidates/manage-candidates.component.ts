@@ -44,7 +44,7 @@ export class ManageCandidatesComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private manageEventsService: ManageEventsService,
     private manageCandidateService: ManageCandidateService,

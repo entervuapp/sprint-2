@@ -39,7 +39,7 @@ export class RegistrationIndividualComponent extends AppComponent
 
   constructor(
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     private registrationIndividualService: RegistrationIndividualService,
     private loginFormService: LoginFormService,
     public localStorageService: LocalStorageService,

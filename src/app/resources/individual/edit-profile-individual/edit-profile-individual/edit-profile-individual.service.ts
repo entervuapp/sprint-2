@@ -10,14 +10,14 @@ export class EditProfileIndividualService {
   constructor(private http: HttpClient) {}
 
   public getProfile = (idx): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.PROFILE.GET_PROFILE + idx;
+    let url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.USER.GET_PROFILE + idx;
     return this.http.get(url);
   };
 
   public updateProfile = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();
     headersData.append("Content-Type", "application/json");
-    let url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.PROFILE.UPDATE_PROFILE;
+    let url = API_URLS_CONSTANTS.API_URLS.INDIVIDUAL.USER.UPDATE_PROFILE;
     return this.http.put(url, requestBody, { headers: headersData });
   };
 }

@@ -25,7 +25,7 @@ export class TimeInputFieldComponent implements OnInit, OnChanges {
   @Input() resetField: boolean;
   @Input() renderValue: string;
   @Output() onChange = new EventEmitter();
-  constructor(private objectUtil: ObjectUtil) {}
+  constructor(public objectUtil: ObjectUtil) {}
 
   ngOnInit() {
     this.isRequired = this.isRequired || false;

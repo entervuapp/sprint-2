@@ -33,7 +33,7 @@ export class ManageSkillsComponent implements OnInit {
   constructor(
     public manageHeaderService: ManageHeaderService,
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     private manageSkillsService: ManageSkillsService
   ) {}
 
