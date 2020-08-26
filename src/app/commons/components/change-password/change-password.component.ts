@@ -26,7 +26,7 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private changePasswordService: ChangePasswordService,
     public localStorageService: LocalStorageService

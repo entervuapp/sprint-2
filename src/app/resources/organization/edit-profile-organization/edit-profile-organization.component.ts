@@ -32,7 +32,7 @@ export class EditProfileOrganizationComponent extends AppComponent
 
   constructor(
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private editProfileOrganizationService: EditProfileOrganizationService,
     public localStorageService: LocalStorageService,
@@ -136,6 +136,7 @@ export class EditProfileOrganizationComponent extends AppComponent
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
     requestBody["officeEmail"] = requestBody.email;
+    requestBody["mobileNumber"] = requestBody.contactNumber;
     requestBody.clientName =
       this.userDetails &&
       this.userDetails["user"] &&

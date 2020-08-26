@@ -38,7 +38,7 @@ export class LoginFormComponent extends AppComponent implements OnInit {
     private loginFormService: LoginFormService,
     public router: Router,
     public localStorageService: LocalStorageService,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     public sharedService: SharedService,
     public userDetailsService: UserDetailsService
   ) {

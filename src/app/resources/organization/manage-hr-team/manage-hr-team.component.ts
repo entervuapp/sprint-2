@@ -33,7 +33,7 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     private manageHrTeamService: ManageHrTeamService,
     public manageHeaderService: ManageHeaderService,
     public localStorageService: LocalStorageService,
