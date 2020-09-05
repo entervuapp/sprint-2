@@ -1,3 +1,4 @@
+import { AppComponent } from "src/app/app.component";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -5,22 +6,26 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ActivatedRoute } from "@angular/router";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { EditProfileOrganizationService } from "./edit-profile-organization/edit-profile-organization.service";
 import { Subscription } from "rxjs";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 
 @Component({
   selector: "app-edit-profile-organization",
   templateUrl: "./edit-profile-organization.component.html",
   styleUrls: ["./edit-profile-organization.component.scss"],
 })
-export class EditProfileOrganizationComponent implements OnInit {
+export class EditProfileOrganizationComponent
+  extends AppComponent
+  implements OnInit {
   public myForm: FormGroup;
-  private userData: object;
+  private userDetails: object;
   public SHARED_CONSTANTS;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
@@ -28,11 +33,15 @@ export class EditProfileOrganizationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private editProfileOrganizationService: EditProfileOrganizationService,
-    private localStorageService: LocalStorageService
-  ) {}
+    public localStorageService: LocalStorageService,
+    public userDetailsService: UserDetailsService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.displayTextObject = {
@@ -51,8 +60,12 @@ export class EditProfileOrganizationComponent implements OnInit {
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
-    this.initializeForm(null);
-    this.getUserProfile();
+    this.userDetails = this.userDetailsService.get();
+    if (!this.userDetails) {
+      this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
+      this.setUserDetails();
+    }
+    this.initializeForm({ ...this.userDetails });
   }
 
   ngOnDestroy(): void {
@@ -61,22 +74,31 @@ export class EditProfileOrganizationComponent implements OnInit {
 
   private initializeForm = (data): void => {
     this.myForm = this.fb.group({
-      avatar: new FormControl(data && data.avatar ? data.avatar : ""),
-      firstName: new FormControl(data && data.firstName ? data.firstName : "", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      lastName: new FormControl(data && data.lastName ? data.lastName : ""),
+      imageUrl: new FormControl(
+        data && data.user && data.user.imageUrl ? data.user.imageUrl : ""
+      ),
+      firstName: new FormControl(
+        data && data.user && data.user.firstName ? data.user.firstName : "",
+        [Validators.required, Validators.minLength(3)]
+      ),
+      lastName: new FormControl(
+        data && data.user && data.user.lastName ? data.user.lastName : ""
+      ),
       id: new FormControl(data && data.id ? data.id : null),
-      mobile: new FormControl(data && data.mobile ? data.mobile : null, [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(10),
-      ]),
-      officeEmail: new FormControl(data && data.email ? data.email : "", [
-        Validators.required,
-        Validators.email,
-      ]),
+      contactNumber: new FormControl(
+        data && data.user && data.user.contactNumber
+          ? data.user.contactNumber
+          : null,
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ]
+      ),
+      email: new FormControl(
+        data && data.user && data.user.email ? data.user.email : "",
+        [Validators.required, Validators.email]
+      ),
       companyName: new FormControl(
         data && data.organization && data.organization.companyName
           ? data.organization.companyName
@@ -93,10 +115,12 @@ export class EditProfileOrganizationComponent implements OnInit {
         },
         [Validators.required, Validators.min(3)]
       ),
-      address: new FormControl(data && data.address ? data.address : "", [
-        Validators.required,
-        Validators.min(10),
-      ]),
+      address: new FormControl(
+        data && data.address && data.address.addressLine1
+          ? data.address.addressLine1
+          : "",
+        [Validators.required, Validators.min(10)]
+      ),
     });
   };
 
@@ -106,34 +130,46 @@ export class EditProfileOrganizationComponent implements OnInit {
 
   public onAvatarChange = (event): void => {
     if (event && event.image) {
-      this.myForm.controls["avatar"].setValue(event.image);
+      this.myForm.controls["imageUrl"].setValue(event.image);
     } else {
-      this.myForm.controls.avatar.setValue(null);
+      this.myForm.controls.imageUrl.setValue(null);
     }
   };
 
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
+    requestBody["officeEmail"] = requestBody.email;
+    requestBody["mobileNumber"] = requestBody.contactNumber;
     requestBody.clientName =
-      this.userData &&
-      this.userData["client"] &&
-      this.userData["client"].clientName
-        ? this.userData["client"].clientName
+      this.userDetails &&
+      this.userDetails["user"] &&
+      this.userDetails["user"]["client"] &&
+      this.userDetails["user"]["client"].clientName
+        ? this.userDetails["user"]["client"].clientName
         : "";
     requestBody.role =
-      this.userData &&
-      this.userData["roles"] &&
-      this.userData["roles"][0] &&
-      this.userData["roles"][0].name
-        ? this.userData["roles"][0].name
+      this.userDetails &&
+      this.userDetails["user"] &&
+      this.userDetails["user"]["roles"] &&
+      this.userDetails["user"]["roles"][0] &&
+      this.userDetails["user"]["roles"][0].name
+        ? this.userDetails["user"]["roles"][0].name
         : "";
+
+    requestBody["address"] = {
+      addressLine1: this.myForm.value.address,
+      addressLine2: "string",
+      district: "string",
+      state: "string",
+      postalCode: "string",
+      country: "string",
+    };
     this._subscriptions.add(
       this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
         (response) => {
           this.objectUtil.showAlert([
             ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
           ]);
-          this.getUserProfile();
         },
         (errors) => {
           if (errors) {
@@ -147,27 +183,8 @@ export class EditProfileOrganizationComponent implements OnInit {
   };
 
   public onReset = (): void => {
-    this.myForm.reset();
-  };
-
-  private getUserProfile = (): void => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
-    this._subscriptions.add(
-      this.editProfileOrganizationService.getProfile(userDetails.id).subscribe(
-        (data) => {
-          this.initializeForm({ ...data.response });
-          this.userData = { ...data.response };
-        },
-        (errors) => {
-          if (errors) {
-            console.log(errors);
-          }
-        }
-      )
-    );
+    setTimeout(() => {
+      this.initializeForm({ ...this.userDetails });
+    }, 500);
   };
 }

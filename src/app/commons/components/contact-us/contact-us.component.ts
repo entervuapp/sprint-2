@@ -5,7 +5,7 @@ import {
   FormBuilder,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../utils/object-utils";
+import { ObjectUtil } from "../../utils/object-utils";
 
 @Component({
   selector: "app-contact-us",

@@ -1,11 +1,5 @@
 <div class="whatWeAreCnt">
-  <p>
-    {{ displayTextObject["message"] }}
-  </p>
-  <p>
-    {{ displayTextObject["message"] }}
-  </p>
-  <p>
+  <p *ngFor="let item of [1, 2]">
     {{ displayTextObject["message"] }}
   </p>
 </div>

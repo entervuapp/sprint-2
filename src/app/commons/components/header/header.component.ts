@@ -4,6 +4,8 @@ import { AppComponent } from "src/app/app.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
+import { ObjectUtil } from "../../utils/object-utils";
+import { UserDetailsService } from "../../services/user-details/user-details.service";
 
 interface Menu {
   DISPLAY_TEXT: string;
@@ -20,50 +22,58 @@ export class HeaderComponent extends AppComponent implements OnInit {
   public activeModule: string;
   public showSettings: boolean;
   public fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
-  private SHARED_CONSTANTS;
+  public SHARED_CONSTANTS;
   public menuList: Menu[];
+
   constructor(
     public router: Router,
     private activatedRoute: ActivatedRoute,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService,
+    public objectUtil: ObjectUtil,
+    public userDetailsService: UserDetailsService
   ) {
     super();
   }
 
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
+    let userDetails = this.userDetailsService.get();
     if (
-      this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ===
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
-      )
+      userDetails &&
+      userDetails["user"] &&
+      userDetails["user"].roles &&
+      userDetails["user"].roles[0] &&
+      userDetails["user"].roles[0].name
     ) {
-      this.menuList = [
-        ...this.SHARED_CONSTANTS.MAIN_MENU.ORGANIZATION_MENU_LIST,
-      ];
-    } else if (
-      this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER ===
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
-      )
-    ) {
-      this.menuList = [
-        ...this.SHARED_CONSTANTS.MAIN_MENU.ORGANIZATION_MENU_LIST,
-      ];
-    } else if (
-      this.SHARED_CONSTANTS.EVU_USER_ROLES.CANDIDATE ===
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
-      )
-    ) {
-      this.menuList = [...this.SHARED_CONSTANTS.MAIN_MENU.INDIVIDUAL_MENU_LIST];
-    } else if (
-      this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER ===
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
-      )
-    ) {
-      this.menuList = [...this.SHARED_CONSTANTS.MAIN_MENU.SUPER_USER_MENU_LIST];
+      if (
+        this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ===
+        userDetails["user"].roles[0].name
+      ) {
+        this.menuList = [
+          ...this.SHARED_CONSTANTS.MAIN_MENU.ORGANIZATION_MENU_LIST,
+        ];
+      } else if (
+        this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER ===
+        userDetails["user"].roles[0].name
+      ) {
+        this.menuList = [
+          ...this.SHARED_CONSTANTS.MAIN_MENU.ORGANIZATION_MENU_LIST,
+        ];
+      } else if (
+        this.SHARED_CONSTANTS.EVU_USER_ROLES.CANDIDATE ===
+        userDetails["user"].roles[0].name
+      ) {
+        this.menuList = [
+          ...this.SHARED_CONSTANTS.MAIN_MENU.INDIVIDUAL_MENU_LIST,
+        ];
+      } else if (
+        this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER ===
+        userDetails["user"].roles[0].name
+      ) {
+        this.menuList = [
+          ...this.SHARED_CONSTANTS.MAIN_MENU.SUPER_USER_MENU_LIST,
+        ];
+      }
     }
     this.highlightModule();
   }
@@ -87,6 +97,7 @@ export class HeaderComponent extends AppComponent implements OnInit {
   };
 
   public navigateToScreen = (menu): void => {
+    this.objectUtil.showAlert([]);
     switch (menu.DISPLAY_TEXT) {
       case "EVENTS":
         this.activeModule = menu.DISPLAY_TEXT;

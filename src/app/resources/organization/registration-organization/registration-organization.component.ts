@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { AppComponent } from "src/app/app.component";
 import { LoginFormService } from "../../../commons/components/login-form/login-form/login-form.service";
@@ -15,6 +15,8 @@ import { Subscription } from "rxjs";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { RegistrationOrganizationService } from "../registration-organization/registration-organization/registration-organization.service";
+import { SharedService } from "../../../commons/rest-services/shared/shared.service";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 
 @Component({
   selector: "app-registration-organization",
@@ -24,11 +26,12 @@ import { RegistrationOrganizationService } from "../registration-organization/re
 export class RegistrationOrganizationComponent extends AppComponent
   implements OnInit {
   myForm: FormGroup;
-  SHARED_CONSTANTS;
+  public SHARED_CONSTANTS;
   ROUTE_URL_PATH_CONSTANTS;
   FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   public displayTextObject: Object;
+  private role: string;
 
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
@@ -36,15 +39,18 @@ export class RegistrationOrganizationComponent extends AppComponent
   constructor(
     public router: Router,
     private fb: FormBuilder,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     private loginFormService: LoginFormService,
-    private localStorageService: LocalStorageService,
-    private registrationOrganizationService: RegistrationOrganizationService
+    public localStorageService: LocalStorageService,
+    private registrationOrganizationService: RegistrationOrganizationService,
+    public sharedService: SharedService,
+    public userDetailsService: UserDetailsService
   ) {
     super();
   }
 
   ngOnInit() {
+    this.role = "";
     this.displayTextObject = {
       signUp: "Sign up",
     };
@@ -64,20 +70,35 @@ export class RegistrationOrganizationComponent extends AppComponent
         Validators.minLength(3),
       ]),
       lastName: new FormControl(""),
-      officeEmail: new FormControl("", [Validators.required, Validators.email]),
-      companyCode: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      companyName: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
       password: new FormControl("", [
         Validators.required,
         Validators.minLength(8),
       ]),
       confirmPassword: new FormControl("", [Validators.required]),
+      officeEmail: new FormControl("", [Validators.required, Validators.email]),
+      clientName: new FormControl("entervu", [Validators.required]),
+      organizationRequest: new FormGroup({
+        code: new FormControl("", [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        name: new FormControl("", [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        contactNumber: new FormControl("", []),
+        address: new FormGroup({
+          addressLine1: new FormControl("", []),
+          addressLine2: new FormControl("", []),
+          district: new FormControl("", []),
+          state: new FormControl("", []),
+          postalCode: new FormControl("", []),
+          country: new FormControl("", []),
+        }),
+      }),
+      mobileNumber: new FormControl("", []),
+      gender: new FormControl("", []),
+      imageUrl: new FormControl("", []),
     });
   };
 
@@ -91,28 +112,24 @@ export class RegistrationOrganizationComponent extends AppComponent
     this.objectUtil.showAlert([]);
     let requestBody = {
       ...this.myForm.value,
-      clientName: "entervu",
+      mobileNumber: "1111111111",
       role:
         this.myForm.value &&
         this.myForm.value.companyCode &&
         this.myForm.value.companyName
-          ? "ENTERVU_ROLE_HR_ADMIN"
-          : "ENTERVU_ROLE_CANDIDATE",
+          ? this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN
+          : this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE,
     };
+    this.role = this.myForm["role"];
     delete requestBody.confirmPassword;
-    console.log("on register", JSON.stringify(requestBody));
 
     this._subscriptions.add(
       this.registrationOrganizationService
         .organizationSignUp(requestBody)
         .subscribe(
           (response) => {
-            console.log("signup organization success", response);
             this.sendEmailForVerification();
             this.doLogin(requestBody);
-            // this.navigateTo(
-            //   this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-            // );
           },
           (errors) => {
             if (errors) {
@@ -131,16 +148,17 @@ export class RegistrationOrganizationComponent extends AppComponent
   };
 
   private doLogin = (requestBody): void => {
-    let requestBodyfroLogin = {
+    let requestBodyforLogin = {
       email: requestBody.officeEmail,
       password: requestBody.password,
     };
     this._subscriptions.add(
-      this.loginFormService.signIn(requestBodyfroLogin).subscribe(
+      this.loginFormService.signIn(requestBodyforLogin).subscribe(
         (response) => {
-          console.log("login success", response);
           this.prepareLocalStorages(response);
-          this.handleNavigation();
+          this.getUserData(
+            this.objectUtil.decodeUserType(response["accessToken"])
+          );
         },
         (errors) => {
           if (errors) {
@@ -153,54 +171,63 @@ export class RegistrationOrganizationComponent extends AppComponent
       )
     );
   };
+
   private prepareLocalStorages = (response): void => {
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE,
-      response.roles[0]
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
-      response.accessToken
-    );
-    this.localStorageService.set(
-      this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_DETAILS,
-      JSON.stringify({
-        firstName: response && response.firstName ? response.firstName : "",
-        lastName: response && response.lastName ? response.lastName : "",
-        email: response && response.email ? response.email : "",
-        id: response && response.id ? response.id : "",
-        companyName:
-          response && response.companyName ? response.companyName : "",
-        companyCode:
-          response && response.companyCode ? response.companyCode : "",
-      })
-    );
+    if (response && response["accessToken"]) {
+      this.localStorageService.set(
+        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_SESSION_TOKEN,
+        response["accessToken"]
+      );
+    }
   };
 
   private sendEmailForVerification = (): void => {};
 
   private handleNavigation = (): void => {
+    let userDetails = this.userDetailsService.get();
     if (
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+      userDetails &&
+      userDetails["user"] &&
+      userDetails["user"].roles &&
+      userDetails["user"].roles[0] &&
+      userDetails["user"].roles[0].name
     ) {
-      this.navigateTo(
-        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
-      );
-    } else if (
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS["EVU_LOCAL_STORAGES"].LS_EVU_USER_ROLE
-      ) === this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
-    ) {
-      this.navigateTo(
-        this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
-      );
-    } else {
-      this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+      if (
+        userDetails["user"].roles[0].name ===
+          this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN ||
+        userDetails["user"].roles[0].name ===
+          this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_USER
+      ) {
+        this.navigateTo(
+          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD
+        );
+      } else if (
+        userDetails["user"].roles[0].name ===
+        this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE
+      ) {
+        this.navigateTo(
+          this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD
+        );
+      } else {
+        this.navigateTo(this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN);
+      }
     }
+  };
+
+  private getUserData = (type): void => {
+    this.sharedService.getLoggedInUserDetails(type).subscribe(
+      (data) => {
+        this.userDetailsService.set(data["response"]);
+        this.handleNavigation();
+      },
+      (errors) => {
+        if (errors) {
+          console.log("errors", errors);
+          this.objectUtil.showAlert(
+            this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+          );
+        }
+      }
+    );
   };
 }

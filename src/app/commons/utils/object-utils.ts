@@ -3,13 +3,15 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { AlertService } from "../services/alert/alert.service";
 import { LocalStorageService } from "../services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../constants/shared.constants";
+import { UserDetailsService } from "../services/user-details/user-details.service";
 
 @Injectable()
-export default class ObjectUtil {
+export class ObjectUtil {
   private SHARED_CONSTANTS = SHARED_CONSTANTS;
   constructor(
     private alertService: AlertService,
-    private localStorageService: LocalStorageService
+    public localStorageService: LocalStorageService,
+    private userDetailsService: UserDetailsService
   ) {}
 
   public checkPasswordStrength = (enteredPassword): number => {
@@ -47,7 +49,10 @@ export default class ObjectUtil {
         case "email":
         case "officeEmail":
           if (
-            (formObj.controls[property].hasError("required") &&
+            (formObj &&
+              formObj.controls &&
+              formObj.controls[property] &&
+              formObj.controls[property].hasError("required") &&
               formObj.controls[property].touched) ||
             formObj.controls[property].hasError("email")
           ) {
@@ -61,6 +66,7 @@ export default class ObjectUtil {
         case "address":
         case "experience":
         case "mobile":
+        case "contactNumber":
         case "comments":
         case "companyCode":
         case "companyName":
@@ -68,11 +74,21 @@ export default class ObjectUtil {
         case "firstName":
         case "description":
           if (
-            ((formObj.controls[property].hasError("required") ||
+            formObj &&
+            formObj.controls &&
+            formObj.controls[property] &&
+            (formObj.controls[property].hasError("required") ||
               formObj.controls[property].hasError("duplicate")) &&
-              formObj.controls[property].touched) ||
-            formObj.controls[property].hasError("minlength") ||
-            formObj.controls[property].hasError("maxlength")
+            formObj.controls[property].touched
+          ) {
+            isError = true;
+          }
+          if (
+            formObj &&
+            formObj.controls &&
+            formObj.controls[property] &&
+            (formObj.controls[property].hasError("minlength") ||
+              formObj.controls[property].hasError("maxlength"))
           ) {
             isError = true;
           }
@@ -84,6 +100,40 @@ export default class ObjectUtil {
               formObj.controls[property].touched) ||
             formObj.controls[property].hasError("minlength") ||
             formObj.controls[property].hasError("maxlength")
+          ) {
+            isError = true;
+          }
+          break;
+        case "code":
+        case "name":
+          if (
+            formObj &&
+            formObj.controls &&
+            formObj.controls.organizationRequest &&
+            formObj.controls.organizationRequest["controls"] &&
+            formObj.controls.organizationRequest["controls"][property] &&
+            (formObj.controls.organizationRequest["controls"][
+              property
+            ].hasError("required") ||
+              formObj.controls.organizationRequest["controls"][
+                property
+              ].hasError("duplicate")) &&
+            formObj.controls.organizationRequest["controls"][property].touched
+          ) {
+            isError = true;
+          }
+          if (
+            (formObj &&
+              formObj.controls &&
+              formObj.controls.organizationRequest &&
+              formObj.controls.organizationRequest["controls"] &&
+              formObj.controls.organizationRequest["controls"][property] &&
+              formObj.controls.organizationRequest["controls"][
+                property
+              ].hasError("minlength")) ||
+            formObj.controls.organizationRequest["controls"][property].hasError(
+              "maxlength"
+            )
           ) {
             isError = true;
           }
@@ -230,9 +280,15 @@ export default class ObjectUtil {
   };
 
   public isAuthorized = (task: string): boolean => {
-    let userRole = this.localStorageService.get(
-      this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_ROLE
-    );
+    let userDetails = this.userDetailsService.get();
+    let userRole =
+      userDetails &&
+      userDetails["user"] &&
+      userDetails["user"].roles &&
+      userDetails["user"].roles[0] &&
+      userDetails["user"].roles[0].name
+        ? userDetails["user"].roles[0].name
+        : null;
     let hasCapability = false;
     switch (task) {
       case "addTeam":
@@ -271,5 +327,14 @@ export default class ObjectUtil {
         break;
     }
     return hasCapability;
+  };
+
+  public decodeUserType = (token): string => {
+    let type: string = "";
+    let splitToken = token.split(".")[0];
+    let decodedJson = JSON.parse(atob(splitToken));
+    return decodedJson && decodedJson["userType"]
+      ? decodedJson["userType"]
+      : null;
   };
 }

@@ -14,6 +14,8 @@ import { ManageCandidatesComponent } from "./resources/organization/manage-candi
 import { OnGoingEventOrganizationComponent } from "./resources/organization/on-going-event-organization/on-going-event-organization.component";
 import { ManageHrTeamComponent } from "./resources/organization/manage-hr-team/manage-hr-team.component";
 import { EditProfileIndividualComponent } from "./resources/individual/edit-profile-individual/edit-profile-individual.component";
+import { LoginFormComponent } from "./commons/components/login-form/login-form.component";
+import { UserDetailsResolverService } from "./commons/services/user-details-resolver/user-details-resolver.service";
 
 const routes: Routes = [
   {
@@ -23,24 +25,32 @@ const routes: Routes = [
     pathMatch: "full",
   },
   {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGIN,
+    component: MainScreenComponent,
+  },
+  {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD,
     component: DashboardIndividualComponent,
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD,
     component: ManageEventsComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_ORGANIZATION_PROFILE,
     component: EditProfileOrganizationComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_INDIVIDUAL_PROFILE,
     component: EditProfileIndividualComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
     component: ChangePasswordComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
@@ -54,10 +64,12 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE,
     component: ManageCandidatesComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_TEAM,
     component: ManageHrTeamComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ON_GOING_EVENT_ORGANIZATION,

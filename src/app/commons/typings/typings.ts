@@ -28,6 +28,7 @@ export interface SkillAndRound {
 export interface SkillAndActive {
   skill: ValueDescription;
   active: boolean;
+  id: number;
 }
 
 export interface SkillWithCount {

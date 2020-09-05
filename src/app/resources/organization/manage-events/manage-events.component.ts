@@ -7,7 +7,7 @@ import {
   FormGroupDirective,
   AbstractControl,
 } from "@angular/forms";
-import ObjectUtil from "../../../commons/utils/object-utils";
+import { ObjectUtil } from "../../../commons/utils/object-utils";
 import { ManageEventsService } from "./manage-events/manage-events.service";
 import {
   ValueDescriptionId,
@@ -15,13 +15,14 @@ import {
 } from "../../../commons/typings/typings";
 import FONT_AWESOME_ICONS_CONSTANTS from "../../../commons/constants/font-awesome-icons";
 import { AppComponent } from "src/app/app.component";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-path.constants";
 import { Subscription } from "rxjs";
 import { ManageSkillsService } from "../../admin/manage-skills/manage-skills/manage-skills.service";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 
 @Component({
   selector: "app-manage-events",
@@ -45,6 +46,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   public SHARED_CONSTANTS;
   public newRoundNames: string[];
   public editedSkillRoundDetails = [];
+  public userDetails: object;
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
@@ -53,14 +55,17 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     public objectUtil: ObjectUtil,
     public manageEventsService: ManageEventsService,
     public router: Router,
+    public activatedRoute: ActivatedRoute,
     private manageSkillsService: ManageSkillsService,
-    private localStorageService: LocalStorageService,
-    public manageHeaderService: ManageHeaderService
+    public localStorageService: LocalStorageService,
+    public manageHeaderService: ManageHeaderService,
+    public userDetailsService: UserDetailsService
   ) {
     super();
   }
 
   ngOnInit() {
+    this.userDetails = null;
     this.newRoundNames = [];
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.skillObjForPopup = {};
@@ -87,13 +92,18 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     this.resetField = false;
     this.getSkillOptions();
     this.initializeForm();
-    this.getEventsList();
     if (
       this.manageHeaderService &&
       this.manageHeaderService.updateHeaderVisibility
     ) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
+    this.userDetails = this.userDetailsService.get();
+    if (!this.userDetails) {
+      this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
+      this.setUserDetails();
+    }
+    this.getEventsList();
   }
 
   ngOnDestroy(): void {
@@ -176,8 +186,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       eventName: this.formGroupObject.value.name,
       eventDate: this.formGroupObject.value.eventDate,
       eventTime: this.formGroupObject.value.eventTime,
-      createdBy: this.getUserDetails("email"),
-      companyCode: this.getUserDetails("companyCode"),
+      createdBy: this.getUserData("email"),
+      companyCode: this.getUserData("companyCode"),
       eventSkills: this.prepareSkillList(
         [...this.skillsList],
         this.formGroupObject
@@ -435,12 +445,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   private getEventsList = () => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
-    let requestBody = userDetails["companyCode"];
+    let requestBody = this.userDetails["organization"]["companyCode"];
     this._subscriptions.add(
       this.manageEventsService.getEvents(requestBody).subscribe(
         (data) => {
@@ -732,17 +737,16 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     return displayText;
   };
 
-  private getUserDetails = (expectedField): string => {
-    let userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
+  private getUserData = (expectedField): string => {
     if (expectedField === "email") {
-      return userDetails && userDetails.email ? userDetails.email : null;
+      return this.userDetails &&
+        this.userDetails["user"] &&
+        this.userDetails["user"]["email"]
+        ? this.userDetails["user"]["email"]
+        : null;
     } else if (expectedField === "companyCode") {
-      return userDetails && userDetails.companyCode
-        ? userDetails.companyCode
+      return this.userDetails && this.userDetails["organization"]["companyCode"]
+        ? this.userDetails["organization"]["companyCode"]
         : null;
     }
   };
@@ -761,17 +765,21 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
             id: skillObj.id,
             skill: skillObj.skill,
             rounds: skillObj.numberOfRounds,
-            roundDetails: skillObj.roundDetailsList,
+            eventRoundDetails: skillObj.roundDetailsList,
           };
         } else {
           temp = {
             id: null,
             skill: skillObj.skill,
             rounds: skillObj.numberOfRounds,
-            roundDetails: skillObj.roundDetailsList,
+            eventRoundDetails: skillObj.roundDetailsList,
           };
-          if (temp && temp["roundDetails"] && temp["roundDetails"].length) {
-            temp["roundDetails"].forEach((element) => {
+          if (
+            temp &&
+            temp["eventRoundDetails"] &&
+            temp["eventRoundDetails"].length
+          ) {
+            temp["eventRoundDetails"].forEach((element) => {
               delete element.id;
             });
           }

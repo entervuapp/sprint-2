@@ -12,6 +12,7 @@
             [isTouched]="myForm.controls.email.touched"
             [resetField]="resetField"
             (onSelect)="onEmailSelect($event)"
+            [renderValue]="myForm.value.email"
           ></app-email-autocomplete>
         </div>
         <div class="form-group formGroupAddCandidate">
@@ -46,16 +47,16 @@
               id="mobile"
               [placeholder]="displayTextObject['mobile']"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'mobile')
+                'input-field-error': checkForError(myForm, 'contactNumber')
               }"
-              formControlName="mobile"
+              formControlName="contactNumber"
               appNumbersOnly
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'mobile')"
+            *ngIf="checkForError(myForm, 'contactNumber')"
             [formObject]="myForm"
-            [controlName]="'mobile'"
+            [controlName]="'contactNumber'"
             [fieldName]="displayTextObject['mobile']"
           ></app-error-message>
         </div>
@@ -70,7 +71,8 @@
               <option
                 [value]="skill.value"
                 *ngFor="let skill of skillDropDownList"
-                >{{ skill.description }}
+              >
+                {{ skill.description }}
               </option>
             </select>
           </div>
@@ -153,16 +155,20 @@
             <tbody>
               <tr *ngFor="let candidateObj of candidatesList; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
-                <td>{{ candidateObj.candidate.firstName }}</td>
-                <td>{{ candidateObj.candidate.email }}</td>
-                <td>{{ candidateObj.candidate.mobile }}</td>
+                <td>{{ candidateObj.candidate.user.firstName }}</td>
+                <td>{{ candidateObj.candidate.user.email }}</td>
+                <td>{{ candidateObj.candidate.user.contactNumber }}</td>
+                <td>{{ candidateObj.candidate.experience }}</td>
                 <td>{{ candidateObj.invitedBy }}</td>
                 <td>
-                  <a href="javascript:void(0)" (click)="onEdit(candidate)">
+                  <a href="javascript:void(0)" (click)="onEdit(candidateObj)">
                     {{ displayTextObject["edit"] }}
                   </a>
                   |
-                  <a href="javascript:void(0)" (click)="onDelete(candidate)">
+                  <a
+                    href="javascript:void(0)"
+                    (click)="onCandidateDelete(candidateObj)"
+                  >
                     {{ displayTextObject["delete"] }}
                   </a>
                 </td>

@@ -14,7 +14,7 @@ import {
   Output,
 } from "@angular/core";
 import { EmailAutocompleteService } from "./email-autocomplete/email-autocomplete.service";
-import ObjectUtil from "../../../utils/object-utils";
+import { ObjectUtil } from "../../../utils/object-utils";
 import { SHARED_CONSTANTS } from "../../../constants/shared.constants";
 import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
@@ -33,11 +33,12 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
   @Input() isRequired: boolean;
   @Input() isTouched: boolean;
   @Input() resetField: boolean;
+  @Input() renderValue: string;
   @Output() onSelect = new EventEmitter();
 
   constructor(
     private emailAutocompleteService: EmailAutocompleteService,
-    private objectUtil: ObjectUtil,
+    public objectUtil: ObjectUtil,
     private fb: FormBuilder
   ) {}
 
@@ -76,7 +77,11 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
     ) {
       this.resetField = changes.resetField.currentValue;
       this.emailList = [];
-      this.initializeForm();
+      if (this.formGroup && this.formGroup.reset) {
+        this.formGroup.reset();
+      } else {
+        this.initializeForm();
+      }
     }
 
     if (
@@ -85,46 +90,59 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
       changes.isRequired.currentValue !== changes.isRequired.previousValue
     ) {
       this.isRequired = changes.isRequired.currentValue;
-      this.initializeForm();
+      if (this.formGroup && this.formGroup.reset) {
+        this.formGroup.reset();
+      } else {
+        this.initializeForm();
+      }
+    }
+    if (
+      changes &&
+      changes.hasOwnProperty("renderValue") &&
+      changes.renderValue.currentValue
+    ) {
+      this.renderValue = changes.renderValue.currentValue;
+      this.optionSelected = true;
+      this.formGroup.controls.email.setValue(this.renderValue);
     }
   }
 
   private initializeForm = (): void => {
     if (this.isRequired) {
       this.formGroup = this.fb.group({
-        client: new FormGroup({
-          clientName: new FormControl("", []),
-          clientSecret: new FormControl("", []),
-          id: new FormControl("", []),
-        }),
+        // client: new FormGroup({
+        //   clientName: new FormControl("", []),
+        //   clientSecret: new FormControl("", []),
+        //   id: new FormControl("", []),
+        // }),
         email: new FormControl("", [Validators.required]),
-        emailVerified: new FormControl("", []),
-        firstName: new FormControl("", []),
-        id: new FormControl("", [Validators.required]),
-        lastName: new FormControl("", []),
-        imageUrl: new FormControl("", []),
-        organization: new FormControl("", []),
-        provider: new FormControl("", []),
-        providerId: new FormControl("", []),
-        roles: new FormArray([this.prepateRolesFormGroup()]),
+        // emailVerified: new FormControl("", []),
+        // firstName: new FormControl("", []),
+        // id: new FormControl("", [Validators.required]),
+        // lastName: new FormControl("", []),
+        // imageUrl: new FormControl("", []),
+        // organization: new FormControl("", []),
+        // provider: new FormControl("", []),
+        // providerId: new FormControl("", []),
+        // roles: new FormArray([this.prepareRolesFormGroup()]),
       });
     } else {
       this.formGroup = this.fb.group({
-        client: new FormGroup({
-          clientName: new FormControl("", []),
-          clientSecret: new FormControl("", []),
-          id: new FormControl("", []),
-        }),
+        // client: new FormGroup({
+        //   clientName: new FormControl("", []),
+        //   clientSecret: new FormControl("", []),
+        //   id: new FormControl("", []),
+        // }),
         email: new FormControl("", []),
-        emailVerified: new FormControl("", []),
-        firstName: new FormControl("", []),
-        id: new FormControl("", []),
-        lastName: new FormControl("", []),
-        imageUrl: new FormControl("", []),
-        organization: new FormControl("", []),
-        provider: new FormControl("", []),
-        providerId: new FormControl("", []),
-        roles: new FormArray([this.prepateRolesFormGroup()]),
+        // emailVerified: new FormControl("", []),
+        // firstName: new FormControl("", []),
+        // id: new FormControl("", []),
+        // lastName: new FormControl("", []),
+        // imageUrl: new FormControl("", []),
+        // organization: new FormControl("", []),
+        // provider: new FormControl("", []),
+        // providerId: new FormControl("", []),
+        // roles: new FormArray([this.prepareRolesFormGroup()]),
       });
     }
   };
@@ -153,20 +171,18 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
     return this.objectUtil.checkForFormErrors(formObj, property);
   }
 
-  public onEmailOptionSelect = (user): void => {
-    if (user) {
-      this.formGroup.patchValue({
-        ...user,
-      });
+  public onEmailOptionSelect = (userData): void => {
+    if (userData) {
+      this.formGroup.controls.email.setValue(userData.user.email);
       this.optionSelected = true;
       this.emailList = [];
       if (this.onSelect) {
-        this.onSelect.emit({ ...user });
+        this.onSelect.emit({ ...userData });
       }
     }
   };
 
-  private prepateRolesFormGroup = (): FormGroup => {
+  private prepareRolesFormGroup = (): FormGroup => {
     return new FormGroup({
       id: new FormControl("", []),
       name: new FormControl("", []),

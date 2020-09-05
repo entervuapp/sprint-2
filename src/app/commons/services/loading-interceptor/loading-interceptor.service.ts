@@ -13,7 +13,7 @@ import { catchError } from "rxjs/operators";
 import { AppComponent } from "src/app/app.component";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
 import { LocalStorageService } from "../local-storage/local-storage.service";
-import ObjectUtil from "../../utils/object-utils";
+import { ObjectUtil } from "../../utils/object-utils";
 
 @Injectable({
   providedIn: "root",
@@ -24,8 +24,8 @@ export class LoadingInterceptorService extends AppComponent
   counter: number = 0;
   constructor(
     private loaderService: LoaderService,
-    private localStorageService: LocalStorageService,
-    private objectUtil: ObjectUtil
+    public localStorageService: LocalStorageService,
+    public objectUtil: ObjectUtil
   ) {
     super();
   }
@@ -45,9 +45,10 @@ export class LoadingInterceptorService extends AppComponent
         headers: request.headers
           .set(
             "Authorization",
-            this.localStorageService.get(
-              this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
-            )
+            "Bearer " +
+              this.localStorageService.get(
+                this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
+              )
           )
           .append("Access-Control-Allow-Origin", "*"),
       });

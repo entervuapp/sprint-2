@@ -1,5 +1,5 @@
 const LOCAL_URL = "http://localhost:3000";
-const BASE_URL = "https://visakharoyalinteriors.herokuapp.com";
+const BASE_URL = "https://entervu-server.herokuapp.com";
 
 export class API_URLS_CONSTANTS {
   static API_URLS = {
@@ -13,8 +13,13 @@ export class API_URLS_CONSTANTS {
       URL: `${BASE_URL}/entervu/user/`,
     },
     ORGANIZATION: {
-      REGISTRATION: {
-        HR: `${BASE_URL}/entervu/company/register`,
+      USER: {
+        CHANGE_PASSWORD: `${BASE_URL}/entervu/password`,
+        DELETE: `${BASE_URL}/entervu/user/`,
+        REGISTRATION: `${BASE_URL}/entervu/company/register`,
+        GET_PROFILE: `${BASE_URL}/entervu/company/user/`,
+        UPDATE_PROFILE: `${BASE_URL}/entervu/company/user`,
+        JR_HR_REGISTER: `${BASE_URL}/entervu/company/register/user`,
       },
       MANAGE_EVENTS: {
         GET_EVENTS: `${BASE_URL}/entervu/event/company/`,
@@ -27,8 +32,8 @@ export class API_URLS_CONSTANTS {
         FIND_CANDIDATE_BY_EMAIL: `${BASE_URL}/entervu/candidate/`,
         GET_CANDIDATES: `${LOCAL_URL}/candidates`,
         ADD_CANDIDATE: `${BASE_URL}/entervu/event/candidate`,
-        UPDATE_CANDIDATE: `${LOCAL_URL}/candidates`,
-        DELETE_CANDIDATE: `${LOCAL_URL}/candidates`,
+        UPDATE_CANDIDATE_IN_EVENT: `${BASE_URL}/entervu/event/candidate`,
+        DELETE_CANDIDATE_FROM_EVENT: `${BASE_URL}/entervu/event/candidate`,
         GET_EVENT_CANDIDATES: `${BASE_URL}/entervu/candidate/event/`,
       },
       MANAGE_HR_TEAM: {
@@ -37,20 +42,14 @@ export class API_URLS_CONSTANTS {
         UPDATE_TEAM_MEMBERS: `${BASE_URL}/teams`,
         DELETE_TEAM_MEMBERS: `${BASE_URL}/teams`,
       },
-      PROFILE: {
-        GET_PROFILE: `${BASE_URL}/entervu/user/`,
-        UPDATE_PROFILE: `${BASE_URL}/entervu/company/user`,
-        DELETE_PROFILE: `${BASE_URL}/entervu/user`,
-      },
     },
     INDIVIDUAL: {
-      REGISTRATION: {
-        CANDIDATE: `${BASE_URL}/entervu/candidate/register`,
-      },
-      PROFILE: {
-        GET_PROFILE: `${BASE_URL}/entervu/user/`,
+      USER: {
+        REIGSTRATION: `${BASE_URL}/entervu/candidate/register`,
+        CHANGE_PASSWORD: `${BASE_URL}/entervu/password`,
+        DELETE: `${BASE_URL}/entervu/user/`,
+        GET_PROFILE: `${BASE_URL}/entervu/candidate/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/candidate/user`,
-        DELETE_PROFILE: `${BASE_URL}/entervu/user`,
       },
     },
     ADMIN: {

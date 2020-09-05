@@ -203,7 +203,7 @@
                   <span
                     class="eventRoundsData"
                     data-toggle="tooltip"
-                    *ngIf="skillObj.roundDetailsList.length"
+                    *ngIf="skillObj['roundDetailsList'].length"
                     [title]="displaySkills(i, true)"
                   >
                     - {{ displaySkills(i) }}
@@ -292,7 +292,7 @@
               ></app-display-date>
             </div>
             <div class="col-sm-4">
-              <p class="eventTime">{{ event.eventDate }}</p>
+              <p class="eventTime">{{ event.eventTime }}</p>
             </div>
             <div class="col-sm-4">
               <p
@@ -371,7 +371,7 @@
               <div
                 class="form-group"
                 *ngFor="
-                  let skill of skillObjForPopup.roundDetailsList;
+                  let skill of skillObjForPopup['roundDetailsList'];
                   let i = index
                 "
               >
