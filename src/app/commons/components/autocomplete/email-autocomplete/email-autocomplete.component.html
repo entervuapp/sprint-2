@@ -23,7 +23,7 @@
       *ngFor="let emailObj of emailList"
       (click)="onEmailOptionSelect(emailObj)"
     >
-      {{ emailObj.email }}
+      {{ emailObj && emailObj.user && emailObj.user.email }}
     </p>
   </div>
 </div>

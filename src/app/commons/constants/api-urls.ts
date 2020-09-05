@@ -1,5 +1,5 @@
 const LOCAL_URL = "http://localhost:3000";
-const BASE_URL = "https://visakharoyalinteriors.herokuapp.com";
+const BASE_URL = "https://entervu-server.herokuapp.com";
 
 export class API_URLS_CONSTANTS {
   static API_URLS = {
@@ -19,6 +19,7 @@ export class API_URLS_CONSTANTS {
         REGISTRATION: `${BASE_URL}/entervu/company/register`,
         GET_PROFILE: `${BASE_URL}/entervu/company/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/company/user`,
+        JR_HR_REGISTER: `${BASE_URL}/entervu/company/register/user`,
       },
       MANAGE_EVENTS: {
         GET_EVENTS: `${BASE_URL}/entervu/event/company/`,

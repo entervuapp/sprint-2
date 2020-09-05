@@ -1,3 +1,4 @@
+import { AppComponent } from "./../../../app.component";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -12,25 +13,32 @@ import { NewAny } from "../../../commons/typings/typings";
 import { ChangePasswordService } from "./change-password/change-password.service";
 import { LocalStorageService } from "../../services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../../constants/shared.constants";
+import { UserDetailsService } from "../../services/user-details/user-details.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-change-password",
   templateUrl: "./change-password.component.html",
   styleUrls: ["./change-password.component.css"],
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangePasswordComponent extends AppComponent implements OnInit {
   public myForm: FormGroup;
   private _subscriptions = new Subscription();
   public displayTextObject: NewAny;
   public SHARED_CONSTANTS;
+  private userDetails: object;
 
   constructor(
     private fb: FormBuilder,
     public objectUtil: ObjectUtil,
     public manageHeaderService: ManageHeaderService,
     private changePasswordService: ChangePasswordService,
-    public localStorageService: LocalStorageService
-  ) {}
+    public localStorageService: LocalStorageService,
+    public userDetailsService: UserDetailsService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
@@ -44,6 +52,11 @@ export class ChangePasswordComponent implements OnInit {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
     this.initializeForm();
+    this.userDetails = this.userDetailsService.get();
+    if (!this.userDetails) {
+      this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
+      this.setUserDetails();
+    }
   }
 
   ngOnDestroy(): void {
@@ -74,11 +87,12 @@ export class ChangePasswordComponent implements OnInit {
   public onUpdate = (): void => {
     let requestBody = {
       ...this.myForm.value,
-      email: JSON.parse(
-        this.localStorageService.get(
-          this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-        )
-      ).email,
+      email:
+        this.userDetails &&
+        this.userDetails["user"] &&
+        this.userDetails["user"]["email"]
+          ? this.userDetails["user"]["email"]
+          : "",
     };
     delete requestBody.confirmNewPassword;
     console.log("on password update", JSON.stringify(requestBody));

@@ -17,6 +17,7 @@
 8. QA module(phase 2)
 9. Ask questions from candidate and give points to him, the points can be converted to money, gifts.
 10. Excel for events (Phase 2)
+11. Gate pass
 ---------------PHASE 2 END--------------
 
 

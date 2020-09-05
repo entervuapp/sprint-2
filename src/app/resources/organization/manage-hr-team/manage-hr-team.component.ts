@@ -81,15 +81,12 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
   public onAdd = (): void => {
     let requestBody = {
       ...this.myForm.value,
-      role: this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER,
-      companyCode: this.userDetails["organization"].companyCode,
-      companyName: this.userDetails["organization"].companyName,
-      clientName: this.userDetails["user"]["client"].clientName,
+      mobileNumber: "1111111111",
     };
 
     this._subscriptions.add(
       this.registrationOrganizationService
-        .organizationSignUp(requestBody)
+        .jrHrRegistration(requestBody)
         .subscribe(
           (data) => {
             this.objectUtil.showAlert([
