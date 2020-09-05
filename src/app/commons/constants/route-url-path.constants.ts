@@ -4,7 +4,7 @@ export class ROUTE_URL_PATH_CONSTANTS {
     INDIVIDUAL_DASHBOARD: "individual-dashboard",
     ORGANIZATION_DASHBOARD: "organization-events",
     EDIT_ORGANIZATION_PROFILE: "edit-organization-profile",
-    EDIT_COMPANY_PROFILE: "edit-company-profile",
+    EDIT_HR_PROFILE: "edit-hr-profile",
     EDIT_INDIVIDUAL_PROFILE: "edit-individual-profile",
     CHANGE_PASSWORD: "change-password",
     MANAGE_CANDIDATE: "manage-candidate",
@@ -14,5 +14,6 @@ export class ROUTE_URL_PATH_CONSTANTS {
     QA_DASHBOARD: "qa-dashboard",
     ADMIN: "admin",
     LOGIN: "",
+    SETTINGS: "Settings",
   };
 }

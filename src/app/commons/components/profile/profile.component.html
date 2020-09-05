@@ -1,36 +1,7 @@
 <div class="individualProfileContent">
   <ul class="individualProfileUl">
-    <li>
-      <a (click)="navigateToScreen(displayTextObject['myProfile'])">
-        {{ displayTextObject["myProfile"] }}</a
-      >
-    </li>
-    <li>
-      <a (click)="navigateToScreen(displayTextObject['companyProfile'])">
-        {{ displayTextObject["companyProfile"] }}</a
-      >
-    </li>
-    <li>
-      <a
-        (click)="
-          navigateToScreen(
-            ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD
-          )
-        "
-      >
-        {{ displayTextObject["changePassword"] }}
-      </a>
-    </li>
-    <li>
-      <a>{{ displayTextObject["settings"] }}</a>
-    </li>
-    <li>
-      <a
-        (click)="
-          navigateToScreen(ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT)
-        "
-        >{{ displayTextObject["logout"] }}</a
-      >
+    <li *ngFor="let menuObj of displayTextObject['menuList']">
+      <a (click)="navigateToScreen(menuObj)"> {{ menuObj.displayText }}</a>
     </li>
   </ul>
 </div>

@@ -18,6 +18,7 @@ export class ProfileComponent extends AppComponent implements OnInit {
   public ROUTE_URL_PATH_CONSTANTS;
   public displayTextObject: NewAny;
   public SHARED_CONSTANTS;
+  public userDetails: object;
 
   @Output() hideSettingsMenu = new EventEmitter();
 
@@ -32,60 +33,80 @@ export class ProfileComponent extends AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
-    this.displayTextObject = {
-      myProfile: "My profile",
-      companyProfile: "Company profile",
-      changePassword: "Change password",
-      settings: "Settings",
-      logout: "Logout",
-    };
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
+    this.SHARED_CONSTANTS = SHARED_CONSTANTS;
+    this.userDetails = this.userDetailsService.get();
+    this.displayTextObject = {
+      menuList: [
+        {
+          displayText: "Change password",
+          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
+        },
+        {
+          displayText: "Setting",
+          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.SETTINGS,
+        },
+        {
+          displayText: "Logout",
+          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
+        },
+      ],
+    };
+    this.prepareMenuItems();
   }
 
+  private prepareMenuItems = (): void => {
+    let userRole: string =
+      this.userDetails &&
+      this.userDetails["user"] &&
+      this.userDetails["user"].roles &&
+      this.userDetails["user"].roles[0] &&
+      this.userDetails["user"].roles[0].name;
+
+    if (
+      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER
+    ) {
+      if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN) {
+        let organizationProfileMenu = {
+          displayText: "Organization profile",
+          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+            .EDIT_ORGANIZATION_PROFILE,
+        };
+        this.displayTextObject["menuList"]["unshift"](organizationProfileMenu);
+      }
+      let myProfileMenu = {
+        displayText: "My profile",
+        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_HR_PROFILE,
+      };
+      this.displayTextObject["menuList"]["unshift"](myProfileMenu);
+    } else if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.CANDIDATE) {
+      let myProfileMenu = {
+        displayText: "My profile",
+        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+          .EDIT_INDIVIDUAL_PROFILE,
+      };
+      this.displayTextObject["menuList"]["unshift"](myProfileMenu);
+    }
+  };
+
   public navigateToScreen = (screen): void => {
-    if (screen) {
-      screen === "logout"
-        ? (this.localStorageService.delete(
-            this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
-          ),
-          this.objectUtil.showAlert([]),
-          this.manageHeaderService.updateHeaderVisibility(false),
-          this.userDetailsService.set(null))
-        : "";
-      if (screen === "My profile") {
-        let userDetails = this.userDetailsService.get();
-        let userRole: string = "";
-        if (
-          userDetails &&
-          userDetails["user"] &&
-          userDetails["user"].roles &&
-          userDetails["user"].roles[0] &&
-          userDetails["user"].roles[0].name
-        ) {
-          userRole = userDetails["user"].roles[0].name;
-        }
-        if (
-          userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
-          userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER
-        ) {
-          screen = this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-            .EDIT_ORGANIZATION_PROFILE;
-        } else if (
-          userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.CANDIDATE
-        ) {
-          screen = this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-            .EDIT_INDIVIDUAL_PROFILE;
-        }
-      }
-      if (screen === "Company profile") {
-        screen = this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-        .EDIT_COMPANY_PROFILE;
-      }
-      this.navigateTo(screen);
-      if (this.hideSettingsMenu) {
-        this.hideSettingsMenu.emit();
-      }
+    switch (screen.url) {
+      case this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT:
+        this.localStorageService.delete(
+          this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_SESSION_TOKEN
+        );
+        this.objectUtil.showAlert([]);
+        this.manageHeaderService.updateHeaderVisibility(false);
+        this.userDetailsService.set(null);
+        break;
+      default:
+        break;
+    }
+
+    this.navigateTo(screen.url);
+    if (this.hideSettingsMenu) {
+      this.hideSettingsMenu.emit();
     }
   };
 }
