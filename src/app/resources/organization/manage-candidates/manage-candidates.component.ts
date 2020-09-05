@@ -270,6 +270,9 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
       candidateObj,
       "DELETE"
     );
+    requestBody.candidates.forEach(item =>{
+      item["candidateId"] = item["id"];
+    });
     this._subscriptions.add(
       this.manageCandidateService
         .deleteCandidateFromEvent(requestBody)

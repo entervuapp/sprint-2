@@ -67,9 +67,24 @@
             </thead>
             <tbody>
               <tr *ngFor="let member of teamMembersList; let i = index">
-                <td scope="row">{{ member.firstName }}</td>
-                <td scope="row">{{ member.email }}</td>
-                <td scope="row">{{ member.mobile }}</td>
+                <td scope="row">
+                  {{ member && member.user && member.user.firstName }}
+                </td>
+                <td scope="row">
+                  {{ member && member.user && member.user.email }}
+                </td>
+                <td scope="row">
+                  {{ member && member.user && member.user.mobile }}
+                </td>
+                <td scope="row">
+                  <a href="javascript:void(0)" (click)="onPromote(member)">
+                    {{ displayTextObject["promote"] }}
+                  </a>
+                  |
+                  <a href="javascript:void(0)" (click)="onDemote(member)">
+                    {{ displayTextObject["demote"] }}
+                  </a>
+                </td>
                 <td>
                   <!-- <a href="javascript:void(0)" (click)="onEdit(member)">
                   Edit

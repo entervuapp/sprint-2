@@ -11,9 +11,7 @@ export class ManageHrTeamService {
 
   public getTeamMembers = (companyCode): Observable<any> => {
     let url =
-      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS +
-      companyCode +
-      "/team";
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS;
     return this.http.get(url);
   };
 
