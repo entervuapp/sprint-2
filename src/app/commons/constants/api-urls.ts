@@ -37,7 +37,7 @@ export class API_URLS_CONSTANTS {
         GET_EVENT_CANDIDATES: `${BASE_URL}/entervu/candidate/event/`,
       },
       MANAGE_HR_TEAM: {
-        GET_TEAM_MEMBERS: `${BASE_URL}/entervu/company/`,
+        GET_TEAM_MEMBERS: `${BASE_URL}/entervu/company/team`,
         ADD_TEAM_MEMBERS: `${BASE_URL}/teams`,
         UPDATE_TEAM_MEMBERS: `${BASE_URL}/teams`,
         DELETE_TEAM_MEMBERS: `${BASE_URL}/teams`,

@@ -18,20 +18,21 @@
 9. Ask questions from candidate and give points to him, the points can be converted to money, gifts.
 10. Excel for events (Phase 2)
 11. Gate pass
+12. Open drive or closed drive (Phase 2) and candidate can search an open events
 ---------------PHASE 2 END--------------
 
 
 //issues
 1. Manage events screen, Skill field border is different from others - done
-2. Manage events screen, View event label alignment 
+2. Manage events screen, View event label alignment
 3. Manage events screen, enter skill as react. the height of the options panel issue. - done
-4. Add candidates screen, search inside the tab. need to work on the size of the search field. 
+4. Add candidates screen, search inside the tab. need to work on the size of the search field.
 5. Manage events screen, Hightlight current event which is on going.
 6. Main menus center align.
 7. look in to change password.
 8. show cursor pointer on logo mouse hover and on menu items too.
 9. contact us form
-10. 
+10.
 
 
 
@@ -40,7 +41,7 @@
 2. To view all past events
 3. email and mobile number sell?
 4. You can add only 5 team members in a day
-5. For creating more than 1 event on a day 
+5. For creating more than 1 event on a day
 6. for organizing more than 1 event on a day
 7. change for QA which was asked in that organization
 

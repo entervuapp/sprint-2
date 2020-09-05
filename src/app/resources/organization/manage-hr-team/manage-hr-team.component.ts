@@ -47,11 +47,13 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
 
   ngOnInit() {
     this.displayTextObject = {
-      headerList: ["Name", "Email", "Mobile", "Actions"],
+      headerList: ["Name", "Email", "Mobile", "Promote/Demote", "Actions"],
       addTeamMember: "Add team member",
       officeEmail: "Office email",
       teamList: "Team list",
       delete: "Delete",
+      promote: "Promote",
+      demote: "Demote",
     };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.teamMembersList = [];
@@ -153,7 +155,7 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
   private getTeamMembers = (): void => {
     this._subscriptions.add(
       this.manageHrTeamService
-        .getTeamMembers(this.userDetails["organization"].name)
+        .getTeamMembers(this.userDetails["organization"].companyCode)
         .subscribe(
           (data) => {
             if (data && data["response"] && data["response"].length > 0) {
@@ -161,9 +163,6 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
             } else {
               this.teamMembersList = [];
             }
-            // this.teamMembersList = teams.filter(
-            //   (member) => member.organization === "PK Global"
-            // );
           },
           (errors) => {
             if (errors) {
@@ -177,4 +176,8 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
   public hasCapability = (task): boolean => {
     return this.objectUtil.isAuthorized(task);
   };
+
+  public onPromote = (member): void => {};
+
+  public onDemote = (member): void => {};
 }
