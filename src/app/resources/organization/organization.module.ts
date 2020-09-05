@@ -12,6 +12,7 @@ import { ManageHrTeamComponent } from "./manage-hr-team/manage-hr-team.component
 import { ManageEventsComponent } from "./manage-events/manage-events.component";
 import { OnGoingEventOrganizationComponent } from "./on-going-event-organization/on-going-event-organization.component";
 import { ServicesModule } from "../../commons/services/services.module";
+import { EditProfileCompanyComponent } from './edit-profile-organization/edit-profile-company/edit-profile-company.component';
 
 const COMPONENTS_LIST = [
   RegistrationOrganizationComponent,
@@ -23,7 +24,7 @@ const COMPONENTS_LIST = [
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS_LIST],
+  declarations: [...COMPONENTS_LIST, EditProfileCompanyComponent],
   imports: [
     CommonModule,
     OrganizationRoutingModule,
