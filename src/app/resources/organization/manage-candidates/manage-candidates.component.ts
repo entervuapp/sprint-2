@@ -1,3 +1,4 @@
+import { AppComponent } from "src/app/app.component";
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {
   FormBuilder,
@@ -17,13 +18,14 @@ import {
 import { ManageCandidateService } from "./manage-candidates/manage-candidate.service";
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
+import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 
 @Component({
   selector: "app-manage-candidates",
   templateUrl: "./manage-candidates.component.html",
   styleUrls: ["./manage-candidates.component.scss"],
 })
-export class ManageCandidatesComponent implements OnInit {
+export class ManageCandidatesComponent extends AppComponent implements OnInit {
   private eventDetails: object;
   private _subscriptions = new Subscription();
   public skillDropDownList: ValueDescriptionId[];
@@ -48,16 +50,14 @@ export class ManageCandidatesComponent implements OnInit {
     public manageHeaderService: ManageHeaderService,
     private manageEventsService: ManageEventsService,
     private manageCandidateService: ManageCandidateService,
-    public localStorageService: LocalStorageService
-  ) {}
+    public localStorageService: LocalStorageService,
+    public userDetailsService: UserDetailsService
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
-    this.userDetails = JSON.parse(
-      this.localStorageService.get(
-        this.SHARED_CONSTANTS.EVU_LOCAL_STORAGES.LS_EVU_USER_DETAILS
-      )
-    );
     this.candidateData = {};
     this.resetField = false;
     this.candidateSearchControl = new FormControl("");
@@ -73,7 +73,15 @@ export class ManageCandidatesComponent implements OnInit {
       candidateList: "Candidates list",
       edit: "Edit",
       delete: "Delete",
-      headerList: ["#", "Name", "Email", "Mobile", "Invited by", "Actions"],
+      headerList: [
+        "#",
+        "Name",
+        "Email",
+        "Mobile",
+        "Experience",
+        "Invited by",
+        "Actions",
+      ],
     };
     this.originalCandidatesList = [];
     this.eventDetails = {};
@@ -91,25 +99,40 @@ export class ManageCandidatesComponent implements OnInit {
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
     }
+    this.userDetails = this.userDetailsService.get();
+    if (!this.userDetails) {
+      this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
+      this.setUserDetails();
+    }
   }
 
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
   }
 
-  private initializeForm = (): void => {
+  private initializeForm = (data = null): void => {
     this.myForm = this.fb.group({
-      id: new FormControl(null),
-      firstName: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      contactNumber: new FormControl("", [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(10),
-      ]),
+      id: new FormControl(data && data.id ? data.id : null),
+      firstName: new FormControl(
+        data && data["user"] && data["user"].firstName
+          ? data["user"].firstName
+          : "",
+        [Validators.required, Validators.minLength(3)]
+      ),
+      email: new FormControl(
+        data && data["user"] && data["user"].email ? data["user"].email : "",
+        [Validators.required, Validators.email]
+      ),
+      contactNumber: new FormControl(
+        data && data["user"] && data["user"].contactNumber
+          ? data["user"].contactNumber
+          : "",
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ]
+      ),
       eventId: new FormControl(this.eventId, []),
       roundId: new FormControl("", []),
       skill: new FormGroup({
@@ -120,12 +143,6 @@ export class ManageCandidatesComponent implements OnInit {
           Validators.minLength(2),
         ]),
       }),
-      invitedBy: new FormControl(
-        this.userDetails && this.userDetails["email"]
-          ? this.userDetails["email"]
-          : "",
-        [Validators.required]
-      ),
     });
   };
 
@@ -219,33 +236,31 @@ export class ManageCandidatesComponent implements OnInit {
     this.resetField = true;
     setTimeout(() => {
       this.myForm.controls.eventId.setValue(this.eventId);
-      this.myForm.controls.invitedBy.setValue(this.userDetails["email"]);
       this.onSkillSelect();
       this.resetField = false;
     }, 500);
   };
 
-  public onEdit = (candidate): void => {
-    const {
-      name,
-      email,
-      contactNumber,
-      skill,
-      id,
-      eventId,
-      roundId,
-      invitedBy,
-    } = candidate;
-    this.myForm.patchValue({
-      name,
-      email,
-      contactNumber,
-      skill,
-      id,
-      eventId,
-      roundId,
-      invitedBy,
-    });
+  public onEdit = (candidateObj): void => {
+    // const {
+    //   name,
+    //   email,
+    //   contactNumber,
+    //   skill,
+    //   id,
+    //   eventId,
+    //   roundId,
+    // } = candidateObj.candidate.user;
+    // this.myForm.patchValue({
+    //   name,
+    //   email,
+    //   contactNumber,
+    //   skill,
+    //   id,
+    //   eventId,
+    //   roundId,
+    // });
+    this.initializeForm({ ...candidateObj.candidate });
     this.skillSelect.nativeElement.value = this.myForm.value.skill.value;
   };
 
@@ -403,22 +418,32 @@ export class ManageCandidatesComponent implements OnInit {
         (candidateObj) =>
           (candidateObj &&
             candidateObj.candidate &&
-            candidateObj.candidate.firstName &&
-            candidateObj.candidate.firstName
+            candidateObj.candidate.user &&
+            candidateObj.candidate.user.firstName &&
+            candidateObj.candidate.user.firstName
               .toLowerCase()
               .indexOf(this.candidateSearchControl.value.toLowerCase()) !==
               -1) ||
           (candidateObj &&
             candidateObj.candidate &&
-            candidateObj.candidate.email &&
-            candidateObj.candidate.email
+            candidateObj.candidate.user &&
+            candidateObj.candidate.user.email &&
+            candidateObj.candidate.user.email
               .toLowerCase()
               .indexOf(this.candidateSearchControl.value.toLowerCase()) !==
               -1) ||
           (candidateObj &&
             candidateObj.candidate &&
-            candidateObj.candidate.contactNumber &&
-            candidateObj.candidate.contactNumber.indexOf(
+            candidateObj.candidate.user &&
+            candidateObj.candidate.user.contactNumber &&
+            candidateObj.candidate.user.contactNumber.indexOf(
+              this.candidateSearchControl.value.toLowerCase()
+            ) !== -1) ||
+          (candidateObj &&
+            candidateObj.candidate &&
+            candidateObj.candidate.user &&
+            candidateObj.candidate.user.experience &&
+            candidateObj.candidate.user.experience.indexOf(
               this.candidateSearchControl.value.toLowerCase()
             ) !== -1) ||
           (candidateObj &&
@@ -456,8 +481,8 @@ export class ManageCandidatesComponent implements OnInit {
   };
 
   public onEmailSelect = (userObj): void => {
-    if (userObj && userObj.email) {
-      const { firstName, contactNumber, email } = userObj;
+    if (userObj && userObj.user && userObj.user.email) {
+      const { firstName, contactNumber, email } = userObj.user;
       this.candidateData = { ...userObj };
       this.candidateData["candidateId"] = userObj.id;
       this.myForm.controls.firstName.setValue(firstName);
@@ -478,7 +503,6 @@ export class ManageCandidatesComponent implements OnInit {
         skillIdAndRoundId && skillIdAndRoundId["roundId"]
           ? skillIdAndRoundId["roundId"]
           : null,
-      invitedBy: form && form.invitedBy ? form.invitedBy : null,
       candidates: [{ ...this.candidateData }],
     };
     return request;

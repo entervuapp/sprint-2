@@ -21,7 +21,8 @@ import { UserDetailsService } from "../../../commons/services/user-details/user-
   templateUrl: "./edit-profile-organization.component.html",
   styleUrls: ["./edit-profile-organization.component.scss"],
 })
-export class EditProfileOrganizationComponent extends AppComponent
+export class EditProfileOrganizationComponent
+  extends AppComponent
   implements OnInit {
   public myForm: FormGroup;
   private userDetails: object;
@@ -114,10 +115,12 @@ export class EditProfileOrganizationComponent extends AppComponent
         },
         [Validators.required, Validators.min(3)]
       ),
-      address: new FormControl(data && data.address ? data.address : "", [
-        Validators.required,
-        Validators.min(10),
-      ]),
+      address: new FormControl(
+        data && data.address && data.address.addressLine1
+          ? data.address.addressLine1
+          : "",
+        [Validators.required, Validators.min(10)]
+      ),
     });
   };
 
@@ -154,7 +157,7 @@ export class EditProfileOrganizationComponent extends AppComponent
         : "";
 
     requestBody["address"] = {
-      addressLine1: "string",
+      addressLine1: this.myForm.value.address,
       addressLine2: "string",
       district: "string",
       state: "string",

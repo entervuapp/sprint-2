@@ -45,10 +45,12 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_INDIVIDUAL_PROFILE,
     component: EditProfileIndividualComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
     component: ChangePasswordComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
@@ -62,6 +64,7 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_CANDIDATE,
     component: ManageCandidatesComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_TEAM,

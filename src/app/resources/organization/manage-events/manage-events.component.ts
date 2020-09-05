@@ -739,12 +739,14 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
 
   private getUserData = (expectedField): string => {
     if (expectedField === "email") {
-      return this.userDetails && this.userDetails["email"]
-        ? this.userDetails["email"]
+      return this.userDetails &&
+        this.userDetails["user"] &&
+        this.userDetails["user"]["email"]
+        ? this.userDetails["user"]["email"]
         : null;
     } else if (expectedField === "companyCode") {
-      return this.userDetails && this.userDetails["companyCode"]
-        ? this.userDetails["companyCode"]
+      return this.userDetails && this.userDetails["organization"]["companyCode"]
+        ? this.userDetails["organization"]["companyCode"]
         : null;
     }
   };
@@ -763,17 +765,21 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
             id: skillObj.id,
             skill: skillObj.skill,
             rounds: skillObj.numberOfRounds,
-            roundDetails: skillObj.roundDetailsList,
+            eventRoundDetails: skillObj.roundDetailsList,
           };
         } else {
           temp = {
             id: null,
             skill: skillObj.skill,
             rounds: skillObj.numberOfRounds,
-            roundDetails: skillObj.roundDetailsList,
+            eventRoundDetails: skillObj.roundDetailsList,
           };
-          if (temp && temp["roundDetails"] && temp["roundDetails"].length) {
-            temp["roundDetails"].forEach((element) => {
+          if (
+            temp &&
+            temp["eventRoundDetails"] &&
+            temp["eventRoundDetails"].length
+          ) {
+            temp["eventRoundDetails"].forEach((element) => {
               delete element.id;
             });
           }

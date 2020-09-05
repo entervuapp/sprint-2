@@ -33,6 +33,7 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
   @Input() isRequired: boolean;
   @Input() isTouched: boolean;
   @Input() resetField: boolean;
+  @Input() renderValue: string;
   @Output() onSelect = new EventEmitter();
 
   constructor(
@@ -95,44 +96,53 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
         this.initializeForm();
       }
     }
+    if (
+      changes &&
+      changes.hasOwnProperty("renderValue") &&
+      changes.renderValue.currentValue
+    ) {
+      this.renderValue = changes.renderValue.currentValue;
+      this.optionSelected = true;
+      this.formGroup.controls.email.setValue(this.renderValue);
+    }
   }
 
   private initializeForm = (): void => {
     if (this.isRequired) {
       this.formGroup = this.fb.group({
-        client: new FormGroup({
-          clientName: new FormControl("", []),
-          clientSecret: new FormControl("", []),
-          id: new FormControl("", []),
-        }),
+        // client: new FormGroup({
+        //   clientName: new FormControl("", []),
+        //   clientSecret: new FormControl("", []),
+        //   id: new FormControl("", []),
+        // }),
         email: new FormControl("", [Validators.required]),
-        emailVerified: new FormControl("", []),
-        firstName: new FormControl("", []),
-        id: new FormControl("", [Validators.required]),
-        lastName: new FormControl("", []),
-        imageUrl: new FormControl("", []),
-        organization: new FormControl("", []),
-        provider: new FormControl("", []),
-        providerId: new FormControl("", []),
-        roles: new FormArray([this.prepareRolesFormGroup()]),
+        // emailVerified: new FormControl("", []),
+        // firstName: new FormControl("", []),
+        // id: new FormControl("", [Validators.required]),
+        // lastName: new FormControl("", []),
+        // imageUrl: new FormControl("", []),
+        // organization: new FormControl("", []),
+        // provider: new FormControl("", []),
+        // providerId: new FormControl("", []),
+        // roles: new FormArray([this.prepareRolesFormGroup()]),
       });
     } else {
       this.formGroup = this.fb.group({
-        client: new FormGroup({
-          clientName: new FormControl("", []),
-          clientSecret: new FormControl("", []),
-          id: new FormControl("", []),
-        }),
+        // client: new FormGroup({
+        //   clientName: new FormControl("", []),
+        //   clientSecret: new FormControl("", []),
+        //   id: new FormControl("", []),
+        // }),
         email: new FormControl("", []),
-        emailVerified: new FormControl("", []),
-        firstName: new FormControl("", []),
-        id: new FormControl("", []),
-        lastName: new FormControl("", []),
-        imageUrl: new FormControl("", []),
-        organization: new FormControl("", []),
-        provider: new FormControl("", []),
-        providerId: new FormControl("", []),
-        roles: new FormArray([this.prepareRolesFormGroup()]),
+        // emailVerified: new FormControl("", []),
+        // firstName: new FormControl("", []),
+        // id: new FormControl("", []),
+        // lastName: new FormControl("", []),
+        // imageUrl: new FormControl("", []),
+        // organization: new FormControl("", []),
+        // provider: new FormControl("", []),
+        // providerId: new FormControl("", []),
+        // roles: new FormArray([this.prepareRolesFormGroup()]),
       });
     }
   };
@@ -161,15 +171,13 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
     return this.objectUtil.checkForFormErrors(formObj, property);
   }
 
-  public onEmailOptionSelect = (user): void => {
-    if (user) {
-      this.formGroup.patchValue({
-        ...user,
-      });
+  public onEmailOptionSelect = (userData): void => {
+    if (userData) {
+      this.formGroup.controls.email.setValue(userData.user.email);
       this.optionSelected = true;
       this.emailList = [];
       if (this.onSelect) {
-        this.onSelect.emit({ ...user });
+        this.onSelect.emit({ ...userData });
       }
     }
   };
