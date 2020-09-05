@@ -8,7 +8,6 @@ import { DashboardIndividualComponent } from "./resources/individual/dashboard-i
 import { MainScreenComponent } from "./resources/main-screen/main-screen.component";
 import { PageNotFoundComponent } from "./commons/components/page-not-found/page-not-found.component";
 import { EditProfileOrganizationComponent } from "./resources/organization/edit-profile-organization/edit-profile-organization.component";
-import { EditProfileCompanyComponent } from "./resources/organization/edit-profile-organization/edit-profile-company/edit-profile-company.component";
 import { ChangePasswordComponent } from "./commons/components/change-password/change-password.component";
 import { QaDashboardComponent } from "./resources/qa/qa-dashboard/qa-dashboard.component";
 import { ManageCandidatesComponent } from "./resources/organization/manage-candidates/manage-candidates.component";
@@ -17,6 +16,7 @@ import { ManageHrTeamComponent } from "./resources/organization/manage-hr-team/m
 import { EditProfileIndividualComponent } from "./resources/individual/edit-profile-individual/edit-profile-individual.component";
 import { LoginFormComponent } from "./commons/components/login-form/login-form.component";
 import { UserDetailsResolverService } from "./commons/services/user-details-resolver/user-details-resolver.service";
+import { EditProfileHrComponent } from "./resources/organization/edit-profile-hr/edit-profile-hr.component";
 
 const routes: Routes = [
   {
@@ -44,8 +44,8 @@ const routes: Routes = [
     resolve: { userDetails: UserDetailsResolverService },
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_COMPANY_PROFILE,
-    component: EditProfileCompanyComponent,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_HR_PROFILE,
+    component: EditProfileHrComponent,
     resolve: { userDetails: UserDetailsResolverService },
   },
   {

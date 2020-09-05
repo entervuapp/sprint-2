@@ -15,6 +15,7 @@ interface OrganizationNameButton {
 })
 export class DashboardIndividualComponent implements OnInit {
   public organizationList: OrganizationNameButton[];
+  public eventsList: any[];
 
   constructor(public manageHeaderService: ManageHeaderService) {}
 
@@ -41,4 +42,7 @@ export class DashboardIndividualComponent implements OnInit {
       }
     });
   };
+
+  public navigateToScreen = (): void => {};
+  public prepareSkillsForDisplay = (): void => {};
 }

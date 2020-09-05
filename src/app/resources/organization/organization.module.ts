@@ -12,7 +12,14 @@ import { ManageHrTeamComponent } from "./manage-hr-team/manage-hr-team.component
 import { ManageEventsComponent } from "./manage-events/manage-events.component";
 import { OnGoingEventOrganizationComponent } from "./on-going-event-organization/on-going-event-organization.component";
 import { ServicesModule } from "../../commons/services/services.module";
-import { EditProfileCompanyComponent } from './edit-profile-organization/edit-profile-company/edit-profile-company.component';
+import { EditProfileHrComponent } from "./edit-profile-hr/edit-profile-hr.component";
+
+//services
+import { EditProfileHrService } from "./edit-profile-hr/edit-profile-hr/edit-profile-hr.service";
+import { ManageCandidateService } from "./manage-candidates/manage-candidates/manage-candidate.service";
+import { ManageEventsService } from "./manage-events/manage-events/manage-events.service";
+import { ManageHrTeamService } from "./manage-hr-team/manage-hr-team/manage-hr-team.service";
+import { RegistrationOrganizationService } from "./registration-organization/registration-organization/registration-organization.service";
 
 const COMPONENTS_LIST = [
   RegistrationOrganizationComponent,
@@ -21,10 +28,18 @@ const COMPONENTS_LIST = [
   ManageHrTeamComponent,
   ManageEventsComponent,
   OnGoingEventOrganizationComponent,
+  EditProfileHrComponent,
 ];
 
+const SERVICES_LIST = [
+  ManageCandidateService,
+  ManageEventsService,
+  ManageHrTeamService,
+  RegistrationOrganizationService,
+  EditProfileHrService,
+];
 @NgModule({
-  declarations: [...COMPONENTS_LIST, EditProfileCompanyComponent],
+  declarations: [...COMPONENTS_LIST],
   imports: [
     CommonModule,
     OrganizationRoutingModule,
@@ -36,5 +51,6 @@ const COMPONENTS_LIST = [
     ServicesModule,
   ],
   exports: [...COMPONENTS_LIST],
+  providers: [...SERVICES_LIST],
 })
 export class OrganizationModule {}
