@@ -1,3 +1,35 @@
 .appAutoCompleteWrapper{
     padding: 15px 15px;
 }
+.individualEventListCard {
+    border: 2px solid #a1a5a9;
+    width: 98%;
+    margin: 15px auto;
+    padding: 15px 12px 12px 12px;
+  }
+  .individualAddEventsTable{
+    margin: 14px 0px 0px 0px;
+    display: flex;
+  }
+  .individualEventListCardHead {
+    margin: 0px 0px 22px 0px;
+  }
+  .individualEventListCardHead h3 {
+    margin: 0px;
+    font-size: 22px;
+    color: #02434e;
+    cursor: pointer;
+    width: auto;
+    text-decoration: underline;
+  }
+  .individualEventListCardContent {
+    margin: 0px 0px 5px 0px;
+  }
+  .individualEventListCardContent p {
+    font-size: 18px;
+    color: #333;
+    margin: 0px;
+  }
+  .individualEventListCardAddBtn {
+    margin: 0px 0px 8px 0px;
+  }

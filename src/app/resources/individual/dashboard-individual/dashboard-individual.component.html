@@ -1,13 +1,72 @@
 <div class="individualDashboard">
   <div class="companyList">
-    <button
-      class="btn companySingleBtn"
-      *ngFor="let organization of organizationList"
-      [ngClass]="{ active: organization.active }"
-      (click)="onOrganizationClick(organization)"
-    >
-      {{ organization.companyName }}
-    </button>
+    <div class="companyListBtnWrapper">
+      <button
+        class="btn companySingleBtn"
+        *ngFor="let organization of organizationList"
+        [ngClass]="{ active: organization.active }"
+        (click)="onOrganizationClick(organization)"
+      >
+        {{ organization.companyName }}
+      </button>
+    </div>
+
+    <div class="individualEventListBlock">
+      <div class="individualAddEventsTable">
+        <div
+          class="individualEventListCard"
+        >
+          <div class="individualEventListCardHead">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3
+                  (click)="
+                    navigateToScreen(
+                      ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+                        .ON_GOING_EVENT_ORGANIZATION,
+                      event
+                    )
+                  "
+                >
+                  Test Megadrive
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="individualEventListCardContent">
+            <div class="row">
+              <div class="col-sm-4">
+                <!-- <app-display-date
+                  [dateInput]="event && event.eventDate"
+                ></app-display-date> -->
+                <p class="individualEventDate">07/23/2020</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="individualEventTime">2020-07-23</p>
+              </div>
+              <div class="col-sm-4">
+                <!-- <p
+                  class="individualEventSkills"
+                  data-toggle="tooltip"
+                  [title]="prepareSkillsForDisplay(event, true)"
+                >
+                  {{ prepareSkillsForDisplay(event) }}
+                </p> -->
+                <p class="individualEventSkills"
+                data-toggle="tooltip"
+                [title]="prepareSkillsForDisplay(event, true)">Angular Js, React Js</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="individualAddEventsTable" *ngIf="eventsList && eventsList.length === 0">
+        <app-no-records-found
+          [message]="'No events found.'"
+        ></app-no-records-found>
+      </div>
+    </div>
+
   </div>
 
   <app-carousel></app-carousel>
