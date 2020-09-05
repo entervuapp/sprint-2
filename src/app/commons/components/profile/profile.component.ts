@@ -33,6 +33,7 @@ export class ProfileComponent extends AppComponent implements OnInit {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.displayTextObject = {
       myProfile: "My profile",
+      companyProfile: "Company profile",
       changePassword: "Change password",
       settings: "Settings",
       logout: "Logout",
@@ -71,6 +72,10 @@ export class ProfileComponent extends AppComponent implements OnInit {
           screen = this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
             .EDIT_INDIVIDUAL_PROFILE;
         }
+      }
+      if (screen === "Company profile") {
+        screen = this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+        .EDIT_COMPANY_PROFILE;
       }
       this.navigateTo(screen);
       if (this.hideSettingsMenu) {
