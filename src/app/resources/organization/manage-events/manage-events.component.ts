@@ -23,6 +23,8 @@ import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmPopupComponent } from "../../../commons/components/modals/confirm-popup/confirm-popup.component";
 
 @Component({
   selector: "app-manage-events",
@@ -59,7 +61,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     private manageSkillsService: ManageSkillsService,
     public localStorageService: LocalStorageService,
     public manageHeaderService: ManageHeaderService,
-    public userDetailsService: UserDetailsService
+    public userDetailsService: UserDetailsService,
+    private matDialog: MatDialog
   ) {
     super();
   }
@@ -383,23 +386,31 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onDeleteOfEvent = (event) => {
-    if (event && event.id !== null && event.id !== undefined) {
-      let requestBody = {
-        eventId: event && event.id ? event.id : null,
-      };
-      this._subscriptions.add(
-        this.manageEventsService.deleteEvent(requestBody).subscribe(
-          (response) => {
-            console.log("deleted event");
+    const data = { message: "Are you sure?", title: "Confirm?" };
+    const dialogRef = this.matDialog.open(ConfirmPopupComponent, {
+      data: data,
+      disableClose: true,
+    });
 
-            this.getEventsList();
-          },
-          (errors) => {
-            console.log(errors);
-          }
-        )
-      );
-    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === "ok") {
+        if (event && event.id !== null && event.id !== undefined) {
+          let requestBody = {
+            eventId: event && event.id ? event.id : null,
+          };
+          this._subscriptions.add(
+            this.manageEventsService.deleteEvent(requestBody).subscribe(
+              (response) => {
+                this.getEventsList();
+              },
+              (errors) => {
+                console.log(errors);
+              }
+            )
+          );
+        }
+      }
+    });
   };
 
   public validateSkillSubmit = (type = null) => {

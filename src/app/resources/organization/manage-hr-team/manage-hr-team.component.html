@@ -76,22 +76,23 @@
                 <td scope="row">
                   {{ member && member.user && member.user.mobile }}
                 </td>
-                <td scope="row">
-                  <a href="javascript:void(0)" (click)="onPromote(member)">
-                    {{ displayTextObject["promote"] }}
-                  </a>
-                  |
-                  <a href="javascript:void(0)" (click)="onDemote(member)">
-                    {{ displayTextObject["demote"] }}
+                <td scope="row" *ngIf="hasCapability('promoteDemote')">
+                  <a
+                    *ngIf="!isSelf(member)"
+                    href="javascript:void(0)"
+                    (click)="onPromoteDemote($event, member)"
+                  >
+                    {{
+                      member.user.roles[0].name ===
+                      SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN
+                        ? displayTextObject["demote"]
+                        : displayTextObject["promote"]
+                    }}
                   </a>
                 </td>
-                <td>
-                  <!-- <a href="javascript:void(0)" (click)="onEdit(member)">
-                  Edit
-                </a>
-                | -->
+                <td *ngIf="hasCapability('deleteTeam')">
                   <a
-                    *ngIf="hasCapability('deleteTeam')"
+                    *ngIf="!isSelf(member)"
                     href="javascript:void(0)"
                     (click)="onDeleteOfTeamMember(member)"
                   >
