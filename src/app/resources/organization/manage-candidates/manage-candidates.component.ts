@@ -19,6 +19,8 @@ import { ManageCandidateService } from "./manage-candidates/manage-candidate.ser
 import { SHARED_CONSTANTS } from "../../../commons/constants/shared.constants";
 import { LocalStorageService } from "../../../commons/services/local-storage/local-storage.service";
 import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
+import { MatDialog } from "@angular/material/dialog";
+import { ConfirmPopupComponent } from "../../../commons/components/modals/confirm-popup/confirm-popup.component";
 
 @Component({
   selector: "app-manage-candidates",
@@ -51,7 +53,8 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
     private manageEventsService: ManageEventsService,
     private manageCandidateService: ManageCandidateService,
     public localStorageService: LocalStorageService,
-    public userDetailsService: UserDetailsService
+    public userDetailsService: UserDetailsService,
+    private matDialog: MatDialog
   ) {
     super();
   }
@@ -265,32 +268,42 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
   };
 
   public onCandidateDelete = (candidateObj): void => {
-    let requestBody = this.prepareRequestForDeleteAndUpdate(
-      { ...this.eventDetails },
-      candidateObj,
-      "DELETE"
-    );
-    requestBody.candidates.forEach(item =>{
-      item["candidateId"] = item["id"];
+    const data = { message: "Are you sure?", title: "Confirm?" };
+    const dialogRef = this.matDialog.open(ConfirmPopupComponent, {
+      data: data,
+      disableClose: true,
     });
-    this._subscriptions.add(
-      this.manageCandidateService
-        .deleteCandidateFromEvent(requestBody)
-        .subscribe(
-          (data) => {
-            this.eventDetails = { ...data.response };
-            this.filterCandidatesForSkill();
-          },
-          (errors) => {
-            console.log("error", errors);
-            if (errors) {
-              this.objectUtil.showAlert([
-                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
-              ]);
-            }
-          }
-        )
-    );
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === "ok") {
+        let requestBody = this.prepareRequestForDeleteAndUpdate(
+          { ...this.eventDetails },
+          candidateObj,
+          "DELETE"
+        );
+        requestBody.candidates.forEach((item) => {
+          item["candidateId"] = item["id"];
+        });
+        this._subscriptions.add(
+          this.manageCandidateService
+            .deleteCandidateFromEvent(requestBody)
+            .subscribe(
+              (data) => {
+                this.eventDetails = { ...data.response };
+                this.filterCandidatesForSkill();
+              },
+              (errors) => {
+                console.log("error", errors);
+                if (errors) {
+                  this.objectUtil.showAlert([
+                    ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+                  ]);
+                }
+              }
+            )
+        );
+      }
+    });
   };
 
   private prepareSkillDropDwon = (): void => {

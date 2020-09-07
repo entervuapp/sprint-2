@@ -323,6 +323,15 @@ export class ObjectUtil {
           hasCapability = true;
         }
         break;
+      case "promoteDemote":
+        if (
+          userRole ===
+          (this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+            this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER)
+        ) {
+          hasCapability = true;
+        }
+        break;
       default:
         break;
     }

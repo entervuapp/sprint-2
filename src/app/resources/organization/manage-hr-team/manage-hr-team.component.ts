@@ -30,6 +30,7 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
   public teamMembersList: any[];
   public displayTextObject: object;
   public userDetails: object;
+  public userRole: string;
 
   constructor(
     private fb: FormBuilder,
@@ -47,7 +48,7 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
 
   ngOnInit() {
     this.displayTextObject = {
-      headerList: ["Name", "Email", "Mobile", "Promote/Demote", "Actions"],
+      headerList: [],
       addTeamMember: "Add team member",
       officeEmail: "Office email",
       teamList: "Team list",
@@ -69,6 +70,22 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
       this.userDetails = this.activatedRoute.snapshot.data["userDetails"];
       this.setUserDetails();
     }
+    if (
+      this.userDetails &&
+      this.userDetails["user"] &&
+      this.userDetails["user"].roles &&
+      this.userDetails["user"].roles[0] &&
+      this.userDetails["user"].roles[0].name
+    ) {
+      this.userRole = this.userDetails["user"].roles[0].name;
+    }
+
+    this.displayTextObject["headerList"] =
+      this.userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+      this.userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.SUPER_USER
+        ? ["Name", "Email", "Mobile", "Promote/Demote", "Actions"]
+        : ["Name", "Email", "Mobile"];
+
     this.getTeamMembers();
   }
 
@@ -177,7 +194,21 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
     return this.objectUtil.isAuthorized(task);
   };
 
-  public onPromote = (member): void => {};
+  public onPromoteDemote = (event, member): void => {
+    console.log(event, member);
+  };
 
-  public onDemote = (member): void => {};
+  public isSelf = (member): boolean => {
+    let self = false;
+    if (
+      this.userDetails &&
+      this.userDetails["user"] &&
+      member &&
+      member.user &&
+      this.userDetails["user"].email === member.user.email
+    ) {
+      self = true;
+    }
+    return self;
+  };
 }
