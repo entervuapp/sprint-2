@@ -392,6 +392,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       disableClose: true,
     });
 
+    dialogRef.keydownEvents().subscribe((e) => {
+      if (e && e.keyCode === 27) {
+        dialogRef.close();
+      }
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result === "ok") {
         if (event && event.id !== null && event.id !== undefined) {

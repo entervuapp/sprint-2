@@ -49,8 +49,6 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
       firstName: "First name",
       lastName: "Last name",
       officeEmail: "Office email",
-      companyCode: "Company code",
-      companyName: "Company name",
       address: "Address",
       mobile: "Mobile",
     };
@@ -96,28 +94,6 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
       email: new FormControl(
         data && data.user && data.user.email ? data.user.email : "",
         [Validators.required, Validators.email]
-      ),
-      companyName: new FormControl(
-        data && data.organization && data.organization.companyName
-          ? data.organization.companyName
-          : "",
-        [Validators.required, Validators.min(3)]
-      ),
-      companyCode: new FormControl(
-        {
-          value:
-            data && data.organization && data.organization.companyCode
-              ? data.organization.companyCode
-              : "",
-          disabled: true,
-        },
-        [Validators.required, Validators.min(3)]
-      ),
-      address: new FormControl(
-        data && data.address && data.address.addressLine1
-          ? data.address.addressLine1
-          : "",
-        [Validators.required, Validators.min(10)]
       ),
     });
   };

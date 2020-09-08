@@ -20,6 +20,7 @@ export class API_URLS_CONSTANTS {
         GET_PROFILE: `${BASE_URL}/entervu/company/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/company/user`,
         JR_HR_REGISTER: `${BASE_URL}/entervu/company/register/user`,
+        UPDATE_ORGANIZATION: `${BASE_URL}/entervu/company/`,
       },
       MANAGE_EVENTS: {
         GET_EVENTS: `${BASE_URL}/entervu/event/company/`,

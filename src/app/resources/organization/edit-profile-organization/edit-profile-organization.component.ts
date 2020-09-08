@@ -77,13 +77,6 @@ export class EditProfileOrganizationComponent
       imageUrl: new FormControl(
         data && data.user && data.user.imageUrl ? data.user.imageUrl : ""
       ),
-      firstName: new FormControl(
-        data && data.user && data.user.firstName ? data.user.firstName : "",
-        [Validators.required, Validators.minLength(3)]
-      ),
-      lastName: new FormControl(
-        data && data.user && data.user.lastName ? data.user.lastName : ""
-      ),
       id: new FormControl(data && data.id ? data.id : null),
       contactNumber: new FormControl(
         data && data.user && data.user.contactNumber
