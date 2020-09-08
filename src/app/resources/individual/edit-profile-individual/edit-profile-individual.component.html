@@ -168,9 +168,10 @@
         ></app-error-message>
       </div>
       <app-skills-autocomplete
-        [placeholderText]="displayTestObject['mainSkill']"
-        [isTouched]="myForm.controls.skill.controls.description.touched"
+        [placeholderText]="displayTestObject['primarySkill']"
+        [isTouched]="myForm.controls.primarySkill.controls.description.touched"
         [isRequired]="true"
+        [renderSkill]="myForm.value.primarySkill"
         (onSelect)="onSkillSelect($event)"
       ></app-skills-autocomplete>
       <!-- <div class="form-group">

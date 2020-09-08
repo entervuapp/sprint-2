@@ -19,6 +19,9 @@
 10. Excel for events (Phase 2)
 11. Gate pass
 12. Open drive or closed drive (Phase 2) and candidate can search an open events
+13. Desgination for HR field in edit profile, employee ID
+14. location map
+15. Stress relief game
 ---------------PHASE 2 END--------------
 
 

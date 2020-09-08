@@ -75,22 +75,31 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
     if (
       this.selectedSlide &&
       this.eventDetails &&
-      this.eventDetails["skillsList"] &&
-      this.eventDetails["skillsList"].length
+      this.eventDetails["eventSkills"] &&
+      this.eventDetails["eventSkills"].length
     ) {
-      this.currentSlideWithSkill = this.eventDetails["skillsList"].find(
-        (skillObj) => skillObj["skill"].value === this.selectedSlide.skill.value
+      this.currentSlideWithSkill = this.eventDetails["eventSkills"].find(
+        (eachSkill) =>
+          eachSkill["skill"].value === this.selectedSlide.skill.value
       );
       this.roundsList = [];
-      for (let i = 0; i < this.currentSlideWithSkill.numberOfRounds; i++) {
-        let temp = {
-          active: i === 0 ? true : false,
-          displayText: "Round " + (i + 1),
-          id: i + 1,
-        };
-        this.roundsList.push(temp);
+      if (
+        this.currentSlideWithSkill &&
+        this.currentSlideWithSkill["roundDetails"] &&
+        this.currentSlideWithSkill["roundDetails"].length
+      ) {
+        this.currentSlideWithSkill["roundDetails"].map((eachRound, i) => {
+          let eachRoundDetails = {
+            active: i === 0 ? true : false,
+            ...eachRound,
+            skill: { ...this.currentSlideWithSkill.skill },
+          };
+          this.roundsList.push(eachRoundDetails);
+        });
+      } else {
+        console.log("a");
       }
-      this.filterCandidateAsPerRound({ id: 1 });
+      this.filterCandidateAsPerRound();
     }
   };
 
@@ -103,14 +112,14 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
         round.active = false;
       }
     });
-    this.filterCandidateAsPerRound(roundObj);
+    this.filterCandidateAsPerRound();
   };
 
-  private filterCandidateAsPerRound = (roundObj): void => {
-    this.filteredCandidateList = this.candidatesList
-      .filter(
-        (candidate) => candidate.skill.value === this.selectedSlide.skill.value
-      )
-      .filter((candidate) => candidate.inRound === roundObj.id);
+  private filterCandidateAsPerRound = (): void => {
+    this.roundsList.map((eachRound) => {
+      if (eachRound.active) {
+        this.filteredCandidateList = eachRound.candidates;
+      }
+    });
   };
 }

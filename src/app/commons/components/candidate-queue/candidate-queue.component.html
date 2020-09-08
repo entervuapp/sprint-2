@@ -6,7 +6,7 @@
         class="nav-link"
         [ngClass]="{ active: round.active }"
         (click)="onRoundsTabClick(round)"
-        >{{ round.displayText }}</a
+        >{{ round.roundName }}</a
       >
     </li>
   </ul>
@@ -20,10 +20,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let candidate of filteredCandidateList; let i = index">
+        <tr *ngFor="let candidateObj of filteredCandidateList; let i = index">
           <td>{{ i + 1 }}</td>
-          <td>{{ candidate.name }}</td>
-          <td>{{ candidate.interviewStatus }}</td>
+          <td>{{ candidateObj.candidate.user.firstName }}</td>
+          <td>{{ candidateObj.interviewStatus }}</td>
           <td>
             <div class="dropdown actionIcon">
               <span data-toggle="dropdown">
