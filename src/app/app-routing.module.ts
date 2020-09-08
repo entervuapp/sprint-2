@@ -32,6 +32,7 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.INDIVIDUAL_DASHBOARD,
     component: DashboardIndividualComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ORGANIZATION_DASHBOARD,

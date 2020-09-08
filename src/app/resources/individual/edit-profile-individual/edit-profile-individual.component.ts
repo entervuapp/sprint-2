@@ -52,7 +52,7 @@ export class EditProfileIndividualComponent
       editProfile: "Edit profile",
       update: "Update",
       reset: "Reset",
-      mainSkill: "Main skill",
+      primarySkill: "Primary skill",
       firstName: "First name",
       lastName: "Last name",
       male: "Male",
@@ -124,18 +124,22 @@ export class EditProfileIndividualComponent
         data && data.experience ? data.experience : "",
         [Validators.required]
       ),
-      skill: new FormGroup({
+      primarySkill: new FormGroup({
         value: new FormControl(
-          data && data.skill && data.skill.value ? data.skill.value : "",
+          data && data.primarySkill && data.primarySkill.value
+            ? data.primarySkill.value
+            : "",
           [Validators.required]
         ),
         id: new FormControl(
-          data && data.skill && data.skill.id ? data.skill.id : "",
+          data && data.primarySkill && data.primarySkill.id
+            ? data.primarySkill.id
+            : "",
           [Validators.required]
         ),
         description: new FormControl(
-          data && data.skill && data.skill.description
-            ? data.skill.description
+          data && data.primarySkill && data.primarySkill.description
+            ? data.primarySkill.description
             : "",
           [Validators.required]
         ),
@@ -216,7 +220,7 @@ export class EditProfileIndividualComponent
     console.log("on reset", this.myForm.value);
   };
 
-  public onSkillSelect = (skill: ValueDescriptionId): void => {
-    this.myForm.controls.skill.patchValue({ ...skill });
+  public onSkillSelect = (primarySkill: ValueDescriptionId): void => {
+    this.myForm.controls.primarySkill.patchValue({ ...primarySkill });
   };
 }

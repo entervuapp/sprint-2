@@ -19,9 +19,11 @@
       (click)="onClickOfCarousel(slide)"
     >
       <div class="interviewSlideCard">
-        <p class="interviewSlideCardHead">{{ slide.skill.description }}</p>
+        <p class="interviewSlideCardHead">
+          {{ slide && slide.skill && slide.skill.description }}
+        </p>
         <p class="interviewSlideCardMembers">
-          {{ slide.candidatesCount }} Members
+          {{ slide && slide.count ? slide.count : 0 }} Members
         </p>
       </div>
     </div>

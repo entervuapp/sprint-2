@@ -60,7 +60,6 @@ export class SkillsAutocompleteComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes): void {
-    console.log(changes);
     if (
       changes &&
       changes.hasOwnProperty("isTouched") &&
@@ -68,6 +67,16 @@ export class SkillsAutocompleteComponent implements OnInit, OnChanges {
     ) {
       this.isTouched = changes.isTouched.currentValue;
       this.isTouched ? this.formGroup.controls.description.markAsTouched() : "";
+    }
+    if (
+      changes &&
+      changes.hasOwnProperty("renderSkill") &&
+      changes.renderSkill.currentValue
+    ) {
+      this.renderSkill = changes.renderSkill.currentValue;
+      this.renderSkill && this.renderSkill.value
+        ? this.formGroup.patchValue({ ...this.renderSkill })
+        : "";
     }
   }
 

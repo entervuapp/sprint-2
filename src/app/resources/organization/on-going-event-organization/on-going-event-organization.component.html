@@ -1,12 +1,10 @@
 <app-carousel
   [eventDetails]="eventDetails"
   (onSelect)="onSelectOfCarousel($event)"
-  [candidatesList]="candidatesList"
 ></app-carousel>
 
 <app-candidate-queue
-  *ngIf="selectedSlide && eventDetails && candidatesList"
+  *ngIf="selectedSlide && eventDetails"
   [selectedSlide]="selectedSlide"
   [eventDetails]="eventDetails"
-  [candidatesList]="candidatesList"
 ></app-candidate-queue>

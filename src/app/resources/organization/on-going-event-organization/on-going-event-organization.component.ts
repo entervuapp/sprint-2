@@ -17,7 +17,6 @@ export class OnGoingEventOrganizationComponent implements OnInit {
   public eventId: number;
   public selectedSlide: SkillWithCount;
   public eventDetails: object;
-  public candidatesList: any[];
   public SHARED_CONSTANTS;
 
   constructor(
@@ -51,9 +50,8 @@ export class OnGoingEventOrganizationComponent implements OnInit {
     if (eventId) {
       this._subscriptions.add(
         this.manageEventsService.findEvent(eventId).subscribe(
-          (response) => {
-            this.eventDetails = { ...response };
-            this.getCandidatesList(this.eventId);
+          (data) => {
+            this.eventDetails = { ...data.response };
           },
           (errors) => {
             console.log("error", errors);
@@ -66,26 +64,5 @@ export class OnGoingEventOrganizationComponent implements OnInit {
         )
       );
     }
-  };
-
-  private getCandidatesList = (eventId): void => {
-    this._subscriptions.add(
-      this.manageCandidateService.getCandidates().subscribe(
-        (response) => {
-          let allCandidatesList = [...response];
-          this.candidatesList = allCandidatesList.filter(
-            (item) => item.eventId === eventId
-          );
-        },
-        (errors) => {
-          console.log("error", errors);
-          if (errors) {
-            this.objectUtil.showAlert([
-              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
-            ]);
-          }
-        }
-      )
-    );
   };
 }

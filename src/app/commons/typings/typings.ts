@@ -32,8 +32,18 @@ export interface SkillAndActive {
 }
 
 export interface SkillWithCount {
-  skill: ValueDescription;
-  candidatesCount: boolean;
+  skill: Skill;
+  count: number;
+}
+
+export interface Skill {
+  createdBy: string;
+  createdDate: string;
+  description: string;
+  id: number;
+  lastUpdatedBy: string;
+  updatedDate: string;
+  value: string;
 }
 
 export interface NewAny {

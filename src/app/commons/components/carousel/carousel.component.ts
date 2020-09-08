@@ -70,16 +70,46 @@ export class CarouselComponent implements OnInit, OnChanges {
       changes.eventDetails.currentValue
     ) {
       this.eventDetails = changes.eventDetails.currentValue;
-    }
-    if (
-      changes &&
-      changes.hasOwnProperty("candidatesList") &&
-      changes.candidatesList.currentValue
-    ) {
-      this.candidatesList = changes.candidatesList.currentValue;
-      this.getCandidateCategoryCount(this.candidatesList);
+      this.getSkillsAndCandidateCount();
     }
   }
+
+  private getSkillsAndCandidateCount = (): void => {
+    if (
+      this.eventDetails &&
+      this.eventDetails["eventSkills"] &&
+      this.eventDetails["eventSkills"].length
+    ) {
+      this.eventDetails["eventSkills"].map((eachSkill) => {
+        let temp: SkillWithCount = {
+          skill: null,
+          count: null,
+        };
+        temp["skill"] = eachSkill.skill;
+        if (
+          eachSkill &&
+          eachSkill.roundDetails &&
+          eachSkill.roundDetails.length
+        ) {
+          eachSkill.roundDetails.map((eachRound) => {
+            if (eachRound && eachRound.candidates.length) {
+              temp.count = temp.count + eachRound.candidates.length;
+            }
+          });
+        }
+        this.slides.push(temp);
+        if (this.onSelect) {
+          this.onSelect.emit({ ...this.slides[0] });
+        }
+      });
+    }
+  };
+
+  public onClickOfCarousel = (slide): void => {
+    if (this.onSelect) {
+      this.onSelect.emit({ ...slide });
+    }
+  };
 
   public addSlide(): void {
     this.slides.push();
@@ -104,42 +134,4 @@ export class CarouselComponent implements OnInit, OnChanges {
   public beforeChange(e): void {
     // console.log("beforeChange");
   }
-
-  private getCandidateCategoryCount = (list): void => {
-    const countOfCandidatesPerSkill = {};
-    list.forEach((item) => {
-      if (
-        item &&
-        item.skill &&
-        item.skill.value &&
-        countOfCandidatesPerSkill &&
-        countOfCandidatesPerSkill.hasOwnProperty(item.skill.value)
-      ) {
-        countOfCandidatesPerSkill[item.skill.value].candidatesCount++;
-      } else {
-        countOfCandidatesPerSkill[item.skill.value] = {
-          skill: {
-            description: item.skill.description,
-            value: item.skill.value,
-          },
-          candidatesCount: 1,
-        };
-      }
-    });
-
-    for (const key in countOfCandidatesPerSkill) {
-      if (countOfCandidatesPerSkill.hasOwnProperty(key)) {
-        this.slides.push(countOfCandidatesPerSkill[key]);
-      }
-    }
-    if (this.onSelect) {
-      this.onSelect.emit({ ...this.slides[0] });
-    }
-  };
-
-  public onClickOfCarousel = (slide): void => {
-    if (this.onSelect) {
-      this.onSelect.emit({ ...slide });
-    }
-  };
 }
