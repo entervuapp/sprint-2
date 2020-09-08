@@ -45,7 +45,7 @@ export class EditProfileOrganizationComponent
 
   ngOnInit() {
     this.displayTextObject = {
-      editProfile: "Edit profile",
+      organizationDetials: "Organization details",
       update: "Update",
       reset: "Reset",
       firstName: "First name",
@@ -53,7 +53,7 @@ export class EditProfileOrganizationComponent
       officeEmail: "Office email",
       companyCode: "Company code",
       companyName: "Company name",
-      address: "Address",
+      officeAddress: "Office address",
       mobile: "Mobile",
     };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;

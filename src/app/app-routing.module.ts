@@ -80,6 +80,7 @@ const routes: Routes = [
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ON_GOING_EVENT_ORGANIZATION,
     component: OnGoingEventOrganizationComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN,
