@@ -7,7 +7,7 @@
       appFocusInvalidInput
       appFocusFirstEmptyInput
     >
-      <h2>{{ displayTextObject["editProfile"] }}</h2>
+      <h2>{{ displayTextObject["organizationDetails"] }}</h2>
       <div class="form-group formGroupOrgProfile">
         <div class="input-group orgEditPhotoBlock">
           <app-image-upload-and-preview
@@ -108,7 +108,7 @@
               class="form-control"
               name="address"
               id="address"
-              [placeholder]="displayTextObject['address']"
+              [placeholder]="displayTextObject['officeAddress']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'address')
               }"
