@@ -1,20 +1,32 @@
-.appAutoCompleteWrapper{
-    padding: 15px 15px;
+.indi_present_Block {
+  margin: 30px 0px 30px 0px;
 }
-.individualEventListCard {
+.indi_present_Block_head{
+  margin: 15px 0px 0px 0px;
+  display: flex;
+}
+.indi_present_Block_head h2 {
+  border-bottom: 1px solid #00aff5;
+  width: 100%;
+  padding: 0px 0px 14px 0px;
+  margin: 0px;
+  font-size: 26px;
+  color: #ffb302;
+}
+.indi_present_Card {
     border: 2px solid #a1a5a9;
     width: 98%;
-    margin: 15px auto;
+    margin: 12px auto 2px auto;
     padding: 15px 12px 12px 12px;
   }
-  .individualAddEventsTable{
-    margin: 14px 0px 0px 0px;
+  .indi_present_Table{
+    margin: 10px 0px 0px 0px;
     display: flex;
   }
-  .individualEventListCardHead {
+  .indi_present_CardHead {
     margin: 0px 0px 22px 0px;
   }
-  .individualEventListCardHead h3 {
+  .indi_present_CardHead h3 {
     margin: 0px;
     font-size: 22px;
     color: #02434e;
@@ -22,14 +34,66 @@
     width: auto;
     text-decoration: underline;
   }
-  .individualEventListCardContent {
-    margin: 0px 0px 5px 0px;
+  .indi_present_CardContent {
+    margin: 0px 0px 16px 0px;
   }
-  .individualEventListCardContent p {
+  .indi_present_CardContent p {
     font-size: 18px;
     color: #333;
     margin: 0px;
   }
-  .individualEventListCardAddBtn {
-    margin: 0px 0px 8px 0px;
-  }
+ .indi_present_card_footer {
+  margin: 0px 0px 5px 0px;
+ }
+ .indi_present_card_footer p {
+  font-size: 18px;
+  color: #333;
+  margin: 0px;
+}
+.indi_present_location p {
+  margin: 0px;
+  border-top: 1px solid #a1a5a9;
+  padding: 10px 0px 0px 0px;
+  font-size: 14px;
+  color: #333;
+}
+
+
+
+
+
+//   .appAutoCompleteWrapper{
+//     padding: 15px 15px;
+// }
+// .individualEventListCard {
+//     border: 2px solid #a1a5a9;
+//     width: 98%;
+//     margin: 15px auto;
+//     padding: 15px 12px 12px 12px;
+//   }
+//   .individualAddEventsTable{
+//     margin: 14px 0px 0px 0px;
+//     display: flex;
+//   }
+//   .individualEventListCardHead {
+//     margin: 0px 0px 22px 0px;
+//   }
+//   .individualEventListCardHead h3 {
+//     margin: 0px;
+//     font-size: 22px;
+//     color: #02434e;
+//     cursor: pointer;
+//     width: auto;
+//     text-decoration: underline;
+//   }
+//   .individualEventListCardContent {
+//     margin: 0px 0px 5px 0px;
+//   }
+//   .individualEventListCardContent p {
+//     font-size: 18px;
+//     color: #333;
+//     margin: 0px;
+//   }
+//   .individualEventListCardAddBtn {
+//     margin: 0px 0px 8px 0px;
+//   }
