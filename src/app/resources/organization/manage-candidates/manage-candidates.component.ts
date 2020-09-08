@@ -274,6 +274,12 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
       disableClose: true,
     });
 
+    dialogRef.keydownEvents().subscribe((e) => {
+      if (e && e.keyCode === 27) {
+        dialogRef.close();
+      }
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result === "ok") {
         let requestBody = this.prepareRequestForDeleteAndUpdate(

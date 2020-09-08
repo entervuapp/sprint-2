@@ -138,6 +138,12 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
       disableClose: true,
     });
 
+    dialogRef.keydownEvents().subscribe((e) => {
+      if (e && e.keyCode === 27) {
+        dialogRef.close();
+      }
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result === "ok") {
         if (member && member.id) {
@@ -194,8 +200,12 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
     return this.objectUtil.isAuthorized(task);
   };
 
-  public onPromoteDemote = (event, member): void => {
-    console.log(event, member);
+  public onPromoteDemote = (member): void => {
+    let action =
+      member.user.roles[0].name === SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN
+        ? this.displayTextObject["demote"]
+        : this.displayTextObject["promote"];
+    console.log(action);
   };
 
   public isSelf = (member): boolean => {

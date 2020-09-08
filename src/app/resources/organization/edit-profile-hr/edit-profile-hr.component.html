@@ -95,69 +95,6 @@
             [fieldName]="displayTextObject['mobile']"
           ></app-error-message>
         </div>
-        <div class="form-group formGroupOrgProfile">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              name="companyName"
-              id="companyName"
-              [placeholder]="displayTextObject['companyName']"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'companyName')
-              }"
-              formControlName="companyName"
-            />
-          </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'companyName')"
-            [formObject]="myForm"
-            [controlName]="'companyName'"
-            [fieldName]="displayTextObject['companyName']"
-          ></app-error-message>
-        </div>
-        <div class="form-group formGroupOrgProfile">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              name="companyCode"
-              id="companyCode"
-              [placeholder]="displayTextObject['companyCode']"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'companyCode')
-              }"
-              formControlName="companyCode"
-            />
-          </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'companyCode')"
-            [formObject]="myForm"
-            [controlName]="'companyCode'"
-            [fieldName]="displayTextObject['companyCode']"
-          ></app-error-message>
-        </div>
-        <div class="form-group formGroupOrgProfile">
-          <div class="input-group">
-            <textarea
-              type="text"
-              class="form-control"
-              name="address"
-              id="address"
-              [placeholder]="displayTextObject['address']"
-              [ngClass]="{
-                'input-field-error': checkForError(myForm, 'address')
-              }"
-              formControlName="address"
-            ></textarea>
-          </div>
-          <app-error-message
-            *ngIf="checkForError(myForm, 'address')"
-            [formObject]="myForm"
-            [controlName]="'address'"
-            [fieldName]="displayTextObject['address']"
-          ></app-error-message>
-        </div>
       </div>
       <div class="form-group formGroupOrgProfile">
         <app-save-cancel-buttons

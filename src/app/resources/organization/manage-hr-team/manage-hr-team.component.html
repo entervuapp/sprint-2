@@ -80,7 +80,7 @@
                   <a
                     *ngIf="!isSelf(member)"
                     href="javascript:void(0)"
-                    (click)="onPromoteDemote($event, member)"
+                    (click)="onPromoteDemote(member)"
                   >
                     {{
                       member.user.roles[0].name ===
