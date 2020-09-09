@@ -42,6 +42,7 @@ export class API_URLS_CONSTANTS {
         ADD_TEAM_MEMBERS: `${BASE_URL}/teams`,
         UPDATE_TEAM_MEMBERS: `${BASE_URL}/teams`,
         DELETE_TEAM_MEMBERS: `${BASE_URL}/teams`,
+        UPDATE_HR_ROLE: `${BASE_URL}/entervu/company/role`,
       },
     },
     INDIVIDUAL: {
@@ -51,6 +52,9 @@ export class API_URLS_CONSTANTS {
         DELETE: `${BASE_URL}/entervu/user/`,
         GET_PROFILE: `${BASE_URL}/entervu/candidate/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/candidate/user`,
+      },
+      MANAGE_EVENTS: {
+        GET_INDIVIDUAL_EVENTS: `${BASE_URL}/entervu/event/candidate/`,
       },
     },
     ADMIN: {

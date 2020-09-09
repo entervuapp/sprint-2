@@ -205,7 +205,27 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
       member.user.roles[0].name === SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN
         ? this.displayTextObject["demote"]
         : this.displayTextObject["promote"];
-    console.log(action);
+    let requestBody = {
+      userId: this.userDetails["id"],
+      action: action.toUpperCase(),
+    };
+    this._subscriptions.add(
+      this.manageHrTeamService.updateHrRole(requestBody).subscribe(
+        (response) => {
+          console.log(response);
+          this.objectUtil.showAlert([
+            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
+          ]);
+        },
+        (errors) => {
+          if (errors) {
+            this.objectUtil.showAlert([
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+            ]);
+          }
+        }
+      )
+    );
   };
 
   public isSelf = (member): boolean => {

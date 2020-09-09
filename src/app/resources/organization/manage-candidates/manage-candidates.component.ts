@@ -470,7 +470,8 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
             ) !== -1) ||
           (candidateObj &&
             candidateObj.invitedBy &&
-            candidateObj.invitedBy
+            candidateObj.invitedBy.firstName &&
+            candidateObj.invitedBy.firstName
               .toLowerCase()
               .indexOf(this.candidateSearchControl.value.toLowerCase()) !== -1)
       );
