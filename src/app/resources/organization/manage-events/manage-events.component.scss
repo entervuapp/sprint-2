@@ -69,19 +69,19 @@
 }
 .skillRoundsDetailBlock .eventRoundsBtn.roundsNotAdded {
   color: #fff;
-    font-size: 16px;
-    padding: 2px 8px 2px 8px;
-    border-radius: 2px;
-    box-shadow: 0px 0px 2px #333;
-    background: #dd2f62;
-    cursor: pointer;
-    margin: 0px;
-    display: inline-block;
+  font-size: 16px;
+  padding: 2px 8px 2px 8px;
+  border-radius: 2px;
+  box-shadow: 0px 0px 2px #333;
+  background: #dd2f62;
+  cursor: pointer;
+  margin: 0px;
+  display: inline-block;
 }
 .green {
   background-color: green !important;
 }
-.skillRoundsDetailBlock .eventRoundsData{
+.skillRoundsDetailBlock .eventRoundsData {
   font-size: 16px;
   color: #333;
   margin: 0px;
@@ -254,4 +254,8 @@
   color: #196f7d;
   background: #fff;
   border: 1px solid #196f7d;
+}
+
+.is-invalid {
+  color: red;
 }

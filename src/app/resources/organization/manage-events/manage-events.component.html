@@ -208,6 +208,14 @@
                   >
                     - {{ displaySkills(i) }}
                   </span>
+                  <span
+                    class="error"
+                    data-toggle="tooltip"
+                    *ngIf="skillObj['roundDetailsList'].length === 0"
+                    [title]="displaySkills(i, true)"
+                  >
+                    - {{ displayTextObject["roundDetailsMissing"] }}
+                  </span>
                 </td>
                 <td class="editRemoveBtns">
                   <input
@@ -232,7 +240,10 @@
       <div class="eventsSubmitCancelBtns">
         <app-save-cancel-buttons
           (onSave)="
-            formGroupObject.valid && validateSkillSubmit('save') && onSave()
+            checkForRoundDetailsValidity() &&
+              formGroupObject.valid &&
+              validateSkillSubmit('save') &&
+              onSave()
           "
           (onCancel)="onReset()"
           [saveButtonName]="formGroupObject.value.id ? 'Update' : 'Save'"
@@ -366,40 +377,58 @@
       <!-- Modal body -->
       <div class="modal-body">
         <div class="addRoundsDetailsForm">
-          <div class="addRoundsDetailsFormCard">
-            <div class="addRoundsDetailsFormFields">
-              <div
-                class="form-group"
-                *ngFor="
-                  let skill of skillObjForPopup['roundDetailsList'];
-                  let i = index
-                "
-              >
-                <label for="time"
-                  >{{ displayTextObject["round"] }} {{ i + 1 }}:</label
+          <br />
+          <form name="form" #f="ngForm" novalidate>
+            <div class="addRoundsDetailsFormCard">
+              <div class="addRoundsDetailsFormFields">
+                <div
+                  class="form-group"
+                  *ngFor="
+                    let skill of skillObjForPopup['roundDetailsList'];
+                    let i = index
+                  "
                 >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="round{{ i + 1 }}"
-                  name="round{{ i + 1 }}"
-                  [ngModel]="skill.roundName"
-                  (blur)="onRoundNameBlur($event, skill)"
-                />
+                  <label for="time"
+                    >{{ displayTextObject["round"] }} {{ i + 1 }}:</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="round{{ i + 1 }}"
+                    name="round{{ i + 1 }}"
+                    [(ngModel)]="skill.roundName"
+                    (blur)="onRoundNameBlur($event, skill)"
+                    [ngClass]="{
+                      'input-field-error':
+                        skill.roundName === '' && roundsDetailsFormSubmitted
+                    }"
+                    required
+                  />
+                  <div
+                    class="error"
+                    *ngIf="skill.roundName === '' && roundsDetailsFormSubmitted"
+                  >
+                    Required
+                  </div>
+                </div>
+              </div>
+              <div class="addRoundsDetailsFormBtns">
+                <button
+                  id="submit1"
+                  #roundNamesSubmit
+                  type="submit"
+                  class="btn btn-primary"
+                  (click)="
+                    (roundsDetailsFormSubmitted = true) &&
+                      f.valid &&
+                      onRoundNamesSubmit()
+                  "
+                >
+                  {{ displayTextObject["submit"] }}
+                </button>
               </div>
             </div>
-            <div class="addRoundsDetailsFormBtns">
-              <button
-                id="submit1"
-                #roundNamesSubmit
-                type="submit"
-                class="btn btn-primary"
-                (click)="onRoundNamesSubmit()"
-              >
-                {{ displayTextObject["submit"] }}
-              </button>
-            </div>
-          </div>
+          </form>
           <div class="addRoundsDetailsOptionsCard">
             <h3>{{ displayTextObject["options"] }}</h3>
             <span
