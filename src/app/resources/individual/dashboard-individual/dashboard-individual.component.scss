@@ -13,26 +13,33 @@
   font-size: 26px;
   color: #ffb302;
 }
-.indi_present_Card {
+  .indi_present_Table{
+    margin: 10px 0px 0px 0px;
+    display: flex;
+  }
+  .indi_present_Card {
     border: 2px solid #a1a5a9;
     width: 98%;
     margin: 12px auto 2px auto;
     padding: 15px 12px 12px 12px;
   }
-  .indi_present_Table{
-    margin: 10px 0px 0px 0px;
-    display: flex;
-  }
-  .indi_present_CardHead {
+  .indi_present_CompanyName {
     margin: 0px 0px 22px 0px;
   }
-  .indi_present_CardHead h3 {
+  .indi_present_CompanyName h3 {
     margin: 0px;
     font-size: 22px;
     color: #02434e;
-    cursor: pointer;
     width: auto;
-    text-decoration: underline;
+  }
+  .indi_present_CardHead {
+    margin: 0px 0px 20px 0px;
+  }
+  .indi_present_CardHead h3 {
+    margin: 0px;
+    font-size: 18px;
+    color: #333;
+    width: auto;
   }
   .indi_present_CardContent {
     margin: 0px 0px 16px 0px;
