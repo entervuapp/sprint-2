@@ -4,6 +4,7 @@ import { DashboardIndividualComponent } from "./dashboard-individual/dashboard-i
 import { ROUTE_URL_PATH_CONSTANTS } from "../../commons/constants/route-url-path.constants";
 import { RegistrationIndividualService } from "./registration-individual/registration-individual/registration-individual.service";
 import { EditProfileIndividualService } from "./edit-profile-individual/edit-profile-individual/edit-profile-individual.service";
+import { DashboardIndividualService } from "./dashboard-individual/dashboard-individual/dashboard-individual.service";
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
 const SERVICES_LIST = [
   RegistrationIndividualService,
   EditProfileIndividualService,
+  DashboardIndividualService,
 ];
 
 @NgModule({

@@ -1,9 +1,11 @@
+import { Subscription } from "rxjs";
 import { AppComponent } from "./../../../app.component";
 import { NewAny } from "src/app/commons/typings/typings";
 import { Component, OnInit } from "@angular/core";
 import { ManageHeaderService } from "../../../commons/services/manage-header/manage-header.service";
 import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 import { ActivatedRoute } from "@angular/router";
+import { DashboardIndividualService } from "./dashboard-individual/dashboard-individual.service";
 
 interface OrganizationNameButton {
   companyName: string;
@@ -22,11 +24,13 @@ export class DashboardIndividualComponent
   public organizationList: OrganizationNameButton[];
   public eventsList: any[];
   public userDetails: object;
+  private _subscriptions = new Subscription();
 
   constructor(
     public manageHeaderService: ManageHeaderService,
     public userDetailsService: UserDetailsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dashboardIndividualService: DashboardIndividualService
   ) {
     super();
   }
@@ -45,11 +49,30 @@ export class DashboardIndividualComponent
       this.setUserDetails();
     }
 
-    // this.organizationList = [
-    //   { companyCode: "TCS", companyName: "TCS", active: true },
-    //   { companyCode: "INFOSYS", companyName: "INFOSYS", active: false },
-    // ];
+    this.getIndividualEvents();
   }
+
+  private getIndividualEvents = (): void => {
+    this._subscriptions.add(
+      this.dashboardIndividualService
+        .getUserMappedEvents(this.userDetails["id"])
+        .subscribe(
+          (data) => {
+            if (data && data["response"] && data["response"].length) {
+              this.eventsList = [...data.response];
+            } else {
+              this.eventsList = [];
+            }
+          },
+          (errors) => {
+            console.log("errors", errors);
+            this.objectUtil.showAlert(
+              this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR
+            );
+          }
+        )
+    );
+  };
 
   // public onOrganizationClick = (organization: OrganizationNameButton): void => {
   //   this.organizationList.forEach((element) => {

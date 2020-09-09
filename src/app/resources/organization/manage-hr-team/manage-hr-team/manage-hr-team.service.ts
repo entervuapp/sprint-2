@@ -14,6 +14,11 @@ export class ManageHrTeamService {
       API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.GET_TEAM_MEMBERS;
     return this.http.get(url);
   };
+  public updateHrRole = (requestBody): Observable<any> => {
+    let url =
+      API_URLS_CONSTANTS.API_URLS.ORGANIZATION.MANAGE_HR_TEAM.UPDATE_HR_ROLE;
+    return this.http.put(url, requestBody);
+  };
 
   public addMember = (requestBody): Observable<any> => {
     const headersData = new HttpHeaders();

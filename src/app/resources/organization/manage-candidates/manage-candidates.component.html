@@ -159,7 +159,12 @@
                 <td>{{ candidateObj.candidate.user.email }}</td>
                 <td>{{ candidateObj.candidate.user.contactNumber }}</td>
                 <td>{{ candidateObj.candidate.experience }}</td>
-                <td>{{ candidateObj.invitedBy }}</td>
+                <td>
+                  {{ candidateObj.invitedBy.firstName }}
+                  <span *ngIf="candidateObj.invitedBy.lastName">
+                    - {{ candidateObj.invitedBy.lastName }}</span
+                  >
+                </td>
                 <td>
                   <a href="javascript:void(0)" (click)="onEdit(candidateObj)">
                     {{ displayTextObject["edit"] }}

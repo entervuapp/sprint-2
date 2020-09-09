@@ -1,311 +1,275 @@
 <div class="indi_dashboardWrapper">
-   <div class="container">
-      <div class="indi_present_Block">
-        <div class="indi_present_Block_head">
-          <h2>Present Interview List</h2>
-        </div>
-        <div class="indi_present_Table">
-          <div class="indi_present_Card">
-            <div class="indi_present_CompanyName">
-              <div class="row">
-                 <div class="col-sm-12">
-                    <h3>TCS</h3>
-                 </div>
-              </div>
-            </div>
-            <div class="indi_present_CardHead">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h3>
-                    Test Megadrive
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_CardContent">
-              <div class="row">
-                <div class="col-sm-4">
-                  <p class="indi_present_date">07/23/2020</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_time">09:30AM</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_skills">Angular Js, React Js</p>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_card_footer">
-              <div class="row">
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para" data-toggle="collapse" data-target="#demo">Location</p>
-                 </div>
-                 <div class="col-sm-4"></div>
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Where i am</p>
-                 </div>
-              </div>
-            </div>
-            <div class="collapse indi_present_location" id="demo">
-              <div class="row">
-                <div class="col-sm-12">
-                  <p>Lorem ipsum dolor sit amet</p>
-                </div>
-             </div>
-            </div>
-          </div>
-        </div>
-        <div class="indi_present_Table">
-          <div class="indi_present_Card">
-            <div class="indi_present_CompanyName">
-              <div class="row">
-                 <div class="col-sm-12">
-                    <h3>TCS</h3>
-                 </div>
-              </div>
-            </div>
-            <div class="indi_present_CardHead">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h3>
-                    Test Megadrive
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_CardContent">
-              <div class="row">
-                <div class="col-sm-4">
-                  <p class="indi_present_date">07/23/2020</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_time">09:30AM</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_skills">Angular Js, React Js</p>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_card_footer">
-              <div class="row">
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Location</p>
-                 </div>
-                 <div class="col-sm-4"></div>
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Where i am</p>
-                 </div>
+  <div class="container">
+    <div class="indi_present_Block">
+      <div class="indi_present_Block_head">
+        <h2>Present Interview List</h2>
+      </div>
+      <div class="indi_present_Table" *ngFor="let eventObj of eventsList">
+        <div class="indi_present_Card">
+          <div class="indi_present_CompanyName">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>Company code: {{ eventObj.companyCode }}</h3>
               </div>
             </div>
           </div>
-        </div>
-        <div class="indi_present_Table" *ngIf="eventsList && eventsList.length === 0">
-          <app-no-records-found
-            [message]="'No events found.'"
-          ></app-no-records-found>
+          <div class="indi_present_CardHead">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>{{ eventObj.eventName }}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_CardContent">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_date">
+                  <app-display-date
+                    [dateInput]="eventObj && eventObj.eventDate"
+                  ></app-display-date>
+                </p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_time">{{ eventObj.eventTime }}</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_skills">Angular Js, React Js</p>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_card_footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <p
+                  class="indi_present_footer_para"
+                  data-toggle="collapse"
+                  data-target="#demo"
+                >
+                  Location
+                </p>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Where i am</p>
+              </div>
+            </div>
+          </div>
+          <div class="collapse indi_present_location" id="demo">
+            <div class="row">
+              <div class="col-sm-12">
+                <p>Lorem ipsum dolor sit amet</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <div
+        class="indi_present_Table"
+        *ngIf="eventsList && eventsList.length === 0"
+      >
+        <app-no-records-found
+          [message]="'No events found.'"
+        ></app-no-records-found>
+      </div>
+    </div>
 
-      <div class="indi_present_Block">
-        <div class="indi_present_Block_head">
-          <h2>future Interview List</h2>
-        </div>
-        <div class="indi_present_Table">
-          <div class="indi_present_Card">
-            <div class="indi_present_CompanyName">
-              <div class="row">
-                 <div class="col-sm-12">
-                    <h3>TCS</h3>
-                 </div>
-              </div>
-            </div>
-            <div class="indi_present_CardHead">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h3>
-                    Test Megadrive
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_CardContent">
-              <div class="row">
-                <div class="col-sm-4">
-                  <p class="indi_present_date">07/23/2020</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_time">09:30AM</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_skills">Angular Js, React Js</p>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_card_footer">
-              <div class="row">
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Location</p>
-                 </div>
-                 <div class="col-sm-4"></div>
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Where i am</p>
-                 </div>
+    <div class="indi_present_Block">
+      <div class="indi_present_Block_head">
+        <h2>future Interview List</h2>
+      </div>
+      <div class="indi_present_Table">
+        <div class="indi_present_Card">
+          <div class="indi_present_CompanyName">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>TCS</h3>
               </div>
             </div>
           </div>
-        </div>
-        <div class="indi_present_Table">
-          <div class="indi_present_Card">
-            <div class="indi_present_CompanyName">
-              <div class="row">
-                 <div class="col-sm-12">
-                    <h3>TCS</h3>
-                 </div>
-              </div>
-            </div>
-            <div class="indi_present_CardHead">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h3>
-                    Test Megadrive
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_CardContent">
-              <div class="row">
-                <div class="col-sm-4">
-                  <p class="indi_present_date">07/23/2020</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_time">09:30AM</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_skills">Angular Js, React Js</p>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_card_footer">
-              <div class="row">
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Location</p>
-                 </div>
-                 <div class="col-sm-4"></div>
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Where i am</p>
-                 </div>
+          <div class="indi_present_CardHead">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>Test Megadrive</h3>
               </div>
             </div>
           </div>
-        </div>
-        <div class="indi_present_Table" *ngIf="eventsList && eventsList.length === 0">
-          <app-no-records-found
-            [message]="'No events found.'"
-          ></app-no-records-found>
+          <div class="indi_present_CardContent">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_date">07/23/2020</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_time">09:30AM</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_skills">Angular Js, React Js</p>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_card_footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Location</p>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Where i am</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <div class="indi_present_Table">
+        <div class="indi_present_Card">
+          <div class="indi_present_CompanyName">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>TCS</h3>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_CardHead">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>Test Megadrive</h3>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_CardContent">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_date">07/23/2020</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_time">09:30AM</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_skills">Angular Js, React Js</p>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_card_footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Location</p>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Where i am</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="indi_present_Table"
+        *ngIf="eventsList && eventsList.length === 0"
+      >
+        <app-no-records-found
+          [message]="'No events found.'"
+        ></app-no-records-found>
+      </div>
+    </div>
 
-      <div class="indi_present_Block">
-        <div class="indi_present_Block_head">
-          <h2>Past Interview List</h2>
-        </div>
-        <div class="indi_present_Table">
-          <div class="indi_present_Card">
-            <div class="indi_present_CompanyName">
-              <div class="row">
-                 <div class="col-sm-12">
-                    <h3>TCS</h3>
-                 </div>
-              </div>
-            </div>
-            <div class="indi_present_CardHead">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h3>
-                    Test Megadrive
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_CardContent">
-              <div class="row">
-                <div class="col-sm-4">
-                  <p class="indi_present_date">07/23/2020</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_time">09:30AM</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_skills">Angular Js, React Js</p>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_card_footer">
-              <div class="row">
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Location</p>
-                 </div>
-                 <div class="col-sm-4"></div>
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Where i am</p>
-                 </div>
+    <div class="indi_present_Block">
+      <div class="indi_present_Block_head">
+        <h2>Past Interview List</h2>
+      </div>
+      <div class="indi_present_Table">
+        <div class="indi_present_Card">
+          <div class="indi_present_CompanyName">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>TCS</h3>
               </div>
             </div>
           </div>
-        </div>
-        <div class="indi_present_Table">
-          <div class="indi_present_Card">
-            <div class="indi_present_CompanyName">
-              <div class="row">
-                 <div class="col-sm-12">
-                    <h3>TCS</h3>
-                 </div>
-              </div>
-            </div>
-            <div class="indi_present_CardHead">
-              <div class="row">
-                <div class="col-sm-12">
-                  <h3>
-                    Test Megadrive
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_CardContent">
-              <div class="row">
-                <div class="col-sm-4">
-                  <p class="indi_present_date">07/23/2020</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_time">09:30AM</p>
-                </div>
-                <div class="col-sm-4">
-                  <p class="indi_present_skills">Angular Js, React Js</p>
-                </div>
-              </div>
-            </div>
-            <div class="indi_present_card_footer">
-              <div class="row">
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Location</p>
-                 </div>
-                 <div class="col-sm-4"></div>
-                 <div class="col-sm-4">
-                   <p class="indi_present_footer_para">Where i am</p>
-                 </div>
+          <div class="indi_present_CardHead">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>Test Megadrive</h3>
               </div>
             </div>
           </div>
-        </div>
-        <div class="indi_present_Table" *ngIf="eventsList && eventsList.length === 0">
-          <app-no-records-found
-            [message]="'No events found.'"
-          ></app-no-records-found>
+          <div class="indi_present_CardContent">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_date">07/23/2020</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_time">09:30AM</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_skills">Angular Js, React Js</p>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_card_footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Location</p>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Where i am</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-   </div>
+      <div class="indi_present_Table">
+        <div class="indi_present_Card">
+          <div class="indi_present_CompanyName">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>TCS</h3>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_CardHead">
+            <div class="row">
+              <div class="col-sm-12">
+                <h3>Test Megadrive</h3>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_CardContent">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_date">07/23/2020</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_time">09:30AM</p>
+              </div>
+              <div class="col-sm-4">
+                <p class="indi_present_skills">Angular Js, React Js</p>
+              </div>
+            </div>
+          </div>
+          <div class="indi_present_card_footer">
+            <div class="row">
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Location</p>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4">
+                <p class="indi_present_footer_para">Where i am</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="indi_present_Table"
+        *ngIf="eventsList && eventsList.length === 0"
+      >
+        <app-no-records-found
+          [message]="'No events found.'"
+        ></app-no-records-found>
+      </div>
+    </div>
+  </div>
 </div>
-
 
 <!-- <div class="individualDashboard">
   <div class="companyList">
