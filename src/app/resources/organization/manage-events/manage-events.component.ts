@@ -49,6 +49,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   public newRoundNames: string[];
   public editedSkillRoundDetails = [];
   public userDetails: object;
+  public roundsDetailsFormSubmitted: boolean;
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
@@ -68,6 +69,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.roundsDetailsFormSubmitted = false;
     this.userDetails = null;
     this.newRoundNames = [];
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
@@ -76,6 +78,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     this.ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
     this.eventsList = [];
     this.displayTextObject = {
+      roundDetailsMissing: "Please add round details",
+      fewRoundDetailsMissing: "Few round details are missing",
       name: "Name",
       eventDate: "Date",
       eventTime: "Time",
@@ -673,6 +677,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   };
 
   public onClickOfNumberOfRounds = (skillObj): void => {
+    this.roundsDetailsFormSubmitted = false;
     this.skillObjForPopup = {};
     this.skillObjForPopup = JSON.parse(JSON.stringify(skillObj));
     if (
@@ -734,6 +739,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       }
     }
     this.skillObjForPopup = {};
+    this.roundsDetailsFormSubmitted = false;
     let elem2: HTMLElement = document.querySelector(
       "#addRoundsPopup .close"
     ) as HTMLElement;
@@ -845,5 +851,19 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       let skillObj = this.skillOptionsList.find((skill) => skill.id === id);
       return skillObj.description;
     }
+  };
+
+  public checkForRoundDetailsValidity = (): boolean => {
+    let isValid = true;
+    this.skillsList.map((eachSkill) => {
+      if (
+        eachSkill &&
+        eachSkill["roundDetailsList"] &&
+        eachSkill["roundDetailsList"].length === 0
+      ) {
+        isValid = false;
+      }
+    });
+    return isValid;
   };
 }
