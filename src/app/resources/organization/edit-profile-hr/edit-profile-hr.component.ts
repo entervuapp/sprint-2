@@ -92,7 +92,10 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
         ]
       ),
       email: new FormControl(
-        data && data.user && data.user.email ? data.user.email : "",
+        {
+          value: data && data.user && data.user.email ? data.user.email : "",
+          disabled: true,
+        },
         [Validators.required, Validators.email]
       ),
     });

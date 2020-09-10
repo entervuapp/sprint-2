@@ -15,7 +15,7 @@ export class API_URLS_CONSTANTS {
     ORGANIZATION: {
       USER: {
         CHANGE_PASSWORD: `${BASE_URL}/entervu/password`,
-        DELETE: `${BASE_URL}/entervu/user/`,
+        DELETE_HR: `${BASE_URL}/entervu/company/user/`,
         REGISTRATION: `${BASE_URL}/entervu/company/register`,
         GET_PROFILE: `${BASE_URL}/entervu/company/user/`,
         UPDATE_PROFILE: `${BASE_URL}/entervu/company/user`,

@@ -52,6 +52,7 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
       addTeamMember: "Add team member",
       officeEmail: "Office email",
       teamList: "Team list",
+      teamMembers: "Team members",
       delete: "Delete",
       promote: "Promote",
       demote: "Demote",
@@ -206,16 +207,16 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
         ? this.displayTextObject["demote"]
         : this.displayTextObject["promote"];
     let requestBody = {
-      userId: this.userDetails["id"],
+      userId: member.id,
       action: action.toUpperCase(),
     };
     this._subscriptions.add(
       this.manageHrTeamService.updateHrRole(requestBody).subscribe(
         (response) => {
-          console.log(response);
           this.objectUtil.showAlert([
             ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
           ]);
+          this.getTeamMembers();
         },
         (errors) => {
           if (errors) {

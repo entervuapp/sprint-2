@@ -45,16 +45,17 @@ export class EditProfileOrganizationComponent
 
   ngOnInit() {
     this.displayTextObject = {
-      organizationDetials: "Organization details",
+      organizationDetails: "Organization details",
       update: "Update",
       reset: "Reset",
       firstName: "First name",
       lastName: "Last name",
       officeEmail: "Office email",
+      organizationEmail: "Organization email",
       companyCode: "Company code",
       companyName: "Company name",
       officeAddress: "Office address",
-      mobile: "Mobile",
+      contactNumber: "Contact number",
     };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     if (this.manageHeaderService) {
@@ -75,12 +76,13 @@ export class EditProfileOrganizationComponent
   private initializeForm = (data): void => {
     this.myForm = this.fb.group({
       imageUrl: new FormControl(
-        data && data.user && data.user.imageUrl ? data.user.imageUrl : ""
+        data && data.organization && data.organization.imageUrl
+          ? data.organization.imageUrl
+          : ""
       ),
-      id: new FormControl(data && data.id ? data.id : null),
       contactNumber: new FormControl(
-        data && data.user && data.user.contactNumber
-          ? data.user.contactNumber
+        data && data.organization && data.organization.contactNumber
+          ? data.organization.contactNumber
           : null,
         [
           Validators.required,
@@ -89,7 +91,9 @@ export class EditProfileOrganizationComponent
         ]
       ),
       email: new FormControl(
-        data && data.user && data.user.email ? data.user.email : "",
+        data && data.organization && data.organization.companyEmail
+          ? data.organization.companyEmail
+          : "",
         [Validators.required, Validators.email]
       ),
       companyName: new FormControl(
@@ -109,8 +113,11 @@ export class EditProfileOrganizationComponent
         [Validators.required, Validators.min(3)]
       ),
       address: new FormControl(
-        data && data.address && data.address.addressLine1
-          ? data.address.addressLine1
+        data &&
+        data.organization &&
+        data.organization.address &&
+        data.organization.address.addressLine1
+          ? data.organization.address.addressLine1
           : "",
         [Validators.required, Validators.min(10)]
       ),
@@ -131,24 +138,7 @@ export class EditProfileOrganizationComponent
 
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
-    requestBody["officeEmail"] = requestBody.email;
-    requestBody["mobileNumber"] = requestBody.contactNumber;
-    requestBody.clientName =
-      this.userDetails &&
-      this.userDetails["user"] &&
-      this.userDetails["user"]["client"] &&
-      this.userDetails["user"]["client"].clientName
-        ? this.userDetails["user"]["client"].clientName
-        : "";
-    requestBody.role =
-      this.userDetails &&
-      this.userDetails["user"] &&
-      this.userDetails["user"]["roles"] &&
-      this.userDetails["user"]["roles"][0] &&
-      this.userDetails["user"]["roles"][0].name
-        ? this.userDetails["user"]["roles"][0].name
-        : "";
-
+    requestBody["companyEmail"] = requestBody.email;
     requestBody["address"] = {
       addressLine1: this.myForm.value.address,
       addressLine2: "string",
@@ -157,21 +147,24 @@ export class EditProfileOrganizationComponent
       postalCode: "string",
       country: "string",
     };
+    requestBody["name"] = requestBody["companyName"];
     this._subscriptions.add(
-      this.editProfileOrganizationService.updateProfile(requestBody).subscribe(
-        (response) => {
-          this.objectUtil.showAlert([
-            ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
-          ]);
-        },
-        (errors) => {
-          if (errors) {
+      this.editProfileOrganizationService
+        .updateOrganizationProfile(requestBody)
+        .subscribe(
+          (response) => {
             this.objectUtil.showAlert([
-              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
             ]);
+          },
+          (errors) => {
+            if (errors) {
+              this.objectUtil.showAlert([
+                ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.ERROR,
+              ]);
+            }
           }
-        }
-      )
+        )
     );
   };
 
