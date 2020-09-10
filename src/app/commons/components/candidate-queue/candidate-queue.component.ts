@@ -30,6 +30,7 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
         { displayText: "Leaving for the day", dataTarget: "leaveForDayPopup" },
         { displayText: "Feedback", dataTarget: "feedbackPopup" },
       ],
+      queueTableTitle: `${this.selectedSlide.skill.description} interview candidates`,
       breakStatus: "Break status",
       email: "Email",
       comment: "Comment",
@@ -50,6 +51,11 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
       changes.selectedSlide.currentValue
     ) {
       this.selectedSlide = changes.selectedSlide.currentValue;
+      if (this.displayTextObject && this.displayTextObject["queueTableTitle"]) {
+        this.displayTextObject[
+          "queueTableTitle"
+        ] = `${this.selectedSlide.skill.description} interview candidates`;
+      }
       this.prepareRoundsDisplay();
     }
 
@@ -104,6 +110,8 @@ export class CandidateQueueComponent implements OnInit, OnChanges {
   };
 
   public onRoundsTabClick = (roundObj): void => {
+    this.displayTextObject["queueTableTitle"] =
+      roundObj.roundName + " interview candidates";
     roundObj.active = true;
     this.roundsList.forEach((round) => {
       if (round.id === roundObj.id) {

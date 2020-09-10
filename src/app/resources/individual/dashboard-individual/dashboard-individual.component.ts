@@ -6,6 +6,7 @@ import { ManageHeaderService } from "../../../commons/services/manage-header/man
 import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
 import { ActivatedRoute } from "@angular/router";
 import { DashboardIndividualService } from "./dashboard-individual/dashboard-individual.service";
+import { DatePipe } from "@angular/common";
 
 interface OrganizationNameButton {
   companyName: string;
@@ -22,20 +23,33 @@ export class DashboardIndividualComponent
   extends AppComponent
   implements OnInit {
   public organizationList: OrganizationNameButton[];
-  public eventsList: any[];
+  public todaysEventList: any[];
+  public pastEventsList: any[];
+  public upComingEventsList: any[];
+  public originalEventsList: any[];
   public userDetails: object;
   private _subscriptions = new Subscription();
+  public displayTextObject: object;
 
   constructor(
     public manageHeaderService: ManageHeaderService,
     public userDetailsService: UserDetailsService,
     private activatedRoute: ActivatedRoute,
-    private dashboardIndividualService: DashboardIndividualService
+    private dashboardIndividualService: DashboardIndividualService,
+    private datePipe: DatePipe
   ) {
     super();
   }
 
   ngOnInit() {
+    this.todaysEventList = [];
+    this.upComingEventsList = [];
+    this.pastEventsList = [];
+    this.displayTextObject = {
+      todaysInterview: "Today's interview",
+      upComingInterviews: "Upcoming interviews",
+      pastInterviews: "Past interviews",
+    };
     if (
       this.manageHeaderService &&
       this.manageHeaderService.updateHeaderVisibility
@@ -59,9 +73,10 @@ export class DashboardIndividualComponent
         .subscribe(
           (data) => {
             if (data && data["response"] && data["response"].length) {
-              this.eventsList = [...data.response];
+              this.originalEventsList = [...data.response];
+              this.filterEventsAsPerDate();
             } else {
-              this.eventsList = [];
+              this.originalEventsList = [];
             }
           },
           (errors) => {
@@ -74,15 +89,30 @@ export class DashboardIndividualComponent
     );
   };
 
-  // public onOrganizationClick = (organization: OrganizationNameButton): void => {
-  //   this.organizationList.forEach((element) => {
-  //     if (element && element.companyCode === organization.companyCode) {
-  //       element.active = true;
-  //     } else {
-  //       element.active = false;
-  //     }
-  //   });
-  // };
+  private filterEventsAsPerDate = (): void => {
+    if (this.originalEventsList && this.originalEventsList.length) {
+      this.originalEventsList.map((eachEvent) => {
+        let eventDate = this.datePipe.transform(
+          eachEvent.eventDate,
+          "MM/dd/yyyy"
+        );
+        let todaysDate = this.datePipe.transform(new Date(), "MM/dd/yyyy");
+        let eventDateFormat = new Date(eventDate).getTime();
+        let todaysDateFormat = new Date(todaysDate).getTime();
+        if (eventDateFormat > todaysDateFormat) {
+          this.upComingEventsList.push(eachEvent);
+        } else if (eventDateFormat < todaysDateFormat) {
+          this.pastEventsList.push(eachEvent);
+        } else if (eventDateFormat === todaysDateFormat) {
+          this.todaysEventList.push(eachEvent);
+        }
+      });
+    } else {
+      this.todaysEventList = [];
+      this.pastEventsList = [];
+      this.upComingEventsList = [];
+    }
+  };
 
   // public navigateToScreen = (): void => {};
   // public prepareSkillsForDisplay = (): void => {};

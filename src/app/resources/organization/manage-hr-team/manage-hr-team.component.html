@@ -69,12 +69,13 @@
               <tr *ngFor="let member of teamMembersList; let i = index">
                 <td scope="row">
                   {{ member && member.user && member.user.firstName }}
+                  {{ member && member.user && member.user.lastName }}
                 </td>
                 <td scope="row">
                   {{ member && member.user && member.user.email }}
                 </td>
                 <td scope="row">
-                  {{ member && member.user && member.user.mobile }}
+                  {{ member && member.user && member.user.contactNumber }}
                 </td>
                 <td scope="row" *ngIf="hasCapability('promoteDemote')">
                   <a

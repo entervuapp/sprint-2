@@ -80,6 +80,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     this.displayTextObject = {
       roundDetailsMissing: "Please add round details",
       fewRoundDetailsMissing: "Few round details are missing",
+      createEvent: "Create event",
       name: "Name",
       eventDate: "Date",
       eventTime: "Time",
