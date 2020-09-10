@@ -73,7 +73,7 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
       reset: "Reset",
       add: "Add",
       update: "Update",
-      candidateList: "Candidates list",
+      invitedCandidates: "Invited candidates",
       edit: "Edit",
       delete: "Delete",
       headerList: [
@@ -157,7 +157,6 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
             this.eventDetails = { ...data.response };
             this.prepareSkillDropDwon();
             this.onSkillSelect(this.skillDropDownList[0]);
-            // this.getCandidatesList(this.eventId);
             this.filterCandidatesForSkill();
           },
           (errors) => {

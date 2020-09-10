@@ -1,5 +1,5 @@
 <div class="interviewQueue">
-  <h3 class="interviewQueueHead">Java Interview Candidents list</h3>
+  <h3 class="interviewQueueHead">{{ displayTextObject["queueTableTitle"] }}</h3>
   <ul class="nav nav-tabs">
     <li class="nav-item" *ngFor="let round of roundsList; let i = index">
       <a
@@ -43,6 +43,14 @@
               </ul>
             </div>
           </td>
+        </tr>
+        <tr
+          *ngIf="
+            (filteredCandidateList && filteredCandidateList.length === 0) ||
+            !filteredCandidateList
+          "
+        >
+          <app-no-records-found></app-no-records-found>
         </tr>
       </tbody>
     </table>

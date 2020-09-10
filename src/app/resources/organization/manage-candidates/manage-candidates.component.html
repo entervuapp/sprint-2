@@ -1,4 +1,8 @@
 <div class="addCandidatesBlock container">
+  {{ eventDetails.eventName }} -
+  <app-display-date
+    [dateInput]="eventDetails && eventDetails.eventDate"
+  ></app-display-date>
   <div class="addCandidatesFormBlock">
     <form [formGroup]="myForm" appHighlightRequiredFields appFocusInvalidInput>
       <h2>{{ displayTextObject["addCandidate"] }}</h2>
@@ -103,7 +107,7 @@
   </div>
 
   <div class="candidatesListBlock">
-    <h3>{{ displayTextObject["candidateList"] }}</h3>
+    <h3>{{ displayTextObject["invitedCandidates"] }}</h3>
     <div class="manageCandidatesList">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li
@@ -162,7 +166,7 @@
                 <td>
                   {{ candidateObj.invitedBy.firstName }}
                   <span *ngIf="candidateObj.invitedBy.lastName">
-                    - {{ candidateObj.invitedBy.lastName }}</span
+                    {{ candidateObj.invitedBy.lastName }}</span
                   >
                 </td>
                 <td>
