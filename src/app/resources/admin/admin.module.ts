@@ -5,14 +5,19 @@ import { MaterialComponentsModule } from "../../commons/material-components/mate
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { CommonsModule } from "../../commons/commons.module";
 
+//modules
 import { AdminRoutingModule } from "./admin-routing.module";
-import { ManageSkillsComponent } from "./manage-skills/manage-skills.component";
 
 //services
 import { ManageSkillsService } from "./manage-skills/manage-skills/manage-skills.service";
 
+//components
+import { ManageSkillsComponent } from "./manage-skills/manage-skills.component";
+import { AdminOrganizationComponent } from "./admin-organization/admin-organization.component";
+
 const SERVICES_LIST = [ManageSkillsService];
-const COMPONENTS_LIST = [ManageSkillsComponent];
+
+const COMPONENTS_LIST = [ManageSkillsComponent, AdminOrganizationComponent];
 
 @NgModule({
   declarations: [COMPONENTS_LIST],

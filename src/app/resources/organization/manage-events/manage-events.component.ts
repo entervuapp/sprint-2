@@ -145,7 +145,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
           id: new FormControl("", []),
           description: new FormControl("", []),
         }),
-        numberOfRounds: new FormControl("", []),
+        numberOfRounds: new FormControl("", [Validators.min(1)]),
       });
       // this.skillsList =
       //   formData && formData.eventSkills && formData.eventSkills.length > 0
@@ -170,7 +170,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
             Validators.minLength(2),
           ]),
         }),
-        numberOfRounds: new FormControl("", [Validators.required]),
+        numberOfRounds: new FormControl("", [
+          Validators.required,
+          Validators.min(1),
+        ]),
       });
       this.skillsList = [];
     }
@@ -605,6 +608,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       ]);
       this.formGroupObject.controls.numberOfRounds.setValidators([
         Validators.required,
+        Validators.min(1),
       ]);
     } else {
       this.formGroupObject.controls.skill["controls"].description.setValidators(
@@ -615,7 +619,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       );
       this.formGroupObject.controls.skill["controls"].value.setValidators([]);
       this.formGroupObject.controls.skill["controls"].value.setErrors(null);
-      this.formGroupObject.controls.numberOfRounds.setValidators([]);
+      this.formGroupObject.controls.numberOfRounds.setValidators([
+        Validators.min(1),
+      ]);
       this.formGroupObject.controls.numberOfRounds.setErrors(null);
     }
     if (
@@ -662,6 +668,8 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       ]);
       this.formGroupObject.controls.numberOfRounds.setValidators([
         Validators.required,
+        Validators.min(1),
+        Validators.max(10),
       ]);
     } else {
       this.formGroupObject.controls.skill["controls"].description.setValidators(
@@ -672,7 +680,9 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       );
       this.formGroupObject.controls.skill["controls"].value.setValidators([]);
       this.formGroupObject.controls.skill["controls"].value.setErrors(null);
-      this.formGroupObject.controls.numberOfRounds.setValidators([]);
+      this.formGroupObject.controls.numberOfRounds.setValidators([
+        Validators.min(1),
+      ]);
       this.formGroupObject.controls.numberOfRounds.setErrors(null);
     }
   };

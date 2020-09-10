@@ -17,6 +17,7 @@ import { EditProfileIndividualComponent } from "./resources/individual/edit-prof
 import { LoginFormComponent } from "./commons/components/login-form/login-form.component";
 import { UserDetailsResolverService } from "./commons/services/user-details-resolver/user-details-resolver.service";
 import { EditProfileHrComponent } from "./resources/organization/edit-profile-hr/edit-profile-hr.component";
+import { AdminOrganizationComponent } from "./resources/admin/admin-organization/admin-organization.component";
 
 const routes: Routes = [
   {
@@ -84,8 +85,14 @@ const routes: Routes = [
     resolve: { userDetails: UserDetailsResolverService },
   },
   {
-    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN,
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_SKILLS,
     component: ManageSkillsComponent,
+    resolve: { userDetails: UserDetailsResolverService },
+  },
+  {
+    path: ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN_ORGANIZATION,
+    component: AdminOrganizationComponent,
+    resolve: { userDetails: UserDetailsResolverService },
   },
   {
     path: "**",

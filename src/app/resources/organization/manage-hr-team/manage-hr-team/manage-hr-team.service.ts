@@ -29,7 +29,7 @@ export class ManageHrTeamService {
   };
 
   public deleteTeamMember = (idx): Observable<any> => {
-    let url = API_URLS_CONSTANTS.API_URLS.DELETE_USER.URL + idx;
+    let url = API_URLS_CONSTANTS.API_URLS.ORGANIZATION.USER.DELETE_HR + idx;
     return this.http.delete(url);
   };
 }

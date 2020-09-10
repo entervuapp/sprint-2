@@ -5,7 +5,6 @@
       [formGroup]="myForm"
       appHighlightRequiredFields
       appFocusInvalidInput
-      appFocusFirstEmptyInput
     >
       <h2>{{ displayTextObject["organizationDetails"] }}</h2>
       <div class="form-group formGroupOrgProfile">
@@ -23,7 +22,7 @@
               class="form-control"
               name="officeEmail"
               id="officeEmail"
-              [placeholder]="displayTextObject['officeEmail']"
+              [placeholder]="displayTextObject['organizationEmail']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'email')
               }"
@@ -34,7 +33,7 @@
             *ngIf="checkForError(myForm, 'email')"
             [formObject]="myForm"
             [controlName]="'email'"
-            [fieldName]="displayTextObject['officeEmail']"
+            [fieldName]="displayTextObject['organizationEmail']"
           ></app-error-message>
         </div>
         <div class="form-group formGroupOrgProfile">
@@ -44,7 +43,7 @@
               class="form-control"
               name="mobile"
               id="mobile"
-              [placeholder]="displayTextObject['mobile']"
+              [placeholder]="displayTextObject['contactNumber']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'contactNumber')
               }"
@@ -56,7 +55,7 @@
             *ngIf="checkForError(myForm, 'contactNumber')"
             [formObject]="myForm"
             [controlName]="'contactNumber'"
-            [fieldName]="displayTextObject['mobile']"
+            [fieldName]="displayTextObject['contactNumber']"
           ></app-error-message>
         </div>
         <div class="form-group formGroupOrgProfile">
@@ -119,7 +118,7 @@
             *ngIf="checkForError(myForm, 'address')"
             [formObject]="myForm"
             [controlName]="'address'"
-            [fieldName]="displayTextObject['address']"
+            [fieldName]="displayTextObject['officeAddress']"
           ></app-error-message>
         </div>
       </div>

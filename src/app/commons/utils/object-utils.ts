@@ -92,6 +92,15 @@ export class ObjectUtil {
           ) {
             isError = true;
           }
+          if (
+            formObj &&
+            formObj.controls &&
+            formObj.controls[property] &&
+            (formObj.controls[property].hasError("min") ||
+              formObj.controls[property].hasError("max"))
+          ) {
+            isError = true;
+          }
           break;
         case "value":
           if (

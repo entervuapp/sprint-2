@@ -128,9 +128,14 @@ export class AppComponent {
           { queryParams: { id: queryParams.id } }
         );
         break;
-      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN:
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_SKILLS:
         this.router.navigate([
-          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN}`,
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.MANAGE_SKILLS}`,
+        ]);
+        break;
+      case ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN_ORGANIZATION:
+        this.router.navigate([
+          `/${ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.ADMIN_ORGANIZATION}`,
         ]);
         break;
       default:

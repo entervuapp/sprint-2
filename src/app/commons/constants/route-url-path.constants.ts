@@ -12,8 +12,9 @@ export class ROUTE_URL_PATH_CONSTANTS {
     MANAGE_TEAM: "organization-team",
     LOGOUT: "logout",
     QA_DASHBOARD: "qa-dashboard",
-    ADMIN: "admin",
+    MANAGE_SKILLS: "manage-skills",
     LOGIN: "",
-    SETTINGS: "Settings",
+    SETTINGS: "settings",
+    ADMIN_ORGANIZATION: "admin-organization",
   };
 }

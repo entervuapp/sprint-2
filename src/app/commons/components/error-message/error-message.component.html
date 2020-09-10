@@ -65,6 +65,17 @@
         formObject &&
         formObject['controls'] &&
         formObject['controls'][controlName] &&
+        formObject['controls'][controlName].hasError('min')
+      "
+    >
+      {{ formObject["controls"][controlName].errors.min.actual }}
+      is invalid.
+    </p>
+    <p
+      *ngIf="
+        formObject &&
+        formObject['controls'] &&
+        formObject['controls'][controlName] &&
         formObject['controls'][controlName].hasError('maxlength')
       "
     >
