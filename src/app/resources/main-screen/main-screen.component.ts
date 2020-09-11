@@ -11,6 +11,7 @@ import { SHARED_CONSTANTS } from "../../commons/constants/shared.constants";
 export class MainScreenComponent implements OnInit {
   public activated: string;
   public handleFormsDisplay: object;
+  public handleFormsDisplayMobile: object;
   public displayTextObject: object;
   public SHARED_CONSTANTS;
 
@@ -32,6 +33,14 @@ export class MainScreenComponent implements OnInit {
       login: false,
       organization: false,
       individual: false,
+    };
+    this.handleFormsDisplayMobile = {
+      organizationRegistration: false,
+      individualRegistration: false,
+      login: true,
+      organization: false,
+      individual: false,
+      aboutUs: false,
     };
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(false);
@@ -62,7 +71,6 @@ export class MainScreenComponent implements OnInit {
       };
     }
   };
-  1;
 
   public handleSignUpDisplay = (): void => {
     if (this.handleFormsDisplay && this.handleFormsDisplay["organization"]) {
@@ -109,4 +117,82 @@ export class MainScreenComponent implements OnInit {
       );
     }
   };
+
+  //mobile related codes starts here
+
+  public showAboutUs = (): void => {
+    this.handleFormsDisplayMobile = {
+      organizationRegistration: false,
+      individualRegistration: false,
+      login: false,
+      organization: false,
+      individual: false,
+      aboutUs: true,
+    };
+  };
+
+  public handleViewOnSlideMobile = (event): void => {
+    if (event && event.buttonName === "organizationButton") {
+      this.handleFormsDisplayMobile = {
+        organizationRegistration: false,
+        individualRegistration: false,
+        login: true,
+        organization: true,
+        individual: false,
+      };
+    } else {
+      this.handleFormsDisplayMobile = {
+        organizationRegistration: false,
+        individualRegistration: false,
+        login: true,
+        organization: false,
+        individual: true,
+      };
+    }
+  };
+
+  public handleSignUpDisplayMobile = (): void => {
+    if (
+      this.handleFormsDisplayMobile &&
+      this.handleFormsDisplayMobile["organization"]
+    ) {
+      this.handleFormsDisplayMobile = {
+        organizationRegistration: true,
+        individualRegistration: false,
+        login: false,
+        organization: true,
+        individual: false,
+      };
+    } else {
+      this.handleFormsDisplayMobile = {
+        organizationRegistration: false,
+        individualRegistration: true,
+        login: false,
+        organization: false,
+        individual: true,
+      };
+    }
+  };
+
+  public showLoginScreenMobile = (type): void => {
+    if (type === "organization") {
+      this.handleFormsDisplayMobile = {
+        organizationRegistration: false,
+        individualRegistration: false,
+        login: true,
+        organization: true,
+        individual: false,
+      };
+    } else {
+      this.handleFormsDisplayMobile = {
+        organizationRegistration: false,
+        individualRegistration: false,
+        login: true,
+        organization: false,
+        individual: true,
+      };
+    }
+  };
+
+  //mobile related chages ends here
 }

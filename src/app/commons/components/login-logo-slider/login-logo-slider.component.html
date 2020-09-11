@@ -10,8 +10,13 @@
         id="organizationButton"
         class="loginFormNavigationBtn organizationText"
         (click)="addSlideOneClass($event)"
-        >
-        <img class="login_imgs loginOrganizationImg" src="../../../../../assets/images/organization.png" alt="Organization Icon">
+      >
+        <img
+          id="organizationButton"
+          class="login_imgs loginOrganizationImg"
+          src="../../../../../assets/images/organization.png"
+          alt="Organization Icon"
+        />
         {{ displayTextObject["organization"] }}</span
       >
     </div>
@@ -20,8 +25,13 @@
         id="individualButton"
         class="loginFormNavigationBtn individualText"
         (click)="addSlideOneClass($event)"
-        >
-        <img class="login_imgs loginIndividualImg" src="../../../../../assets/images/candidate.png" alt="Candidates Icon">
+      >
+        <img
+          id="individualButton"
+          class="login_imgs loginIndividualImg"
+          src="../../../../../assets/images/candidate.png"
+          alt="Candidates Icon"
+        />
         {{ displayTextObject["individual"] }}</span
       >
     </div>
@@ -30,8 +40,12 @@
         id="aboutButton"
         class="loginFormNavigationBtn aboutUsText"
         (click)="removeSlideOneClass($event)"
-        >
-        <img class="login_imgs loginAboutUsImg" src="../../../../../assets/images/about_us.png" alt="About Us Icon">
+      >
+        <img
+          class="login_imgs loginAboutUsImg"
+          src="../../../../../assets/images/about_us.png"
+          alt="About Us Icon"
+        />
         {{ displayTextObject["aboutUs"] }}</span
       >
     </div>

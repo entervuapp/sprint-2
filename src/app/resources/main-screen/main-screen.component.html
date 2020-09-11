@@ -1,8 +1,73 @@
 <div class="ev_mainContainer">
   <div class="bgShadow">
-  <div class="ev_loginCard">
-    <div class="loginCard_left">
-      <div class="ev_about_us">
+    <div class="ev_loginCard">
+      <div class="loginCard_left">
+        <div class="ev_about_us">
+          <div class="aboutHeader">
+            <span
+              id="whatWeAre"
+              class="aboutHeaderTitle"
+              [ngClass]="{ active: activated === 'whatWeAre' }"
+              (click)="handleAboutUsAndContactUs($event)"
+              >{{ displayTextObject["whatWeAre"] }}</span
+            >
+            <span
+              id="contactUs"
+              class="aboutHeaderTitle"
+              [ngClass]="{ active: activated === 'contactUs' }"
+              (click)="handleAboutUsAndContactUs($event)"
+              >{{ displayTextObject["contactUs"] }}</span
+            >
+          </div>
+          <div class="aboutUsContent">
+            <app-about-us *ngIf="activated === 'whatWeAre'"></app-about-us>
+            <app-contact-us *ngIf="activated === 'contactUs'"></app-contact-us>
+          </div>
+        </div>
+      </div>
+      <app-login-logo-slider
+        (onSelect)="handleViewOnSlide($event)"
+        (showAboutUs)="activated = 'whatWeAre'"
+      ></app-login-logo-slider>
+      <div class="loginCard_right_signIn">
+        <app-login-form
+          *ngIf="handleFormsDisplay['login']"
+          (handleSignUpDisplay)="handleSignUpDisplay()"
+        ></app-login-form>
+        <app-registration-individual
+          *ngIf="handleFormsDisplay['individualRegistration']"
+          (onLoginClick)="showLoginScreen()"
+        ></app-registration-individual>
+        <app-registration-organization
+          *ngIf="handleFormsDisplay['organizationRegistration']"
+          (onLoginClick)="showLoginScreen()"
+        ></app-registration-organization>
+      </div>
+    </div>
+
+    <!-- login screen for mobile view start-->
+    <div class="mobile_ev_loginCard">
+      <app-login-logo-slider
+        (onSelect)="handleViewOnSlideMobile($event)"
+        (showAboutUs)="showAboutUs()"
+      ></app-login-logo-slider>
+
+      <div class="loginCard_right_signIn">
+        <app-login-form
+          *ngIf="handleFormsDisplayMobile['login']"
+          (handleSignUpDisplay)="handleSignUpDisplayMobile()"
+        ></app-login-form>
+        <app-registration-individual
+          *ngIf="handleFormsDisplayMobile['individualRegistration']"
+          (onLoginClick)="showLoginScreenMobile('individual')"
+        ></app-registration-individual>
+        <app-registration-organization
+          *ngIf="handleFormsDisplayMobile['organizationRegistration']"
+          (onLoginClick)="showLoginScreenMobile('organization')"
+        ></app-registration-organization>
+      </div>
+
+      <div class="ev_about_us" *ngIf="handleFormsDisplayMobile['aboutUs']">
         <div class="aboutHeader">
           <span
             id="whatWeAre"
@@ -25,73 +90,6 @@
         </div>
       </div>
     </div>
-    <app-login-logo-slider
-      (onSelect)="handleViewOnSlide($event)"
-      (showAboutUs)="activated = 'whatWeAre'"
-    ></app-login-logo-slider>
-    <div class="loginCard_right_signIn">
-      <app-login-form
-        *ngIf="handleFormsDisplay['login']"
-        (handleSignUpDisplay)="handleSignUpDisplay()"
-      ></app-login-form>
-      <app-registration-individual
-        *ngIf="handleFormsDisplay['individualRegistration']"
-        (onLoginClick)="showLoginScreen()"
-      ></app-registration-individual>
-      <app-registration-organization
-        *ngIf="handleFormsDisplay['organizationRegistration']"
-        (onLoginClick)="showLoginScreen()"
-      ></app-registration-organization>
-    </div>
+    <!-- login screen for mobile view end-->
   </div>
-
-  <!-- login screen for mobile view start-->
-   <div class="mobile_ev_loginCard">
-
-    <app-login-logo-slider
-      (onSelect)="handleViewOnSlide($event)"
-      (showAboutUs)="activated = 'whatWeAre'"
-    ></app-login-logo-slider>
-
-    <div class="loginCard_right_signIn">
-      <app-login-form
-        *ngIf="handleFormsDisplay['login']"
-        (handleSignUpDisplay)="handleSignUpDisplay()"
-      ></app-login-form>
-      <app-registration-individual
-        *ngIf="handleFormsDisplay['individualRegistration']"
-        (onLoginClick)="showLoginScreen()"
-      ></app-registration-individual>
-      <app-registration-organization
-        *ngIf="handleFormsDisplay['organizationRegistration']"
-        (onLoginClick)="showLoginScreen()"
-      ></app-registration-organization>
-    </div>
-
-    <!-- <div class="ev_about_us">
-      <div class="aboutHeader">
-        <span
-          id="whatWeAre"
-          class="aboutHeaderTitle"
-          [ngClass]="{ active: activated === 'whatWeAre' }"
-          (click)="handleAboutUsAndContactUs($event)"
-          >{{ displayTextObject["whatWeAre"] }}</span
-        >
-        <span
-          id="contactUs"
-          class="aboutHeaderTitle"
-          [ngClass]="{ active: activated === 'contactUs' }"
-          (click)="handleAboutUsAndContactUs($event)"
-          >{{ displayTextObject["contactUs"] }}</span
-        >
-      </div>
-      <div class="aboutUsContent">
-        <app-about-us *ngIf="activated === 'whatWeAre'"></app-about-us>
-        <app-contact-us *ngIf="activated === 'contactUs'"></app-contact-us>
-      </div>
-    </div> -->
-
-   </div>
-  <!-- login screen for mobile view end-->
-</div>
 </div>
