@@ -17,22 +17,21 @@ import { ROUTE_URL_PATH_CONSTANTS } from "../../../commons/constants/route-url-p
 import { Router } from "@angular/router";
 import { SharedService } from "../../../commons/rest-services/shared/shared.service";
 import { UserDetailsService } from "../../../commons/services/user-details/user-details.service";
-import { typeofExpr } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-registration-individual",
   templateUrl: "./registration-individual.component.html",
   styleUrls: ["./registration-individual.component.scss"],
 })
-export class RegistrationIndividualComponent extends AppComponent
+export class RegistrationIndividualComponent
+  extends AppComponent
   implements OnInit {
   public myForm: FormGroup;
-  public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
+  public FONT_AWESOME_ICONS_CONSTANTS;
   private _subscriptions = new Subscription();
   public SHARED_CONSTANTS;
   private ROUTE_URL_PATH_CONSTANTS;
   public displayTextObject: object;
-  private role: string;
 
   @Output() onLoginClick = new EventEmitter();
   @Output() onError = new EventEmitter();
@@ -51,7 +50,7 @@ export class RegistrationIndividualComponent extends AppComponent
   }
 
   ngOnInit() {
-    this.role = "";
+    this.FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
     this.displayTextObject = {
       signUp: "Sign Up",
       firstName: "First name",
@@ -71,18 +70,27 @@ export class RegistrationIndividualComponent extends AppComponent
 
   public initializeForm = (): void => {
     this.myForm = this.fb.group({
-      firstName: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
+      firstName: new FormControl("", {
+        validators: [Validators.required, Validators.minLength(3)],
+        updateOn: "blur",
+      }),
       lastName: new FormControl(""),
-      officeEmail: new FormControl("", [Validators.required, Validators.email]),
-      contactNumber: new FormControl("", [
-        Validators.required,
-        Validators.minLength(10),
-      ]),
-      password: new FormControl("", [Validators.required]),
-      confirmPassword: new FormControl("", [Validators.required]),
+      email: new FormControl("", {
+        validators: [Validators.required, Validators.email],
+        updateOn: "blur",
+      }),
+      contactNumber: new FormControl("", {
+        validators: [Validators.required, Validators.minLength(10)],
+        updateOn: "blur",
+      }),
+      password: new FormControl("", {
+        validators: Validators.required,
+        updateOn: "blur",
+      }),
+      confirmPassword: new FormControl("", {
+        validators: Validators.required,
+        updateOn: "blur",
+      }),
     });
   };
 
@@ -108,14 +116,12 @@ export class RegistrationIndividualComponent extends AppComponent
     let requestBody = {
       ...this.myForm.value,
       clientName: "entervu",
-      email: this.myForm.value.officeEmail,
       role:
         this.myForm.value.companyCode && this.myForm.value.companyName
           ? this.SHARED_CONSTANTS["EVU_USER_ROLES"].HR_ADMIN
           : this.SHARED_CONSTANTS["EVU_USER_ROLES"].CANDIDATE,
     };
     delete requestBody.confirmPassword;
-    this.role = this.myForm["role"];
     this._subscriptions.add(
       this.registrationIndividualService
         .inidivualRegistration(requestBody)
@@ -138,7 +144,7 @@ export class RegistrationIndividualComponent extends AppComponent
 
   private doLogin = (requestBody): void => {
     let requestBodyfroLogin = {
-      email: requestBody.officeEmail,
+      email: requestBody.email,
       password: requestBody.password,
     };
     this._subscriptions.add(
