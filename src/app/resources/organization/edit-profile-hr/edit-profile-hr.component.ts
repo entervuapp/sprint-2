@@ -117,22 +117,6 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
     let requestBody = { ...this.myForm.getRawValue() };
     requestBody["officeEmail"] = requestBody.email;
     requestBody["mobileNumber"] = requestBody.contactNumber;
-    requestBody.clientName =
-      this.userDetails &&
-      this.userDetails["user"] &&
-      this.userDetails["user"]["client"] &&
-      this.userDetails["user"]["client"].clientName
-        ? this.userDetails["user"]["client"].clientName
-        : "";
-    requestBody.role =
-      this.userDetails &&
-      this.userDetails["user"] &&
-      this.userDetails["user"]["roles"] &&
-      this.userDetails["user"]["roles"][0] &&
-      this.userDetails["user"]["roles"][0].name
-        ? this.userDetails["user"]["roles"][0].name
-        : "";
-
     requestBody["address"] = {
       addressLine1: this.myForm.value.address,
       addressLine2: "string",
