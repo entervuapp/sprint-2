@@ -23,7 +23,8 @@ import { UserDetailsService } from "../../../commons/services/user-details/user-
   templateUrl: "./registration-organization.component.html",
   styleUrls: ["./registration-organization.component.scss"],
 })
-export class RegistrationOrganizationComponent extends AppComponent
+export class RegistrationOrganizationComponent
+  extends AppComponent
   implements OnInit {
   myForm: FormGroup;
   public SHARED_CONSTANTS;
@@ -65,28 +66,37 @@ export class RegistrationOrganizationComponent extends AppComponent
 
   private initializeForm = (): void => {
     this.myForm = this.fb.group({
-      firstName: new FormControl("", [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
+      firstName: new FormControl("", {
+        validators: [Validators.required, Validators.minLength(3)],
+        updateOn: "blur",
+      }),
       lastName: new FormControl(""),
-      password: new FormControl("", [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-      confirmPassword: new FormControl("", [Validators.required]),
-      officeEmail: new FormControl("", [Validators.required, Validators.email]),
+      password: new FormControl("", {
+        validators: [Validators.required, Validators.minLength(8)],
+        updateOn: "blur",
+      }),
+      confirmPassword: new FormControl("", {
+        validators: [Validators.required],
+        updateOn: "blur",
+      }),
+      officeEmail: new FormControl("", {
+        validators: [Validators.required, Validators.email],
+        updateOn: "blur",
+      }),
       clientName: new FormControl("entervu", [Validators.required]),
       organizationRequest: new FormGroup({
-        code: new FormControl("", [
-          Validators.required,
-          Validators.minLength(3),
-        ]),
-        name: new FormControl("", [
-          Validators.required,
-          Validators.minLength(3),
-        ]),
-        contactNumber: new FormControl("", []),
+        code: new FormControl("", {
+          validators: [Validators.required, Validators.minLength(3)],
+          updateOn: "blur",
+        }),
+        name: new FormControl("", {
+          validators: [Validators.required, Validators.minLength(3)],
+          updateOn: "blur",
+        }),
+        contactNumber: new FormControl("", {
+          validators: [],
+          updateOn: "blur",
+        }),
         address: new FormGroup({
           addressLine1: new FormControl("", []),
           addressLine2: new FormControl("", []),

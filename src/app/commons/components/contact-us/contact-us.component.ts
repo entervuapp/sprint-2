@@ -30,12 +30,18 @@ export class ContactUsComponent implements OnInit {
 
   private initializeForm = (): void => {
     this.formGroupObject = this.fb.group({
-      name: new FormControl("", [Validators.required, Validators.minLength(3)]),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      comments: new FormControl("", [
-        Validators.required,
-        Validators.minLength(10),
-      ]),
+      name: new FormControl("", {
+        validators: [Validators.required, Validators.minLength(3)],
+        updateOn: "blur",
+      }),
+      email: new FormControl("", {
+        validators: [Validators.required, Validators.email],
+        updateOn: "blur",
+      }),
+      comments: new FormControl("", {
+        validators: [Validators.required, Validators.minLength(10)],
+        updateOn: "blur",
+      }),
     });
   };
 
