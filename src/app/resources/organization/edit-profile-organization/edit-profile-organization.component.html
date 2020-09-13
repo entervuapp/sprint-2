@@ -17,12 +17,14 @@
       <div class="orgProfileForm">
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="organizationEmail">{{
+              displayTextObject["organizationEmail"]
+            }}</label>
             <input
               type="email"
               class="form-control"
-              name="officeEmail"
-              id="officeEmail"
-              [placeholder]="displayTextObject['organizationEmail']"
+              name="organizationEmail"
+              id="organizationEmail"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'email')
               }"
@@ -38,12 +40,14 @@
         </div>
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="contactNumber">{{
+              displayTextObject["contactNumber"]
+            }}</label>
             <input
               type="text"
               class="form-control"
-              name="mobile"
-              id="mobile"
-              [placeholder]="displayTextObject['contactNumber']"
+              name="contactNumber"
+              id="contactNumber"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'contactNumber')
               }"
@@ -60,12 +64,14 @@
         </div>
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="companyName">{{
+              displayTextObject["companyName"]
+            }}</label>
             <input
               type="text"
               class="form-control"
               name="companyName"
               id="companyName"
-              [placeholder]="displayTextObject['companyName']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'companyName')
               }"
@@ -81,12 +87,14 @@
         </div>
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="companyCode">{{
+              displayTextObject["companyCode"]
+            }}</label>
             <input
               type="text"
               class="form-control"
               name="companyCode"
               id="companyCode"
-              [placeholder]="displayTextObject['companyCode']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'companyCode')
               }"
@@ -102,12 +110,14 @@
         </div>
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="officeAddress">{{
+              displayTextObject["officeAddress"]
+            }}</label>
             <textarea
               type="text"
               class="form-control"
-              name="address"
-              id="address"
-              [placeholder]="displayTextObject['officeAddress']"
+              name="officeAddress"
+              id="officeAddress"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'address')
               }"

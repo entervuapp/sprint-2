@@ -133,7 +133,10 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
   };
 
   public onDeleteOfTeamMember = (member): void => {
-    const data = { message: "Are you sure?", title: "Confirm?" };
+    const data = {
+      message: "Are you sure you want to delete?",
+      title: "Confirmation.",
+    };
     const dialogRef = this.matDialog.open(ConfirmPopupComponent, {
       data: data,
       disableClose: true,

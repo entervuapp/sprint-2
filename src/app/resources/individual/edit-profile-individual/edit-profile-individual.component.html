@@ -1,7 +1,7 @@
 <div class="ev_loginForm">
   <div class="login-form">
     <form [formGroup]="myForm" appHighlightRequiredFields appFocusInvalidInput>
-      <h2 class="text-center">{{ displayTestObject["editProfile"] }}</h2>
+      <h2 class="text-center">{{ displayTextObject["editProfile"] }}</h2>
       <div class="form-group">
         <div class="input-group">
           <app-image-upload-and-preview
@@ -11,19 +11,12 @@
       </div>
       <div class="form-group">
         <div class="input-group">
-          <span
-            class="input-group-addon"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'firstName')
-            }"
-            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faUser"></fa-icon
-          ></span>
+          <label for="firstName">{{ displayTextObject["firstName"] }} </label>
           <input
             type="text"
             class="form-control"
             name="firstName"
             id="firstName"
-            [placeholder]="displayTestObject['firstName']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'firstName')
             }"
@@ -34,24 +27,17 @@
           *ngIf="checkForError(myForm, 'firstName')"
           [formObject]="myForm"
           [controlName]="'firstName'"
-          [fieldName]="displayTestObject['firstName']"
+          [fieldName]="displayTextObject['firstName']"
         ></app-error-message>
       </div>
       <div class="form-group">
         <div class="input-group">
-          <span
-            class="input-group-addon"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'lastName')
-            }"
-            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faUser"></fa-icon
-          ></span>
+          <label for="lastName">{{ displayTextObject["lastName"] }} </label>
           <input
             type="text"
             class="form-control"
             name="lastName"
             id="lastName"
-            [placeholder]="displayTestObject['lastName']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'lastName')
             }"
@@ -61,6 +47,7 @@
       </div>
       <div class="form-group">
         <div class="input-group">
+          <label for="gender">{{ displayTextObject["gender"] }} </label>
           <div class="radio">
             <label
               ><input
@@ -68,7 +55,7 @@
                 name="gender"
                 value="male"
                 formControlName="gender"
-              />{{ displayTestObject["male"] }}</label
+              />{{ displayTextObject["male"] }}</label
             >
             <label
               ><input
@@ -76,26 +63,19 @@
                 name="gender"
                 value="female"
                 formControlName="gender"
-              />{{ displayTestObject["female"] }}</label
+              />{{ displayTextObject["female"] }}</label
             >
           </div>
         </div>
       </div>
       <div class="form-group">
         <div class="input-group">
-          <span
-            class="input-group-addon"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'email')
-            }"
-            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faEnvelope"></fa-icon
-          ></span>
+          <label for="email">{{ displayTextObject["email"] }} </label>
           <input
             type="email"
             class="form-control"
             name="email"
             id="email"
-            [placeholder]="displayTestObject['emailId']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'email')
             }"
@@ -106,24 +86,17 @@
           *ngIf="checkForError(myForm, 'email')"
           [formObject]="myForm"
           [controlName]="'email'"
-          [fieldName]="displayTestObject['emailId']"
+          [fieldName]="displayTextObject['email']"
         ></app-error-message>
       </div>
       <div class="form-group">
         <div class="input-group">
-          <span
-            class="input-group-addon"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'contactNumber')
-            }"
-            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faMobile"></fa-icon
-          ></span>
+          <label for="mobile">{{ displayTextObject["mobile"] }} </label>
           <input
             type="text"
             class="form-control"
             name="mobile"
             id="mobile"
-            [placeholder]="displayTestObject['mobile']"
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'contactNumber')
             }"
@@ -134,25 +107,18 @@
           *ngIf="checkForError(myForm, 'contactNumber')"
           [formObject]="myForm"
           [controlName]="'contactNumber'"
-          [fieldName]="displayTestObject['mobile']"
+          [fieldName]="displayTextObject['mobile']"
           appNumbersOnly
         ></app-error-message>
       </div>
       <div class="form-group">
         <div class="input-group">
-          <span
-            class="input-group-addon"
-            [ngClass]="{
-              'input-field-error': checkForError(myForm, 'experience')
-            }"
-            ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faLock"></fa-icon
-          ></span>
+          <label for="experience">{{ displayTextObject["experience"] }} </label>
           <input
             type="text"
             class="form-control"
             name="experience"
             id="experience"
-            placeholder="Experience"
             appNumbersOnly
             [ngClass]="{
               'input-field-error': checkForError(myForm, 'experience')
@@ -167,9 +133,11 @@
           [fieldName]="'Experience'"
         ></app-error-message>
       </div>
+      <label for="primarySkill">{{ displayTextObject["primarySkill"] }} </label>
       <app-skills-autocomplete
-        [placeholderText]="displayTestObject['primarySkill']"
-        [isTouched]="myForm.controls.primarySkill.controls.description.touched"
+        [isTouched]="
+          myForm.controls.primarySkill['controls'].description.touched
+        "
         [isRequired]="true"
         [renderSkill]="myForm.value.primarySkill"
         (onSelect)="onSkillSelect($event)"
@@ -189,8 +157,8 @@
       </div> -->
       <div class="form-group">
         <app-save-cancel-buttons
-          [saveButtonName]="displayTestObject['update']"
-          [cancelButtonName]="displayTestObject['reset']"
+          [saveButtonName]="displayTextObject['update']"
+          [cancelButtonName]="displayTextObject['reset']"
           (onSave)="myForm.valid && onUpdate()"
           (onCancel)="onReset()"
         ></app-save-cancel-buttons>

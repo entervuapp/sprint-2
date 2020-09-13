@@ -29,7 +29,7 @@ export class EditProfileIndividualComponent
   private _subscriptions = new Subscription();
   public fileData: File = null;
   public FONT_AWESOME_ICONS_CONSTANTS = FONT_AWESOME_ICONS_CONSTANTS;
-  public displayTestObject: NewAny;
+  public displayTextObject: NewAny;
   public SHARED_CONSTANTS;
   public userDetails: object;
 
@@ -48,8 +48,9 @@ export class EditProfileIndividualComponent
   ngOnInit() {
     this.initializeForm(null);
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
-    this.displayTestObject = {
+    this.displayTextObject = {
       editProfile: "Edit profile",
+      gender: "Gender",
       update: "Update",
       reset: "Reset",
       primarySkill: "Primary skill",
@@ -57,9 +58,10 @@ export class EditProfileIndividualComponent
       lastName: "Last name",
       male: "Male",
       female: "Female",
-      emailId: "Email Id",
+      email: "Email",
       mobile: "Mobile",
       skill: "Skill",
+      experience: "Experience",
     };
     if (
       this.manageHeaderService &&

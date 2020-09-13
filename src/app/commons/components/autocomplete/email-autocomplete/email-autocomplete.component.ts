@@ -45,7 +45,7 @@ export class EmailAutocompleteComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.optionSelected = false;
     this.displayTextObject = {
-      placeholder: "Email",
+      email: "Email",
     };
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.formGroup.controls.email.valueChanges
