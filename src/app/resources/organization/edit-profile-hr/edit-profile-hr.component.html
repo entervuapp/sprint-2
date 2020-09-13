@@ -18,12 +18,12 @@
       <div class="orgProfileForm">
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="firstName">{{ displayTextObject["firstName"] }} </label>
             <input
               type="text"
               class="form-control"
               name="firstName"
               id="firstName"
-              [placeholder]="displayTextObject['firstName']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'firstName')
               }"
@@ -39,12 +39,12 @@
         </div>
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="lastName">{{ displayTextObject["lastName"] }}</label>
             <input
               type="text"
               class="form-control"
               name="lastName"
               id="lastName"
-              [placeholder]="displayTextObject['lastName']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'lastName')
               }"
@@ -54,12 +54,14 @@
         </div>
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
+            <label for="officeEmail">{{
+              displayTextObject["officeEmail"]
+            }}</label>
             <input
               type="email"
               class="form-control"
               name="officeEmail"
               id="officeEmail"
-              [placeholder]="displayTextObject['officeEmail']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'email')
               }"
@@ -74,13 +76,13 @@
           ></app-error-message>
         </div>
         <div class="form-group formGroupOrgProfile">
+          <label for="mobile">{{ displayTextObject["mobile"] }}</label>
           <div class="input-group">
             <input
               type="text"
               class="form-control"
               name="mobile"
               id="mobile"
-              [placeholder]="displayTextObject['mobile']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'contactNumber')
               }"

@@ -7,7 +7,6 @@
         'input-field-error': checkForError(formGroup, 'email')
       }"
       id="skill"
-      [placeholder]="displayTextObject['placeholder']"
       name="skill"
       [formControl]="formGroup.controls.email"
     />
@@ -16,7 +15,7 @@
     *ngIf="checkForError(formGroup, 'email')"
     [formObject]="formGroup"
     [controlName]="'email'"
-    [fieldName]="'Email'"
+    [fieldName]="displayTextObject['email']"
   ></app-error-message>
   <div class="listArrayCard" *ngIf="emailList && emailList.length">
     <p

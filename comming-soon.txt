@@ -56,3 +56,8 @@
 3. jr email verification and registration
 4. candidate email verification
 5. contact us
+
+
+// expenses
+1. Bought domain 1yr 550/-
+2. Renewal domain 2yrs 2330/-
