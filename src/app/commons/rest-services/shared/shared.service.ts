@@ -14,6 +14,10 @@ export class SharedService {
 
   public getLoggedInUserDetails = (type): Observable<any> => {
     let url = "";
+    if (!type) {
+      console.log("without user hitting user details");
+      return;
+    }
     switch (type) {
       case this.SHARED_CONSTANTS.USER_TYPES.ORGANIZATION[0]:
       case this.SHARED_CONSTANTS.USER_TYPES.ORGANIZATION[1]:
