@@ -1,5 +1,26 @@
+.addCandidateDriveName {
+    padding: 40px 0px 5px 0px;
+    display: inline-block;
+    width: 100%;
+}
+.addCandidateDriveName h4 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #ffb200;
+    margin: 0px 0px;
+    display: inline;
+    float: left;
+}
+.addCandidateDriveName p {
+    font-size: 18px;
+    color: #333;
+    display: inline;
+    float: left;
+    margin: 6px 0px 0px 10px;
+}
 .addCandidatesFormBlock{
-    padding: 25px 15px 15px 15px;
+    padding: 20px 15px 15px 15px;
+    clear: both;
 }
 .addCandidatesFormBlock h2{
     font-size: 20px;
@@ -46,4 +67,9 @@
 }
 .manageCandidatesListTabel {
     border: 0px solid #ccc;
+}
+.manageCandidatesListTabel #skillSearch {
+    min-height: 46px;
+    border-radius: 2px;
+    border: 1px solid #ffb405;
 }
