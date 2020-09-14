@@ -117,18 +117,29 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
     this.myForm = this.fb.group({
       id: new FormControl(data && data.id ? data.id : null),
       firstName: new FormControl(
-        data && data["user"] && data["user"].firstName
-          ? data["user"].firstName
+        data &&
+        data.candidate &&
+        data.candidate["user"] &&
+        data.candidate["user"].firstName
+          ? data.candidate["user"].firstName
           : "",
         [Validators.required, Validators.minLength(3)]
       ),
       email: new FormControl(
-        data && data["user"] && data["user"].email ? data["user"].email : "",
+        data &&
+        data.candidate &&
+        data.candidate["user"] &&
+        data.candidate["user"].email
+          ? data.candidate["user"].email
+          : "",
         [Validators.required, Validators.email]
       ),
       contactNumber: new FormControl(
-        data && data["user"] && data["user"].contactNumber
-          ? data["user"].contactNumber
+        data &&
+        data.candidate &&
+        data.candidate["user"] &&
+        data.candidate["user"].contactNumber
+          ? data.candidate["user"].contactNumber
           : "",
         [
           Validators.required,
@@ -139,12 +150,20 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
       eventId: new FormControl(this.eventId, []),
       roundId: new FormControl("", []),
       skill: new FormGroup({
-        value: new FormControl("", [Validators.required]),
-        id: new FormControl("", []),
-        description: new FormControl("", [
-          Validators.required,
-          Validators.minLength(2),
-        ]),
+        value: new FormControl(
+          data && data.skill && data.skill.value ? data.skill.value : "",
+          [Validators.required]
+        ),
+        id: new FormControl(
+          data && data.skill && data.skill.id ? data.skill.id : "",
+          []
+        ),
+        description: new FormControl(
+          data && data.skill && data.skill.description
+            ? data.skill.description
+            : "",
+          [Validators.required, Validators.minLength(2)]
+        ),
       }),
     });
   };
@@ -244,25 +263,12 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
   };
 
   public onEdit = (candidateObj): void => {
-    // const {
-    //   name,
-    //   email,
-    //   contactNumber,
-    //   skill,
-    //   id,
-    //   eventId,
-    //   roundId,
-    // } = candidateObj.candidate.user;
-    // this.myForm.patchValue({
-    //   name,
-    //   email,
-    //   contactNumber,
-    //   skill,
-    //   id,
-    //   eventId,
-    //   roundId,
-    // });
-    this.initializeForm({ ...candidateObj.candidate });
+    let activeSkill = this.skillTabsList.find((item) => item.active === true);
+    this.initializeForm({
+      ...candidateObj,
+      skill: activeSkill.skill,
+    });
+    this.onEmailSelect(candidateObj.candidate);
     this.skillSelect.nativeElement.value = this.myForm.value.skill.value;
   };
 
@@ -519,6 +525,7 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
   private prepareRequestBody = (form): object => {
     let skillIdAndRoundId = this.getSkillId(form.skill);
     let request = {
+      id: form && form.id ? form.id : null,
       eventId: form && form.eventId ? form.eventId : null,
       skillId:
         skillIdAndRoundId && skillIdAndRoundId["skillId"]
