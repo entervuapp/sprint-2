@@ -11,7 +11,10 @@ import {
   faEdit,
   faSearch,
   faPlus,
-  faBars
+  faBars,
+  faTimes,
+  faAngleDown,
+  faAngleUp
 } from "@fortawesome/free-solid-svg-icons";
 
 const FONT_AWESOME_ICONS_CONSTANTS = {
@@ -28,6 +31,9 @@ const FONT_AWESOME_ICONS_CONSTANTS = {
   faEdit: faEdit,
   faSearch: faSearch,
   faPlus: faPlus,
+  faTimes: faTimes,
+  faAngleDown: faAngleDown,
+  faAngleUp: faAngleUp
 };
 
 export default FONT_AWESOME_ICONS_CONSTANTS;

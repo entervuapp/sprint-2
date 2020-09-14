@@ -8,7 +8,7 @@
     <a (click)="onClickOfLogo()">
       <img src="../../../../assets/images/logo2.png" alt="EnterVu" />
     </a>
-    <!-- <button><fa-icon [icon]="fontIcon.faBars"></fa-icon></button> -->
+    <button class="mobileHamBtn"><fa-icon [icon]="fontIcon.faBars"></fa-icon></button>
   </div>
   <div class="headerNavbar">
     <ul class="navbarUl">
@@ -43,5 +43,24 @@
         ></app-profile>
       </li>
     </ul>
+  </div>
+
+  <div class="mobileMenuBlock">
+     <div class="mobileMenuCard">
+        <ul class="mobileMenuMain">
+          <li class="mobileMenuTop"><p><span class="mobileMenuHead">EnterVu</span> <span class="mobileMenuClose"><fa-icon [icon]="fontIcon.faTimes"></fa-icon></span></p></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Profile <span class="mobileSubMenuAngle"><fa-icon [icon]="fontIcon.faAngleDown"></fa-icon></span></a>
+              <ul class="mobileMenuSub">
+                <li><a href="#">My Profile</a></li>
+                <li><a href="#">Organization Profile</a></li>
+                <li><a href="#">Change Password</a></li>
+                <li><a href="#">Settings</a></li>
+              </ul>
+          </li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+     </div>
   </div>
 </div>
