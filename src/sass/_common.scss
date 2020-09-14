@@ -658,6 +658,29 @@ body {
   cursor: pointer;
 }
 
+// confirmation popup css changes start
+.mat-dialog-container {
+  min-width: 500px;
+  padding: 20px;
+}
+.mat-dialog-container h4{
+  color: #333;
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0px 0px 10px 0px;
+}
+.mat-dialog-container span {
+  font-size: 16px;
+    color: #333;
+    margin: 0px 0px 10px 0px;
+    display: inline-block;
+    width: 100%;
+}
+.mat-dialog-container .text-right {
+  margin: 8px 0px 0px 0px;
+}
+// confirmation popup css changes end
+
 @media (max-width: 920px) {
   .aboutHeaderTitle {
     padding: 8px 8px 8px 8px;

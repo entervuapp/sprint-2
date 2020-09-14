@@ -1,13 +1,30 @@
 <div class="form-group formGroupAddEvents autoFormGroup">
+  <!-- <label for="text"
+    >{{ displayTextObject["skill"]
+    }}<span
+      [ngClass]="{
+        error: checkForError(formGroup, 'description')
+      }"
+      >*</span
+    ></label
+  > -->
   <div class="input-group">
+    <!-- <span
+      class="input-group-addon"
+      [ngClass]="{
+        'input-field-error': checkForError(formGroup, 'description')
+      }"
+      ><fa-icon [icon]="FONT_AWESOME_ICONS_CONSTANTS.faLock"></fa-icon
+    ></span> -->
     <input
       type="text"
       class="form-control autoFormControl"
       [ngClass]="{
         'input-field-error': checkForError(formGroup, 'description')
       }"
-      id="primarySkill"
-      name="primarySkill"
+      id="skill"
+      [placeholder]="placeholderText"
+      name="skill"
       [formControl]="formGroup.controls.description"
       (keyup)="onSkillChange()"
     />
