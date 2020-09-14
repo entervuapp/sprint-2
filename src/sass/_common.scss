@@ -81,7 +81,12 @@ button {
   -webkit-transition: left 2s;
   transition: left 2s;
 }
-
+.mobileHamBtn {
+  display: none;
+}
+.mobileMenuBlock {
+  display: none;
+}
 .aboutHeader {
   border-bottom: 1px solid $evu-grey-color;
   margin-top: 5px;
@@ -810,6 +815,83 @@ body {
   padding: 20px 30px 30px 30px;
 }
 
+.headerNavbar {
+  display: none;
+}
+.headerRightSide {
+  display: none;
+}
+.headerLogo {
+  display: block;
+    width: 100%;
+}
+.headerLogo a {
+  float: left;
+}
+.mobileHamBtn {
+  display: inherit;
+  float: right;
+    border: 1px solid #07b1f5;
+    background: #fff;
+    color: #07b1f5;
+    box-shadow: none;
+    padding: 3px 10px 0px 10px;
+    margin: 10px 6px 0px 0px;
+}
+.mobileHamBtn .ng-fa-icon {
+  font-size: 22px;
+}
+.mobileMenuBlock {
+  display: block;
+  position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+.mobileMenuCard {
+  width: 55%;
+    background: #01aff5;
+    height: 100%;
+    overflow: auto;
+}
+.mobileMenuCard ul {
+  list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+}
+.mobileMenuCard ul li{
+  display: block;
+}
+.mobileMenuCard ul li a{
+  font-size: 20px;
+    padding: 10px 15px;
+    width: 100%;
+    display: inline-block;
+    border-bottom: 1px solid #ccc;
+    color: #fff;
+}
+.mobileMenuMain .mobileMenuTop p {
+  margin: 0px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ccc;
+} 
+.mobileMenuMain .mobileMenuTop p .mobileMenuClose {
+  float: right;
+}
+.mobileMenuCard .mobileMenuSub li a {
+  padding: 10px 15px 10px 35px;
+}
+.mobileMenuCard .mobileSubMenuAngle {
+  font-size: 20px;
+  color: #fff;
+  float: right;
+}
 }
 
 @media (max-width: 680px) {
