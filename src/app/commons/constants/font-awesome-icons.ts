@@ -10,7 +10,8 @@ import {
   faTrash,
   faEdit,
   faSearch,
-  faPlus
+  faPlus,
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
 
 const FONT_AWESOME_ICONS_CONSTANTS = {
@@ -21,6 +22,7 @@ const FONT_AWESOME_ICONS_CONSTANTS = {
   faKey: faKey,
   faMobile: faMobile,
   faBell: faBell,
+  faBars: faBars,
   faEllipsisV: faEllipsisV,
   faTrash: faTrash,
   faEdit: faEdit,

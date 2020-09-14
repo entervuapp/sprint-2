@@ -1,8 +1,10 @@
 <div class="addCandidatesBlock container">
-  {{ eventDetails.eventName }} -
-  <app-display-date
-    [dateInput]="eventDetails && eventDetails.eventDate"
-  ></app-display-date>
+  <div class="addCandidateDriveName">
+    <h4>{{ eventDetails.eventName }}  - </h4>
+    <p><app-display-date
+      [dateInput]="eventDetails && eventDetails.eventDate"
+    ></app-display-date></p>
+  </div>
   <div class="addCandidatesFormBlock">
     <form [formGroup]="myForm" appHighlightRequiredFields appFocusInvalidInput>
       <h2>{{ displayTextObject["addCandidate"] }}</h2>
