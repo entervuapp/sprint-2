@@ -6,6 +6,13 @@
 6. super admin screens for events, candidates
 
 
+--- push notifications -----
+1. when queue position changed.(on off feature)
+2. on result of a round.
+3. 
+
+
+
 ---------------PHASE 2 START--------------
 1. ADD PANEL DETAILS IN EVENT(PHASE 2)
 2. available candidate profile view for HR(phase 2)
@@ -22,7 +29,12 @@
 13. Desgination for HR field in edit profile, employee ID
 14. location map
 15. Stress relief game
+16. Online interview
 ---------------PHASE 2 END--------------
+
+
+
+
 
 
 //issues

@@ -83,8 +83,7 @@ export class EditProfileIndividualComponent
 
   private initializeForm = (data): void => {
     this.myForm = this.fb.group({
-      id: new FormControl(data && data.id ? data.id : "", []),
-      avatar: new FormControl(
+      imageUrl: new FormControl(
         data && data["user"] && data["user"].imageUrl
           ? data["user"].imageUrl
           : "",
@@ -101,6 +100,7 @@ export class EditProfileIndividualComponent
           ? data["user"].lastName
           : ""
       ),
+      candidateId: new FormControl(data && data.id ? data.id : null),
       gender: new FormControl(
         data && data["user"] && data["user"].gender
           ? data["user"].gender
@@ -116,9 +116,9 @@ export class EditProfileIndividualComponent
         },
         [Validators.required, Validators.email]
       ),
-      contactNumber: new FormControl(
-        data && data["user"] && data["user"].contactNumber
-          ? data["user"].contactNumber
+      mobileNumber: new FormControl(
+        data && data["user"] && data["user"].mobileNumber
+          ? data["user"].mobileNumber
           : "",
         [Validators.required, Validators.minLength(10)]
       ),
@@ -156,9 +156,9 @@ export class EditProfileIndividualComponent
 
   public onAvatarChange = (event): void => {
     if (event && event.image) {
-      this.myForm.controls["avatar"].setValue(event.image);
+      this.myForm.controls["imageUrl"].setValue(event.image);
     } else {
-      this.myForm.controls.avatar.setValue(null);
+      this.myForm.controls.imageUrl.setValue(null);
     }
   };
 
@@ -173,38 +173,22 @@ export class EditProfileIndividualComponent
   public onUpdate = (): void => {
     let requestBody = {
       ...this.myForm.getRawValue(),
+      address: {
+        addressLine1: "",
+        addressLine2: "",
+        district: "",
+        state: "",
+        postalCode: "",
+        country: "",
+      },
+      clientName: "entervu",
     };
-    requestBody["address"] = {
-      addressLine1: "string",
-      addressLine2: "string",
-      district: "string",
-      state: "string",
-      postalCode: "string",
-      country: "string",
-    };
-    requestBody.candidateId = requestBody.id;
-    requestBody.clientName =
-      this.userDetails &&
-      this.userDetails["user"] &&
-      this.userDetails["user"]["client"] &&
-      this.userDetails["user"]["client"].clientName
-        ? this.userDetails["user"]["client"].clientName
-        : "";
-    requestBody.role =
-      this.userDetails &&
-      this.userDetails["user"] &&
-      this.userDetails["user"]["roles"] &&
-      this.userDetails["user"]["roles"][0] &&
-      this.userDetails["user"]["roles"][0].name
-        ? this.userDetails["user"]["roles"][0].name
-        : "";
     this._subscriptions.add(
       this.editProfileIndividualService.updateProfile(requestBody).subscribe(
         (data) => {
           this.objectUtil.showAlert([
             ...this.SHARED_CONSTANTS.SERVICE_MESSAGES.SUCCESS,
           ]);
-          // this.getUserProfile();
         },
         (errors) => {
           console.log("error", errors);

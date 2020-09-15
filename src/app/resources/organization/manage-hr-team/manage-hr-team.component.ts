@@ -61,7 +61,10 @@ export class ManageHrTeamComponent extends AppComponent implements OnInit {
     this.teamMembersList = [];
     this.myForm = this.fb.group({
       id: new FormControl(null),
-      officeEmail: new FormControl("", [Validators.required, Validators.email]),
+      officeEmail: new FormControl("", {
+        validators: [Validators.required, Validators.email],
+        updateOn: "blur",
+      }),
     });
     if (this.manageHeaderService) {
       this.manageHeaderService.updateHeaderVisibility(true);
