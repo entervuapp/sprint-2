@@ -841,6 +841,11 @@ body {
   .mobileHamBtn .ng-fa-icon {
     font-size: 22px;
   }
+  .mobileHamBtn:hover, .mobileHamBtn:focus {
+    border: 1px solid #ffb405;
+    border-radius: 0px;
+    outline: none;
+  }
   .mobileMenuBlock {
     display: none;
     position: fixed;
@@ -869,12 +874,18 @@ body {
     display: block;
   }
   .mobileMenuCard ul li a {
-    font-size: 20px;
-    padding: 10px 15px;
+    font-size: 17px;
+    padding: 10px 16px;
     width: 100%;
     display: inline-block;
     border-bottom: 1px solid #ccc;
     color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .mobileMenuCard ul li a:hover {
+    color: #333;
+    text-decoration: none;
   }
   .mobileMenuMain .mobileMenuTop p {
     margin: 0px;
@@ -886,6 +897,7 @@ body {
   }
   .mobileMenuMain .mobileMenuTop p .mobileMenuClose {
     float: right;
+    cursor: pointer;
   }
   .mobileMenuCard .mobileMenuSub {
     display: none;
