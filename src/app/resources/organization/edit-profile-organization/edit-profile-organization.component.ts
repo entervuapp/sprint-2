@@ -50,7 +50,6 @@ export class EditProfileOrganizationComponent
       reset: "Reset",
       firstName: "First name",
       lastName: "Last name",
-      officeEmail: "Office email",
       organizationEmail: "Organization email",
       companyCode: "Company code",
       companyName: "Company name",
@@ -84,13 +83,16 @@ export class EditProfileOrganizationComponent
         data && data.organization && data.organization.contactNumber
           ? data.organization.contactNumber
           : null,
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-        ]
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.maxLength(10),
+          ],
+          updateOn: "blur",
+        }
       ),
-      email: new FormControl(
+      companyEmail: new FormControl(
         data && data.organization && data.organization.companyEmail
           ? data.organization.companyEmail
           : "",
@@ -100,7 +102,10 @@ export class EditProfileOrganizationComponent
         data && data.organization && data.organization.companyName
           ? data.organization.companyName
           : "",
-        [Validators.required, Validators.min(3)]
+        {
+          validators: [Validators.required, Validators.min(3)],
+          updateOn: "blur",
+        }
       ),
       companyCode: new FormControl(
         {
@@ -119,7 +124,10 @@ export class EditProfileOrganizationComponent
         data.organization.address.addressLine1
           ? data.organization.address.addressLine1
           : "",
-        [Validators.required, Validators.min(10)]
+        {
+          validators: [Validators.required, Validators.min(10)],
+          updateOn: "blur",
+        }
       ),
     });
   };
@@ -138,7 +146,6 @@ export class EditProfileOrganizationComponent
 
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.getRawValue() };
-    requestBody["companyEmail"] = requestBody.email;
     requestBody["address"] = {
       addressLine1: this.myForm.value.address,
       addressLine2: "string",

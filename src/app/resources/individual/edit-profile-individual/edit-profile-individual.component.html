@@ -101,15 +101,15 @@
               name="mobile"
               id="mobile"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'contactNumber')
+                'input-field-error': checkForError(myForm, 'mobileNumber')
               }"
-              formControlName="contactNumber"
+              formControlName="mobileNumber"
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'contactNumber')"
+            *ngIf="checkForError(myForm, 'mobileNumber')"
             [formObject]="myForm"
-            [controlName]="'contactNumber'"
+            [controlName]="'mobileNumber'"
             [fieldName]="displayTextObject['mobile']"
             appNumbersOnly
           ></app-error-message>

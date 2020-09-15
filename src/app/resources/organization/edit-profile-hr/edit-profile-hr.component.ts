@@ -80,10 +80,9 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
       lastName: new FormControl(
         data && data.user && data.user.lastName ? data.user.lastName : ""
       ),
-      id: new FormControl(data && data.id ? data.id : null),
-      contactNumber: new FormControl(
-        data && data.user && data.user.contactNumber
-          ? data.user.contactNumber
+      mobileNumber: new FormControl(
+        data && data.user && data.user.mobileNumber
+          ? data.user.mobileNumber
           : null,
         [
           Validators.required,
@@ -91,7 +90,7 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
           Validators.maxLength(10),
         ]
       ),
-      email: new FormControl(
+      officeEmail: new FormControl(
         {
           value: data && data.user && data.user.email ? data.user.email : "",
           disabled: true,
@@ -114,17 +113,9 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
   };
 
   public onUpdate = (): void => {
-    let requestBody = { ...this.myForm.getRawValue() };
-    requestBody["officeEmail"] = requestBody.email;
-    requestBody["mobileNumber"] = requestBody.contactNumber;
-    requestBody["address"] = {
-      addressLine1: this.myForm.value.address,
-      addressLine2: "string",
-      district: "string",
-      state: "string",
-      postalCode: "string",
-      country: "string",
-    };
+    let requestBody = { ...this.myForm.value };
+    //to be removed
+    requestBody["organizationRequest"] = {};
     this._subscriptions.add(
       this.editProfileHrService.updateProfile(requestBody).subscribe(
         (response) => {

@@ -16,7 +16,7 @@ import { ObjectUtil } from "../../utils/object-utils";
 })
 export class ProfileComponent extends AppComponent implements OnInit {
   public ROUTE_URL_PATH_CONSTANTS;
-  public displayTextObject: NewAny;
+  public displayTextObject: object;
   public SHARED_CONSTANTS;
   public userDetails: object;
 
@@ -37,57 +37,15 @@ export class ProfileComponent extends AppComponent implements OnInit {
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     this.userDetails = this.userDetailsService.get();
     this.displayTextObject = {
-      menuList: [
-        {
-          displayText: "Change password",
-          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
-        },
-        {
-          displayText: "Setting",
-          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.SETTINGS,
-        },
-        {
-          displayText: "Logout",
-          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
-        },
-      ],
+      menuList: [],
     };
     this.prepareMenuItems();
   }
 
   private prepareMenuItems = (): void => {
-    let userRole: string =
-      this.userDetails &&
-      this.userDetails["user"] &&
-      this.userDetails["user"].roles &&
-      this.userDetails["user"].roles[0] &&
-      this.userDetails["user"].roles[0].name;
-
-    if (
-      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
-      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER
-    ) {
-      if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN) {
-        let organizationProfileMenu = {
-          displayText: "Organization profile",
-          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-            .EDIT_ORGANIZATION_PROFILE,
-        };
-        this.displayTextObject["menuList"]["unshift"](organizationProfileMenu);
-      }
-      let myProfileMenu = {
-        displayText: "My profile",
-        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_HR_PROFILE,
-      };
-      this.displayTextObject["menuList"]["unshift"](myProfileMenu);
-    } else if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.CANDIDATE) {
-      let myProfileMenu = {
-        displayText: "My profile",
-        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
-          .EDIT_INDIVIDUAL_PROFILE,
-      };
-      this.displayTextObject["menuList"]["unshift"](myProfileMenu);
-    }
+    this.displayTextObject["menuList"] = this.objectUtil.getMenuList(
+      this.userDetails
+    );
   };
 
   public navigateToScreen = (screen): void => {

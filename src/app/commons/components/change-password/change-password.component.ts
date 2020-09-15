@@ -95,7 +95,6 @@ export class ChangePasswordComponent extends AppComponent implements OnInit {
           : "",
     };
     delete requestBody.confirmNewPassword;
-    console.log("on password update", JSON.stringify(requestBody));
 
     this._subscriptions.add(
       this.changePasswordService.updatePassword(requestBody).subscribe(

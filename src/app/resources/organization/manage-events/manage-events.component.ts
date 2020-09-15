@@ -130,7 +130,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         ),
         name: new FormControl(
           formData && formData.eventName ? formData.eventName : "",
-          [Validators.required, Validators.minLength(3)]
+          {
+            validators: [Validators.required, Validators.minLength(3)],
+            updateOn: "blur",
+          }
         ),
         eventDate: new FormControl(
           formData && formData.eventDate ? formData.eventDate : "",
@@ -145,7 +148,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
           id: new FormControl("", []),
           description: new FormControl("", []),
         }),
-        numberOfRounds: new FormControl("", [Validators.min(1)]),
+        numberOfRounds: new FormControl("", {
+          validators: [Validators.min(1)],
+          updateOn: "blur",
+        }),
       });
       // this.skillsList =
       //   formData && formData.eventSkills && formData.eventSkills.length > 0
@@ -156,24 +162,24 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         id: new FormControl(null),
         createdBy: new FormControl(""),
         creationDate: new FormControl(""),
-        name: new FormControl("", [
-          Validators.required,
-          Validators.minLength(3),
-        ]),
+        name: new FormControl("", {
+          validators: [Validators.required, Validators.minLength(3)],
+          updateOn: "blur",
+        }),
         eventDate: new FormControl("", [Validators.required]),
         eventTime: new FormControl("", [Validators.required]),
         skill: new FormGroup({
           value: new FormControl("", [Validators.required]),
           id: new FormControl("", []),
-          description: new FormControl("", [
-            Validators.required,
-            Validators.minLength(2),
-          ]),
+          description: new FormControl("", {
+            validators: [Validators.required, Validators.minLength(2)],
+            updateOn: "blur",
+          }),
         }),
-        numberOfRounds: new FormControl("", [
-          Validators.required,
-          Validators.min(1),
-        ]),
+        numberOfRounds: new FormControl("", {
+          validators: [Validators.required, Validators.min(1)],
+          updateOn: "blur",
+        }),
       });
       this.skillsList = [];
     }
@@ -204,7 +210,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         this.formGroupObject
       ),
     };
-    console.log("onSubmit ", requestBody);
+
     if (
       requestBody &&
       requestBody.id !== null &&

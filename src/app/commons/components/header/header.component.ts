@@ -24,6 +24,9 @@ export class HeaderComponent extends AppComponent implements OnInit {
   public fontIcon = FONT_AWESOME_ICONS_CONSTANTS;
   public SHARED_CONSTANTS;
   public menuList: Menu[];
+  public showMobileMenu: boolean;
+  public showProfileOptionsForMobile: boolean;
+  public profileMenuList;
 
   constructor(
     public router: Router,
@@ -36,8 +39,11 @@ export class HeaderComponent extends AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showProfileOptionsForMobile = false;
+    this.showMobileMenu = false;
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     let userDetails = this.userDetailsService.get();
+    this.profileMenuList = this.objectUtil.getMenuList(this.userDetails);
     if (
       userDetails &&
       userDetails["user"] &&
@@ -98,29 +104,31 @@ export class HeaderComponent extends AppComponent implements OnInit {
 
   public navigateToScreen = (menu): void => {
     this.objectUtil.showAlert([]);
-    switch (menu.DISPLAY_TEXT) {
-      case "EVENTS":
-        this.activeModule = menu.DISPLAY_TEXT;
-        this.navigateTo(menu.NAVIGATE_TO);
-        break;
-      case "TEAM":
-        this.activeModule = menu.DISPLAY_TEXT;
-        this.navigateTo(menu.NAVIGATE_TO);
-        break;
-      case "DASHBOARD":
-        this.activeModule = menu.DISPLAY_TEXT;
-        this.navigateTo(menu.NAVIGATE_TO);
-        break;
-      case "QA":
-        this.activeModule = menu.DISPLAY_TEXT;
-        this.navigateTo(menu.NAVIGATE_TO);
-        break;
-      case "ADMIN":
-        this.activeModule = menu.DISPLAY_TEXT;
-        this.navigateTo(menu.NAVIGATE_TO);
-        break;
-      default:
-        break;
+    if (menu) {
+      switch (menu.DISPLAY_TEXT) {
+        case "EVENTS":
+          this.activeModule = menu.DISPLAY_TEXT;
+          this.navigateTo(menu.NAVIGATE_TO);
+          break;
+        case "TEAM":
+          this.activeModule = menu.DISPLAY_TEXT;
+          this.navigateTo(menu.NAVIGATE_TO);
+          break;
+        case "DASHBOARD":
+          this.activeModule = menu.DISPLAY_TEXT;
+          this.navigateTo(menu.NAVIGATE_TO);
+          break;
+        case "QA":
+          this.activeModule = menu.DISPLAY_TEXT;
+          this.navigateTo(menu.NAVIGATE_TO);
+          break;
+        case "ADMIN":
+          this.activeModule = menu.DISPLAY_TEXT;
+          this.navigateTo(menu.NAVIGATE_TO);
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -148,5 +156,19 @@ export class HeaderComponent extends AppComponent implements OnInit {
       default:
         break;
     }
+  };
+
+  public handleDisplayMobileMenu = (event, showMenu: false): void => {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    this.showMobileMenu = showMenu;
+  };
+
+  public handleProfileOptionExpansion = (event): void => {
+    event.stopPropagation();
+    event.preventDefault();
+    this.showProfileOptionsForMobile = !this.showProfileOptionsForMobile;
   };
 }

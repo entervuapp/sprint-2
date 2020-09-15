@@ -4,10 +4,12 @@ import { AlertService } from "../services/alert/alert.service";
 import { LocalStorageService } from "../services/local-storage/local-storage.service";
 import { SHARED_CONSTANTS } from "../constants/shared.constants";
 import { UserDetailsService } from "../services/user-details/user-details.service";
+import { ROUTE_URL_PATH_CONSTANTS } from "../constants/route-url-path.constants";
 
 @Injectable()
 export class ObjectUtil {
   private SHARED_CONSTANTS = SHARED_CONSTANTS;
+  private ROUTE_URL_PATH_CONSTANTS = ROUTE_URL_PATH_CONSTANTS;
   constructor(
     private alertService: AlertService,
     public localStorageService: LocalStorageService,
@@ -48,6 +50,7 @@ export class ObjectUtil {
       switch (property) {
         case "email":
         case "officeEmail":
+        case "companyEmail":
           if (
             (formObj &&
               formObj.controls &&
@@ -67,6 +70,7 @@ export class ObjectUtil {
         case "experience":
         case "mobile":
         case "contactNumber":
+        case "mobileNumber":
         case "comments":
         case "companyCode":
         case "companyName":
@@ -354,5 +358,55 @@ export class ObjectUtil {
     return decodedJson && decodedJson["userType"]
       ? decodedJson["userType"]
       : null;
+  };
+
+  public getMenuList = (userDetails) => {
+    let menuList = [
+      {
+        displayText: "Change password",
+        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.CHANGE_PASSWORD,
+      },
+      {
+        displayText: "Setting",
+        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.SETTINGS,
+      },
+      {
+        displayText: "Logout",
+        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.LOGOUT,
+      },
+    ];
+    let userRole: string =
+      userDetails &&
+      userDetails["user"] &&
+      userDetails["user"].roles &&
+      userDetails["user"].roles[0] &&
+      userDetails["user"].roles[0].name;
+
+    if (
+      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN ||
+      userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_USER
+    ) {
+      if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.HR_ADMIN) {
+        let organizationProfileMenu = {
+          displayText: "Organization profile",
+          url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+            .EDIT_ORGANIZATION_PROFILE,
+        };
+        menuList["unshift"](organizationProfileMenu);
+      }
+      let myProfileMenu = {
+        displayText: "My profile",
+        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH.EDIT_HR_PROFILE,
+      };
+      menuList["unshift"](myProfileMenu);
+    } else if (userRole === this.SHARED_CONSTANTS.EVU_USER_ROLES.CANDIDATE) {
+      let myProfileMenu = {
+        displayText: "My profile",
+        url: this.ROUTE_URL_PATH_CONSTANTS.ROUTE_URL_PATH
+          .EDIT_INDIVIDUAL_PROFILE,
+      };
+      menuList["unshift"](myProfileMenu);
+    }
+    return menuList;
   };
 }

@@ -17,24 +17,24 @@
       <div class="orgProfileForm">
         <div class="form-group formGroupOrgProfile">
           <div class="input-group">
-            <label for="organizationEmail">{{
+            <label for="companyEmail">{{
               displayTextObject["organizationEmail"]
             }}</label>
             <input
               type="email"
               class="form-control"
-              name="organizationEmail"
-              id="organizationEmail"
+              name="companyEmail"
+              id="companyEmail"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'email')
+                'input-field-error': checkForError(myForm, 'companyEmail')
               }"
-              formControlName="email"
+              formControlName="companyEmail"
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'email')"
+            *ngIf="checkForError(myForm, 'companyEmail')"
             [formObject]="myForm"
-            [controlName]="'email'"
+            [controlName]="'companyEmail'"
             [fieldName]="displayTextObject['organizationEmail']"
           ></app-error-message>
         </div>

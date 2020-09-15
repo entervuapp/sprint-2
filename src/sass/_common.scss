@@ -20,8 +20,8 @@ button {
 
 .bgShadow {
   background-color: rgba(0, 0, 0, 0.9);
-    width: 100%;
-    height: 100vh;
+  width: 100%;
+  height: 100vh;
 }
 
 .ev_loginCard {
@@ -668,18 +668,18 @@ body {
   min-width: 500px;
   padding: 20px;
 }
-.mat-dialog-container h4{
+.mat-dialog-container h4 {
   color: #333;
-    font-size: 26px;
-    font-weight: 600;
-    margin: 0px 0px 10px 0px;
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0px 0px 10px 0px;
 }
 .mat-dialog-container span {
   font-size: 16px;
-    color: #333;
-    margin: 0px 0px 10px 0px;
-    display: inline-block;
-    width: 100%;
+  color: #333;
+  margin: 0px 0px 10px 0px;
+  display: inline-block;
+  width: 100%;
 }
 .mat-dialog-container .text-right {
   margin: 8px 0px 0px 0px;
@@ -696,7 +696,7 @@ body {
   }
   .login-form {
     padding: 0px 15px;
-}
+  }
 }
 
 @media (max-width: 820px) {
@@ -720,11 +720,11 @@ body {
   }
   #contactUs {
     float: inherit;
-}
-.aboutHeaderTitle {
-  margin-right: 10px;
-  font-weight: 600;
-}
+  }
+  .aboutHeaderTitle {
+    margin-right: 10px;
+    font-weight: 600;
+  }
   .ev_mainContainer {
     background-image: url(./assets/images/bg1.jpg);
     background-size: cover;
@@ -765,133 +765,142 @@ body {
     top: inherit;
     left: inherit;
     transition: inherit;
-}
-.ev_logo_block {
-  padding: 15px 18%;
-}
-.loginFormNavigation {
-  margin: 0px;
-  text-align: center;
-  padding: 15px 15px 15px 15px;
-  display: flex;
-  border-top: 1px solid #d6d6d6;
-}
-.loginFormNavigation .btnGroup {
-  float: left;
+  }
+  .ev_logo_block {
+    padding: 15px 18%;
+  }
+  .loginFormNavigation {
+    margin: 0px;
+    text-align: center;
+    padding: 15px 15px 15px 15px;
+    display: flex;
+    border-top: 1px solid #d6d6d6;
+  }
+  .loginFormNavigation .btnGroup {
+    float: left;
     width: 33.33%;
     padding: 12px 15px;
-}
-.loginFormNavigationBtn {
-  border: 2px solid #ffffff;
-  font-size: 18px;
-  color: #ffffff;
-  width: 100%;
-  display: inline-block;
-  padding: 8px 0px;
-  border-radius: 8px;
-  margin: 0px;
-  cursor: pointer;
-  font-weight: 500;
-  box-shadow: 0px 0px 2px #333;
-}
-.loginCard_right_signIn {
-  background-image: none;
-  background-size: inherit;
-  background-repeat: inherit;
-  width: inherit;
-  float: none;
-  position: inherit;
-  height: inherit;
-  border-radius: inherit;
-  padding: 0px;
-  z-index: inherit;
-  top: 0px;
-  left: 0px;
-  right: 0;
-  transition: inherit;
-  overflow: inherit;
-}
-.login-form {
-  padding: 20px 30px 30px 30px;
-}
-
-.headerNavbar {
-  display: none;
-}
-.headerRightSide {
-  display: none;
-}
-.headerLogo {
-  display: block;
+  }
+  .loginFormNavigationBtn {
+    border: 2px solid #ffffff;
+    font-size: 18px;
+    color: #ffffff;
     width: 100%;
-}
-.headerLogo a {
-  float: left;
-}
-.mobileHamBtn {
-  display: inherit;
-  float: right;
+    display: inline-block;
+    padding: 8px 0px;
+    border-radius: 8px;
+    margin: 0px;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0px 0px 2px #333;
+  }
+  .loginCard_right_signIn {
+    background-image: none;
+    background-size: inherit;
+    background-repeat: inherit;
+    width: inherit;
+    float: none;
+    position: inherit;
+    height: inherit;
+    border-radius: inherit;
+    padding: 0px;
+    z-index: inherit;
+    top: 0px;
+    left: 0px;
+    right: 0;
+    transition: inherit;
+    overflow: inherit;
+  }
+  .login-form {
+    padding: 20px 30px 30px 30px;
+  }
+
+  .headerNavbar {
+    display: none;
+  }
+  .headerRightSide {
+    display: none;
+  }
+  .headerLogo {
+    display: block;
+    width: 100%;
+  }
+  .headerLogo a {
+    float: left;
+  }
+  .mobileHamBtn {
+    display: inherit;
+    float: right;
     border: 1px solid #07b1f5;
     background: #fff;
     color: #07b1f5;
     box-shadow: none;
     padding: 3px 10px 0px 10px;
     margin: 10px 6px 0px 0px;
-}
-.mobileHamBtn .ng-fa-icon {
-  font-size: 22px;
-}
-.mobileMenuBlock {
-  display: block;
-  position: fixed;
+  }
+  .mobileHamBtn .ng-fa-icon {
+    font-size: 22px;
+  }
+  .mobileMenuBlock {
+    display: none;
+    position: fixed;
     top: 0px;
     left: 0px;
     background-color: rgba(0, 0, 0, 0.8);
     width: 100%;
     height: 100%;
     z-index: 100;
-}
-.mobileMenuCard {
-  width: 55%;
+  }
+  .mobileMenuBlock.showMobileMenuSidePannel {
+    display: block;
+  }
+  .mobileMenuCard {
+    width: 55%;
     background: #01aff5;
     height: 100%;
     overflow: auto;
-}
-.mobileMenuCard ul {
-  list-style-type: none;
+  }
+  .mobileMenuCard ul {
+    list-style-type: none;
     padding: 0px;
     margin: 0px;
-}
-.mobileMenuCard ul li{
-  display: block;
-}
-.mobileMenuCard ul li a{
-  font-size: 20px;
+  }
+  .mobileMenuCard ul li {
+    display: block;
+  }
+  .mobileMenuCard ul li a {
+    font-size: 20px;
     padding: 10px 15px;
     width: 100%;
     display: inline-block;
     border-bottom: 1px solid #ccc;
     color: #fff;
-}
-.mobileMenuMain .mobileMenuTop p {
-  margin: 0px;
+  }
+  .mobileMenuMain .mobileMenuTop p {
+    margin: 0px;
     font-size: 32px;
     font-weight: 600;
     color: #fff;
     padding: 12px 15px;
     border-bottom: 1px solid #ccc;
-} 
-.mobileMenuMain .mobileMenuTop p .mobileMenuClose {
-  float: right;
-}
-.mobileMenuCard .mobileMenuSub li a {
-  padding: 10px 15px 10px 35px;
-}
-.mobileMenuCard .mobileSubMenuAngle {
-  font-size: 20px;
-  color: #fff;
-  float: right;
-}
+  }
+  .mobileMenuMain .mobileMenuTop p .mobileMenuClose {
+    float: right;
+  }
+  .mobileMenuCard .mobileMenuSub {
+    display: none;
+  }
+  .mobileMenuCard .mobileMenuSub.showProfileOptionsInSidePanel {
+    display: block;
+  }
+  .mobileMenuCard .mobileMenuSub li a {
+    padding: 10px 15px 10px 35px;
+  }
+  .mobileMenuCard .mobileSubMenuAngle {
+    font-size: 20px;
+    color: #fff;
+    float: right;
+  }
 }
 
 @media (max-width: 680px) {
@@ -910,32 +919,33 @@ body {
     border-radius: 0px;
     border: 0px;
     box-shadow: none;
-}
-.loginFormNavigation .btnGroup {
-  padding: 12px 6px;
-  text-align: center;
-}
-.loginFormNavigationBtn:hover, .loginFormNavigationBtn:focus {
-  border: 0px solid #ffffff;
-  color: #333;
-  background: transparent;
-  box-shadow: none;
-}
+  }
+  .loginFormNavigation .btnGroup {
+    padding: 12px 6px;
+    text-align: center;
+  }
+  .loginFormNavigationBtn:hover,
+  .loginFormNavigationBtn:focus {
+    border: 0px solid #ffffff;
+    color: #333;
+    background: transparent;
+    box-shadow: none;
+  }
 }
 
 @media (max-width: 580px) {
   .loginFormNavigation .btnGroup {
     padding: 12px 6px;
-}
-.bgShadow {
-  padding: 35px 20px;
-}
+  }
+  .bgShadow {
+    padding: 35px 20px;
+  }
 }
 
 @media (max-width: 480px) {
   .ev_logo_block {
     padding: 15px 14%;
-}
+  }
 }
 
 @media (max-width: 420px) {

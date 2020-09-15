@@ -123,7 +123,10 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
         data.candidate["user"].firstName
           ? data.candidate["user"].firstName
           : "",
-        [Validators.required, Validators.minLength(3)]
+        {
+          validators: [Validators.required, Validators.minLength(3)],
+          updateOn: "blur",
+        }
       ),
       email: new FormControl(
         data &&
@@ -132,7 +135,10 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
         data.candidate["user"].email
           ? data.candidate["user"].email
           : "",
-        [Validators.required, Validators.email]
+        {
+          validators: [Validators.required, Validators.email],
+          updateOn: "blur",
+        }
       ),
       contactNumber: new FormControl(
         data &&
@@ -141,11 +147,14 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
         data.candidate["user"].contactNumber
           ? data.candidate["user"].contactNumber
           : "",
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10),
-        ]
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.maxLength(10),
+          ],
+          updateOn: "blur",
+        }
       ),
       eventId: new FormControl(this.eventId, []),
       roundId: new FormControl("", []),

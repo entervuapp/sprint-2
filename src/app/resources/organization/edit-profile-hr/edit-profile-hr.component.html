@@ -63,15 +63,15 @@
               name="officeEmail"
               id="officeEmail"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'email')
+                'input-field-error': checkForError(myForm, 'officeEmail')
               }"
-              formControlName="email"
+              formControlName="officeEmail"
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'email')"
+            *ngIf="checkForError(myForm, 'officeEmail')"
             [formObject]="myForm"
-            [controlName]="'email'"
+            [controlName]="'officeEmail'"
             [fieldName]="displayTextObject['officeEmail']"
           ></app-error-message>
         </div>
@@ -84,16 +84,16 @@
               name="mobile"
               id="mobile"
               [ngClass]="{
-                'input-field-error': checkForError(myForm, 'contactNumber')
+                'input-field-error': checkForError(myForm, 'mobileNumber')
               }"
-              formControlName="contactNumber"
+              formControlName="mobileNumber"
               appNumbersOnly
             />
           </div>
           <app-error-message
-            *ngIf="checkForError(myForm, 'contactNumber')"
+            *ngIf="checkForError(myForm, 'mobileNumber')"
             [formObject]="myForm"
-            [controlName]="'contactNumber'"
+            [controlName]="'mobileNumber'"
             [fieldName]="displayTextObject['mobile']"
           ></app-error-message>
         </div>
