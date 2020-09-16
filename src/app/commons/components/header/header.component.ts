@@ -43,7 +43,7 @@ export class HeaderComponent extends AppComponent implements OnInit {
     this.showMobileMenu = false;
     this.SHARED_CONSTANTS = SHARED_CONSTANTS;
     let userDetails = this.userDetailsService.get();
-    this.profileMenuList = this.objectUtil.getMenuList(this.userDetails);
+    this.profileMenuList = this.objectUtil.getMenuList(userDetails);
     if (
       userDetails &&
       userDetails["user"] &&
@@ -170,5 +170,11 @@ export class HeaderComponent extends AppComponent implements OnInit {
     event.stopPropagation();
     event.preventDefault();
     this.showProfileOptionsForMobile = !this.showProfileOptionsForMobile;
+  };
+
+  public navigateToProfileScreen = (profileMenu): void => {
+    if (profileMenu && profileMenu.url) {
+      this.navigateTo(profileMenu.url);
+    }
   };
 }

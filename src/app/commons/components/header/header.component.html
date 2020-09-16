@@ -83,13 +83,32 @@
                 showProfileOptionsForMobile === true
             }"
           >
-            <li><a href="#">My Profile</a></li>
-            <li><a href="#">Organization Profile</a></li>
-            <li><a href="#">Change Password</a></li>
-            <li><a href="#">Settings</a></li>
+            <li
+              *ngFor="
+                let profileMenu of profileMenuList.slice(
+                  0,
+                  profileMenuList.length - 1
+                )
+              "
+            >
+              <a (click)="navigateToProfileScreen(profileMenu)">{{
+                profileMenu.displayText
+              }}</a>
+            </li>
           </ul>
         </li>
-        <li><a href="#">Logout</a></li>
+        <li
+          *ngFor="
+            let profileMenu of profileMenuList.slice(
+              profileMenuList.length - 1,
+              profileMenuList.length
+            )
+          "
+        >
+          <a (click)="navigateToProfileScreen(profileMenu)">{{
+            profileMenu.displayText
+          }}</a>
+        </li>
       </ul>
     </div>
   </div>

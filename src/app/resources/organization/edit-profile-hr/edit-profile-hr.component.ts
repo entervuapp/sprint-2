@@ -115,7 +115,6 @@ export class EditProfileHrComponent extends AppComponent implements OnInit {
   public onUpdate = (): void => {
     let requestBody = { ...this.myForm.value };
     //to be removed
-    requestBody["organizationRequest"] = {};
     this._subscriptions.add(
       this.editProfileHrService.updateProfile(requestBody).subscribe(
         (response) => {
