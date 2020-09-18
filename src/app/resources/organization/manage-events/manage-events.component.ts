@@ -603,7 +603,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     }
   };
 
-  public onSkillChange = (): void => {
+  public onSkillChange = (event = null): void => {
+    if (event && event.currentTarget && event.currentTarget.value) {
+      this.formGroupObject.controls.skill["controls"].description.setValue(
+        event.currentTarget.value
+      );
+    }
     if (
       this.formGroupObject.controls.skill["controls"].description.value ||
       this.formGroupObject.controls.numberOfRounds.value ||
