@@ -1,6 +1,7 @@
 <div class="addEventBlock container">
   <div class="addEventFormBlock">
     <form
+      autocomplete="off"
       [formGroup]="formGroupObject"
       appHighlightRequiredFields
       appFocusInvalidInput
@@ -112,7 +113,7 @@
                 [formControl]="
                   formGroupObject.controls.skill['controls'].description
                 "
-                (keyup)="onSkillChange()"
+                (keyup)="onSkillChange($event)"
               />
               <app-error-message
                 *ngIf="checkForError(formGroupObject, 'skill')"
