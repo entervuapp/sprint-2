@@ -79,8 +79,12 @@ export class RegistrationIndividualComponent
         validators: [Validators.required, Validators.email],
         updateOn: "blur",
       }),
-      contactNumber: new FormControl("", {
-        validators: [Validators.required, Validators.minLength(10)],
+      mobileNumber: new FormControl("", {
+        validators: [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+        ],
         updateOn: "blur",
       }),
       password: new FormControl("", {

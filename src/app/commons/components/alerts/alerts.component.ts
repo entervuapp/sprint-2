@@ -5,6 +5,8 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  ElementRef,
+  ViewChild,
 } from "@angular/core";
 
 @Component({
@@ -15,6 +17,8 @@ import {
 export class AlertsComponent implements OnInit, OnChanges {
   @Input() alertsList: any[];
   @Output() onClose = new EventEmitter();
+
+  @ViewChild("alertCloseBtn") alertCloseBtn: ElementRef;
 
   constructor() {}
 
@@ -30,6 +34,9 @@ export class AlertsComponent implements OnInit, OnChanges {
     ) {
       if (changes.alertsList.currentValue.length) {
         this.alertsList = changes.alertsList.currentValue;
+        setTimeout(() => {
+          this.alertCloseBtn.nativeElement.focus();
+        }, 0);
       } else {
         this.alertsList = [];
       }
