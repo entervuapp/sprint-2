@@ -191,7 +191,7 @@
                 <td class="skillRoundsCount">
                   <p
                     class="eventRoundsBtn roundsNotAdded roundsAdded"
-                    [ngClass]="{ green: displaySkills(i) }"
+                    [ngClass]="{ green: !isRoundNamesMissing(skillObj) }"
                     data-toggle="modal"
                     data-target="#addRoundsPopup"
                     (click)="onClickOfNumberOfRounds(skillObj)"
@@ -201,7 +201,7 @@
                   <span
                     class="eventRoundsData"
                     data-toggle="tooltip"
-                    *ngIf="skillObj['roundDetailsList'].length"
+                    *ngIf="!isRoundNamesMissing(skillObj)"
                     [title]="displaySkills(i, true)"
                   >
                     - {{ displaySkills(i) }}
@@ -209,7 +209,7 @@
                   <span
                     class="error"
                     data-toggle="tooltip"
-                    *ngIf="skillObj['roundDetailsList'].length === 0"
+                    *ngIf="isRoundNamesMissing(skillObj)"
                     [title]="displaySkills(i, true)"
                   >
                     - {{ displayTextObject["roundDetailsMissing"] }}

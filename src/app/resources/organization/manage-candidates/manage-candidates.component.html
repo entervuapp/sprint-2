@@ -1,9 +1,11 @@
 <div class="addCandidatesBlock container">
   <div class="addCandidateDriveName">
-    <h4>{{ eventDetails.eventName }}  - </h4>
-    <p><app-display-date
-      [dateInput]="eventDetails && eventDetails.eventDate"
-    ></app-display-date></p>
+    <h4>{{ eventDetails.eventName }} -</h4>
+    <p>
+      <app-display-date
+        [dateInput]="eventDetails && eventDetails.eventDate"
+      ></app-display-date>
+    </p>
   </div>
   <div class="addCandidatesFormBlock">
     <form [formGroup]="myForm" appHighlightRequiredFields appFocusInvalidInput>
@@ -29,7 +31,6 @@
               class="form-control"
               name="name"
               id="name"
-              [placeholder]="displayTextObject['name']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'firstName')
               }"
@@ -51,7 +52,6 @@
               class="form-control"
               name="mobile"
               id="mobile"
-              [placeholder]="displayTextObject['mobile']"
               [ngClass]="{
                 'input-field-error': checkForError(myForm, 'contactNumber')
               }"
