@@ -522,11 +522,11 @@ export class ManageCandidatesComponent extends AppComponent implements OnInit {
 
   public onEmailSelect = (userObj): void => {
     if (userObj && userObj.user && userObj.user.email) {
-      const { firstName, contactNumber, email } = userObj.user;
+      const { firstName, mobileNumber, email } = userObj.user;
       this.candidateData = { ...userObj };
       this.candidateData["candidateId"] = userObj.id;
       this.myForm.controls.firstName.setValue(firstName);
-      this.myForm.controls.contactNumber.setValue(contactNumber);
+      this.myForm.controls.contactNumber.setValue(mobileNumber);
       this.myForm.controls.email.setValue(email);
     }
   };
