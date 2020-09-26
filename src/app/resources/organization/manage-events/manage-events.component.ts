@@ -147,6 +147,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
           value: new FormControl("", []),
           id: new FormControl("", []),
           description: new FormControl("", []),
+          createdBy: new FormControl("", []),
+          createdDate: new FormControl("", []),
+          lastUpdatedBy: new FormControl("", []),
+          updatedDate: new FormControl("", []),
         }),
         numberOfRounds: new FormControl("", {
           validators: [Validators.min(1)],
@@ -175,6 +179,10 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
             validators: [Validators.required, Validators.minLength(2)],
             updateOn: "blur",
           }),
+          createdBy: new FormControl("", []),
+          createdDate: new FormControl("", []),
+          lastUpdatedBy: new FormControl("", []),
+          updatedDate: new FormControl("", []),
         }),
         numberOfRounds: new FormControl("", {
           validators: [Validators.required, Validators.min(1)],
@@ -295,32 +303,27 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         eachSkill = {
           id: this.renderSkillId,
           skill: {
-            value: this.formGroupObject.controls.skill["controls"].value.value,
-            description: this.formGroupObject.controls.skill["controls"]
-              .description.value,
-            id: this.formGroupObject.controls.skill["controls"].id.value,
+            ...this.formGroupObject.controls.skill.value,
           },
           numberOfRounds: this.formGroupObject.controls.numberOfRounds.value,
           roundDetailsList: this.assignRoundDetails(),
         };
       } else {
         eachSkill = {
-          id: this.skillsList.length + 1,
+          uiReferenceId: this.skillsList.length + 1,
           skill: {
-            value: this.formGroupObject.controls.skill["controls"].value.value,
-            description: this.formGroupObject.controls.skill["controls"]
-              .description.value,
-            id: this.formGroupObject.controls.skill["controls"].id.value,
+            ...this.formGroupObject.controls.skill.value,
           },
           numberOfRounds: this.formGroupObject.controls.numberOfRounds.value,
           roundDetailsList: [],
         };
       }
-      // this.objectUtil.showAlert([
-      //   { code: "SUCCESS", systemMessage: "Success" },
-      // ]);
       this.renderSkillId
-        ? this.skillsList.splice(this.renderSkillId - 1, 1, eachSkill)
+        ? this.skillsList.splice(
+            this.skillsList.findIndex((item) => item["id"] === eachSkill.id),
+            1,
+            eachSkill
+          )
         : this.skillsList.push(eachSkill);
       this.clearSkillFields();
       this.onChangeOfRounds(null);
@@ -339,8 +342,12 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   private clearSkillFields = () => {
     this.formGroupObject.controls.skill.setValue({
       value: "",
-      id: "",
+      id: null,
       description: "",
+      createdBy: null,
+      createdDate: null,
+      lastUpdatedBy: null,
+      updatedDate: null,
     });
     this.formGroupObject.controls.skill.markAsUntouched();
     this.formGroupObject.controls.skill.markAsPristine();
@@ -355,15 +362,18 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
 
   public onSkillEdit = (skillObj): void => {
     this.formGroupObject.controls.skill.setValue({
-      id: skillObj.skill.id,
-      value: skillObj.skill.value,
-      description: skillObj.skill.description,
+      ...skillObj.skill,
     });
     this.formGroupObject.controls.numberOfRounds.setValue(
       skillObj.numberOfRounds
     );
     this.editedSkillRoundDetails = skillObj.roundDetailsList;
-    this.renderSkillId = skillObj.id;
+    this.renderSkillId =
+      skillObj && skillObj.uiReferenceId
+        ? skillObj.uiReferenceId
+        : skillObj.id
+        ? skillObj.id
+        : "";
   };
 
   public onEditOfEvent = (event) => {
@@ -545,16 +555,6 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     return year + "-" + month + "-" + date;
   };
 
-  public onSkillSelect = (data) => {
-    if (data) {
-      let temp = { ...data };
-      this.formGroupObject.controls.skill.setValue({
-        value: temp.value,
-        description: temp.description,
-      });
-    }
-  };
-
   public isSkillRequired = (): boolean => {
     let validators = this.formGroupObject.controls.skill[
       "controls"
@@ -594,9 +594,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
         this.checkForError(this.formGroupObject, "skill");
       } else {
         this.formGroupObject.controls.skill.setValue({
-          value: skill.value,
-          id: skill.id,
-          description: skill.description,
+          ...skill,
         });
         this.filteredSkillOptionsList = [];
       }
@@ -882,13 +880,44 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
     let isValid = true;
     this.skillsList.map((eachSkill) => {
       if (
-        eachSkill &&
-        eachSkill["roundDetailsList"] &&
-        eachSkill["roundDetailsList"].length === 0
+        (eachSkill &&
+          eachSkill["roundDetailsList"] &&
+          eachSkill["roundDetailsList"].length === 0) ||
+        eachSkill["roundDetailsList"].length !== eachSkill.numberOfRounds ||
+        !eachSkill["roundDetailsList"]
       ) {
         isValid = false;
+      } else {
+        for (let i = 0; i < eachSkill["roundDetailsList"].length; i++) {
+          if (eachSkill["roundDetailsList"][i].roundName === "") {
+            isValid = false;
+            break;
+          }
+        }
       }
     });
     return isValid;
+  };
+
+  public isRoundNamesMissing = (skillObj): boolean => {
+    let provided = false;
+    if (
+      (skillObj &&
+        skillObj["roundDetailsList"] &&
+        skillObj["roundDetailsList"].length === 0) ||
+      skillObj["roundDetailsList"].length !== skillObj.numberOfRounds ||
+      !skillObj["roundDetailsList"]
+    ) {
+      provided = true;
+    } else {
+      for (let i = 0; i < skillObj["roundDetailsList"].length; i++) {
+        if (skillObj["roundDetailsList"][i].roundName === "") {
+          provided = true;
+          break;
+        }
+      }
+    }
+
+    return provided;
   };
 }
