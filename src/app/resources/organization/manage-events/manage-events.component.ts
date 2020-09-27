@@ -50,6 +50,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
   public editedSkillRoundDetails = [];
   public userDetails: object;
   public roundsDetailsFormSubmitted: boolean;
+  public addEventMobileVarible: boolean;
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
@@ -98,6 +99,7 @@ export class ManageEventsComponent extends AppComponent implements OnInit {
       previousOptions: "Previous Options",
     };
     this.resetField = false;
+    this.addEventMobileVarible = false;
     this.getSkillOptions();
     this.initializeForm();
     if (

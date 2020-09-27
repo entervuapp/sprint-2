@@ -261,3 +261,50 @@
 .is-invalid {
   color: red;
 }
+.eventsShowIconWrapper {
+  display: none;
+}
+
+@media (max-width: 1199px) {
+  .formGroupAddEvents {
+    width: 33.33%;
+  }
+}
+
+@media (max-width: 767px) {
+  .addEventBlock.container {
+    width: 100%;
+    max-width: 100%;
+  }
+  .eventsShowIconWrapper {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ff3b00;
+    color: #fff;
+    padding: 14px 18px 14px 18px;
+    border-radius: 50%;
+    z-index: 100;
+    box-shadow: 0px 0px 8px #4c4c4c;
+  }
+  .eventsShowIconWrapper .eventsShowIconSpan {
+    color: #fff;
+  }
+  .eventsShowIconWrapper .eventsShowIconSpan .ng-fa-icon {
+    font-size: 18px;
+  }
+  .addEventBlock .addEventFormBlock {
+    display: none;
+  }
+  .addEventBlock .addEventFormBlock.addEventFormBlockMobile {
+    display: block;
+    position: fixed;
+    background: #fff;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    z-index: 101;
+    height: 100%;
+  }
+}
