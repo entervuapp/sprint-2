@@ -1,12 +1,17 @@
 <div class="addEventBlock container">
-  <div class="addEventFormBlock">
+  <div class="addEventFormBlock" [ngClass]="{addEventFormBlockMobile : addEventMobileVarible === true}">
     <form
       autocomplete="off"
       [formGroup]="formGroupObject"
       appHighlightRequiredFields
       appFocusInvalidInput
     >
-      <h2>{{ displayTextObject["createEvent"] }}</h2>
+      <h2> 
+        <span>
+          <fa-icon class="eventsShowIcon" [icon]="fontIcon.faArrowLeft" (click)="addEventMobileVarible = false"></fa-icon>
+        </span> &nbsp;
+        {{ displayTextObject["createEvent"] }}
+      </h2>
       <div class="addEventsFormCard">
         <div class="addEventsForm">
           <div class="form-group formGroupAddEvents">
@@ -461,3 +466,13 @@
   </div>
 </div>
 <!-- The Modal popup for add rounds -->
+
+<div class="eventsShowIconWrapper" (click)="addEventMobileVarible = true">
+  <span class="eventsShowIconSpan">
+    <fa-icon
+    class="eventsShowIcon"
+    [icon]="fontIcon.faEdit"
+    (click)="onShowOfEvent()"
+    ></fa-icon
+  ></span>
+</div>
