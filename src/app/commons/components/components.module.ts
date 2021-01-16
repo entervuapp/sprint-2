@@ -37,6 +37,7 @@ import { ChangePasswordComponent } from "./change-password/change-password.compo
 import { CarouselComponent } from "./carousel/carousel.component";
 import { SkillsAutocompleteComponent } from "./autocomplete/skills-autocomplete/skills-autocomplete.component";
 import { EmailAutocompleteComponent } from "./autocomplete/email-autocomplete/email-autocomplete.component";
+import { SnackBarAlertComponent } from './snack-bar-alert/snack-bar-alert.component';
 
 const COMPONENTS_LIST = [
   SaveCancelButtonsComponent,
@@ -64,6 +65,7 @@ const COMPONENTS_LIST = [
   CarouselComponent,
   SkillsAutocompleteComponent,
   EmailAutocompleteComponent,
+  SnackBarAlertComponent
 ];
 
 const SERVICES_LIST = [ChangePasswordService, EmailAutocompleteService];
